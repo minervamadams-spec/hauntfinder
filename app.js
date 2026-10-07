@@ -12,7 +12,7 @@ const filters=['All','Family Friendly','Spooky','Scary','Walk-through','Drive-by
 const state={filter:'All',selected:null,expanded:null,route:[],startMode:'current',startAddr:'',coords:{}};
 
 const map=L.map('map',{scrollWheelZoom:true,dragging:!L.Browser.mobile,tap:true}).setView([40.87,-74.72],12);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:20,attribution:'&copy; OpenStreetMap contributors &copy; CARTO'}).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,attribution:'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'}).addTo(map);
 const markerByNum=new Map();
 
 function pinHTML(n){return `<div class="pin" data-pin="${n}"><span class="pin__ring"></span><img src="pumpkin-pin.svg" alt=""><span class="pin__num">${n}</span><span class="pin__check">✓</span></div>`}
