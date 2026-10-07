@@ -72,10 +72,10 @@
   </div>
   <div class="shell community-links">
     <button class="btn btn--outline" type="button" id="flyersBtn">Display Flyers</button>
-    <button class="btn btn--outline" type="button" id="aboutBtn">About Skully’s Closet &amp; Donations</button>
-    <a href="https://www.facebook.com/SkullyRAdams" target="_blank" rel="noopener">Follow Skully on Facebook ↗</a>
-    <a href="https://www.instagram.com/skullyadams/" target="_blank" rel="noopener">Follow Skully on Instagram ↗</a>
-    <a href="mailto:minervamadams@gmail.com">Email Minerva</a>
+    <button class="btn btn--outline" type="button" id="aboutBtn">About &amp; Donations</button>
+    <div class="footer-social"><span>Follow Skully</span><a href="https://www.facebook.com/SkullyRAdams" target="_blank" rel="noopener">Facebook ↗</a>
+    <a href="https://www.instagram.com/skullyadams/" target="_blank" rel="noopener">Instagram ↗</a>
+    </div><a href="mailto:minervamadams@gmail.com">Email Minerva</a>
   </div>
 </footer>
 
@@ -87,9 +87,10 @@
 <dialog class="site-dialog" id="feedbackDialog" aria-labelledby="feedbackTitle">
   <div class="dialog-head"><h2 id="feedbackTitle">Visitor Feedback</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close feedback">×</button></div>
   <p id="feedbackHouse" class="dialog-subtitle"></p>
-  <p id="feedbackStatus" role="status"></p>
-  <section id="feedbackList" aria-label="Visitor comments" aria-live="polite"></section>
-  <form id="feedbackForm">
+  <div class="feedback-tabs" aria-label="Feedback views"><button type="button" id="readReviewsBtn" aria-pressed="true">Read reviews</button><button type="button" id="writeReviewBtn" aria-pressed="false">Write a review</button></div>
+  <div id="reviewPanel"><p id="feedbackStatus" role="status"></p>
+  <section id="feedbackList" aria-label="Visitor comments" aria-live="polite"></section></div>
+  <form id="feedbackForm" hidden>
     <h3>Tell us about your visit</h3>
     <label for="feedbackName">Name <small>(first name or nickname)</small></label>
     <input id="feedbackName" name="name" maxlength="60" autocomplete="given-name" required>

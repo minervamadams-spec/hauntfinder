@@ -4,12 +4,23 @@ let feedbackHouseId=null,feedbackRequest=null;
 const escapeHTML=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function skeletonIcon(){return '<svg viewBox="0 0 32 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 14v17M10 18h12M10 22l6 2 6-2M11 26l5 2 5-2M10 17l-5 7 3 8m14-15 5 7-3 8M11 31l5 3 5-3M12 34l-2 6 1 5m9-11 2 6-1 5M7 46h5m8 0h5"/></g><path fill="currentColor" d="M9 7a7 7 0 0 1 14 0v3l-3 2v3h-8v-3l-3-2Z"/><g fill="#0B0910"><ellipse cx="13" cy="7" rx="2" ry="2.3"/><ellipse cx="19" cy="7" rx="2" ry="2.3"/><path d="m16 9-1.5 3h3Z"/><path d="M14 13h1v2h-1zm3 0h1v2h-1z"/></g></svg>'}
 document.getElementById('crowChoices').innerHTML=[1,2,3,4,5].map(n=>`<label class="crow-choice"><input type="radio" name="rating" value="${n}" required aria-label="${n} skeleton${n===1?'':'s'}"><span>${skeletonIcon()}<b>${n}</b></span></label>`).join('');
+const ratingSummaries=new Map();
+function paintRatingSummaries(){document.querySelectorAll('[data-rating-summary]').forEach(b=>{const summary=ratingSummaries.get(+b.dataset.ratingSummary);if(!summary)return;b.innerHTML=summary.count?`${skeletonIcon()}<span>${summary.average} / 5 <small>(${summary.count})</small></span>`:'No ratings yet';b.setAttribute('aria-label',summary.count?`${summary.average} out of 5 skeletons, ${summary.count} reviews. Read reviews`:'No ratings yet. Read or write a review')})}
+function rememberRating(id,data){const reviews=data.reviews||[];ratingSummaries.set(id,{count:reviews.length,average:reviews.length?(reviews.reduce((sum,r)=>sum+r.rating,0)/reviews.length).toFixed(1):null});paintRatingSummaries()}
+new MutationObserver(paintRatingSummaries).observe(document.getElementById('cardList'),{childList:true});
+listings.forEach(async house=>{try{const response=await fetch('/api/feedback?house='+house.num);if(response.ok)rememberRating(house.num,await response.json())}catch{}});
+function paintSelectedRating(){const chosen=Number(feedbackForm.querySelector('[name="rating"]:checked')?.value||0);document.querySelectorAll('.crow-choice').forEach(label=>label.classList.toggle('is-filled',Number(label.querySelector('input').value)<=chosen))}
+feedbackForm.addEventListener('change',paintSelectedRating);
+function feedbackView(write){feedbackForm.hidden=!write;document.getElementById('reviewPanel').hidden=write;document.getElementById('readReviewsBtn').setAttribute('aria-pressed',String(!write));document.getElementById('writeReviewBtn').setAttribute('aria-pressed',String(write));feedbackDialog.scrollTop=0}
+document.getElementById('readReviewsBtn').onclick=()=>feedbackView(false);
+document.getElementById('writeReviewBtn').onclick=()=>feedbackView(true);
 document.querySelectorAll('[data-close-dialog]').forEach(b=>b.onclick=()=>b.closest('dialog').close());
 document.querySelectorAll('.site-dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target!==d)return;const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}));
 feedbackDialog.addEventListener('close',()=>feedbackRequest?.abort());
 document.getElementById('cardList').addEventListener('click',e=>{const b=e.target.closest('[data-feedback]');if(b)openFeedback(+b.dataset.feedback)});
 document.getElementById('mobileMapRouteBtn').onclick=buildRoute;
 function displayFeedback(data){
+  rememberRating(feedbackHouseId,data);
   const reviews=data.reviews||[];
   const average=reviews.length?(reviews.reduce((sum,r)=>sum+r.rating,0)/reviews.length).toFixed(1):null;
   document.getElementById('feedbackStatus').textContent=reviews.length?`${average} / 5 skeletons · ${reviews.length} visitor review${reviews.length===1?'':'s'} (latest first)`:'No feedback yet. Be the first to share your visit.';
@@ -21,7 +32,7 @@ async function openFeedback(id){
   document.getElementById('feedbackHouse').textContent=house.name+' · '+house.town;
   document.getElementById('feedbackList').replaceChildren();
   document.getElementById('feedbackStatus').textContent='Loading visitor feedback…';
-  document.getElementById('feedbackFormStatus').textContent='';feedbackForm.reset();
+  document.getElementById('feedbackFormStatus').textContent='';feedbackForm.reset();paintSelectedRating();feedbackView(false);
   document.getElementById('feedbackSubmit').disabled=true;feedbackDialog.showModal();
   try{
     const response=await fetch('/api/feedback?house='+id,{signal:feedbackRequest.signal});
@@ -38,7 +49,7 @@ feedbackForm.addEventListener('submit',async e=>{
   try{
     const response=await fetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({house:id,name:form.get('name'),rating:Number(form.get('rating')),comment:form.get('comment'),website:form.get('website')})});
     const data=await response.json();if(!response.ok)throw new Error(data.error||'Your feedback was not saved. Please try again.');
-    if(feedbackHouseId===id&&feedbackDialog.open){displayFeedback(data);feedbackForm.reset();status.textContent='Your feedback is posted. Thank you for visiting!'}
+    if(feedbackHouseId===id&&feedbackDialog.open){displayFeedback(data);feedbackForm.reset();paintSelectedRating();feedbackView(false);status.textContent='Your feedback is posted. Thank you for visiting!'}
   }catch(e){if(feedbackHouseId===id)status.textContent=e.message.startsWith('Feedback')||e.message.startsWith('Please')?e.message:'Your feedback was not saved. Please try again.'}
   finally{if(feedbackHouseId===id)button.disabled=false}
 });
