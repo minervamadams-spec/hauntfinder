@@ -8,7 +8,7 @@ const listings=[
  {updatedAt:'2026-10-06',num:6,name:"Will's House of Horrors",town:'Flanders',address:'20 Tinc Rd, Flanders, NJ',dates:'October',times:'Fri–Sun 6:00 PM–12:00 AM · Mon–Thu 6:00 PM–11:00 PM',levels:['Spooky','Scary'],type:['Walk-up'],features:['Animatronics','Spooky Decor','Fog','Lights','Yard Display'],notes:'Front yard lights on nightly during October. willshouseofhorrors.com'},
  {updatedAt:'2026-10-06',num:7,name:'Sunset Drive Halloween Display',town:'Budd Lake',address:'14 Sunset Dr, Budd Lake, NJ',dates:'Expected complete this weekend',times:'',levels:[],type:['Drive-by'],features:[],notes:'Display is still in progress and should be completed this weekend.'}
 ];
-const filters=['All','Family Friendly','Spooky','Scary','Walk-through','Drive-by','Animatronics','Fog','Music/Sound','Photo Opportunities','Lights','Actors'];
+const filters=['All','Family Friendly','Spooky','Scary','Walk-through','Drive-by','Animatronics','Fog','Music/Sound','Photo Opportunities','Lights','Actors','Costumes Available'];
 const state={filter:'All',selected:null,route:[],startMode:'current',startAddr:'',coords:{}};
 
 try{const saved=JSON.parse(localStorage.getItem('hfroute:2026')||'[]');if(Array.isArray(saved))state.route=[...new Set(saved.filter(n=>listings.some(x=>x.num===n)))]}catch{}
@@ -22,17 +22,18 @@ function iconFor(n,offset=0){return L.divIcon({className:'',html:pinHTML(n),icon
 function gmapsDirections(address){return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`}
 function matchFilter(x){if(state.filter==='All')return true;if(['Family Friendly','Spooky','Scary'].includes(state.filter))return x.levels.includes(state.filter);if(['Walk-through','Drive-by'].includes(state.filter))return x.type.includes(state.filter);return x.features.some(f=>featureKey(f)===state.filter)}
 const FEATURE_ICONS={
- 'Music/Sound':{label:'Music',path:'M9 18V5l11-2v13M9 8l11-2M9 18c0 2-5 3-5 0s5-3 5 0m11-2c0 2-5 3-5 0s5-3 5 0'},
+ 'Costumes Available':{label:'Costumes Available',path:'M10 5a2 2 0 1 1 3 2l-1 1v3M12 11 2 18v3h20v-3Z'},
+ 'Music/Sound':{label:'Music / Sound',path:'M9 18V5l11-2v13M9 8l11-2M9 18c0 2-5 3-5 0s5-3 5 0m11-2c0 2-5 3-5 0s5-3 5 0'},
  'Photo Opportunities':{label:'Photo opportunities',path:'M3 7h5l2-3h4l2 3h5v14H3ZM16 14a4 4 0 1 1-8 0 4 4 0 0 1 8 0'},
  'Fog':{label:'Fog',path:'M3 9h18M5 13h14M2 17h20M7 5h10M5 21h14'},
  'Lights':{label:'Lights',path:'M8 16c-6-6-1-13 4-13s10 7 4 13ZM9 20h6M10 23h4M12 1v1M2 8l2 1m16 0 2-1'},
  'Animatronics':{label:'Animatronics',path:'M6 7h12v13H6ZM12 3v4M8 11h1m6 0h1M9 16h6M3 10v6m18-6v6M8 20v3m8-3v3'},
- 'Actors':{label:'Actors',path:'M3 4l9 2v12c-7 0-9-7-9-14ZM12 6l9-2c0 7-2 14-9 14M6 9h2m8 0h2M7 13l2 1m6 0 2-1'},
+ 'Actors':{label:'Live Actors',path:'M3 4l9 2v12c-7 0-9-7-9-14ZM12 6l9-2c0 7-2 14-9 14M6 9h2m8 0h2M7 13l2 1m6 0 2-1'},
  'Spider theme':{label:'Spider theme',path:'M15 13a3 4 0 1 1-6 0 3 4 0 0 1 6 0M12 6v3M9 10 5 7 2 4m13 6 4-3 3-3M9 12H4l-2-2m13 2h5l2-2M9 14l-5 2-2 4m13-6 5 2 2 4M10 16l-3 3v4m7-7 3 3v4'},
  'Spooky Decor':{label:'Spooky decor',path:'M5 21V9a7 7 0 0 1 14 0v12l-4-2-3 2-3-2ZM8 9h1m6 0h1M10 14h4'},
  'Yard Display':{label:'Yard display',path:'M3 21V8l3-4 3 4v13m6 0V8l3-4 3 4v13M3 11h18M3 17h18'}
 };
-function featureKey(value){const f=String(value).toLowerCase();return Object.keys(FEATURE_ICONS).find(k=>k.toLowerCase()===f)||value}
+function featureKey(value){const f=String(value).trim().toLowerCase().replace(/\s*\/\s*/g,'/');if(f==='live actors')return 'Actors';return Object.keys(FEATURE_ICONS).find(k=>k.toLowerCase().replace(/\s*\/\s*/g,'/')===f)||value}
 function featureIcon(value){const item=FEATURE_ICONS[featureKey(value)];return item?`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${item.path}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`:''}
 function featureChip(value){const key=featureKey(value),icon=featureIcon(key);return icon?`<span class="chip feature-chip" tabindex="0" role="img" aria-label="${safeListingText(FEATURE_ICONS[key].label)}" data-feature-label="${safeListingText(FEATURE_ICONS[key].label)}">${icon}</span>`:`<span class="chip">${safeListingText(value)}</span>`}
 function scarePips(levels){const order=['Family Friendly','Spooky','Scary'];return `<span class="pips">${order.map(x=>`<span class="pip ${levels.includes(x)?'is-on':''}"></span>`).join('')}</span>${safeListingText(levels.length?levels.join(' · '):'Not specified')}`}
