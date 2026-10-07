@@ -275,3 +275,6 @@ body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:0}
 .list-column .tabs{display:flex;flex-wrap:nowrap;gap:4px;width:100%}
 .list-column .tabs button{flex:1 1 0;min-width:0;white-space:nowrap;font-size:15px;padding:12px 5px}
 @media(max-width:650px){.list-column .tabs button{font-size:13px;padding:12px 3px}.list-column .tabs button span{font-size:11px}}
+
+/* Readable numbers centered on the pumpkin body, including double digits. */
+.pin__num{top:52%;color:#fff;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:0;text-shadow:-1px -1px 0 #0B0910,1px -1px 0 #0B0910,-1px 1px 0 #0B0910,1px 1px 0 #0B0910,0 2px 3px #0B0910}
