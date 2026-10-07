@@ -10,7 +10,28 @@ const listings=[
  {"updatedAt":"2026-10-07","num":8,"name":"Skully's Costume Closet","town":"Budd Lake","address":"5 N Mount Olive Rd, Budd Lake, NJ","dates":"Open daily","times":"Weekdays 5:00 PM–8:00 PM · Weekends 10:00 AM–6:00 PM","levels":["Family Friendly"],"type":["Walk-through"],"features":["Costumes Available"],"notes":"Skully’s Costume Closet is open daily and offers free, gently used costumes. Inventory changes daily, so we can’t answer every question about what’s in stock. Please stop by to see what’s available.\n\nWe accept costume donations year-round.","kind":"Costume closet"},
  {"updatedAt":"2026-10-07","num":9,"name":"Capone’s","town":"Budd Lake","address":"22 Cedar Manor Ct, Budd Lake, NJ","dates":"Opens October 1","times":"After dusk","levels":["Family Friendly"],"type":["Drive-by"],"features":["Lights"],"notes":"","kind":"Decorated home/yard display"}
 ];
-const events=[];
+const events=[
+  {
+    "id": "best-buddies-safe-trick-or-treat-2026-10-29",
+    "updatedAt": "2026-10-07",
+    "name": "Best Buddies Safe Trick or Treat",
+    "eventType": "Trunk-or-treat",
+    "venue": "MOHS Track",
+    "address": "18 Corey Road, Flanders",
+    "date": "2026-10-29",
+    "startAt": "2026-10-29T17:30:00-04:00",
+    "endAt": "2026-10-29T19:00:00-04:00",
+    "hours": "5:30 PM–7:00 PM",
+    "cost": "$5 a child",
+    "attendance": "Open to all",
+    "features": [
+      "Open to all",
+      "Kid-friendly"
+    ],
+    "url": "",
+    "notes": "$1 off with a non-perishable food donation. Registration not required."
+  }
+];
 const filters=['All','Family Friendly','Spooky','Scary','Walk-through','Drive-by','Walk-by','Animatronics','Fog','Music/Sound','Photo Opportunities','Lights','Actors','Costumes Available'];
 const state={filter:'All',selected:null,route:[],startMode:'current',startAddr:'',coords:{},category:'displays',page:0};
 
