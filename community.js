@@ -54,9 +54,3 @@ feedbackForm.addEventListener('submit',async e=>{
   finally{if(feedbackHouseId===id)button.disabled=false}
 });
 document.getElementById('aboutBtn').onclick=()=>document.getElementById('aboutDialog').showModal();
-document.getElementById('flyersBtn').onclick=()=>{
-  document.getElementById('printGuide').innerHTML=`<h2>Mount Olive &amp; Surrounding Area</h2><h3>Halloween Display &amp; Haunt Finder 2026</h3><p>Updated house list · hauntfinder.vercel.app · Printed ${escapeHTML(new Date().toLocaleDateString())}</p>${listings.map(x=>`<article><h3>${x.num}. ${escapeHTML(x.name)}</h3><p>${escapeHTML(x.address)}</p><p>${escapeHTML([x.dates,x.times].filter(Boolean).join(' · ')||'Viewing times not specified')}</p><p>${escapeHTML([...x.levels,...x.type,...x.features].join(' · '))}</p>${x.notes?`<p><strong>Host notes:</strong> ${escapeHTML(x.notes)}</p>`:''}</article>`).join('')}<p>Community guide. This is not a contest. Visit the site for current details.</p>`;
-  document.getElementById('flyerDialog').showModal();
-};
-document.getElementById('printGuideBtn').onclick=()=>{document.body.classList.add('printing-guide');window.print()};
-window.addEventListener('afterprint',()=>document.body.classList.remove('printing-guide'));
