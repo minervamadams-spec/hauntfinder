@@ -2,7 +2,7 @@ const feedbackDialog=document.getElementById('feedbackDialog');
 const feedbackForm=document.getElementById('feedbackForm');
 let feedbackHouseId=null,feedbackRequest=null;
 const escapeHTML=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function crowIcon(){return '<svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M4 20c3-1 5-4 7-7 2-3 5-4 8-2 0-4 4-7 7-5 2 1 2 3 2 4l4 2-5 2c-1 6-4 10-10 10l-1 4h3v2h-6l1-6-4-2-7 1 3-4z"/><circle cx="25" cy="9" r="1" fill="#0B0910"/></svg>'}
+function crowIcon(){return '<svg viewBox="0 0 48 48" aria-hidden="true"><path fill="currentColor" d="M12 34 3 43l12-3 4-6c4 3 10 2 13-2 3-4 3-10 1-15l-1-4 12-2-12-4c-2-5-9-6-13-2-2 2-2 5-2 8-5 5-8 12-5 21Z"/><path d="m18 18 8 4-7 10m3 3-1 8m8-9 1 9M17 44h9m1 0h9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="m18 18 8 4-7 10" fill="none" stroke="#0B0910" stroke-width="1.5" stroke-linecap="round"/><circle cx="27" cy="8" r="1.3" fill="#0B0910"/></svg>'}
 document.getElementById('crowChoices').innerHTML=[1,2,3,4,5].map(n=>`<label class="crow-choice"><input type="radio" name="rating" value="${n}" required aria-label="${n} crow${n===1?'':'s'}"><span>${crowIcon()}<b>${n}</b></span></label>`).join('');
 document.querySelectorAll('[data-close-dialog]').forEach(b=>b.onclick=()=>b.closest('dialog').close());
 document.querySelectorAll('.site-dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target!==d)return;const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}));
