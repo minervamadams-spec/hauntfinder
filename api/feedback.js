@@ -11,9 +11,7 @@ async function redis(command){
 }
 async function reviewsFor(house){
   const rows=await redis(['LRANGE',KEY_PREFIX+'reviews:'+house,0,199]);
-  // Remove the owner-requested test review by its exact ID only.
-  if(house===1){for(const row of rows||[]){const review=typeof row==='string'?JSON.parse(row):row;if(review.id==='fe12a0e1-4c57-453d-9a18-d4c434df2737')await redis(['LREM',KEY_PREFIX+'reviews:'+house,1,typeof row==='string'?row:JSON.stringify(row)]);}}
-  return (rows||[]).filter(row=>(typeof row==='string'?JSON.parse(row):row).id!=='fe12a0e1-4c57-453d-9a18-d4c434df2737').map(x=>typeof x==='string'?JSON.parse(x):x);
+  return (rows||[]).map(x=>typeof x==='string'?JSON.parse(x):x);
 }
 module.exports=async function handler(req,res){
   res.setHeader('Cache-Control','no-store');
@@ -35,7 +33,7 @@ module.exports=async function handler(req,res){
     const name=typeof body.name==='string'?body.name.trim():'';
     const comment=typeof body.comment==='string'?body.comment.trim():'';
     if(website)return res.status(400).json({error:'Please use the feedback form.'});
-    if(!HOUSE_IDS.has(house)||!Number.isInteger(rating)||rating<1||rating>5||!name||name.length>60||!comment||comment.length>1500)return res.status(400).json({error:'Please add your name, a 1–5 crow rating and feedback (up to 1,500 characters).'});
+    if(!HOUSE_IDS.has(house)||!Number.isInteger(rating)||rating<1||rating>5||!name||name.length>60||!comment||comment.length>1500)return res.status(400).json({error:'Please add your name, a 1–5 skeleton rating and feedback (up to 1,500 characters).'});
     const ip=String(req.headers['x-forwarded-for']||req.socket?.remoteAddress||'unknown').split(',')[0].trim();
     const rateKey=KEY_PREFIX+'rate:'+createHmac('sha256',storageToken()).update(ip).digest('hex');
     const review={id:randomUUID(),house,name,rating,comment,timestamp:new Date().toISOString()};
