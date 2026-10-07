@@ -42,27 +42,34 @@
     },
     {
       "row": 7,
+      "fingerprint": "11843388f162a3d361cb209b2ee38abe8ad03fec8e1aaa3cba5e013044e70ad3",
+      "fingerprintColumns": 14,
+      "listingId": 9,
+      "decision": "matched_existing_verified_submission"
+    },
+    {
+      "row": 8,
       "fingerprint": "60978a445fc68bd32b35eecf835aa1367a7f638e74de1371d01d6ae94118c181",
       "listingId": 4,
       "decision": "baseline_existing_curated_listing",
       "fingerprintColumns": 12
     },
     {
-      "row": 8,
+      "row": 9,
       "fingerprint": "652ac8322d5f7164281a0de5e03aa42c5ed390707b3aa427f3a905a07d0694fc",
       "listingId": 5,
       "decision": "baseline_existing_curated_listing",
       "fingerprintColumns": 12
     },
     {
-      "row": 9,
+      "row": 10,
       "fingerprint": "42a89818613806612a71f11d204cedabcc18a4852404cb587f76849301bbd6ca",
       "listingId": 6,
       "decision": "baseline_existing_curated_listing",
       "fingerprintColumns": 12
     },
     {
-      "row": 10,
+      "row": 11,
       "fingerprint": "c04fe7d2da1a5636b9447b8257ebce92cf60763e39d8c8ee54923e793e2d17fd",
       "listingId": 7,
       "decision": "baseline_existing_curated_listing",
