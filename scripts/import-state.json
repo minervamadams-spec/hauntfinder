@@ -1,50 +1,72 @@
 {
-  "version": 1,
+  "version": 2,
   "spreadsheetId": "1L6jFSp8I1d1BgejX16UqGdFJVVFMwhR3zCYSTTA6uJc",
   "sheet": "Form Responses 1",
-  "fingerprintFormat": "SHA-256 of JSON array of 12 string cells; null/missing normalized to empty; UTF-8; ensure_ascii=false; compact separators",
+  "fingerprintFormat": "SHA-256 of compact UTF-8 JSON string-cell array; null/missing normalized to empty; fingerprintColumns gives column count. Legacy baselines use 12; current rows use 14 including Listing Action and Listing Kind. Match fingerprints independently of row position.",
   "rows": [
     {
       "row": 2,
       "fingerprint": "2af75b6899952ea3f6acf4afbe23ff5d6094ec3b62122937d407aebac492e9bc",
       "listingId": 1,
-      "decision": "baseline_existing_curated_listing"
+      "decision": "baseline_existing_curated_listing",
+      "fingerprintColumns": 12,
+      "supersededByRow": 5
     },
     {
       "row": 3,
       "fingerprint": "1d8a7eda26826b8ea6f1c8f946599377fceb9efc9b863ed760eec537a71a561c",
       "listingId": 2,
-      "decision": "baseline_existing_curated_listing"
+      "decision": "baseline_existing_curated_listing",
+      "fingerprintColumns": 12
     },
     {
       "row": 4,
       "fingerprint": "5acc8bc2947f1bfc3b5516fe9f7118fca61d0bf13e8868cf81a2008454456735",
       "listingId": 3,
-      "decision": "baseline_existing_curated_listing"
+      "decision": "baseline_existing_curated_listing",
+      "fingerprintColumns": 12
     },
     {
       "row": 5,
-      "fingerprint": "60978a445fc68bd32b35eecf835aa1367a7f638e74de1371d01d6ae94118c181",
-      "listingId": 4,
-      "decision": "baseline_existing_curated_listing"
+      "fingerprint": "ea6e8299b6feb9d5a003505e56c09d8a55637256cd62907514922a81c4ef3aa1",
+      "fingerprintColumns": 14,
+      "listingId": 1,
+      "decision": "updated_existing_verified_host"
     },
     {
       "row": 6,
-      "fingerprint": "652ac8322d5f7164281a0de5e03aa42c5ed390707b3aa427f3a905a07d0694fc",
-      "listingId": 5,
-      "decision": "baseline_existing_curated_listing"
+      "fingerprint": "da4f752069e3c2c5feebc612b7a45cf02033a837a910118625b85416c1bc2061",
+      "fingerprintColumns": 14,
+      "listingId": 8,
+      "decision": "added_distinct_costume_closet_verified_host"
     },
     {
       "row": 7,
-      "fingerprint": "42a89818613806612a71f11d204cedabcc18a4852404cb587f76849301bbd6ca",
-      "listingId": 6,
-      "decision": "baseline_existing_curated_listing"
+      "fingerprint": "60978a445fc68bd32b35eecf835aa1367a7f638e74de1371d01d6ae94118c181",
+      "listingId": 4,
+      "decision": "baseline_existing_curated_listing",
+      "fingerprintColumns": 12
     },
     {
       "row": 8,
+      "fingerprint": "652ac8322d5f7164281a0de5e03aa42c5ed390707b3aa427f3a905a07d0694fc",
+      "listingId": 5,
+      "decision": "baseline_existing_curated_listing",
+      "fingerprintColumns": 12
+    },
+    {
+      "row": 9,
+      "fingerprint": "42a89818613806612a71f11d204cedabcc18a4852404cb587f76849301bbd6ca",
+      "listingId": 6,
+      "decision": "baseline_existing_curated_listing",
+      "fingerprintColumns": 12
+    },
+    {
+      "row": 10,
       "fingerprint": "c04fe7d2da1a5636b9447b8257ebce92cf60763e39d8c8ee54923e793e2d17fd",
       "listingId": 7,
-      "decision": "baseline_existing_curated_listing"
+      "decision": "baseline_existing_curated_listing",
+      "fingerprintColumns": 12
     }
   ]
 }
