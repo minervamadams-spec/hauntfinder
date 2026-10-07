@@ -41,10 +41,6 @@
     </div>
     <div id="mapPeek" class="map-peek is-hidden" aria-live="polite"></div>
 
-    <section class="route-wrap">
-      <h2 class="brush-label brush-label--lime">Plan Your Halloween Route</h2>
-      <div class="route" id="routePlanner"></div>
-    </section>
   </section>
 
   <aside class="list-column">
@@ -60,6 +56,10 @@
       <button type="button" class="btn btn--outline" id="showAllBtn">Show all displays</button>
     </div>
   </aside>
+  <section class="route-wrap" id="routeSection">
+    <h2 class="brush-label brush-label--lime">Plan Your Halloween Route</h2>
+    <div class="route" id="routePlanner"></div>
+  </section>
 </main>
 
 <footer class="hf-footer">
@@ -70,9 +70,60 @@
     </div>
     <a class="btn btn--form" href="https://forms.gle/msXn5jNgMF3Aet3N9" target="_blank" rel="noopener">Open the Listing Form ↗</a>
   </div>
+  <div class="shell community-links">
+    <button class="btn btn--outline" type="button" id="flyersBtn">Display Flyers</button>
+    <button class="btn btn--outline" type="button" id="aboutBtn">About Skully’s Closet &amp; Donations</button>
+    <a href="https://www.facebook.com/SkullyRAdams" target="_blank" rel="noopener">Follow Skully on Facebook ↗</a>
+    <a href="https://www.instagram.com/skullyadams/" target="_blank" rel="noopener">Follow Skully on Instagram ↗</a>
+    <a href="mailto:minervamadams@gmail.com">Email Minerva</a>
+  </div>
 </footer>
+
+<div class="mobile-route-bar is-hidden" id="mobileRouteBar">
+  <span id="mobileRouteCount" aria-live="polite"></span>
+  <button class="btn btn--map-route" type="button" id="mobileMapRouteBtn">Map My Route</button>
+</div>
+
+<dialog class="site-dialog" id="feedbackDialog" aria-labelledby="feedbackTitle">
+  <div class="dialog-head"><h2 id="feedbackTitle">Visitor Feedback</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close feedback">×</button></div>
+  <p id="feedbackHouse" class="dialog-subtitle"></p>
+  <p id="feedbackStatus" role="status"></p>
+  <section id="feedbackList" aria-label="Visitor comments" aria-live="polite"></section>
+  <form id="feedbackForm">
+    <h3>Tell us about your visit</h3>
+    <label for="feedbackName">Name <small>(first name or nickname)</small></label>
+    <input id="feedbackName" name="name" maxlength="60" autocomplete="given-name" required>
+    <fieldset class="crow-rating"><legend>Your rating</legend><div id="crowChoices"></div><small>1 crow = needs work · 5 crows = loved it. Rate your visit, not how scary it was.</small></fieldset>
+    <label for="feedbackComment">Your feedback</label>
+    <textarea id="feedbackComment" name="comment" rows="4" maxlength="1500" required placeholder="What did you enjoy? What would help other visitors?"></textarea>
+    <label class="honeypot" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+    <p class="form-note">Your name, rating, comment and submission time will appear publicly. Keep feedback about the display and avoid personal information. The time is added automatically.</p>
+    <button class="btn btn--route" id="feedbackSubmit" type="submit" disabled>Post Feedback</button>
+    <p id="feedbackFormStatus" role="status"></p>
+  </form>
+</dialog>
+
+<dialog class="site-dialog" id="aboutDialog" aria-labelledby="aboutTitle">
+  <div class="dialog-head"><h2 id="aboutTitle">Skully’s Costume Closet</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close about Skully">×</button></div>
+  <p>Halloween should be fun for everyone. The Adams family’s community costume closet offers free costumes and accessories for children and adults at <strong>5 N Mount Olive Road, Budd Lake, NJ</strong>. Take what you need, give what you can.</p>
+  <h3>Donations welcome year-round</h3>
+  <p>Have costumes or accessories ready for their next home? Donations help keep the closet stocked for the community. Leave them on the front porch, or email Minerva to coordinate a drop-off.</p>
+  <p>Skully’s Closet sits in the garage behind the house. Follow Skully for current hours, seasonal updates and community events. We love seeing your costume photos and being tagged in your posts.</p>
+  <div class="community-links"><a href="https://www.facebook.com/SkullyRAdams" target="_blank" rel="noopener">Facebook ↗</a><a href="https://www.instagram.com/skullyadams/" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:minervamadams@gmail.com?subject=Skully%27s%20Costume%20Closet%20Donation">Ask about donating</a></div>
+  <p class="form-note">Read the <a href="https://mtolivelife.com/skullys-free-costumes-for-all-returns-this-fall/" target="_blank" rel="noopener">community story about Skully’s Closet ↗</a>.</p>
+</dialog>
+
+<dialog class="site-dialog flyer-dialog" id="flyerDialog" aria-labelledby="flyerTitle">
+  <div class="dialog-head"><h2 id="flyerTitle">Display Flyers</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close flyers">×</button></div>
+  <p>View the original display-guide flyer, or print a current list of all homes. Use the house cards for the latest viewing details.</p>
+  <a href="assets/display-guide-option-2.webp" target="_blank" rel="noopener"><img class="flyer-preview" src="assets/display-guide-option-2.webp" alt="Mount Olive Halloween Display Guide 2026, original illustrated flyer for houses 1 to 3" loading="lazy"></a>
+  <p class="form-note">Original illustrated guide: houses 1–3. Open the image to save or print it.</p>
+  <button class="btn btn--route" id="printGuideBtn" type="button">Print Current House List</button>
+  <div id="printGuide"></div>
+</dialog>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script src="app.js"></script>
+<script src="community.js"></script>
 </body>
 </html>
