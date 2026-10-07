@@ -112,6 +112,15 @@
   <p class="form-note">Read the <a href="https://mtolivelife.com/skullys-free-costumes-for-all-returns-this-fall/" target="_blank" rel="noopener">community story about Skully’s Closet ↗</a>.</p>
 </dialog>
 
+<dialog class="site-dialog" id="listingReportDialog" aria-labelledby="listingReportTitle">
+  <div class="dialog-head"><h2 id="listingReportTitle">Report a listing</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close listing report">×</button></div>
+  <p id="listingReportHouse" class="dialog-subtitle"></p><p>Help us keep the map current. Reports go to the organizer for review.</p>
+  <form id="listingReportForm"><label for="listingReportType">What needs updating?</label><select id="listingReportType" required><option value="Incorrect listing details">Incorrect listing details</option><option value="Temporarily closed">Temporarily closed</option><option value="Weather cancellation">Weather cancellation</option><option value="Display no longer available">Display no longer available</option></select>
+  <label for="listingReportNotes">Details</label><textarea id="listingReportNotes" rows="4" maxlength="1500" required placeholder="What changed? For closures, include the date/time and any host announcement link."></textarea>
+  <p class="form-note">If you’re the host, use the Add / Update a Display form for listing changes. A report does not automatically change the map.</p><button class="btn btn--route" type="submit">Prepare report email</button><p id="listingReportStatus" role="status"></p></form>
+  <a class="btn btn--outline" href="https://forms.gle/msXn5jNgMF3Aet3N9" target="_blank" rel="noopener">Host: update your listing ↗</a>
+</dialog>
+
 <dialog class="site-dialog" id="houseShareDialog" aria-labelledby="houseShareTitle">
   <div class="dialog-head"><h2 id="houseShareTitle">Share this house</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close house sharing">×</button></div>
   <p>Listed here? Use this suggested post and listing image to invite visitors.</p>

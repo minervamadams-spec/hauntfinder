@@ -54,3 +54,7 @@ feedbackForm.addEventListener('submit',async e=>{
   finally{if(feedbackHouseId===id)button.disabled=false}
 });
 document.getElementById('aboutBtn').onclick=()=>document.getElementById('aboutDialog').showModal();
+
+let reportHouse=null;
+document.getElementById('cardList').addEventListener('click',e=>{const b=e.target.closest('[data-report-listing]');if(!b)return;reportHouse=listings.find(x=>x.num===Number(b.dataset.reportListing));if(!reportHouse)return;document.getElementById('listingReportHouse').textContent=reportHouse.name+' · '+reportHouse.address;document.getElementById('listingReportForm').reset();document.getElementById('listingReportStatus').textContent='';document.getElementById('listingReportDialog').showModal()});
+document.getElementById('listingReportForm').addEventListener('submit',e=>{e.preventDefault();if(!reportHouse||!e.target.reportValidity())return;const type=document.getElementById('listingReportType').value,notes=document.getElementById('listingReportNotes').value.trim();const body=`House: ${reportHouse.name}\nAddress: ${reportHouse.address}\nListing: https://hauntfinder.vercel.app/?house=${reportHouse.num}\nReport type: ${type}\n\n${notes}`;const link=document.createElement('a');link.href='mailto:minervamadams@gmail.com?subject='+encodeURIComponent('Haunt Finder listing report: '+type+' — '+reportHouse.name)+'&body='+encodeURIComponent(body);link.click();document.getElementById('listingReportStatus').textContent='Your email app opens with the report. Review it and press Send there to submit.'});
