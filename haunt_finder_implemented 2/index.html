@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Halloween Display & Haunt Finder 2026</title>
+  <meta name="description" content="Mount Olive & surrounding area Halloween displays and home haunts.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700;800&family=Creepster&family=Rubik+Dirt&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="hf-header">
+  <div class="hf-header__inner shell">
+    <div class="hf-eyebrow">Mount Olive &amp; Surrounding Area • 2026</div>
+    <h1 class="hf-title">
+      <span class="hf-title__word">Halloween</span>
+      <span class="hf-title__sub">Display &amp; Haunt Finder</span>
+    </h1>
+    <p class="hf-lede">Find decorated homes and home haunts, check viewing details, filter displays, and build a driving route for your Halloween night.</p>
+    <div class="hf-header__actions">
+      <a class="btn btn--cta" href="https://forms.gle/msXn5jNgMF3Aet3N9" target="_blank" rel="noopener">Add / Update a Display</a>
+      <button class="btn btn--outline" id="shareBtn" type="button">Share</button>
+    </div>
+  </div>
+  <div class="moon" aria-hidden="true"></div>
+  <div class="bats" aria-hidden="true">⌁ ︿ ︿</div>
+  <svg class="hf-graveyard" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 74h260l18-24 10 24h48l10-34 12 34h70l11-20 11 20h103l10-38 12 38h76l9-21 10 21h90l12-30 11 30h70l14-44 14 44h61l11-27 12 27h64l14-34 12 34h183v16H0z" fill="#09050f"/>
+    <path d="M1160 22v52M1135 47h50" stroke="#09050f" stroke-width="8"/>
+  </svg>
+</header>
+
+<main class="shell page-grid">
+  <section class="map-column">
+    <div class="section-kicker"><span>The Map</span><small>Tap a pumpkin for details</small></div>
+    <div class="map-frame">
+      <div id="map" class="hf-map" aria-label="Interactive Halloween display map"></div>
+    </div>
+    <div id="mapPeek" class="map-peek is-hidden" aria-live="polite"></div>
+
+    <section class="route-wrap">
+      <h2 class="brush-label brush-label--lime">Plan Your Halloween Route</h2>
+      <div class="route" id="routePlanner"></div>
+    </section>
+  </section>
+
+  <aside class="list-column">
+    <section class="finder-head">
+      <h2 class="brush-label">Find a Display</h2>
+      <div class="filters" id="filters" aria-label="Filter displays"></div>
+      <div id="countLine" class="count-line"></div>
+    </section>
+    <div id="cardList" class="card-list"></div>
+    <div id="noResults" class="empty is-hidden">
+      <strong>Nothing here yet</strong>
+      <span id="noResultsText"></span>
+      <button type="button" class="btn btn--outline" id="showAllBtn">Show all displays</button>
+    </div>
+  </aside>
+</main>
+
+<footer class="hf-footer">
+  <div class="shell footer-inner">
+    <div>
+      <h2>Want to be added or update your listing?</h2>
+      <p>Submit your display details and we’ll add or update your listing.</p>
+    </div>
+    <a class="btn btn--form" href="https://forms.gle/msXn5jNgMF3Aet3N9" target="_blank" rel="noopener">Open the Listing Form ↗</a>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="app.js"></script>
+</body>
+</html>
