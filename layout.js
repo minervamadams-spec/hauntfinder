@@ -1,7 +1,7 @@
 // Category panels share pagination; route controls remain below the map.
 (() => {
  const $=id=>document.getElementById(id),tabs=[['displaysTab','displays'],['treatStopsTab','treats'],['eventsTab','events']];
- const EVENT_FORM_URL=''; // Set after the event form is supplied.
+ const EVENT_FORM_URL='https://forms.gle/bKfYM7u135mcWKfT8';
  const originalFilters=renderFilters,originalCards=renderCards,originalRoute=renderRoute,originalSelect=selectListing;
  state.categoryFeature='';state.eventDay='';
  function visibleCount(){return state.category==='events'?matchingEvents().length:listings.filter(matchFilter).length}
