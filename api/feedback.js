@@ -11,7 +11,9 @@ async function redis(command){
 }
 async function reviewsFor(house){
   const rows=await redis(['LRANGE',KEY_PREFIX+'reviews:'+house,0,199]);
-  return (rows||[]).map(x=>typeof x==='string'?JSON.parse(x):x);
+  // Remove the owner-requested test review by its exact ID only.
+  if(house===1){for(const row of rows||[]){const review=typeof row==='string'?JSON.parse(row):row;if(review.id==='fe12a0e1-4c57-453d-9a18-d4c434df2737')await redis(['LREM',KEY_PREFIX+'reviews:'+house,1,typeof row==='string'?row:JSON.stringify(row)]);}}
+  return (rows||[]).filter(row=>(typeof row==='string'?JSON.parse(row):row).id!=='fe12a0e1-4c57-453d-9a18-d4c434df2737').map(x=>typeof x==='string'?JSON.parse(x):x);
 }
 module.exports=async function handler(req,res){
   res.setHeader('Cache-Control','no-store');
