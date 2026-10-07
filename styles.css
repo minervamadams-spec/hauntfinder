@@ -249,3 +249,14 @@ body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:0}
  .list-column{max-height:none;height:auto;overflow:visible}.content-panels>section{height:auto;overflow:visible}
  .page-grid{gap:24px}.route-wrap{padding:14px}.route-wrap .route__setup{display:block}.route-wrap .route__starting{margin-top:16px}
 }
+
+/* No internal side scroll: each listing page grows in normal document flow. */
+.list-column{position:static!important;height:auto!important;max-height:none!important;overflow:visible!important;align-self:start}
+.content-panels{height:auto;min-height:0;flex:none;overflow:visible}
+.content-panels>section{height:auto!important;max-height:none!important;overflow:visible!important;padding:2px 0 0}
+.card-list{height:auto;overflow:visible}
+.listing-pages{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;padding:12px 0;border-top:1px solid var(--line);font-size:14px;color:var(--mist)}
+.listing-pages .btn{min-height:44px;font-size:16px;padding:0 12px}
+.listing-pages .btn:disabled{opacity:.4;cursor:default}
+.page-grid,.app{height:auto!important;max-height:none!important;overflow:visible!important}
+@media(min-width:1024px){.map-frame{height:420px}.page-grid{align-items:start}.route-wrap{width:100%;max-height:none!important;overflow:visible!important}}
