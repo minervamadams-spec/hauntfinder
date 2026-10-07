@@ -1,0 +1,4 @@
+const test=require('node:test'),assert=require('node:assert/strict');const {bestStopOrder}=require('../routing');
+test('finds shortest driving path rather than straight-line or insertion order',()=>{const m=[[0,10,1,20],[1,0,1,1],[1,1,0,20],[1,1,1,0]];assert.deepEqual(bestStopOrder(m),[1,0,2]);});
+test('rejects disconnected paths and oversized routes',()=>{assert.throws(()=>bestStopOrder([[0,null,null],[null,0,null],[null,null,0]]));assert.throws(()=>bestStopOrder(Array.from({length:12},()=>Array(12).fill(1))));});
+test('matches exhaustive permutations for asymmetric driving times',()=>{const m=[[0,3,6,2,5],[4,0,8,2,3],[7,4,0,6,3],[2,5,9,0,8],[6,3,4,7,0]];function permutations(a){return a.length?a.flatMap((v,i)=>permutations(a.filter((_,j)=>j!==i)).map(p=>[v,...p])):[[]]}function cost(a){return a.reduce((t,v,i)=>t+m[i?a[i-1]+1:0][v+1],0)}const best=Math.min(...permutations([0,1,2,3]).map(cost));assert.equal(cost(bestStopOrder(m)),best)});

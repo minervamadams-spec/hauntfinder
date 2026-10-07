@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Halloween Display & Haunt Finder 2026</title>
+  <title>Hauntfinder 2026</title>
   <meta name="description" content="Mount Olive & surrounding area Halloween displays and home haunts.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,13 +16,12 @@
   <div class="hf-header__inner shell">
     <div class="hf-eyebrow">Mount Olive &amp; Surrounding Area • 2026</div>
     <h1 class="hf-title">
-      <span class="hf-title__word">Halloween</span>
-      <span class="hf-title__sub">Display &amp; Haunt Finder</span>
+      <span class="hf-title__word">Hauntfinder</span>
     </h1>
-    <p class="hf-lede">Find decorated homes and home haunts, check viewing details, filter displays, and build a driving route for your Halloween night.</p>
+    <p class="hf-lede">Find local decorated homes and home haunts, check viewing details, filter displays, and build a driving route for your Halloween night.</p>
     <div class="hf-header__actions">
-      <a class="btn btn--cta" href="https://forms.gle/msXn5jNgMF3Aet3N9" target="_blank" rel="noopener">Add / Update a Display</a>
-      <button class="btn btn--outline" id="shareBtn" type="button">Share</button>
+      <a class="btn btn--cta" href="https://forms.gle/msXn5jNgMF3Aet3N9" target="_blank" rel="noopener">Add/Update a Listing</a>
+      <button class="btn btn--outline" id="shareBtn" type="button">Share this site</button>
     </div>
   </div>
   <div class="moon" aria-hidden="true"></div>
@@ -57,7 +56,7 @@
     </div>
   </aside>
   <section class="route-wrap" id="routeSection">
-    <h2 class="brush-label brush-label--lime">Plan Your Halloween Route</h2>
+    <h2 class="brush-label brush-label--lime">Plan your route</h2>
     <div class="route" id="routePlanner"></div>
   </section>
 </main>
@@ -103,21 +102,25 @@
 </dialog>
 
 <dialog class="site-dialog" id="aboutDialog" aria-labelledby="aboutTitle">
-  <div class="dialog-head"><h2 id="aboutTitle">Skully’s Costume Closet</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close about Skully">×</button></div>
-  <p>Halloween should be fun for everyone. The Adams family’s community costume closet offers free costumes and accessories for children and adults at <strong>5 N Mount Olive Road, Budd Lake, NJ</strong>. Take what you need, give what you can.</p>
+  <div class="dialog-head"><h2 id="aboutTitle">About Skully</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close about Skully">×</button></div>
+  <p>Meet Skully, the Adams family’s 12-foot skeleton and community mascot at <strong>5 N Mount Olive Road, Budd Lake, NJ</strong>. Skully brings neighbors together throughout the year, with plenty of fun and a helping hand when it’s needed.</p>
+  <p>Over the years, our family has offered a free community pumpkin patch, hosted lemonade fundraisers, and provided free beverages during summer electricity outages. Follow Skully to see what’s happening next.</p>
+  <h3>Halloween with the Adams family</h3>
+  <p>Halloween is our busiest season. Alongside our home haunt, we participate in Trunk or Treat, winning three years in a row, and have won Spook the House two years in a row. We love seeing visitors’ photos and being tagged in your posts.</p>
+  <h3>Skully’s Costume Closet · year three</h3>
+  <p>Now in its third year, our community costume closet offers free costumes and accessories for infants, children, and adults. The closet is in the garage behind our home. Take what you need, give what you can, and check the listings and social updates for current hours.</p>
   <h3>Donations welcome year-round</h3>
-  <p>Have costumes or accessories ready for their next home? Donations help keep the closet stocked for the community. Leave them on the front porch, or email Minerva to coordinate a drop-off.</p>
-  <p>Skully’s Closet sits in the garage behind the house. Follow Skully for current hours, seasonal updates and community events. We love seeing your costume photos and being tagged in your posts.</p>
+  <p>Costumes and accessories are welcome all year. Leave donations on the front porch, or contact us to coordinate a drop-off. Your donations help more neighbors enjoy dressing up.</p>
   <div class="community-links"><a href="https://www.facebook.com/SkullyRAdams" target="_blank" rel="noopener">Facebook ↗</a><a href="https://www.instagram.com/skullyadams/" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:minervamadams@gmail.com?subject=Skully%27s%20Costume%20Closet%20Donation">Ask about donating</a></div>
   <p class="form-note">Read the <a href="https://mtolivelife.com/skullys-free-costumes-for-all-returns-this-fall/" target="_blank" rel="noopener">community story about Skully’s Closet ↗</a>.</p>
 </dialog>
 
 <dialog class="site-dialog" id="listingReportDialog" aria-labelledby="listingReportTitle">
-  <div class="dialog-head"><h2 id="listingReportTitle">Report a listing</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close listing report">×</button></div>
+  <div class="dialog-head"><h2 id="listingReportTitle">Weather alerts &amp; listing updates</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close listing report">×</button></div>
   <p id="listingReportHouse" class="dialog-subtitle"></p><p>Help us keep the map current. Reports go to the organizer for review.</p>
-  <form id="listingReportForm"><label for="listingReportType">What needs updating?</label><select id="listingReportType" required><option value="Incorrect listing details">Incorrect listing details</option><option value="Temporarily closed">Temporarily closed</option><option value="Weather cancellation">Weather cancellation</option><option value="Display no longer available">Display no longer available</option></select>
+  <form id="listingReportForm"><label for="listingReportType">What should visitors know?</label><select id="listingReportType" required><option value="Incorrect listing details">Incorrect listing details</option><option value="Temporarily closed">Temporarily closed</option><option value="Weather cancellation">Weather cancellation</option><option value="Display no longer available">Display no longer available</option></select>
   <label for="listingReportNotes">Details</label><textarea id="listingReportNotes" rows="4" maxlength="1500" required placeholder="What changed? For closures, include the date/time and any host announcement link."></textarea>
-  <p class="form-note">If you’re the host, use the Add / Update a Display form for listing changes. A report does not automatically change the map.</p><button class="btn btn--route" type="submit">Prepare report email</button><p id="listingReportStatus" role="status"></p></form>
+  <p class="form-note">If you’re the host, use the Add/Update a Listing form for listing changes. A report does not automatically change the map.</p><button class="btn btn--route" type="submit">Prepare report email</button><p id="listingReportStatus" role="status"></p></form>
   <a class="btn btn--outline" href="https://forms.gle/msXn5jNgMF3Aet3N9" target="_blank" rel="noopener">Host: update your listing ↗</a>
 </dialog>
 
@@ -127,12 +130,13 @@
   <label for="houseShareText">Suggested social post</label><textarea id="houseShareText" rows="8" readonly></textarea>
   <div class="share-actions"><button type="button" class="btn btn--route" id="copyHousePost">Copy post</button><button type="button" class="btn btn--outline" id="shareHousePost">Share post</button></div>
   <img id="houseShareImage" alt="Shareable image of this house listing" class="share-preview">
-  <a id="downloadHouseImage" class="btn btn--outline" download>Save listing image</a>
-  <p class="form-note">Attach the saved image to your social post. Preview your post before publishing.</p><p id="houseShareStatus" role="status"></p>
-  <p><a href="https://forms.gle/msXn5jNgMF3Aet3N9" target="_blank" rel="noopener">Add or update an address ↗</a> · <a href="https://hauntfinder.vercel.app/">Find houses and map your route</a></p>
+  <div class="share-actions"><button id="saveHouseImage" class="btn btn--route" type="button">Save / share image</button><a id="downloadHouseImage" class="btn btn--outline" download>Download image</a></div>
+  <p class="form-note">On a phone, use Save / share image, then choose Save Image if your device offers it. Otherwise download the image, or press and hold its preview. Attach it to your post and review before publishing.</p><p id="houseShareStatus" role="status"></p>
+  <div class="share-actions"><a class="btn btn--outline" href="https://forms.gle/msXn5jNgMF3Aet3N9" target="_blank" rel="noopener">Add/Update a Listing ↗</a><a class="btn btn--route" href="https://hauntfinder.vercel.app/">Find houses &amp; plan your route</a></div>
 </dialog>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="routing.js"></script>
 <script src="app.js"></script>
 <script src="community.js"></script>
 <script src="sharing.js"></script>
