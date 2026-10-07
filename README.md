@@ -9,7 +9,7 @@ Included:
 - Mobile-first responsive layout
 - Filters
 - Pin/card linked states
-- Expandable listing cards
+- Listing cards show all feature tags and full host notes without expanding
 - Add-to-route / Added state
 - Directions links
 - Route planner that opens Google Maps
