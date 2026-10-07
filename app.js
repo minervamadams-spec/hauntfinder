@@ -9,6 +9,7 @@ const listings=[
  {updatedAt:'2026-10-07',num:7,name:'The Walking Dead- End',town:'Budd Lake',address:'14 Sunset Dr, Budd Lake, NJ',dates:'Opens October 10',times:'',levels:['Family Friendly','Spooky'],type:['Drive-by'],features:[],notes:''},
  {"updatedAt":"2026-10-07","num":8,"name":"Skully's Costume Closet","town":"Budd Lake","address":"5 N Mount Olive Rd, Budd Lake, NJ","dates":"Open daily","times":"Weekdays 5:00 PM–8:00 PM · Weekends 10:00 AM–6:00 PM","levels":["Family Friendly"],"type":["Walk-through"],"features":["Costumes Available"],"notes":"Skully’s Costume Closet is open daily and offers free, gently used costumes. Inventory changes daily, so we can’t answer every question about what’s in stock. Please stop by to see what’s available.\n\nWe accept costume donations year-round.","kind":"Costume closet"}
 ];
+const events=[];
 const filters=['All','Family Friendly','Spooky','Scary','Walk-through','Drive-by','Walk-by','Animatronics','Fog','Music/Sound','Photo Opportunities','Lights','Actors','Costumes Available'];
 const state={filter:'All',selected:null,route:[],startMode:'current',startAddr:'',coords:{},category:'displays',page:0};
 
@@ -22,7 +23,10 @@ function pinHTML(n){return `<div class="pin" data-pin="${n}"><span class="pin__r
 function iconFor(n){return L.divIcon({className:'',html:pinHTML(n),iconSize:[58,68],iconAnchor:[29,68]})}
 function gmapsDirections(address){return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`}
 function isTreatStop(x){return x.kind==='Trick-or-treat stop'}
-function matchFilter(x){if(isTreatStop(x)!==(state.category==='treats'))return false;if(state.category==='treats')return true;if(state.filter==='All')return true;if(['Family Friendly','Spooky','Scary'].includes(state.filter))return x.levels.includes(state.filter);if(['Walk-through','Drive-by','Walk-by'].includes(state.filter))return x.type.includes(state.filter)||(x.type.includes('Drive or walk by (both)')&&['Drive-by','Walk-by'].includes(state.filter));return x.features.some(f=>featureKey(f)===state.filter)}
+function eventIsUpcoming(x){return new Date(x.endAt).getTime()>Date.now()}
+function matchFilter(x){if(state.category==='events')return false;if(isTreatStop(x)!==(state.category==='treats'))return false;if(state.category==='treats')return (state.filter==='All'||x.town===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature));if(state.filter==='All')return true;if(['Family Friendly','Spooky','Scary'].includes(state.filter))return x.levels.includes(state.filter);if(['Walk-through','Drive-by','Walk-by'].includes(state.filter))return x.type.includes(state.filter)||(x.type.includes('Drive or walk by (both)')&&['Drive-by','Walk-by'].includes(state.filter));return x.features.some(f=>featureKey(f)===state.filter)}
+function matchingEvents(){return events.filter(x=>eventIsUpcoming(x)&&(state.filter==='All'||x.eventType===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature))&&(!state.eventDay||x.date===state.eventDay)).sort((a,b)=>new Date(a.startAt)-new Date(b.startAt))}
+
 const FEATURE_ICONS={
  'Costumes Available':{label:'Costumes Available',path:'M10 5a2 2 0 1 1 3 2l-1 1v3M12 11 2 18v3h20v-3Z'},
  'Music/Sound':{label:'Music / Sound',path:'M9 18V5l11-2v13M9 8l11-2M9 18c0 2-5 3-5 0s5-3 5 0m11-2c0 2-5 3-5 0s5-3 5 0'},
@@ -64,4 +68,5 @@ async function loadMarkers(){const bounds=[];for(const x of listings){try{const 
 
 document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;state.filter=state.filter===b.dataset.filter?'All':b.dataset.filter;renderFilters();renderCards()});document.getElementById('showAllBtn').onclick=()=>{state.filter='All';renderFilters();renderCards()};document.getElementById('shareBtn').onclick=async()=>{const b=document.getElementById('shareBtn'),payload={title:'Hauntfinder',text:'Find Halloween displays and home haunts around Mount Olive and the surrounding area.',url:'https://hauntfinder.vercel.app/'};try{if(navigator.share)await navigator.share(payload);else{await navigator.clipboard.writeText('https://hauntfinder.vercel.app/');b.textContent='Link copied';setTimeout(()=>b.textContent='Share this site',2000)}}catch{}};
 renderFilters();renderCards();renderRoute();loadMarkers();
+
 

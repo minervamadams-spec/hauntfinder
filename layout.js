@@ -1,39 +1,20 @@
-// The route planner stays below the map in both listing categories.
+// Category panels share pagination; route controls remain below the map.
 (() => {
- const $=id=>document.getElementById(id);
- function updatePages(){const count=listings.filter(matchFilter).length,pages=Math.ceil(count/3);$('listingPages').hidden=pages<2;$('previousListings').disabled=state.page===0;$('nextListings').disabled=state.page>=pages-1;$('listingPageSummary').textContent=count?`${state.page*3+1}–${Math.min(count,state.page*3+3)} of ${count}`:'';}
- function sync(){const treats=state.category==='treats',shown=listings.filter(matchFilter).length;
-  $('routeBadge').textContent=state.route.length;
-  $('displayTabCount').textContent='('+listings.filter(x=>!isTreatStop(x)).length+')';
-  $('treatStopCount').textContent='('+listings.filter(isTreatStop).length+')';
-  $('displaysPanel').setAttribute('aria-labelledby',treats?'treatStopsTab':'displaysTab');
-  $('treatStopsIntro').hidden=!treats;
-  $('filters').hidden=treats;
-  $('mapCategoryHint').textContent=treats?'Candy stops for trick-or-treaters':'Click or tap a pumpkin for details';
-  $('noResults').querySelector('strong').textContent=treats?'Be the first treat stop':'Nothing here yet';
-  $('noResultsText').textContent=treats?'No homes have signed up for this list yet. Welcome trick-or-treaters by adding your home.':`No displays match “${state.filter}” right now.`;
-  $('showAllBtn').hidden=treats;
-  $('mobileRouteBar').classList.add('is-hidden');
-  updatePages();
- }
- function selectTab(name,focus=false){const treats=name==='treats';state.category=name;state.page=0;state.selected=null;$('mapPeek').classList.add('is-hidden');
-  $('displaysTab').setAttribute('aria-selected',String(!treats));$('treatStopsTab').setAttribute('aria-selected',String(treats));
-  $('displaysTab').tabIndex=treats?-1:0;$('treatStopsTab').tabIndex=treats?0:-1;
-  $('displaysPanel').scrollTop=0;renderCards();
-  markerByNum.forEach(m=>m.getElement()?.querySelector('.pin')?.classList.remove('is-selected'));
-  if(focus)$(treats?'treatStopsTab':'displaysTab').focus();
- }
- for(const [id,name] of [['displaysTab','displays'],['treatStopsTab','treats']]){$(id).onclick=()=>selectTab(name);$(id).onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();selectTab(e.key==='Home'?'displays':e.key==='End'?'treats':state.category==='treats'?'displays':'treats',true)}}}
- $('previousListings').onclick=()=>{state.page=Math.max(0,state.page-1);renderCards()};
- $('nextListings').onclick=()=>{state.page++;renderCards()};
- const oldCards=renderCards,oldRoute=renderRoute;
+ const $=id=>document.getElementById(id),tabs=[['displaysTab','displays'],['treatStopsTab','treats'],['eventsTab','events']];
+ const EVENT_FORM_URL=''; // Set after the event form is supplied.
+ const originalFilters=renderFilters,originalCards=renderCards,originalRoute=renderRoute,originalSelect=selectListing;
+ state.categoryFeature='';state.eventDay='';
+ function visibleCount(){return state.category==='events'?matchingEvents().length:listings.filter(matchFilter).length}
+ function pages(){const count=visibleCount(),total=Math.ceil(count/3);state.page=Math.max(0,Math.min(state.page,total-1));$('listingPages').hidden=total<2;$('previousListings').disabled=state.page===0;$('nextListings').disabled=state.page>=total-1;$('listingPageSummary').textContent=count?`${state.page*3+1}–${Math.min(count,state.page*3+3)} of ${count}`:''}
+ function sync(){const treats=state.category==='treats',event=state.category==='events';$('routeBadge').textContent=state.route.length;$('displayTabCount').textContent='('+listings.filter(x=>!isTreatStop(x)).length+')';$('treatStopCount').textContent='('+listings.filter(isTreatStop).length+')';$('eventCount').textContent='('+events.filter(eventIsUpcoming).length+')';$('displaysPanel').setAttribute('aria-labelledby',tabs.find(t=>t[1]===state.category)[0]);$('treatStopsIntro').hidden=!treats;$('eventsIntro').hidden=!event;$('filters').hidden=false;$('eventCalendar').hidden=!event;document.querySelector('.map-frame').hidden=event;document.querySelector('.section-kicker').hidden=event;$('routeSection').hidden=event;$('mapCategoryHint').textContent=treats?'Candy stops for trick-or-treaters':'Click or tap a pumpkin for details';$('noResults').querySelector('strong').textContent=event?'No upcoming events':treats?'Be the first treat stop':'Nothing here yet';$('noResultsText').textContent=event?'No events match these dates and filters yet.':treats?'No treat stops match these filters yet. Add your home to welcome trick-or-treaters.':`No displays match “${state.filter}” right now.`;$('showAllBtn').hidden=treats||event;$('mobileRouteBar').classList.add('is-hidden');pages()}
+ renderFilters=function(){if(state.category==='displays'){originalFilters();return}const treats=state.category==='treats',primary=treats?[...new Set(['All','Budd Lake','Flanders','Netcong',...listings.filter(isTreatStop).map(x=>x.town)])]:['All','Trunk-or-treat','Parade','Festival','Other'],features=treats?['Teal pumpkin','Stroller friendly','Porch light on']:['Free','Open to all','Registration required','Kid-friendly'];const button=(v,key)=>`<button type="button" class="filter" data-category-filter="${key}" data-value="${safeListingText(v)}" aria-pressed="${key==='primary'?state.filter===v:state.categoryFeature===v}">${safeListingText(v)}</button>`;$('filters').innerHTML=`<div class="filter-tier filter-tier--primary"><span class="filterbar__label">${treats?'Town':'Show'}</span>${primary.map(v=>button(v,'primary')).join('')}</div><div class="filter-tier filter-tier--features"><span class="filterbar__label">Features</span>${features.map(v=>button(v,'feature')).join('')}</div>`};
+ function eventCard(x){const dt=new Date(x.startAt),date=dt.toLocaleDateString('en-US',{timeZone:'America/New_York',month:'short',day:'numeric'}),url=x.url&&/^https?:\/\//i.test(x.url)?x.url:'';return `<article class="card event-card"><div class="event-date">${safeListingText(date)}</div><h3>${safeListingText(x.name)}</h3><span class="chip">${safeListingText(x.eventType)}</span><p>${safeListingText(x.venue)} · ${safeListingText(x.address)}</p><p>${safeListingText(x.hours)} · ${safeListingText(x.cost)} · ${safeListingText(x.attendance)}</p>${x.notes?`<details class="card__notes"><summary>Event notes</summary><div>${safeListingText(x.notes)}</div></details>`:''}<div class="card__actions"><a class="btn btn--directions" href="${gmapsDirections(x.address)}" target="_blank" rel="noopener">Directions ↗</a>${url?`<a class="btn btn--outline" href="${safeListingText(url)}" target="_blank" rel="noopener">Event Details ↗</a>`:''}</div></article>`}
+ function calendar(){const weekdays=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];$('eventDays').innerHTML=weekdays.map((day,i)=>{const date=`2026-10-${25+i}`,items=matchingEvents().filter(x=>x.date===date);return `<button type="button" class="event-day" data-event-day="${date}" aria-pressed="${state.eventDay===date}"><span>${day}</span><strong>${25+i}</strong>${i===6?'<small>Trick-or-treat night</small>':''}${items.map(x=>`<small class="calendar-chip" data-type="${safeListingText(x.eventType)}">${safeListingText(x.name)}</small>`).join('')}</button>`}).join('');$('allEventDays').setAttribute('aria-pressed',String(!state.eventDay));if(EVENT_FORM_URL){$('submitEvent').href=EVENT_FORM_URL;$('submitEvent').hidden=false}}
  let lastFilter=state.filter;
- renderCards=function(){if(lastFilter!==state.filter){state.page=0;lastFilter=state.filter}oldCards();sync()};renderRoute=function(){oldRoute();sync()};
- const oldSelect=selectListing;
- selectListing=function(n,scroll=false){const x=listings.find(v=>v.num===n);if(x){const category=isTreatStop(x)?'treats':'displays';if(category!==state.category)selectTab(category);if(!matchFilter(x)){state.filter='All';lastFilter='All';renderFilters()}const position=listings.filter(matchFilter).findIndex(v=>v.num===n);if(position>=0&&Math.floor(position/3)!==state.page){state.page=Math.floor(position/3);renderCards()}}oldSelect(n,scroll)};
- // Markers finish loading asynchronously; apply the current category as they arrive.
- const oldLoad=loadMarkers;loadMarkers=async function(){await oldLoad();renderCards()};
- const observer=new MutationObserver(()=>{markerByNum.forEach((m,n)=>{const x=listings.find(v=>v.num===n);if(x&&!matchFilter(x))map.removeLayer(m)})});
- observer.observe(document.getElementById('map'),{childList:true,subtree:true});
- window.addEventListener('resize',()=>{map.invalidateSize();updatePages()});renderCards();
+ renderCards=function(){if(lastFilter!==state.filter){state.page=0;lastFilter=state.filter}if(state.category==='events'){pages();const items=matchingEvents();$('cardList').innerHTML=items.slice(state.page*3,state.page*3+3).map(eventCard).join('');$('noResults').classList.toggle('is-hidden',items.length>0);$('countLine').textContent=`${items.length} event${items.length===1?'':'s'} shown`;markerByNum.forEach(m=>map.removeLayer(m));calendar()}else originalCards();sync()};renderRoute=function(){originalRoute();sync()};
+ function selectTab(category,focus=false){state.category=category;state.page=0;state.filter='All';state.categoryFeature='';state.eventDay='';state.selected=null;$('mapPeek').classList.add('is-hidden');tabs.forEach(([id,name])=>{$(id).setAttribute('aria-selected',String(name===category));$(id).tabIndex=name===category?0:-1});renderFilters();renderCards();if(category!=='events')map.invalidateSize();if(focus)$(tabs.find(t=>t[1]===category)[0]).focus()}
+ tabs.forEach(([id,name],i)=>{$(id).onclick=()=>selectTab(name);$(id).onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?2:(i+(e.key==='ArrowRight'?1:2))%3;selectTab(tabs[next][1],true)}}});
+ $('filters').addEventListener('click',e=>{const b=e.target.closest('[data-category-filter]');if(!b)return;if(b.dataset.categoryFilter==='primary')state.filter=state.filter===b.dataset.value?'All':b.dataset.value;else state.categoryFeature=state.categoryFeature===b.dataset.value?'':b.dataset.value;state.page=0;renderFilters();renderCards()});$('eventDays').onclick=e=>{const b=e.target.closest('[data-event-day]');if(b){state.eventDay=b.dataset.eventDay;state.page=0;renderCards()}};$('allEventDays').onclick=()=>{state.eventDay='';state.page=0;renderCards()};$('previousListings').onclick=()=>{state.page--;renderCards()};$('nextListings').onclick=()=>{state.page++;renderCards()};
+ selectListing=function(n,scroll=false){const x=listings.find(v=>v.num===n);if(x){const category=isTreatStop(x)?'treats':'displays';if(category!==state.category)selectTab(category);if(!matchFilter(x)){state.filter='All';state.categoryFeature='';renderFilters()}const position=listings.filter(matchFilter).findIndex(v=>v.num===n);state.page=Math.floor(position/3);renderCards()}originalSelect(n,scroll)};
+ const observer=new MutationObserver(()=>markerByNum.forEach((m,n)=>{const x=listings.find(v=>v.num===n);if(x&&!matchFilter(x))map.removeLayer(m)}));observer.observe($('map'),{childList:true,subtree:true});window.addEventListener('resize',()=>{map.invalidateSize();pages()});setInterval(()=>{if(state.category==='events')renderCards()},60000);renderFilters();renderCards();
 })();
