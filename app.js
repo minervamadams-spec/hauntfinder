@@ -9,6 +9,7 @@ const listings=[
  {updatedAt:'2026-10-07',num:7,name:'The Walking Dead- End',town:'Budd Lake',address:'14 Sunset Dr, Budd Lake, NJ',dates:'Opens October 10',times:'',levels:['Family Friendly','Spooky'],type:['Drive-by'],features:[],notes:''},
  {"updatedAt":"2026-10-07","num":8,"name":"Skully's Costume Closet","town":"Budd Lake","address":"5 N Mount Olive Rd, Budd Lake, NJ","dates":"Open daily","times":"Weekdays 5:00 PM–8:00 PM · Weekends 10:00 AM–6:00 PM","levels":["Family Friendly"],"type":["Walk-through"],"features":["Costumes Available"],"notes":"Skully’s Costume Closet is open daily and offers free, gently used costumes. Inventory changes daily, so we can’t answer every question about what’s in stock. Please stop by to see what’s available.\n\nWe accept costume donations year-round.","kind":"Costume closet"},
  {"updatedAt":"2026-10-07","num":9,"name":"Capone’s","town":"Budd Lake","address":"22 Cedar Manor Ct, Budd Lake, NJ","dates":"Opens October 1","times":"After dusk","levels":["Family Friendly"],"type":["Drive-by"],"features":["Lights"],"notes":"","kind":"Decorated home/yard display"}
+ ,{"updatedAt":"2026-10-08","num":10,"name":"Blaze and Bones Halloween Display","town":"Budd Lake","address":"7 Eisenhower St, Budd Lake, NJ","dates":"","times":"","levels":[],"type":[],"features":[],"notes":"Display hours 6pm - 10pm. Treats will be handed out on Halloween"}
 ];
 const events=[
   {
