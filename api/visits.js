@@ -1,5 +1,3 @@
-const {randomUUID}=require('node:crypto');
-const SCRIPT="local added=redis.call('SET',KEYS[2],'1','NX','EX',86400);if added then return redis.call('INCR',KEYS[1]) end;return tonumber(redis.call('GET',KEYS[1]) or '0')";
 module.exports=async function handler(req,res){
   res.setHeader('Cache-Control','no-store');
   res.setHeader('X-Content-Type-Options','nosniff');
@@ -12,11 +10,7 @@ module.exports=async function handler(req,res){
     if(req.method==='POST'){
       const origin=req.headers.origin;
       if(!origin||new URL(origin).host!==req.headers.host)return res.status(403).json({error:'Use this site'});
-      const cookies=String(req.headers.cookie||'');
-      const match=cookies.match(/(?:^|;\s*)hf_visit=([a-f0-9-]{36})(?:;|$)/);
-      const id=match?match[1]:randomUUID();
-      if(!match)res.setHeader('Set-Cookie','hf_visit='+id+'; Path=/; Max-Age=31536000; HttpOnly; Secure; SameSite=Lax');
-      command=['EVAL',SCRIPT,2,'hauntfinder:site-visits:total','hauntfinder:site-visits:seen:'+id];
+      command=['INCR','hauntfinder:site-visits:total'];
     }
     const response=await fetch(url,{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify(command),signal:AbortSignal.timeout(8000)});
     const data=await response.json();
