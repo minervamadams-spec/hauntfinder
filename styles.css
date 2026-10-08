@@ -299,3 +299,14 @@ body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:0}
 .event-card .card__notes{background:transparent;padding:0;font-size:13px;margin:8px 0}
 .event-card .card__actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.event-card .btn{min-height:36px;font-size:14px;padding:0 10px}.btn--event-details{background:var(--cream);color:var(--night)}.event-free{color:var(--lime);font-weight:700}
 @media(max-width:650px){.calendar-heading h2{flex-basis:100%;font-size:21px}.event-day{min-height:260px;padding:7px 3px}.event-day-heading{flex-direction:column;align-items:center}.event-day-heading>span{font-size:11px}.event-day-heading strong{font-size:23px}.calendar-chip{font-size:11px;padding:5px 3px}.calendar-chip small{font-size:9px}.halloween-night{font-size:10px}.event-card-title{flex-wrap:wrap}.event-card h3{flex-basis:100%}}
+
+/* Shared footer typography and responsive link row. */
+.hf-footer .footer-links{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px 28px;padding-top:20px;margin-top:0}
+.hf-footer .footer-links>a,.hf-footer .footer-links>#aboutBtn,.hf-footer .footer-links>#siteVisits{font:600 17px/1.4 var(--f-ui);letter-spacing:.02em;text-transform:none;color:var(--cream);white-space:nowrap;margin:0;padding:8px 0;min-height:40px;border:0;border-radius:0;background:none}
+.hf-footer .footer-links>a,.hf-footer .footer-links>#aboutBtn{text-decoration:underline;text-decoration-color:var(--violet);text-underline-offset:5px}
+.hf-footer .footer-links>a:hover,.hf-footer .footer-links>#aboutBtn:hover{color:var(--lime)}
+.hf-footer #siteVisitTotal{font:inherit;font-variant-numeric:tabular-nums}
+.hf-footer #siteVisits[hidden]{display:none}
+.hf-footer .footer-inner .btn--form{font:700 18px/1.2 var(--f-ui);letter-spacing:.04em;white-space:nowrap}
+@media(min-width:900px){.hf-footer .footer-links{flex-wrap:nowrap}.hf-footer .footer-inner{flex-wrap:nowrap;gap:20px}.hf-footer .footer-inner>div{flex:1}.hf-footer .footer-inner .btn--form{flex:0 0 auto;padding-inline:18px}}
+@media(max-width:600px){.hf-footer .footer-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 20px;text-align:center}.hf-footer .footer-links>#aboutBtn{text-align:center}.hf-footer .footer-links>#siteVisits{white-space:normal}}
