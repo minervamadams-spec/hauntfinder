@@ -6,6 +6,7 @@ import subprocess
 
 from PIL import Image, ImageDraw, ImageFont
 from pypdf import PdfReader, PdfWriter
+from reportlab.pdfgen import canvas
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "assets"
@@ -82,7 +83,7 @@ def build_page():
     # Best Buddies event panel.
     p2 = (25, 825, 1199, 1280)
     rounded_panel(draw, p2)
-    event_art = fit_cover(Image.open(ASSETS / "best-buddies-trunk-or-treat.png"), (410, 435))
+    event_art = fit_cover(Image.open(ASSETS / "best-buddies-trunk-or-treat.jpg"), (410, 435))
     page.paste(event_art, (35, 835))
     draw.rounded_rectangle((35, 835, 445, 1270), radius=20, outline="#17121d", width=6)
     draw.text((480, 850), "BEST BUDDIES", font=font(38, True), fill="#17121d")
@@ -119,8 +120,18 @@ def rebuild_pdf(page_path):
     for page in reader.pages[:3]:
         writer.add_page(page)
     writer.add_page(added.pages[0])
-    with PDF.open("wb") as stream:
+    combined = TMP / "combined.pdf"
+    with combined.open("wb") as stream:
         writer.write(stream)
+    subprocess.run([
+        "pdftoppm", "-jpeg", "-r", "96", "-jpegopt", "quality=48,progressive=y,optimize=y",
+        str(combined), str(TMP / "compressed-page")
+    ], check=True, stdout=subprocess.DEVNULL)
+    out = canvas.Canvas(str(PDF), pagesize=(612, 765), pageCompression=1)
+    for image in sorted(TMP.glob("compressed-page-*.jpg")):
+        out.drawImage(str(image), 0, 0, width=612, height=765)
+        out.showPage()
+    out.save()
 
 
 if __name__ == "__main__":
