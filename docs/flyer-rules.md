@@ -19,7 +19,7 @@ Compare every public app.js listing and event to the flyer on every run, even wi
 
 Use image generation guided by the approved templates for illustrated raster changes. Preserve unchanged approved artwork. Use PDF tools for assembly, factual text and counters. Render and inspect every affected page for facts, text, icons, clipping, category separation and trim buffer.
 
-After validation, refresh approved-guide.pdf and manifest.json, including the SHA-256 of app.js before const filters=. The build script restores that exact release only when public data still matches and refuses stale facts. Never use the rejected old layout generator. Retain reproducible verified sources in this repository.
+Build current facts with scripts/build-flyer.py, then validate with scripts/validate-release.py. The archived approved-guide.pdf and extracted artwork-*.jpeg supply approved artwork only; never copy their old factual text. Listing text uses embedded condensed fonts, not image generation. Retain the approved scenes, distressed borders and illustrated headings. manifest.json records current public-data and PDF hashes. Never edit hashes to bless stale facts. See docs/update-workflow.md for the full run and publication procedure.
 
 Publish fast-forward commits only. Verify Vercel succeeded and live PDF bytes match release bytes. Update any site-referenced flyer previews.
 
@@ -33,4 +33,4 @@ The Walking Dead- End at 14 Sunset Dr opens October 10. Rose Lane supports Drive
 - On slot reuse, clear/archive the former entity's feedback and importer associations; prevent old saved routes or share links from silently identifying the replacement as the former entity. Never transfer old ratings to the new entity.
 - Acceptance: active numbers stay unchanged; no duplicate numbers; vacancy is gray; no directions/route/review controls; new entity fills vacancy; website and next flyer release use identical numbering and category placement.
 - Skully's Costume Closet is now an ongoing daily EVENTS entry, not a display. Its former display #8 is vacant; Adams Family Haunt remains #1, Capone’s #9 and Blaze and Bones #10.
-- Current flyer is intentionally held unchanged by Minerva until the next update round. On that round move Skully to Events, preserve vacant-number placeholders, and fix fuzzy listing text with crisp matching fonts.
+- October 9 update round supersedes the flyer hold. Drakestown Road Display fills #8; North Rose Lane Treat Stop is #11. Skully is in Events. Update site and flyer together, with embedded crisp listing text and approved artwork.

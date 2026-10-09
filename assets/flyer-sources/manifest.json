@@ -1,8 +1,9 @@
 {
-  "approvedDate": "2026-10-08",
-  "pages": 5,
-  "publicDataSha256": "e3770c21e1bd3e64441903a517d5fe5a8e2ba918bccbc777a4d1a1e41dc63027",
   "source": "approved-guide.pdf",
+  "renderer": "scripts/build-flyer.py",
+  "pages": 6,
+  "publicDataSha256": "7e8318d22df124a9dc27db2cbc58e2afc871560d701e9ee6439ffea6fc4b66b2",
+  "pdfSha256": "02c12317ac2baa8c1d8925ea954c2f35c0362b23b1338e9f0f16f92b476a5b14",
   "displayIDs": [
     1,
     2,
@@ -16,6 +17,11 @@
     10
   ],
   "eventIDs": [
+    "skullys-costume-closet",
     "best-buddies-safe-trick-or-treat-2026-10-29"
-  ]
+  ],
+  "treatStopIDs": [
+    11
+  ],
+  "updatedDate": "2026-10-09"
 }

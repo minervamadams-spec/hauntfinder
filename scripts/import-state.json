@@ -81,8 +81,10 @@
       "row": 8,
       "fingerprint": "379e2775966955690e4218df75d6040de7aeaba45ea17b87e1a9ee0f13a7c7cf",
       "fingerprintColumns": 14,
-      "listingId": null,
-      "decision": "review_needed_incomplete_address_missing_town_state"
+      "listingId": 8,
+      "decision": "imported_address_town_confirmed_by_minerva",
+      "entityId": "drakestown-road-2026",
+      "publicAddress": "516 Drakestown Road, Flanders, NJ"
     }
   ],
   "treatStops": {
@@ -100,8 +102,10 @@
         "row": 3,
         "fingerprint": "d92c19e0a8cf5b0cd78b56b382fb41fc0bd99f0b18efecc8ea9c5244a0cb2d3c",
         "fingerprintColumns": 6,
-        "listingId": null,
-        "decision": "review_needed_incomplete_address_missing_town_state"
+        "listingId": 11,
+        "decision": "imported_address_verified_point_address",
+        "entityId": "north-rose-lane-treat-stop-2026",
+        "publicAddress": "5 North Rose Lane, Budd Lake, NJ"
       }
     ]
   },
@@ -117,5 +121,16 @@
         "decision": "matched_existing_consented_event"
       }
     ]
-  }
+  },
+  "slotHistory": [
+    {
+      "num": 8,
+      "formerEventId": "skullys-costume-closet",
+      "replacementEntityId": "drakestown-road-2026",
+      "reusedAt": "2026-10-09",
+      "feedbackNamespace": "hauntfinder:2026:reviews:8:drakestown-road-2026",
+      "legacyShareLinks": "redirect_notice_to_events",
+      "legacySavedRoutes": "exclude_without_entity_token"
+    }
+  ]
 }

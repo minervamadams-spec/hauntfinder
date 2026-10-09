@@ -11,6 +11,8 @@ test('feedback API validates, persists, isolates homes and handles failures',asy
     process.env.UPSTASH_REDIS_REST_URL='https://example.upstash.io';process.env.UPSTASH_REDIS_REST_TOKEN='test-token';
     const rows=new Map(),rates=new Map();let calls=0;
     global.fetch=async(url,opts)=>{calls++;const c=JSON.parse(opts.body);assert.equal(opts.headers.Authorization,'Bearer test-token');if(c[0]==='LRANGE')return {ok:true,json:async()=>({result:rows.get(c[1])||[]})};assert.equal(c[0],'EVAL');assert.equal(c[2],2);const n=(rates.get(c[3])||0)+1;rates.set(c[3],n);if(n>5)return {ok:true,json:async()=>({result:0})};rows.set(c[4],[c[5],...(rows.get(c[4])||[])]);return {ok:true,json:async()=>({result:1})}};
+    rows.set('hauntfinder:2026:reviews:8',[JSON.stringify({name:'Former closet visitor',rating:5})]);
+    res=response();await handler({method:'GET',headers:{},query:{house:'8'}},res);assert.deepEqual(res.body.reviews,[]);assert.equal(rows.get('hauntfinder:2026:reviews:8').length,1);calls=0;
     const valid={house:1,name:'  Visitor  ',rating:5,comment:'Loved the display!',timestamp:'1990-01-01',website:''};
     for(const change of [{rating:0},{rating:6},{rating:1.5},{house:100},{name:' '},{comment:' '},{comment:'x'.repeat(1501)},{website:'spam'}]){res=response();await handler(request({...valid,...change}),res);assert.equal(res.statusCode,400)}assert.equal(calls,0);
     res=response();const foreign=request(valid);foreign.headers.origin='https://other.example';await handler(foreign,res);assert.equal(res.statusCode,403);

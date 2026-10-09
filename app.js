@@ -1,44 +1,271 @@
 const FORM_URL='https://forms.gle/msXn5jNgMF3Aet3N9';
 const listings=[
- {num:8,placeholder:true,name:"Listing number available",town:"",address:"",dates:"",times:"",levels:[],type:[],features:[],notes:"",kind:"Vacant display slot"},
- {"updatedAt":"2026-10-07","num":1,"name":"Adams Family Haunt","town":"Budd Lake","address":"5 N Mount Olive Rd, Budd Lake, NJ","dates":"Halloween","times":"4:00 PM–8:00 PM","levels":["Family Friendly","Spooky","Scary"],"type":["Walk-through"],"features":["Music / Sound","Photo opportunities","Fog","Lights","Animatronics","Live Actors"],"notes":"Our Halloween display is a walk-around experience. Start on either side of the house and follow the wraparound driveway to see all the decorations. Candy and treats are available at the garage (not front door) while supplies last.\n\nPhoto opportunities are available at the Camp Crystal Lake sign and throughout the display. Please watch your step around wires and lighting. If you need assistance, let us know.\n\nPARKING: The driveway will be blocked off. Please park across the street in the TY Ward Monument lot. Use caution when crossing the street and watch for traffic.","kind":"Home haunt / walk-through"},
- {updatedAt:'2026-10-06',num:2,name:'Alcrest Avenue Halloween Display',town:'Budd Lake',address:'24 Alcrest Avenue, Budd Lake, NJ',dates:'Halloween weekend',times:'All weekend',levels:[],type:[],features:['Spider theme'],notes:'More details coming soon.'},
- {updatedAt:'2026-10-06',num:3,name:'Fifth Street Halloween Display',town:'Budd Lake',address:'23 Fifth Street, Budd Lake, NJ',dates:'',times:'',levels:['Family Friendly'],type:['Drive-by','Walk-up'],features:[],notes:'More details coming soon.'},
- {updatedAt:'2026-10-06',num:4,name:"Snowba's Graveyard",town:'Stanhope',address:'13 Towpath Lane, Stanhope, NJ',dates:'Anytime',times:'Lights turn on at 6:00 PM',levels:[],type:[],features:['Spooky decor','Lights','Animatronics'],notes:''},
- {updatedAt:'2026-10-07',num:5,name:'Rose Lane Halloween Display',town:'Budd Lake',address:'9 Rose Lane, Budd Lake, NJ',dates:'Halloween',times:'',levels:[],type:['Drive or walk by (both)'],features:[],notes:'Display will be decorated for Halloween. More details coming soon.'},
- {updatedAt:'2026-10-06',num:6,name:"Will's House of Horrors",town:'Flanders',address:'20 Tinc Rd, Flanders, NJ',dates:'October',times:'Fri–Sun 6:00 PM–12:00 AM · Mon–Thu 6:00 PM–11:00 PM',levels:['Spooky','Scary'],type:['Walk-up'],features:['Animatronics','Spooky Decor','Fog','Lights','Yard Display'],notes:'Front yard lights on nightly during October. willshouseofhorrors.com'},
- {updatedAt:'2026-10-07',num:7,name:'The Walking Dead- End',town:'Budd Lake',address:'14 Sunset Dr, Budd Lake, NJ',dates:'Opens October 10',times:'',levels:['Family Friendly','Spooky'],type:['Drive-by'],features:[],notes:''},
- {"updatedAt":"2026-10-07","num":9,"name":"Capone’s","town":"Budd Lake","address":"22 Cedar Manor Ct, Budd Lake, NJ","dates":"Opens October 1","times":"After dusk","levels":["Family Friendly"],"type":["Drive-by"],"features":["Lights"],"notes":"","kind":"Decorated home/yard display"}
- ,{"updatedAt":"2026-10-08","num":10,"name":"Blaze and Bones Halloween Display","town":"Budd Lake","address":"7 Eisenhower St, Budd Lake, NJ","dates":"","times":"","levels":[],"type":[],"features":[],"notes":"Display hours 6pm - 10pm. Treats will be handed out on Halloween"}
+ {
+  "updatedAt": "2026-10-07",
+  "num": 1,
+  "name": "Adams Family Haunt",
+  "town": "Budd Lake",
+  "address": "5 N Mount Olive Rd, Budd Lake, NJ",
+  "dates": "Halloween",
+  "times": "4:00 PM–8:00 PM",
+  "levels": [
+   "Family Friendly",
+   "Spooky",
+   "Scary"
+  ],
+  "type": [
+   "Walk-through"
+  ],
+  "features": [
+   "Music / Sound",
+   "Photo opportunities",
+   "Fog",
+   "Lights",
+   "Animatronics",
+   "Live Actors"
+  ],
+  "notes": "Our Halloween display is a walk-around experience. Start on either side of the house and follow the wraparound driveway to see all the decorations. Candy and treats are available at the garage (not front door) while supplies last.\n\nPhoto opportunities are available at the Camp Crystal Lake sign and throughout the display. Please watch your step around wires and lighting. If you need assistance, let us know.\n\nPARKING: The driveway will be blocked off. Please park across the street in the TY Ward Monument lot. Use caution when crossing the street and watch for traffic.",
+  "kind": "Home haunt / walk-through",
+  "flyerFeatures": [
+   "Family Friendly",
+   "Spooky",
+   "Scary",
+   "Walk-through",
+   "Photo opportunities"
+  ],
+  "flyerNotes": "Candy at garage while supplies last. Walk around the driveway; watch wires and lights. Park at TY Ward Monument lot across the street; cross carefully."
+ },
+ {
+  "updatedAt": "2026-10-06",
+  "num": 2,
+  "name": "Alcrest Avenue Halloween Display",
+  "town": "Budd Lake",
+  "address": "24 Alcrest Avenue, Budd Lake, NJ",
+  "dates": "Halloween weekend",
+  "times": "All weekend",
+  "levels": [],
+  "type": [],
+  "features": [
+   "Spider theme"
+  ],
+  "notes": "More details coming soon."
+ },
+ {
+  "updatedAt": "2026-10-06",
+  "num": 3,
+  "name": "Fifth Street Halloween Display",
+  "town": "Budd Lake",
+  "address": "23 Fifth Street, Budd Lake, NJ",
+  "dates": "",
+  "times": "",
+  "levels": [
+   "Family Friendly"
+  ],
+  "type": [
+   "Drive-by",
+   "Walk-up"
+  ],
+  "features": [],
+  "notes": "More details coming soon."
+ },
+ {
+  "updatedAt": "2026-10-06",
+  "num": 4,
+  "name": "Snowba's Graveyard",
+  "town": "Stanhope",
+  "address": "13 Towpath Lane, Stanhope, NJ",
+  "dates": "Anytime",
+  "times": "Lights turn on at 6:00 PM",
+  "levels": [],
+  "type": [],
+  "features": [
+   "Spooky decor",
+   "Lights",
+   "Animatronics"
+  ],
+  "notes": ""
+ },
+ {
+  "updatedAt": "2026-10-07",
+  "num": 5,
+  "name": "Rose Lane Halloween Display",
+  "town": "Budd Lake",
+  "address": "9 Rose Lane, Budd Lake, NJ",
+  "dates": "Halloween",
+  "times": "",
+  "levels": [],
+  "type": [
+   "Drive or walk by (both)"
+  ],
+  "features": [],
+  "notes": "Display will be decorated for Halloween. More details coming soon.",
+  "flyerNotes": "More details coming soon."
+ },
+ {
+  "updatedAt": "2026-10-06",
+  "num": 6,
+  "name": "Will's House of Horrors",
+  "town": "Flanders",
+  "address": "20 Tinc Rd, Flanders, NJ",
+  "dates": "October",
+  "times": "Fri–Sun 6:00 PM–12:00 AM · Mon–Thu 6:00 PM–11:00 PM",
+  "levels": [
+   "Spooky",
+   "Scary"
+  ],
+  "type": [
+   "Walk-up"
+  ],
+  "features": [
+   "Animatronics",
+   "Spooky Decor",
+   "Fog",
+   "Lights",
+   "Yard Display"
+  ],
+  "notes": "Front yard lights on nightly during October. willshouseofhorrors.com",
+  "flyerNotes": "Lights on nightly in October. willshouseofhorrors.com"
+ },
+ {
+  "updatedAt": "2026-10-07",
+  "num": 7,
+  "name": "The Walking Dead- End",
+  "town": "Budd Lake",
+  "address": "14 Sunset Dr, Budd Lake, NJ",
+  "dates": "Opens October 10",
+  "times": "",
+  "levels": [
+   "Family Friendly",
+   "Spooky"
+  ],
+  "type": [
+   "Drive-by"
+  ],
+  "features": [],
+  "notes": ""
+ },
+ {
+  "num": 8,
+  "entityId": "drakestown-road-2026",
+  "updatedAt": "2026-10-09",
+  "name": "Drakestown Road Display",
+  "town": "Flanders",
+  "address": "516 Drakestown Road, Flanders, NJ",
+  "dates": "Now through November 1",
+  "times": "6:00 PM–11:00 PM",
+  "levels": [
+   "Family Friendly"
+  ],
+  "type": [
+   "Drive-by"
+  ],
+  "features": [
+   "Lights"
+  ],
+  "notes": "Nearest cross street: Cathy Lane.",
+  "kind": "Decorated home/yard display",
+  "lat": 40.826347885107,
+  "lng": -74.734685446478
+ },
+ {
+  "updatedAt": "2026-10-07",
+  "num": 9,
+  "name": "Capone’s",
+  "town": "Budd Lake",
+  "address": "22 Cedar Manor Ct, Budd Lake, NJ",
+  "dates": "Opens October 1",
+  "times": "After dusk",
+  "levels": [
+   "Family Friendly"
+  ],
+  "type": [
+   "Drive-by"
+  ],
+  "features": [
+   "Lights"
+  ],
+  "notes": "",
+  "kind": "Decorated home/yard display"
+ },
+ {
+  "updatedAt": "2026-10-09",
+  "num": 10,
+  "name": "Blaze and Bones Halloween Display",
+  "town": "Budd Lake",
+  "address": "7 Eisenhower St, Budd Lake, NJ",
+  "dates": "",
+  "times": "6:00 PM–10:00 PM",
+  "levels": [],
+  "type": [],
+  "features": [],
+  "notes": "Treats will be handed out on Halloween."
+ },
+ {
+  "num": 11,
+  "entityId": "north-rose-lane-treat-stop-2026",
+  "updatedAt": "2026-10-09",
+  "name": "North Rose Lane Treat Stop",
+  "town": "Budd Lake",
+  "address": "5 North Rose Lane, Budd Lake, NJ",
+  "dates": "October 31, 2026",
+  "times": "2:00 PM–10:00 PM",
+  "levels": [],
+  "type": [],
+  "features": [],
+  "notes": "Street parking, fun games, friendly dog.",
+  "kind": "Trick-or-treat stop",
+  "lat": 40.879907156751,
+  "lng": -74.734628700993
+ }
 ];
 listings.sort((a,b)=>a.num-b.num);
 const events=[
-  {"id":"skullys-costume-closet","updatedAt":"2026-10-08","name":"Skully's Costume Closet","eventType":"Other","venue":"Skully’s Costume Closet","address":"5 N Mount Olive Rd, Budd Lake, NJ","ongoing":true,"hours":"Weekdays 5:00 PM–8:00 PM · Weekends 10:00 AM–6:00 PM","cost":"Free","attendance":"Open to all","features":["Free","Open to all","Kid-friendly","Costumes Available"],"url":"","notes":"Skully’s Costume Closet is open daily and offers free, gently used costumes. Inventory changes daily, so we can’t answer every question about what’s in stock. Please stop by to see what’s available.\n\nWe accept costume donations year-round."},
-  {
-    "id": "best-buddies-safe-trick-or-treat-2026-10-29",
-    "updatedAt": "2026-10-07",
-    "name": "Best Buddies Safe Trick or Treat",
-    "eventType": "Trunk-or-treat",
-    "venue": "MOHS Track",
-    "address": "18 Corey Road, Flanders",
-    "date": "2026-10-29",
-    "startAt": "2026-10-29T17:30:00-04:00",
-    "endAt": "2026-10-29T19:00:00-04:00",
-    "hours": "5:30 PM–7:00 PM",
-    "cost": "$5 a child",
-    "attendance": "Open to all",
-    "features": [
-      "Open to all",
-      "Kid-friendly"
-    ],
-    "url": "",
-    "notes": "$1 off with a non-perishable food donation. Registration not required."
-  }
+ {
+  "id": "skullys-costume-closet",
+  "updatedAt": "2026-10-08",
+  "name": "Skully's Costume Closet",
+  "eventType": "Other",
+  "venue": "Skully’s Costume Closet",
+  "address": "5 N Mount Olive Rd, Budd Lake, NJ",
+  "ongoing": true,
+  "hours": "Weekdays 5:00 PM–8:00 PM · Weekends 10:00 AM–6:00 PM",
+  "cost": "Free",
+  "attendance": "Open to all",
+  "features": [
+   "Free",
+   "Open to all",
+   "Kid-friendly",
+   "Costumes Available"
+  ],
+  "url": "",
+  "notes": "Skully’s Costume Closet is open daily and offers free, gently used costumes. Inventory changes daily, so we can’t answer every question about what’s in stock. Please stop by to see what’s available.\n\nWe accept costume donations year-round.",
+  "flyerNotes": "Gently used costumes; inventory changes daily. Costume donations accepted year-round."
+ },
+ {
+  "id": "best-buddies-safe-trick-or-treat-2026-10-29",
+  "updatedAt": "2026-10-07",
+  "name": "Best Buddies Safe Trick or Treat",
+  "eventType": "Trunk-or-treat",
+  "venue": "MOHS Track",
+  "address": "18 Corey Road, Flanders",
+  "date": "2026-10-29",
+  "startAt": "2026-10-29T17:30:00-04:00",
+  "endAt": "2026-10-29T19:00:00-04:00",
+  "hours": "5:30 PM–7:00 PM",
+  "cost": "$5 a child",
+  "attendance": "Open to all",
+  "features": [
+   "Open to all",
+   "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "$1 off with a non-perishable food donation. Registration not required."
+ }
 ];
 const filters=['All','Family Friendly','Spooky','Scary','Walk-through','Drive-by','Walk-by','Animatronics','Fog','Music/Sound','Photo Opportunities','Lights','Actors','Costumes Available'];
 const state={filter:'All',selected:null,route:[],startMode:'current',startAddr:'',coords:{},category:'displays',page:0};
 
-try{const saved=JSON.parse(localStorage.getItem('hfroute:2026')||'[]');if(Array.isArray(saved))state.route=[...new Set(saved.filter(n=>listings.some(x=>x.num===n&&!x.placeholder)))]}catch{}
+try{const saved=JSON.parse(localStorage.getItem('hfroute:2026')||'[]');if(Array.isArray(saved))state.route=[...new Set(saved.filter(n=>listings.some(x=>x.num===n&&!x.placeholder&&(n!==8||localStorage.getItem('hfentity:8')===x.entityId))))]}catch{}
 
 const map=L.map('map',{scrollWheelZoom:true,dragging:!L.Browser.mobile,tap:true}).setView([40.87,-74.72],12);
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,attribution:'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'}).addTo(map);
@@ -82,13 +309,13 @@ function wireCards(){document.querySelectorAll('[data-card]').forEach(card=>{con
 function linkPair(n,on){if(matchMedia('(pointer:fine)').matches){document.querySelector(`[data-card="${n}"]`)?.classList.toggle('is-linked',on);markerByNum.get(n)?.getElement()?.querySelector('.pin')?.classList.toggle('is-linked',on)}}
 function selectListing(n,scroll=false){if(listings.find(x=>x.num===n)?.placeholder)return;state.selected=n;markerByNum.forEach((m,num)=>m.getElement()?.querySelector('.pin')?.classList.toggle('is-selected',num===n));document.querySelectorAll('[data-card]').forEach(c=>c.classList.toggle('is-selected',+c.dataset.card===n));renderPeek(n);if(scroll&&innerWidth<1024)document.querySelector(`[data-card="${n}"]`)?.scrollIntoView({behavior:'smooth',block:'center'})}
 function renderPeek(n){const x=listings.find(v=>v.num===n);if(!x||!matchFilter(x)){document.getElementById('mapPeek').classList.add('is-hidden');return}const onRoute=state.route.includes(n),peek=document.getElementById('mapPeek');peek.innerHTML=`<div class="card__pin">${pinHTML(x.num)}</div><div class="map-peek__meta"><strong>${safeListingText(x.name)}</strong><small>${safeListingText(x.town)}${x.times?' · '+safeListingText(x.times):''}</small></div><button class="btn btn--route" type="button" data-peek-route="${n}" aria-pressed="${onRoute}">${onRoute?'Added ✓':'+ Add'}</button>`;peek.classList.remove('is-hidden');peek.querySelector('[data-peek-route]').onclick=()=>toggleRoute(n)}
-function toggleRoute(n){if(listings.find(x=>x.num===n)?.placeholder)return;state.routeMessage='';state.route=state.route.includes(n)?state.route.filter(x=>x!==n):[...state.route,n];try{localStorage.setItem('hfroute:2026',JSON.stringify(state.route))}catch{}renderCards();renderRoute();renderPeek(state.selected);markerByNum.forEach((m,num)=>m.getElement()?.querySelector('.pin')?.classList.toggle('is-on-route',state.route.includes(num)))}
+function toggleRoute(n){if(listings.find(x=>x.num===n)?.placeholder)return;if(n===8)localStorage.setItem('hfentity:8',listings.find(x=>x.num===n).entityId);state.routeMessage='';state.route=state.route.includes(n)?state.route.filter(x=>x!==n):[...state.route,n];try{localStorage.setItem('hfroute:2026',JSON.stringify(state.route))}catch{}renderCards();renderRoute();renderPeek(state.selected);markerByNum.forEach((m,num)=>m.getElement()?.querySelector('.pin')?.classList.toggle('is-on-route',state.route.includes(num)))}
 
 function renderRoute(){document.getElementById('mobileRouteBar').classList.toggle('is-hidden',!state.route.length);document.getElementById('mobileRouteCount').textContent=`${state.route.length} stop${state.route.length===1?'':'s'} selected`;const stops=state.route.map(n=>listings.find(x=>x.num===n));const planner=document.getElementById('routePlanner');planner.innerHTML=`<div class="route__setup"><p class="route__helper">Add listings to your route. Move stops up or down, or suggest an order before opening Google Maps.</p><div class="route__starting"><div class="route__label">Starting from</div><div class="seg" role="radiogroup" aria-label="Starting point"><button type="button" data-mode="current" aria-checked="${state.startMode==='current'}">My location</button><button type="button" data-mode="address" aria-checked="${state.startMode==='address'}">Enter address</button></div>${state.startMode==='current'?`<div class="current-note" style="margin-top:10px"><span class="current-dot"></span>Google Maps uses your location when you open directions</div>`:`<input class="route__input" id="startAddr" value="${safeListingText(state.startAddr)}" placeholder="Enter your starting address" style="margin-top:10px">`}</div></div><div class="route__stops-band"><div class="route__stops-head"><div class="route__label">Your stops (${stops.length})</div><button class="btn btn--outline" id="optimizeRouteBtn" title="Keeps your first stop and suggests an order by straight-line distance" type="button" ${stops.length<2||state.optimizing?'disabled':''}>${state.optimizing?'Finding order…':'Suggest order'}</button></div><div class="stops" style="margin-top:8px">${stops.length?stops.map((s,i)=>`<div class="stop"><span class="stop__order">${i+1}</span><div class="stop__meta"><strong>${safeListingText(s.name)}</strong><small>${safeListingText(s.town)}</small></div><div class="stop__controls"><button type="button" data-move-stop="${s.num}" data-direction="-1" ${i===0||state.optimizing?'disabled':''} aria-label="Move ${safeListingText(s.name)} earlier">↑</button><button type="button" data-move-stop="${s.num}" data-direction="1" ${i===stops.length-1||state.optimizing?'disabled':''} aria-label="Move ${safeListingText(s.name)} later">↓</button><button type="button" class="stop__remove" data-remove="${s.num}" aria-label="Remove ${safeListingText(s.name)}">×</button></div></div>`).join(''):`<div class="empty"><strong>No stops yet</strong><span>Add a listing to start planning your route.</span></div>`}</div></div><div class="route__action"><p id="routeOrderStatus" role="status">${safeListingText(state.routeMessage||'')}</p><p class="route__handoff">Opens driving directions in Google Maps (up to 10 stops). Suggested order keeps your first stop and uses straight-line distance. Check roads and hours; mobile browsers may limit stops.</p><button class="btn btn--map-route" id="mapRouteBtn" type="button" aria-disabled="${stops.length===0}" style="margin-top:4px">Map My Route</button></div>`;planner.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{state.startMode=b.dataset.mode;state.startCoords=null;state.routeMessage='';renderRoute()});planner.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{state.routeMessage='';toggleRoute(+b.dataset.remove)});planner.querySelectorAll('[data-move-stop]').forEach(b=>b.onclick=()=>moveRouteStop(+b.dataset.moveStop,+b.dataset.direction));planner.querySelector('#startAddr')?.addEventListener('input',e=>{state.startAddr=e.target.value;state.startCoords=null;state.routeMessage=''});planner.querySelector('#mapRouteBtn').onclick=buildRoute;planner.querySelector('#optimizeRouteBtn').onclick=optimizeRoute}
 
 function buildRoute(){const stops=state.route.map(n=>listings.find(x=>x.num===n));if(!stops.length)return;if(stops.length>10){state.routeMessage='Google Maps supports up to 10 stops here. Split this into smaller routes.';renderRoute();return}const capped=stops.slice(0,10),last=capped.at(-1),wps=capped.slice(0,-1).map(x=>x.address).join('|');const p=new URLSearchParams({api:'1',travelmode:'driving',destination:last.address});if(wps)p.set('waypoints',wps);if(state.startMode==='address'&&state.startAddr.trim())p.set('origin',state.startAddr.trim());else if(state.startCoords)p.set('origin',state.startCoords.lat+','+state.startCoords.lng);window.open(`https://www.google.com/maps/dir/?${p.toString()}`,'_blank','noopener')}
 
-async function geocodeAddress(address){if(address==='22 Cedar Manor Ct, Budd Lake, NJ')return {lat:40.874662837684,lng:-74.771455584376};if(address==='20 Tinc Rd, Flanders, NJ')return {lat:40.848065557922,lng:-74.721123548723};const key='hfgeo:'+address;const cached=localStorage.getItem(key);if(cached)return JSON.parse(cached);const url='https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q='+encodeURIComponent(address);const r=await fetch(url,{headers:{Accept:'application/json'}});const d=await r.json();if(!d.length)throw new Error('Not found: '+address);const out={lat:+d[0].lat,lng:+d[0].lon};localStorage.setItem(key,JSON.stringify(out));await new Promise(r=>setTimeout(r,1050));return out}
+async function geocodeAddress(address){const verified=listings.find(x=>x.address===address&&Number.isFinite(x.lat)&&Number.isFinite(x.lng));if(verified)return {lat:verified.lat,lng:verified.lng};if(address==='22 Cedar Manor Ct, Budd Lake, NJ')return {lat:40.874662837684,lng:-74.771455584376};if(address==='20 Tinc Rd, Flanders, NJ')return {lat:40.848065557922,lng:-74.721123548723};const key='hfgeo:'+address;const cached=localStorage.getItem(key);if(cached)return JSON.parse(cached);const url='https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q='+encodeURIComponent(address);const r=await fetch(url,{headers:{Accept:'application/json'}});const d=await r.json();if(!d.length)throw new Error('Not found: '+address);const out={lat:+d[0].lat,lng:+d[0].lon};localStorage.setItem(key,JSON.stringify(out));await new Promise(r=>setTimeout(r,1050));return out}
 async function loadMarkers(){const bounds=[];for(const x of listings){if(x.placeholder)continue;try{const c=await geocodeAddress(x.address);state.coords[x.num]=c;const m=L.marker([c.lat,c.lng],{icon:iconFor(x.num),keyboard:true,title:`Display ${x.num}: ${x.name}`,zIndexOffset:(listings.filter(v=>v.address===x.address).length>1?1000:100)+x.num}).addTo(map);m.on('click',()=>{selectListing(x.num,true)});m.on('mouseover',()=>linkPair(x.num,true));m.on('mouseout',()=>linkPair(x.num,false));markerByNum.set(x.num,m);bounds.push([c.lat,c.lng])}catch(err){console.warn(err)}}if(bounds.length)map.fitBounds(bounds,{paddingTopLeft:[40,80],paddingBottomRight:[40,40]});setTimeout(()=>map.invalidateSize(),100)}
 
 document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;state.filter=state.filter===b.dataset.filter?'All':b.dataset.filter;renderFilters();renderCards()});document.getElementById('showAllBtn').onclick=()=>{state.filter='All';renderFilters();renderCards()};document.getElementById('shareBtn').onclick=async()=>{const b=document.getElementById('shareBtn'),payload={title:'Hauntfinder',text:'Find Halloween displays and home haunts around Mount Olive and the surrounding area.',url:'https://hauntfinder.vercel.app/'};try{if(navigator.share)await navigator.share(payload);else{await navigator.clipboard.writeText('https://hauntfinder.vercel.app/');b.textContent='Link copied';setTimeout(()=>b.textContent='Share this site',2000)}}catch{}};

@@ -1,6 +1,6 @@
 const houseShareDialog=document.getElementById('houseShareDialog');
 let sharedHouse=null;
-function houseLink(house){return 'https://hauntfinder.vercel.app/?house='+house.num}
+function houseLink(house){return 'https://hauntfinder.vercel.app/?house='+house.num+(house.num===8?'&entity='+encodeURIComponent(house.entityId):'')}
 function housePost(house){return `We're on the 2026 Hauntfinder!\n\nVisit ${house.name}\n${house.address}\n${[house.dates,house.times].filter(Boolean).join(' · ')||'Check the listing for viewing details.'}\n\nSee our listing: ${houseLink(house)}\nFind nearby displays and build your driving route: https://hauntfinder.vercel.app/\nHave a display to add or update? ${FORM_URL}\n\n#MountOliveNJ #Halloween2026 #HauntFinder`}
 function listingImage(house,artwork=null){
   const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1080;const c=canvas.getContext('2d');
@@ -10,7 +10,7 @@ function listingImage(house,artwork=null){
   function lines(text,y,size,color,maxLines=3){c.font=`${size}px sans-serif`;c.fillStyle=color;const words=String(text).split(/\s+/);let line='',count=0;for(const word of words){const next=line?line+' '+word:word;if(c.measureText(next).width>930&&line){if(++count>=maxLines){while(c.measureText(line+'…').width>930)line=line.slice(0,-1);c.fillText(line+'…',70,y);return y+size*1.3}c.fillText(line,70,y);y+=size*1.3;line=word}else line=next}if(line){while(c.measureText(line).width>930)line=line.slice(0,-2)+'…';c.fillText(line,70,y);y+=size*1.3}return y}
   if(artwork){const crops={1:[30,395,490,340],2:[30,765,480,225],3:[30,1010,480,225]};const crop=crops[house.num];if(crop)c.drawImage(artwork,...crop,70,280,940,house.num===1?360:320)}
   let y=lines(house.name,artwork?700:370,artwork?42:52,'#ff8614',2);y=lines(house.address,y+15,artwork?28:34,'#f5ecd1',2);y=lines([house.dates,house.times].filter(Boolean).join(' · ')||'Check the site for viewing details',y+15,artwork?24:30,'#f5ecd1',3);if(!artwork)lines([...house.levels,...house.type].join(' · '),y+35,28,'#b2e51a',2);
-  c.fillStyle='#7837cf';c.fillRect(70,875,940,3);c.fillStyle='#f5ecd1';c.font='bold 34px sans-serif';c.fillText('Find this house. Plan your route.',70,940);c.font='32px sans-serif';c.fillText('hauntfinder.vercel.app/?house='+house.num,70,994);
+  c.fillStyle='#7837cf';c.fillRect(70,875,940,3);c.fillStyle='#f5ecd1';c.font='bold 34px sans-serif';c.fillText('Find this house. Plan your route.',70,940);c.font=(house.num===8?'22':'32')+'px sans-serif';c.fillText(houseLink(house).replace('https://',''),70,994);
   return canvas.toDataURL('image/png');
 }
 let shareImageFile=null;
@@ -21,6 +21,8 @@ function openHouseShare(id){const house=listings.find(x=>x.num===id);if(!house)r
 document.getElementById('cardList').addEventListener('click',e=>{const button=e.target.closest('[data-share-house]');if(button)openHouseShare(+button.dataset.shareHouse)});
 document.getElementById('copyHousePost').onclick=async()=>{const text=document.getElementById('houseShareText');try{await navigator.clipboard.writeText(text.value);document.getElementById('houseShareStatus').textContent='Post copied. Paste it into your social app and attach the saved image.'}catch{text.focus();text.select();document.getElementById('houseShareStatus').textContent='Select and copy the suggested post above.'}};
 document.getElementById('shareHousePost').onclick=async()=>{if(!sharedHouse)return;if(!navigator.share){document.getElementById('copyHousePost').click();return}try{await navigator.share({title:sharedHouse.name,text:housePost(sharedHouse)});}catch(e){if(e.name!=='AbortError')document.getElementById('houseShareStatus').textContent='Use Copy post and Save listing image to share.'}};
-const linkedHouse=Number(new URLSearchParams(location.search).get('house'));if(listings.some(x=>x.num===linkedHouse)){selectListing(linkedHouse);document.querySelector(`[data-card="${linkedHouse}"]`)?.scrollIntoView({block:'center'});}
+const linkedHouse=Number(new URLSearchParams(location.search).get('house'));if(listings.some(x=>x.num===linkedHouse&&!x.placeholder&&(x.num!==8||new URLSearchParams(location.search).get('entity')===x.entityId))){selectListing(linkedHouse);document.querySelector(`[data-card="${linkedHouse}"]`)?.scrollIntoView({block:'center'});}
 
 document.getElementById('saveHouseImage').onclick=async()=>{if(!shareImageFile)return;try{if(navigator.share&&navigator.canShare?.({files:[shareImageFile]})){await navigator.share({files:[shareImageFile],title:sharedHouse.name});}else{document.getElementById('downloadHouseImage').click();document.getElementById('houseShareStatus').textContent='Image downloaded. On a phone, open it or press and hold the preview to save to Photos.'}}catch(e){if(e.name!=='AbortError')document.getElementById('houseShareStatus').textContent='Use Download image, or press and hold the preview to save it.'}};
+
+if(linkedHouse===8&&new URLSearchParams(location.search).get('entity')!==listings.find(x=>x.num===8)?.entityId){const note=document.createElement('p');note.className='listing-status';note.textContent='The former display #8, Skully’s Costume Closet, is now in Events. Display #8 is now Drakestown Road Display.';document.getElementById('cardList').before(note);}
