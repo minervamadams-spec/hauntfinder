@@ -310,3 +310,8 @@ body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:0}
 .hf-footer .footer-inner .btn--form{font:700 18px/1.2 var(--f-ui);letter-spacing:.04em;white-space:nowrap}
 @media(min-width:900px){.hf-footer .footer-links{flex-wrap:nowrap}.hf-footer .footer-inner{flex-wrap:nowrap;gap:20px}.hf-footer .footer-inner>div{flex:1}.hf-footer .footer-inner .btn--form{flex:0 0 auto;padding-inline:18px}}
 @media(max-width:600px){.hf-footer .footer-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 20px;text-align:center}.hf-footer .footer-links>#aboutBtn{text-align:center}.hf-footer .footer-links>#siteVisits{white-space:normal}}
+
+/* Vacant numbers preserve published listing references. */
+.card--vacant{background:#24242b;border:1px dashed #777;box-shadow:none;color:#b9b9c0;cursor:default}
+.card--vacant .card__name,.card--vacant .card__body p{color:#b9b9c0}
+.vacant-number{display:grid;place-items:center;width:48px;height:48px;flex:0 0 48px;border-radius:50%;background:#55555d;color:#ddd;font-size:26px;font-weight:800}
