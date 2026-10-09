@@ -315,3 +315,6 @@ body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:0}
 .card--vacant{background:#24242b;border:1px dashed #777;box-shadow:none;color:#b9b9c0;cursor:default}
 .card--vacant .card__name,.card--vacant .card__body p{color:#b9b9c0}
 .vacant-number{display:grid;place-items:center;width:48px;height:48px;flex:0 0 48px;border-radius:50%;background:#55555d;color:#ddd;font-size:26px;font-weight:800}
+
+.event-date-badge--ongoing{font-size:12px;padding:4px;box-sizing:border-box}
+.event-date-badge--ongoing strong{font-size:17px;line-height:1.1;white-space:nowrap}
