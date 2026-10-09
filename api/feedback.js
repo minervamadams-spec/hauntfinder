@@ -1,5 +1,5 @@
 const {randomUUID,createHmac}=require('node:crypto');
-const HOUSE_IDS=new Set([1,2,3,4,5,6,7,8,9]);
+const HOUSE_IDS=new Set([1,2,3,4,5,6,7,9,10]);
 const KEY_PREFIX='hauntfinder:2026:';
 const RATE_LIMIT_SCRIPT=`local n=redis.call('INCR',KEYS[1]);if n==1 then redis.call('EXPIRE',KEYS[1],600) end;if n>5 then return 0 end;redis.call('LPUSH',KEYS[2],ARGV[1]);return 1`;
 
