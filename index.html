@@ -21,10 +21,9 @@
   <div class="hf-header__row">
     <h1 class="hf-header__title"><img class="hf-header__sign" src="assets/header-full.png" alt="Hauntfinder: Mount Olive &amp; Surrounding Area Halloween Guide 2026"></h1>
     <div class="hf-header__copy"><p class="hf-lede">Find local displays, treat stops, and Halloween events. Check visiting details and plan your route.</p>
-    <div class="hf-header__actions"><button class="btn btn--outline" id="shareBtn" type="button">Share this site</button></div></div>
+    <div class="hf-header__actions"><a class="btn alerts-cta" href="alerts.html" data-alerts-link hidden>Get new listing alerts</a><button class="btn btn--outline" id="shareBtn" type="button">Share this site</button></div></div>
   </div>
 </header>
-<a class="alerts-top-link" href="alerts.html" data-alerts-link hidden>Get new listing alerts</a>
 <section class="filterbar" aria-label="Find a display"><div class="filters" id="filters" aria-label="Filter displays"></div><div id="countLine" class="count-line" aria-live="polite"></div><span class="filter-hint" aria-hidden="true">›</span></section>
 <main class="shell page-grid app__main">
   <section class="map-column" aria-label="Display map">
@@ -124,6 +123,7 @@
 <script src="community.js"></script>
 <script src="sharing.js"></script>
 <script src="layout.js"></script>
+<dialog id="alertsDialog" class="alerts-dialog" aria-label="Get new listing alerts"><button type="button" class="alerts-dialog-close" aria-label="Close signup">×</button><iframe title="Community listing alerts signup" loading="lazy"></iframe></dialog>
 <script src="alerts-link.js"></script>
 <script>
 (function () {
