@@ -7,11 +7,11 @@ const listings=[
  {updatedAt:'2026-10-07',num:5,name:'Rose Lane Halloween Display',town:'Budd Lake',address:'9 Rose Lane, Budd Lake, NJ',dates:'Halloween',times:'',levels:[],type:['Drive or walk by (both)'],features:[],notes:'Display will be decorated for Halloween. More details coming soon.'},
  {updatedAt:'2026-10-06',num:6,name:"Will's House of Horrors",town:'Flanders',address:'20 Tinc Rd, Flanders, NJ',dates:'October',times:'Fri–Sun 6:00 PM–12:00 AM · Mon–Thu 6:00 PM–11:00 PM',levels:['Spooky','Scary'],type:['Walk-up'],features:['Animatronics','Spooky Decor','Fog','Lights','Yard Display'],notes:'Front yard lights on nightly during October. willshouseofhorrors.com'},
  {updatedAt:'2026-10-07',num:7,name:'The Walking Dead- End',town:'Budd Lake',address:'14 Sunset Dr, Budd Lake, NJ',dates:'Opens October 10',times:'',levels:['Family Friendly','Spooky'],type:['Drive-by'],features:[],notes:''},
- {"updatedAt":"2026-10-07","num":8,"name":"Skully's Costume Closet","town":"Budd Lake","address":"5 N Mount Olive Rd, Budd Lake, NJ","dates":"Open daily","times":"Weekdays 5:00 PM–8:00 PM · Weekends 10:00 AM–6:00 PM","levels":["Family Friendly"],"type":["Walk-through"],"features":["Costumes Available"],"notes":"Skully’s Costume Closet is open daily and offers free, gently used costumes. Inventory changes daily, so we can’t answer every question about what’s in stock. Please stop by to see what’s available.\n\nWe accept costume donations year-round.","kind":"Costume closet"},
  {"updatedAt":"2026-10-07","num":9,"name":"Capone’s","town":"Budd Lake","address":"22 Cedar Manor Ct, Budd Lake, NJ","dates":"Opens October 1","times":"After dusk","levels":["Family Friendly"],"type":["Drive-by"],"features":["Lights"],"notes":"","kind":"Decorated home/yard display"}
  ,{"updatedAt":"2026-10-08","num":10,"name":"Blaze and Bones Halloween Display","town":"Budd Lake","address":"7 Eisenhower St, Budd Lake, NJ","dates":"","times":"","levels":[],"type":[],"features":[],"notes":"Display hours 6pm - 10pm. Treats will be handed out on Halloween"}
 ];
 const events=[
+  {"id":"skullys-costume-closet","updatedAt":"2026-10-08","name":"Skully's Costume Closet","eventType":"Other","venue":"Skully’s Costume Closet","address":"5 N Mount Olive Rd, Budd Lake, NJ","ongoing":true,"hours":"Weekdays 5:00 PM–8:00 PM · Weekends 10:00 AM–6:00 PM","cost":"Free","attendance":"Open to all","features":["Free","Open to all","Kid-friendly","Costumes Available"],"url":"","notes":"Skully’s Costume Closet is open daily and offers free, gently used costumes. Inventory changes daily, so we can’t answer every question about what’s in stock. Please stop by to see what’s available.\n\nWe accept costume donations year-round."},
   {
     "id": "best-buddies-safe-trick-or-treat-2026-10-29",
     "updatedAt": "2026-10-07",
@@ -46,9 +46,9 @@ function pinHTML(n){return `<div class="pin" data-pin="${n}"><span class="pin__r
 function iconFor(n){return L.divIcon({className:'',html:pinHTML(n),iconSize:[58,68],iconAnchor:[29,68]})}
 function gmapsDirections(address){return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`}
 function isTreatStop(x){return x.kind==='Trick-or-treat stop'}
-function eventIsUpcoming(x){return new Date(x.endAt).getTime()>Date.now()}
+function eventIsUpcoming(x){return x.ongoing===true||new Date(x.endAt).getTime()>Date.now()}
 function matchFilter(x){if(state.category==='events')return false;if(isTreatStop(x)!==(state.category==='treats'))return false;if(state.category==='treats')return (state.filter==='All'||x.town===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature));if(state.filter==='All')return true;if(['Family Friendly','Spooky','Scary'].includes(state.filter))return x.levels.includes(state.filter);if(['Walk-through','Drive-by','Walk-by'].includes(state.filter))return x.type.includes(state.filter)||(x.type.includes('Drive or walk by (both)')&&['Drive-by','Walk-by'].includes(state.filter));return x.features.some(f=>featureKey(f)===state.filter)}
-function matchingEvents(){return events.filter(x=>eventIsUpcoming(x)&&(state.filter==='All'||x.eventType===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature))&&(!state.eventDay||x.date===state.eventDay)).sort((a,b)=>new Date(a.startAt)-new Date(b.startAt))}
+function matchingEvents(){return events.filter(x=>eventIsUpcoming(x)&&(state.filter==='All'||x.eventType===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature))&&(!state.eventDay||x.ongoing||x.date===state.eventDay)).sort((a,b)=>new Date(a.startAt)-new Date(b.startAt))}
 
 const FEATURE_ICONS={
  'Costumes Available':{label:'Costumes Available',path:'M10 5a2 2 0 1 1 3 2l-1 1v3M12 11 2 18v3h20v-3Z'},
