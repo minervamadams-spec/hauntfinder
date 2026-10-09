@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/subscriptions.js": {"includeFiles": "app.js", "maxDuration": 60},
+    "api/new-listing-digest.js": {"includeFiles": "app.js", "maxDuration": 60},
+    "api/newsletter-status.js": {"includeFiles": "app.js", "maxDuration": 60}
+  }
+}

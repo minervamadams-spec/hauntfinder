@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700;800&family=Creepster&family=Rubik+Dirt&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="alerts.css">
 </head>
 <body>
 <div class="app">
@@ -23,6 +24,7 @@
     <div class="hf-header__actions"><button class="btn btn--outline" id="shareBtn" type="button">Share this site</button></div></div>
   </div>
 </header>
+<a class="alerts-top-link" href="alerts.html" data-alerts-link hidden>Get new listing alerts</a>
 <section class="filterbar" aria-label="Find a display"><div class="filters" id="filters" aria-label="Filter displays"></div><div id="countLine" class="count-line" aria-live="polite"></div><span class="filter-hint" aria-hidden="true">›</span></section>
 <main class="shell page-grid app__main">
   <section class="map-column" aria-label="Display map">
@@ -52,6 +54,7 @@
   <div class="shell community-links footer-links">
     <a class="listing-download" href="assets/hauntfinder-2026-listings.pdf" target="_blank" rel="noopener">2026 Flyer ↗</a>
     <button class="btn btn--outline" type="button" id="aboutBtn">About Skully</button>
+    <a class="alerts-footer-link" href="alerts.html" data-alerts-link hidden>Get new listing alerts</a>
     <span id="siteVisits" hidden title="Counts page loads, including repeat visits, from a starting total of 57.">Site visits: <strong id="siteVisitTotal"></strong></span>
     <a href="mailto:minervamadams@gmail.com">Contact us</a>
   </div>
@@ -121,6 +124,7 @@
 <script src="community.js"></script>
 <script src="sharing.js"></script>
 <script src="layout.js"></script>
+<script src="alerts-link.js"></script>
 <script>
 (function () {
   fetch('/api/visits', {method: 'POST', credentials: 'same-origin'})
