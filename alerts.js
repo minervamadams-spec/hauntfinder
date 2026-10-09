@@ -1,6 +1,7 @@
 (() => {
  const status=document.getElementById('alertsStatus'),form=document.getElementById('alertsForm'),actionForm=document.getElementById('alertsAction');
  const params=new URLSearchParams(location.search),action=params.get('action'),token=params.get('token');
+ if(params.get('embed')==='1'&&window.parent!==window){document.body.classList.add('alerts-embedded');document.addEventListener('keydown',event=>{if(event.key==='Escape')window.parent.postMessage('close-alerts',location.origin)})}
  async function post(body){const r=await fetch('/api/subscriptions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const d=await r.json();if(!r.ok)throw new Error(d.error||'Please try again later.');return d}
  if((action==='confirm'||action==='unsubscribe')&&token){
   document.getElementById('alertsHeading').textContent=action==='confirm'?'Confirm your listing alerts':'Unsubscribe from listing alerts';
