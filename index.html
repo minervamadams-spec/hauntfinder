@@ -36,7 +36,7 @@ fbq('track', 'PageView');
 <main class="shell page-grid app__main">
   <section class="map-column" aria-label="Display map">
     <section id="eventCalendar" class="event-calendar" aria-labelledby="eventCalendarHeading" hidden><div class="calendar-heading"><h2 id="eventCalendarHeading">Halloween week · Oct 25–31</h2><button type="button" id="allEventDays" class="btn btn--outline">All week</button><a id="submitEvent" class="btn btn--outline" hidden target="_blank" rel="noopener">+ Submit an event ↗</a></div><div id="eventDays" class="event-days"></div><div class="event-legend"><span style="--event-color:#FF7A1A">Trunk-or-treat</span><span style="--event-color:#C49BFF">Parade</span><span style="--event-color:#A6E22E">Festival</span><span style="--event-color:#2EC4B6">Other</span></div><p class="calendar-note">Select a day to filter events. All week resets the list.</p></section><div class="map-frame"><div id="map" class="hf-map" aria-label="Interactive Halloween display map"></div><div id="mapPeek" class="map-peek is-hidden" aria-live="polite"></div><button type="button" class="map-float-btn map-float-btn--search" id="searchAreaBtn">Search this area</button><button type="button" class="map-float-btn map-float-btn--full" id="fullMapBtn">Full map</button><div class="map-full-head" id="mapFullHead" hidden><button type="button" class="map-full-head__close" id="closeFullMapBtn">✕ Close map</button><p class="map-full-head__status" id="fullMapStatus">Within 25 mi of 07828 (Mount Olive area)</p><div class="map-full-head__radii" role="radiogroup" aria-label="Search radius"><button type="button" data-radius="5" aria-checked="false">5 mi</button><button type="button" data-radius="10" aria-checked="false">10 mi</button><button type="button" data-radius="25" aria-checked="true">25 mi</button><button type="button" data-radius="50" aria-checked="false">50 mi</button></div></div></div><small class="distance-help">Straight-line distance from your search area. Driving distance will be longer; use Directions for road mileage.</small>
-    <div class="section-kicker"><span>The Map</span><small id="mapCategoryHint"><span class="map-hint-touch">Tap</span><span class="map-hint-desktop">Click</span> a pumpkin for details</small></div>
+    <div class="section-kicker"><span>The Map</span><small id="mapCategoryHint"><span class="map-hint-touch">Tap</span><span class="map-hint-desktop">Click</span> a pumpkin for details</small><button type="button" class="map-key-btn" id="mapKeyBtn">Map key</button></div>
     <section class="route-wrap" id="routeSection" aria-labelledby="routeHeading"><h2 id="routeHeading" class="brush-label brush-label--lime">Plan your route <span class="tabs__badge" id="routeBadge">0</span></h2><div class="route" id="routePlanner"></div></section>
   </section>
   <aside class="list-column">
@@ -90,6 +90,34 @@ fbq('track', 'PageView');
   </form>
 </dialog>
 
+<dialog class="site-dialog" id="mapKeyDialog" aria-labelledby="mapKeyTitle">
+  <div class="dialog-head"><h2 id="mapKeyTitle">Map key</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close map key">×</button></div>
+  <h3 class="map-key__heading">Pins and markers</h3>
+  <ul class="map-key__list">
+    <li><span class="key-pin key-pin--pumpkin" aria-hidden="true">7</span><span><strong>Numbered pumpkin pin</strong> — a display or treat stop. The number matches its card and flyer.</span></li>
+    <li><span class="key-pin key-pin--pumpkin" aria-hidden="true">✓</span><span><strong>Pumpkin pin with a ✓</strong> — on your route.</span></li>
+    <li><span class="key-pin key-pin--event" aria-hidden="true">Oct 29</span><span><strong>Violet date badge</strong> — an event. The badge shows its date; “Ongoing” means open all season.</span></li>
+    <li><span class="key-circle" aria-hidden="true"></span><span><strong>Orange dashed circle</strong> — your current search area and radius.</span></li>
+    <li><span class="key-card" aria-hidden="true">8</span><span><strong>Gray card with a number</strong> — that listing number is reserved for a future listing.</span></li>
+  </ul>
+  <h3 class="map-key__heading">Experience types</h3>
+  <ul class="map-key__list">
+    <li><strong>Drive-by</strong> — view from your car.</li>
+    <li><strong>Walk-by</strong> — view from the sidewalk.</li>
+    <li><strong>Walk-up</strong> — approach the property or entry.</li>
+    <li><strong>Walk-through</strong> — walk through the display.</li>
+  </ul>
+  <h3 class="map-key__heading">Before you visit</h3>
+  <ul class="map-key__list">
+    <li>Park where the listing says — like the monument lot across from #1 — and cross carefully.</li>
+    <li>Watch your step around wires and lighting; tell the host if you need assistance.</li>
+    <li>Treats are where the host offers them, like the garage at #1 while supplies last — don't go to the front door unless invited.</li>
+    <li>Check the visiting details and hours before you go. Where hours aren't published the site says “Hours unknown” — knock only if the listing invites it.</li>
+    <li>Rate your visit, not how scary it was.</li>
+    <li>Keep feedback about the display and avoid personal information.</li>
+  </ul>
+  <p class="map-key__note">Spotted something wrong or missing? Every card has a <strong>Report/update</strong> link — corrections are welcome.</p>
+</dialog>
 <dialog class="site-dialog" id="aboutDialog" aria-labelledby="aboutTitle">
   <div class="dialog-head"><h2 id="aboutTitle">About Skully</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close about Skully">×</button></div>
   <p>Meet Skully, the Adams family’s 12-foot skeleton and community mascot at <strong>5 N Mount Olive Road, Budd Lake, NJ</strong>. Skully brings neighbors together throughout the year, with plenty of fun and a helping hand when it’s needed.</p>

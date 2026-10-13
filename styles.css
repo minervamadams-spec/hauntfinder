@@ -403,3 +403,20 @@ html:not([data-fullmap]) .map-full-head{display:none!important}
 .filter-date-input{min-height:40px;padding:0 10px;background:var(--night);color:var(--cream);border:1.5px solid var(--line-strong);border-radius:4px;font:600 15px var(--f-body);color-scheme:dark}
 .filter-tier--date{padding-left:12px;border-left:1.5px solid var(--violet)}
 .card__open-tonight{display:inline-flex;align-items:center;min-height:22px;padding:0 8px;border-radius:11px;background:var(--lime);color:var(--night);font:800 12px/1 var(--f-ui);letter-spacing:.06em;text-transform:uppercase}
+
+/* Release 4: map key button and dialog legend. */
+.section-kicker{display:flex;align-items:center;gap:12px}
+.map-key-btn{min-height:44px;padding:0 14px;margin-left:auto;background:var(--filter);color:var(--cream);border:2px solid var(--line-strong);border-radius:4px;font:800 14px/1 var(--f-ui);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.map-key-btn:hover{border-color:var(--cream)}
+.map-key__heading{font:800 20px/1.2 var(--f-ui);text-transform:uppercase;color:var(--pumpkin);margin:18px 0 8px}
+.map-key__heading:first-of-type{margin-top:0}
+.map-key__list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.map-key__list li{display:flex;align-items:center;gap:12px;font-size:15px;line-height:1.4;color:var(--cream-2)}
+.map-key__note{margin:16px 0 0;font-size:14px;color:var(--mist)}
+.key-pin{flex:none;display:inline-flex;align-items:center;justify-content:center;width:34px;height:40px;font:800 15px/1 var(--f-ui);color:var(--night)}
+.key-pin--pumpkin{background:var(--pumpkin);border-radius:50% 50% 46% 46%;position:relative}
+.key-pin--pumpkin::before{content:'';position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:6px;height:6px;background:#476522;border-radius:2px}
+.key-pin--event{width:44px;height:44px;border-radius:50%;background:var(--violet);color:var(--cream);border:2px solid var(--cream);font-size:10px;line-height:1.05;text-transform:uppercase;text-align:center}
+.key-circle{flex:none;width:34px;height:34px;border:2px dashed #FF7A1A;border-radius:50%;background:rgba(255,122,26,.05)}
+.key-card{flex:none;display:inline-flex;align-items:center;justify-content:center;width:34px;height:40px;background:#24242b;border:1px dashed #777;border-radius:4px;color:#b9b9c0;font:800 15px/1 var(--f-ui)}
+@media(max-width:560px){.map-key__list li{font-size:14px}}
