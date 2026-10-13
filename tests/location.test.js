@@ -112,3 +112,68 @@ test('ZIP table integrity: 5-digit keys, launch-state bounding box, 07828 presen
  assert.equal(zipTable['_meta'].vintage,'2023');
  assert.deepEqual(zipTable['_meta'].states,['NJ','NY','PA']);
 });
+const GEO_SEARCH={mode:'zip',zip:'07828',lat:40.885,lng:-74.7557,radius:5};
+const GEO_ITEMS=[
+ {num:2,name:'B',kind:'Home display',lat:40.885,lng:-74.7557},
+ {num:1,name:'A',kind:'Home display',lat:40.885,lng:-74.7557},
+ {num:3,name:'C',kind:'Trick-or-treat stop',lat:40.985,lng:-74.7557},
+ {num:4,name:'D',kind:'Home display',placeholder:true},
+];
+test('formatDistance shows one decimal under 10 mi and whole miles at 10+',()=>{
+ assert.equal(loc.formatDistance(2.44),'2.4');
+ assert.equal(loc.formatDistance(9.94),'9.9');
+ assert.equal(loc.formatDistance(10.4),'10');
+ assert.equal(loc.isDefaultArea({mode:'zip',zip:'07828',lat:40.885,lng:-74.7557,radius:25}),true);
+ assert.equal(loc.isDefaultArea({mode:'zip',zip:'07828',lat:40.885,lng:-74.7557,radius:50}),false);
+ assert.equal(loc.isDefaultArea({mode:'device',zip:'07828',radius:25}),false);
+ assert.equal(loc.isDefaultArea(null),false);
+});
+test('inSearchArea requires finite coords on both sides and includes the boundary',()=>{
+ assert.equal(loc.inSearchArea({lat:40.885,lng:-74.7557},{...GEO_SEARCH,radius:0}),true);
+ assert.equal(loc.inSearchArea({lat:40.88501,lng:-74.7557},{...GEO_SEARCH,radius:0}),false);
+ assert.equal(loc.inSearchArea({lat:40.885},GEO_SEARCH),false);
+ assert.equal(loc.inSearchArea(GEO_ITEMS[0],null),false);
+});
+test('visibleSet is the single visible source: predicate + area + nearest-first with num ties',()=>{
+ const all=loc.visibleSet({items:GEO_ITEMS,search:GEO_SEARCH,predicate:()=>true});
+ assert.deepEqual(all.map(x=>x.num),[1,2]);
+ const treats=loc.visibleSet({items:GEO_ITEMS,search:GEO_SEARCH,predicate:x=>x.kind==='Trick-or-treat stop'});
+ assert.deepEqual(treats.map(x=>x.num),[]);
+ const wide=loc.visibleSet({items:GEO_ITEMS,search:{...GEO_SEARCH,radius:25},predicate:()=>true});
+ assert.deepEqual(wide.map(x=>x.num),[1,2,3]);
+ const kept=loc.visibleSet({items:GEO_ITEMS,search:GEO_SEARCH,predicate:()=>true,keepUnlocated:true});
+ assert.deepEqual(kept.map(x=>x.num),[1,2,4]);
+ const noSearch=loc.visibleSet({items:GEO_ITEMS,search:null,predicate:()=>true});
+ assert.deepEqual(noSearch.map(x=>x.num),[1,2,3,4]);
+});
+test('orderByDistance sorts nearest-first, ties by the custom tiebreak, unlocated last',()=>{
+ const early={id:'early',lat:40.885,lng:-74.7557,startAt:'2026-10-29T10:00:00-04:00'};
+ const late={id:'late',lat:40.885,lng:-74.7557,startAt:'2026-10-29T17:30:00-04:00'};
+ const far={id:'far',startAt:'2026-10-29T12:00:00-04:00'};
+ const byStart=(a,b)=>new Date(a.startAt)-new Date(b.startAt);
+ assert.deepEqual(loc.orderByDistance([late,early,far],GEO_SEARCH,byStart).map(x=>x.id),['early','late','far']);
+ assert.deepEqual(loc.orderByDistance([far,late,early],null,byStart).map(x=>x.id),['early','far','late']);
+});
+test('events are geo-filtered through the shared visible-set path',()=>{
+ const evs=[{id:'in',lat:40.885,lng:-74.7557},{id:'out',lat:40.985,lng:-74.7557},{id:'nocoords'}];
+ const visible=loc.visibleSet({items:evs,search:GEO_SEARCH,predicate:()=>true});
+ assert.deepEqual(visible.map(x=>x.id),['in']);
+});
+test('areaCounts splits displays, treat stops and upcoming events inside the search area',()=>{
+ const now=Date.parse('2026-10-26T12:00:00-04:00');
+ const evs=[
+  {id:'e1',ongoing:true,lat:40.885,lng:-74.7557},
+  {id:'e2',ongoing:false,endAt:'2026-10-31T21:00:00-04:00',lat:40.985,lng:-74.7557},
+  {id:'e3',ongoing:false,endAt:'2020-01-01T00:00:00Z',lat:40.885,lng:-74.7557},
+ ];
+ assert.deepEqual(loc.areaCounts({listings:GEO_ITEMS,events:evs,search:GEO_SEARCH,now}),{displays:2,treats:0,events:1});
+ assert.deepEqual(loc.areaCounts({listings:GEO_ITEMS,events:evs,search:{...GEO_SEARCH,radius:25},now}),{displays:2,treats:1,events:2});
+ assert.deepEqual(loc.areaCounts({listings:GEO_ITEMS,events:evs,search:null,now}),{displays:2,treats:1,events:2});
+});
+test('stopsWithAreaFlags flags route stops outside the current search area without mutating them',()=>{
+ const stops=[{num:1,lat:40.885,lng:-74.7557},{num:2,lat:40.985,lng:-74.7557}];
+ const flagged=loc.stopsWithAreaFlags(stops,GEO_SEARCH);
+ assert.deepEqual(flagged.map(s=>s.outOfArea),[false,true]);
+ assert.ok(stops.every(s=>!('outOfArea' in s)));
+ assert.deepEqual(loc.stopsWithAreaFlags(stops,null).map(s=>s.outOfArea),[false,false]);
+});

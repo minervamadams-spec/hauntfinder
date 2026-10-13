@@ -31,6 +31,36 @@ function normalizeSearch(s){
 function loadSearch(storage){try{return normalizeSearch(JSON.parse(storage.getItem(SEARCH_KEY)||'null'))}catch{return {...DEFAULT_SEARCH}}}
 function saveSearch(s,storage){const clean=normalizeSearch(s);if(clean.mode==='device'){clean.lat=round2(clean.lat);clean.lng=round2(clean.lng)}try{storage.setItem(SEARCH_KEY,JSON.stringify(clean))}catch{}return clean}
 function describeSearch(s){if(s.mode==='device')return `Near your location · within ${s.radius} mi`;if(s.mode==='area')return `Map area · within ${s.radius} mi`;return `Within ${s.radius} mi of ${s.zip}${s.zip==='07828'?' (Mount Olive area)':''}`}
+// ---- Location filtering (Release 1, Phase 4). Pure and Node-testable. ----
+function formatDistance(d){return d<10?d.toFixed(1):String(Math.round(d))}
+function inSearchArea(x,search){if(!search||!Number.isFinite(search.lat)||!Number.isFinite(search.lng)||!Number.isFinite(x.lat)||!Number.isFinite(x.lng))return false;return haversineMi(search,x)<=search.radius}
+function isDefaultArea(search){return Boolean(search)&&search.mode==='zip'&&search.zip==='07828'&&search.radius===25}
+// Nearest-first ordering; boundary ties fall to the tiebreaker, so listings
+// keep number order and events keep start-time order at equal distances.
+function orderByDistance(items,search,tieBreak){
+ const scored=items.map(x=>({x,d:search&&Number.isFinite(x.lat)&&Number.isFinite(x.lng)?haversineMi(search,x):Infinity}));
+ scored.sort((a,b)=>a.d-b.d||(tieBreak?tieBreak(a.x,b.x):0));
+ return scored.map(s=>s.x);
+}
+// The one source of truth for the visible set: predicate (category, feature,
+// season, placeholder rule) plus the search area, ordered nearest-first.
+// Items without coordinates never appear in narrowed distance results.
+function visibleSet({items,search,predicate,coordOf,keepUnlocated=false}){
+ const located=typeof coordOf==='function'?coordOf:x=>({lat:x.lat,lng:x.lng});
+ const pass=x=>{if(predicate&&!predicate(x))return false;if(!search)return true;const c=located(x);if(!Number.isFinite(c.lat)||!Number.isFinite(c.lng))return keepUnlocated;return haversineMi(search,c)<=search.radius};
+ return orderByDistance(items.filter(pass),search,(a,b)=>(a.num??1e9)-(b.num??1e9));
+}
+// Per-tab counts for the current search area (ignores active filter chips).
+function areaCounts({listings=[],events=[],search,now=Date.now()}){
+ const ok=x=>!search||inSearchArea(x,search);
+ return {
+  displays:listings.filter(x=>!x.placeholder&&x.kind!=='Trick-or-treat stop'&&ok(x)).length,
+  treats:listings.filter(x=>!x.placeholder&&x.kind==='Trick-or-treat stop'&&ok(x)).length,
+  events:events.filter(x=>(x.ongoing===true||new Date(x.endAt).getTime()>now)&&ok(x)).length
+ };
+}
+// Route stops keep showing regardless of area; this flags the out-of-area ones.
+function stopsWithAreaFlags(stops,search){return stops.map(s=>({...s,outOfArea:Boolean(search)&&!inSearchArea(s,search)}))}
 
 // ---- Browser wiring (skipped under Node) ----
 let zipTablePromise=null;
@@ -67,7 +97,10 @@ if(typeof document!=='undefined'&&typeof window!=='undefined'&&document.getEleme
   );
  };
  els.radii.forEach(b=>{b.onclick=()=>{state=saveSearch({...state,radius:+b.dataset.radius},localStorage);syncUI();announce()}});
+ // Empty-state "Expand radius" and deep-link "Show listings near here".
+ document.addEventListener('hf:expand-radius',e=>{const radius=e.detail&&e.detail.radius;if(!RADII.includes(radius))return;state=saveSearch({...state,radius},localStorage);syncUI();announce()});
+ document.addEventListener('hf:search-near',e=>{const d=e.detail||{};if(!Number.isFinite(d.lat)||!Number.isFinite(d.lng))return;state=saveSearch({...state,mode:'area',lat:round2(d.lat),lng:round2(d.lng)},localStorage);syncUI();announce()});
  syncUI();
  announce();
 }
-if(typeof module!=='undefined')module.exports={haversineMi,inRadius,sortByDistance,parseZip,isLaunchStateZip,nextRadius,normalizeSearch,loadSearch,saveSearch,describeSearch,DEFAULT_SEARCH,SEARCH_KEY,ERR_UNKNOWN_ZIP,ERR_OUT_OF_COVERAGE,ERR_GEOLOCATION};
+if(typeof module!=='undefined')module.exports={haversineMi,inRadius,sortByDistance,parseZip,isLaunchStateZip,nextRadius,normalizeSearch,loadSearch,saveSearch,describeSearch,DEFAULT_SEARCH,SEARCH_KEY,ERR_UNKNOWN_ZIP,ERR_OUT_OF_COVERAGE,ERR_GEOLOCATION,formatDistance,inSearchArea,isDefaultArea,orderByDistance,visibleSet,areaCounts,stopsWithAreaFlags};

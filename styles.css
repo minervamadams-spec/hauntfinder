@@ -349,3 +349,11 @@ body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:0}
  .locbar__radius{margin-left:auto}
  .locbar__status{width:auto;flex-basis:100%}
 }
+
+/* Location search: distances, event pins, empty-state action, area notes */
+.card__distance{font:700 14px/1.2 var(--f-ui);letter-spacing:.05em;text-transform:uppercase;color:var(--pumpkin)}
+.event-pin{width:54px;height:54px;display:grid;place-items:center;filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
+.event-pin__badge{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--violet);color:var(--cream);border:2px solid var(--cream);box-shadow:0 2px 8px rgba(0,0,0,.5);font:700 13px/1.1 var(--f-ui);text-transform:uppercase;text-align:center;padding:4px;box-sizing:border-box;cursor:pointer}
+.distance-help{display:block;margin-top:8px;font:400 13px/1.35 var(--f-body);color:var(--mist)}
+.empty .btn{margin-top:12px}
+.listing-status .btn{margin-top:6px;min-height:44px}
