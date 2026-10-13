@@ -420,3 +420,8 @@ html:not([data-fullmap]) .map-full-head{display:none!important}
 .key-circle{flex:none;width:34px;height:34px;border:2px dashed #FF7A1A;border-radius:50%;background:rgba(255,122,26,.05)}
 .key-card{flex:none;display:inline-flex;align-items:center;justify-content:center;width:34px;height:40px;background:#24242b;border:1px dashed #777;border-radius:4px;color:#b9b9c0;font:800 15px/1 var(--f-ui)}
 @media(max-width:560px){.map-key__list li{font-size:14px}}
+/* ---- Release 5: favorites + shareable outings. ---- */
+.card--compact .card__actions{grid-template-columns:1.25fr 1fr auto}
+.card__fav-btn{min-width:44px;min-height:44px;padding:0 10px;font-size:22px;line-height:1;background:transparent;color:var(--pumpkin);border:2px solid var(--pumpkin);border-radius:999px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.card__fav-btn[aria-pressed="true"]{background:var(--pumpkin);color:var(--night)}
+.map-peek__fav{min-width:40px;min-height:40px;font-size:19px}

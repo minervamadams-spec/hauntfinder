@@ -56,4 +56,39 @@ async function optimizeRoute(){
  const order=bestStopOrder(matrix);if(JSON.stringify(route)!==JSON.stringify(state.route))throw new Error('Your stops changed. Suggest an order again.');state.route=[route[0],...order.map(i=>route[i+1])];try{localStorage.setItem('hfroute:2026',JSON.stringify(state.route))}catch{}state.routeMessage='Suggested by distance, keeping your first stop. Check roads and hours in Google Maps.';
  }catch(e){state.routeMessage=e.message||'Could not suggest an order. Use the arrows.'}finally{state.optimizing=false;renderRoute()}
 }
-if(typeof module!=='undefined')module.exports={bestStopOrder,migrateRoute,isReusedSlot,legacyEntityId,REUSED_SLOTS_2026};
+// Favorites are stored entity-aware at hffavs:v1, following the route pattern
+// exactly: same verified {num, entityId} entries, same legacy-number migration,
+// same drop rules (unknown numbers, placeholders, entity mismatches). They are
+// a personal saved-list, entirely separate from route stops (hfroute:2026).
+const FAVORITES_KEY='hffavs:v1';
+function loadFavorites(saved,listings,legacyEntityMap){return migrateRoute(saved,listings,legacyEntityMap)}
+// Pure add/remove for favorites: matching num toggles off; anything else is
+// appended at the end. Order is otherwise preserved.
+function toggleFavoriteEntry(favs,num,entityId){
+ const out=(favs||[]).filter(f=>f.num!==num);
+ if(out.length===(favs||[]).length)out.push({num,entityId});
+ return out;
+}
+// Outing deep links (?outing=) carry entity ids only — slot numbers are
+// ambiguous on reused slots, so plain nums are never accepted. Each id is
+// URI-decoded, mapped back to its listing, and unverified/missing/duplicate
+// entries are dropped. Returns the same verified {num, entityId} shape.
+function parseOutingParam(str,listings){
+ const byEntity=new Map(listings.map(x=>[x.entityId,x])),seen=new Set(),out=[];
+ String(str==null?'':str).split(',').forEach(piece=>{
+  let id;try{id=decodeURIComponent(String(piece).trim())}catch(e){return}
+  if(!id)return;
+  const listing=byEntity.get(id);
+  if(!listing||listing.placeholder)return;
+  if(seen.has(listing.num))return;
+  seen.add(listing.num);out.push({num:listing.num,entityId:listing.entityId});
+ });
+ return out;
+}
+// Inverse of parseOutingParam: build a shareable ?outing= URL from route stops.
+function outingLink(stops,base){
+ const root=typeof base==='string'&&base?base:'https://hauntfinder.vercel.app/';
+ const ids=(stops||[]).map(s=>encodeURIComponent(s.entityId)).filter(Boolean);
+ return root+'?outing='+ids.join(',');
+}
+if(typeof module!=='undefined')module.exports={bestStopOrder,migrateRoute,isReusedSlot,legacyEntityId,REUSED_SLOTS_2026,FAVORITES_KEY,loadFavorites,toggleFavoriteEntry,parseOutingParam,outingLink};

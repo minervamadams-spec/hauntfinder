@@ -25,6 +25,9 @@
  else if(['events','treats','displays'].includes(params.get('category')))selectTab(params.get('category'));
  const linked=Number(params.get('house')),house=listings.find(x=>x.num===linked&&!x.placeholder);
  if(house&&(!isReusedSlot(house)||params.get('entity')===house.entityId)){selectListing(linked);if(state.search&&!inSearchArea(house,state.search))insertAreaNote(house)}
+ // ---- Release 5: shareable outings (?outing=entity-id,entity-id). ----
+ const outingParam=params.get('outing');
+ if(outingParam){const stops=parseOutingParam(outingParam,listings);if(stops.length){state.route=stops;try{localStorage.setItem('hfroute:2026',JSON.stringify(state.route))}catch{}state.routeMessage='Shared outing loaded.';const first=listings.find(x=>x.num===stops[0].num);if(first){const cat=isTreatStop(first)?'treats':'displays';if(state.category!==cat)selectTab(cat)}renderRoute();renderCards();const note=document.createElement('div');note.className='listing-status';note.setAttribute('role','note');const strong=document.createElement('strong');strong.textContent='Shared outing.';const span=document.createElement('span');span.textContent=' These stops were added to your route — rearrange or remove them anytime.';note.append(strong,span);document.getElementById('cardList').before(note);document.getElementById('routePlanner')?.scrollIntoView({block:'nearest'})}}
  // ---- Phase 5: mobile map/list views, full-screen map, search this area. ----
  const root=document.documentElement;
  function measureFilterbar(){const fb=document.querySelector('.filterbar');if(fb)root.style.setProperty('--filterbar-h',fb.offsetHeight+'px')}
