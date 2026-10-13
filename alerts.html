@@ -6,6 +6,14 @@
  <label for="alertsEmail">Your email</label><input id="alertsEmail" name="email" type="email" maxlength="254" autocomplete="email" required>
  <fieldset><legend>Categories</legend><label><input type="checkbox" name="categories" value="displays" checked> Displays</label><label><input type="checkbox" name="categories" value="events" checked> Events</label><label><input type="checkbox" name="categories" value="treats" checked> Treat Stops</label></fieldset>
  <fieldset><legend>Seasons</legend><label><input type="checkbox" name="seasons" value="halloween" checked> Halloween</label><label><input type="checkbox" name="seasons" value="holiday"> Future Holiday listings</label></fieldset>
+ <fieldset><legend>Area (optional)</legend>
+  <label><input type="checkbox" id="alertsAreaToggle"> Limit alerts to my area</label>
+  <div id="alertsAreaControls" hidden>
+   <label for="alertsZip">ZIP code</label><input id="alertsZip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="07828">
+   <div class="alerts-radii" role="radiogroup" aria-label="Alert radius"><button type="button" data-alert-radius="5" aria-checked="false">5 mi</button><button type="button" data-alert-radius="10" aria-checked="false">10 mi</button><button type="button" data-alert-radius="25" aria-checked="true">25 mi</button><button type="button" data-alert-radius="50" aria-checked="false">50 mi</button></div>
+   <p class="form-note">Leave this off to get alerts for the whole covered region.</p>
+  </div>
+ </fieldset>
  <label class="consent"><input type="checkbox" name="consent" required> Email me new listings for my selected categories and seasons. I can unsubscribe at any time.</label>
  <label class="alerts-honeypot" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
  <button class="btn btn--route" type="submit">Send confirmation email</button>
