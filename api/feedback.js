@@ -1,10 +1,20 @@
+const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const {randomUUID,createHmac}=require('node:crypto');
 const {storageKeys}=require('../lib/keys');
-const HOUSE_IDS=new Set([1,2,3,4,5,6,7,8,9,10,11]);
+const {isReusedSlot}=require('../routing');
+// House numbers and reused-slot entity namespaces are derived from the
+// listings data at module load, so new listings need no hand edits here.
+function loadHouses(){
+ const src=fs.readFileSync(path.join(__dirname,'../app.js'),'utf8').split('const filters=')[0];
+ const ctx={};vm.runInNewContext(src+';this.data={listings};',ctx,{timeout:500});
+ const ids=new Set(),entities=new Map();
+ for(const x of ctx.data.listings){if(x.placeholder)continue;ids.add(x.num);if(isReusedSlot(x))entities.set(x.num,x.entityId)}
+ return {ids,entities};
+}
+const {ids:HOUSE_IDS,entities:HOUSE_ENTITIES}=loadHouses();
 const KEY_PREFIX='hauntfinder:2026:';
 const RATE_LIMIT_SCRIPT=`local n=redis.call('INCR',KEYS[1]);if n==1 then redis.call('EXPIRE',KEYS[1],600) end;if n>5 then return 0 end;redis.call('LPUSH',KEYS[2],ARGV[1]);return 1`;
-// Legacy frozen mapping: slot 8 reviews live in the Drakestown entity namespace.
-const reviewKey=house=>storageKeys({season:'halloween',year:2026,num:house,entityId:house===8?'drakestown-road-2026':undefined}).review;
+const reviewKey=house=>storageKeys({season:'halloween',year:2026,num:house,entityId:HOUSE_ENTITIES.get(house)}).review;
 
 function storageUrl(){return process.env.UPSTASH_REDIS_REST_URL||process.env.KV_REST_API_URL}
 function storageToken(){return process.env.UPSTASH_REDIS_REST_TOKEN||process.env.KV_REST_API_TOKEN}

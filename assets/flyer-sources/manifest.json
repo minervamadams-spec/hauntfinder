@@ -2,8 +2,8 @@
   "source": "approved-guide.pdf",
   "renderer": "scripts/build-flyer.py",
   "pages": 6,
-  "publicDataSha256": "13286aa47ece4f83d53c80425dae65094a7fe58cd4072465b2512181407bc979",
-  "pdfSha256": "984251623a0b971643f730319dcb4a6e2561676a911c2571a283bba351be0601",
+  "publicDataSha256": "d56b63681c85c4832ffdbc1d14bb5c19ff8b213055a3c84fcbda1e4936d277e4",
+  "pdfSha256": "873b29a548e944ee54c720b50594da17026d631f1978eeb1203b4f0d2cc8cb7d",
   "displayIDs": [
     1,
     2,

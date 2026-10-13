@@ -22,5 +22,5 @@
  if(eventId){const position=matchingEvents().findIndex(x=>x.id===eventId);if(position>=0){selectTab('events');state.page=Math.floor(position/3);renderCards();$('cardList').scrollIntoView({block:'nearest'})}}
  else if(['events','treats','displays'].includes(params.get('category')))selectTab(params.get('category'));
  const linked=Number(params.get('house')),house=listings.find(x=>x.num===linked&&!x.placeholder);
- if(house&&(linked!==8||params.get('entity')===house.entityId))selectListing(linked);
+ if(house&&(!isReusedSlot(house)||params.get('entity')===house.entityId))selectListing(linked);
 })();
