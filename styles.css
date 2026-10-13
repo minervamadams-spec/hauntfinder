@@ -357,3 +357,43 @@ body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:0}
 .distance-help{display:block;margin-top:8px;font:400 13px/1.35 var(--f-body);color:var(--mist)}
 .empty .btn{margin-top:12px}
 .listing-status .btn{margin-top:6px;min-height:44px}
+
+/* Phase 5: mobile map/list views, full-screen map, search-this-area. */
+.view-toggle{display:none}
+.map-float-btn{position:absolute;z-index:650;min-height:44px;padding:0 16px;border:2px solid var(--night);border-radius:22px;background:var(--cream);color:var(--night);font:800 15px/1 var(--f-ui);letter-spacing:.05em;text-transform:uppercase;box-shadow:0 4px 14px rgba(0,0,0,.55);cursor:pointer;transition:opacity .18s ease,transform .18s ease,visibility .18s}
+.map-float-btn--search{left:50%;transform:translate(-50%,8px);bottom:14px;opacity:0;visibility:hidden;pointer-events:none;background:var(--pumpkin)}
+.map-float-btn--search.is-visible{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0)}
+.map-float-btn--full{right:12px;bottom:12px}
+.map-full-head{position:absolute;top:0;left:0;right:0;z-index:700;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:calc(10px + env(safe-area-inset-top)) 12px 10px;background:linear-gradient(rgba(11,9,16,.92),rgba(11,9,16,.72));border-bottom:1.5px solid var(--line-strong)}
+.map-full-head__close{min-height:44px;padding:0 14px;background:var(--cream);color:var(--night);border:0;border-radius:4px;font:800 15px/1 var(--f-ui);letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
+.map-full-head__status{margin:0;font:700 14px/1.3 var(--f-ui);color:var(--mist)}
+.map-full-head__radii{display:flex;gap:6px;margin-left:auto}
+.map-full-head__radii button{min-height:40px;padding:0 12px;background:var(--filter);color:var(--cream);border:2px solid var(--line-strong);border-radius:4px;font:700 14px/1 var(--f-ui);cursor:pointer}
+.map-full-head__radii button[aria-checked="true"]{background:var(--pumpkin);border-color:var(--pumpkin);color:var(--night)}
+html[data-fullmap]{overflow:hidden}
+html:not([data-fullmap]) .map-full-head{display:none!important}
+@media(max-width:1023px){
+ .view-toggle{display:flex;gap:0;margin:0 0 10px;border:2px solid var(--line-strong);border-radius:4px;overflow:hidden;width:max-content}
+ .view-toggle button{min-height:44px;padding:0 18px;background:var(--filter);color:var(--cream);border:0;font:800 16px/1 var(--f-ui);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+ .view-toggle button+button{border-left:2px solid var(--line-strong)}
+ .view-toggle button[aria-pressed="true"]{background:var(--pumpkin);color:var(--night)}
+ /* List view hides the inline map so the page scrolls freely. */
+ html[data-view="list"] .map-frame,html[data-view="list"] .section-kicker,html[data-view="list"] .distance-help{display:none}
+ /* Map view keeps the tabs, hides the card list, and fills the viewport under the sticky filterbar. */
+ html[data-view="map"] .page-grid>.list-column{order:-1;margin-bottom:0}
+ html[data-view="map"] .content-panels,html[data-view="map"] .listing-pages{display:none}
+ html[data-view="map"] .map-frame{position:sticky;top:var(--filterbar-h,150px);height:calc(100dvh - var(--filterbar-h,150px) - env(safe-area-inset-bottom));aspect-ratio:auto;z-index:400}
+ .map-float-btn--search{bottom:calc(96px + env(safe-area-inset-bottom))}
+ .map-float-btn--full{bottom:calc(12px + env(safe-area-inset-bottom))}
+ body:has(.mobile-route-bar:not(.is-hidden)) .map-float-btn--full{bottom:calc(84px + env(safe-area-inset-bottom))}
+ html[data-fullmap] .map-frame{position:fixed;inset:0;height:100dvh;z-index:1200;border-radius:0;aspect-ratio:auto}
+ html[data-fullmap] .map-float-btn--full{display:none}
+ html[data-fullmap] .map-peek{bottom:calc(10px + env(safe-area-inset-bottom))}
+}
+@media(min-width:1024px){
+ .map-float-btn--full{display:none}
+ .map-float-btn--search{bottom:14px}
+}
+@media(prefers-reduced-motion:reduce){.map-float-btn{transition:none}}
+.locbar__back{min-height:36px;padding:0 12px;background:transparent;color:var(--lime);border:1.5px solid var(--lime);border-radius:4px;font:700 14px/1 var(--f-ui);letter-spacing:.04em;text-transform:uppercase;cursor:pointer}
+.locbar__back:hover{background:var(--chip)}

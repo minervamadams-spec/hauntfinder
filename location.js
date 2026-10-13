@@ -5,6 +5,7 @@
 const EARTH_MI=3958.8;
 const DEFAULT_SEARCH={mode:'zip',zip:'07828',lat:40.884959,lng:-74.755657,radius:25};
 const SEARCH_KEY='hfsearch:v1';
+const VIEW_KEY='hfview:v1';
 const ZIP_TABLE_URL='data/zip-centroids.json';
 const RADII=[5,10,25,50];
 const ERR_UNKNOWN_ZIP="We couldn't find that ZIP. Check the number, try a nearby ZIP, or use your location.";
@@ -30,7 +31,10 @@ function normalizeSearch(s){
 // Storage is injectable for tests; every read/write is failure-safe.
 function loadSearch(storage){try{return normalizeSearch(JSON.parse(storage.getItem(SEARCH_KEY)||'null'))}catch{return {...DEFAULT_SEARCH}}}
 function saveSearch(s,storage){const clean=normalizeSearch(s);if(clean.mode==='device'){clean.lat=round2(clean.lat);clean.lng=round2(clean.lng)}try{storage.setItem(SEARCH_KEY,JSON.stringify(clean))}catch{}return clean}
-function describeSearch(s){if(s.mode==='device')return `Near your location · within ${s.radius} mi`;if(s.mode==='area')return `Map area · within ${s.radius} mi`;return `Within ${s.radius} mi of ${s.zip}${s.zip==='07828'?' (Mount Olive area)':''}`}
+function describeSearch(s){if(s.mode==='device')return `Near your location · within ${s.radius} mi`;if(s.mode==='area')return `Map area · within ${s.radius} mi`;return `Within ${s.radius} mi of ${s.zip}`}
+// View preference ('map'|'list') lives in its own private key; storage injectable for tests.
+function loadView(storage){try{return JSON.parse(storage.getItem(VIEW_KEY)||'null')==='map'?'map':'list'}catch{return 'list'}}
+function saveView(v,storage){const clean=v==='map'?'map':'list';try{storage.setItem(VIEW_KEY,JSON.stringify(clean))}catch{}return clean}
 // ---- Location filtering (Release 1, Phase 4). Pure and Node-testable. ----
 function formatDistance(d){return d<10?d.toFixed(1):String(Math.round(d))}
 function inSearchArea(x,search){if(!search||!Number.isFinite(search.lat)||!Number.isFinite(search.lng)||!Number.isFinite(x.lat)||!Number.isFinite(x.lng))return false;return haversineMi(search,x)<=search.radius}
@@ -66,14 +70,16 @@ function stopsWithAreaFlags(stops,search){return stops.map(s=>({...s,outOfArea:B
 let zipTablePromise=null;
 function loadZipTable(fetchImpl){const f=fetchImpl||(typeof fetch!=='undefined'?fetch:null);if(!f)return Promise.resolve(null);if(!zipTablePromise)zipTablePromise=f(ZIP_TABLE_URL).then(r=>{if(!r.ok)throw new Error('ZIP table unavailable');return r.json()}).catch(()=>null);return zipTablePromise}
 if(typeof document!=='undefined'&&typeof window!=='undefined'&&document.getElementById('zipInput')){
- const els={input:document.getElementById('zipInput'),search:document.getElementById('zipSearchBtn'),locate:document.getElementById('locateBtn'),status:document.getElementById('locStatus'),radii:[...document.querySelectorAll('[data-radius]')]};
+ const els={input:document.getElementById('zipInput'),search:document.getElementById('zipSearchBtn'),locate:document.getElementById('locateBtn'),status:document.getElementById('locStatus'),radii:[...document.querySelectorAll('[data-radius]')],back:document.getElementById('backToZipBtn')};
  let state=loadSearch(localStorage);
+ let lastNonArea=state.mode==='area'?{...DEFAULT_SEARCH}:null;
  const announce=()=>document.dispatchEvent(new CustomEvent('hf:search-changed',{detail:{...state}}));
  const setStatus=msg=>{els.status.textContent=msg};
  function syncUI(){
   if(state.mode==='zip')els.input.value=state.zip;
   els.radii.forEach(b=>b.setAttribute('aria-checked',String(+b.dataset.radius===state.radius)));
   setStatus(describeSearch(state));
+  if(els.back){if(state.mode==='area'&&lastNonArea){els.back.hidden=false;els.back.textContent=lastNonArea.mode==='device'?'Back to your location':`Back to ${lastNonArea.zip}`}else els.back.hidden=true}
  }
  async function searchZip(){
   const zip=parseZip(els.input.value);
@@ -83,6 +89,7 @@ if(typeof document!=='undefined'&&typeof window!=='undefined'&&document.getEleme
   if(zip==='07828')center={lat:DEFAULT_SEARCH.lat,lng:DEFAULT_SEARCH.lng};
   else{const table=await loadZipTable();const hit=table&&table[zip];if(!hit){setStatus(ERR_UNKNOWN_ZIP);return}center={lat:hit[0],lng:hit[1]}}
   state=saveSearch({...state,mode:'zip',zip,lat:center.lat,lng:center.lng},localStorage);
+  lastNonArea={...state};
   syncUI();announce();
  }
  els.search.onclick=searchZip;
@@ -91,7 +98,7 @@ if(typeof document!=='undefined'&&typeof window!=='undefined'&&document.getEleme
   if(!navigator.geolocation){setStatus(ERR_GEOLOCATION);els.input.focus();return}
   setStatus('Locating…');
   navigator.geolocation.getCurrentPosition(
-   pos=>{state=saveSearch({...state,mode:'device',lat:pos.coords.latitude,lng:pos.coords.longitude},localStorage);syncUI();announce()},
+   pos=>{state=saveSearch({...state,mode:'device',lat:pos.coords.latitude,lng:pos.coords.longitude},localStorage);lastNonArea={...state};syncUI();announce()},
    ()=>{setStatus(ERR_GEOLOCATION);els.input.focus()},
    {enableHighAccuracy:false,timeout:10000}
   );
@@ -99,8 +106,10 @@ if(typeof document!=='undefined'&&typeof window!=='undefined'&&document.getEleme
  els.radii.forEach(b=>{b.onclick=()=>{state=saveSearch({...state,radius:+b.dataset.radius},localStorage);syncUI();announce()}});
  // Empty-state "Expand radius" and deep-link "Show listings near here".
  document.addEventListener('hf:expand-radius',e=>{const radius=e.detail&&e.detail.radius;if(!RADII.includes(radius))return;state=saveSearch({...state,radius},localStorage);syncUI();announce()});
- document.addEventListener('hf:search-near',e=>{const d=e.detail||{};if(!Number.isFinite(d.lat)||!Number.isFinite(d.lng))return;state=saveSearch({...state,mode:'area',lat:round2(d.lat),lng:round2(d.lng)},localStorage);syncUI();announce()});
+ document.addEventListener('hf:search-near',e=>{const d=e.detail||{};if(!Number.isFinite(d.lat)||!Number.isFinite(d.lng))return;if(state.mode!=='area')lastNonArea={...state};state=saveSearch({...state,mode:'area',lat:round2(d.lat),lng:round2(d.lng)},localStorage);syncUI();announce()});
+ // "Search this area" gets a way back: restore the previous ZIP/device search.
+ if(els.back)els.back.onclick=()=>{if(!lastNonArea)return;state=saveSearch({...lastNonArea},localStorage);syncUI();announce()};
  syncUI();
  announce();
 }
-if(typeof module!=='undefined')module.exports={haversineMi,inRadius,sortByDistance,parseZip,isLaunchStateZip,nextRadius,normalizeSearch,loadSearch,saveSearch,describeSearch,DEFAULT_SEARCH,SEARCH_KEY,ERR_UNKNOWN_ZIP,ERR_OUT_OF_COVERAGE,ERR_GEOLOCATION,formatDistance,inSearchArea,isDefaultArea,orderByDistance,visibleSet,areaCounts,stopsWithAreaFlags};
+if(typeof module!=='undefined')module.exports={haversineMi,inRadius,sortByDistance,parseZip,isLaunchStateZip,nextRadius,normalizeSearch,loadSearch,saveSearch,describeSearch,DEFAULT_SEARCH,SEARCH_KEY,VIEW_KEY,loadView,saveView,ERR_UNKNOWN_ZIP,ERR_OUT_OF_COVERAGE,ERR_GEOLOCATION,formatDistance,inSearchArea,isDefaultArea,orderByDistance,visibleSet,areaCounts,stopsWithAreaFlags};

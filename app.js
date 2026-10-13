@@ -352,7 +352,7 @@ const state={filter:'All',selected:null,route:[],startMode:'current',startAddr:'
 
 try{const legacyEntities={};for(const x of listings){const v=localStorage.getItem('hfentity:'+x.num);if(v)legacyEntities[x.num]=v}state.route=migrateRoute(localStorage.getItem('hfroute:2026')||'[]',listings,legacyEntities)}catch{}
 
-const map=L.map('map',{scrollWheelZoom:true,dragging:!L.Browser.mobile,tap:true}).setView([40.87,-74.72],12);
+const map=L.map('map',{scrollWheelZoom:true,tap:true}).setView([40.87,-74.72],12);
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,attribution:'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'}).addTo(map);
 const markerByNum=new Map();
 
@@ -417,7 +417,7 @@ function buildRoute(){const stops=state.route.map(r=>listings.find(x=>x.num===r.
 
 async function loadMarkers(){const bounds=[];for(const x of listings){if(x.placeholder||!Number.isFinite(x.lat)||!Number.isFinite(x.lng))continue;const c={lat:x.lat,lng:x.lng};state.coords[x.num]=c;const m=L.marker([c.lat,c.lng],{icon:iconFor(x.num),keyboard:true,title:`Display ${x.num}: ${x.name}`,zIndexOffset:(listings.filter(v=>v.address===x.address).length>1?1000:100)+x.num}).addTo(map);m.on('click',()=>{selectListing(x.num,true)});m.on('mouseover',()=>linkPair(x.num,true));m.on('mouseout',()=>linkPair(x.num,false));markerByNum.set(x.num,m);bounds.push([c.lat,c.lng])}if(bounds.length)map.fitBounds(bounds,{paddingTopLeft:[40,80],paddingBottomRight:[40,40]});setTimeout(()=>map.invalidateSize(),100)}
 
-document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;state.filter=state.filter===b.dataset.filter?'All':b.dataset.filter;renderFilters();renderCards()});document.getElementById('showAllBtn').onclick=()=>{state.filter='All';renderFilters();renderCards()};document.getElementById('shareBtn').onclick=async()=>{const b=document.getElementById('shareBtn'),payload={title:'Hauntfinder',text:'Find Halloween displays and home haunts around Mount Olive and the surrounding area.',url:'https://hauntfinder.vercel.app/'};try{if(navigator.share)await navigator.share(payload);else{await navigator.clipboard.writeText('https://hauntfinder.vercel.app/');b.textContent='Link copied';setTimeout(()=>b.textContent='Share this site',2000)}}catch{}};
+document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;state.filter=state.filter===b.dataset.filter?'All':b.dataset.filter;renderFilters();renderCards()});document.getElementById('showAllBtn').onclick=()=>{state.filter='All';renderFilters();renderCards()};document.getElementById('shareBtn').onclick=async()=>{const b=document.getElementById('shareBtn'),payload={title:'Hauntfinder',text:'Find Halloween displays and home haunts around Mount Olive and nearby communities.',url:'https://hauntfinder.vercel.app/'};try{if(navigator.share)await navigator.share(payload);else{await navigator.clipboard.writeText('https://hauntfinder.vercel.app/');b.textContent='Link copied';setTimeout(()=>b.textContent='Share this site',2000)}}catch{}};
 renderFilters();renderCards();renderRoute();loadMarkers();
 
 

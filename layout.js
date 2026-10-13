@@ -25,4 +25,34 @@
  else if(['events','treats','displays'].includes(params.get('category')))selectTab(params.get('category'));
  const linked=Number(params.get('house')),house=listings.find(x=>x.num===linked&&!x.placeholder);
  if(house&&(!isReusedSlot(house)||params.get('entity')===house.entityId)){selectListing(linked);if(state.search&&!inSearchArea(house,state.search))insertAreaNote(house)}
+ // ---- Phase 5: mobile map/list views, full-screen map, search this area. ----
+ const root=document.documentElement;
+ function measureFilterbar(){const fb=document.querySelector('.filterbar');if(fb)root.style.setProperty('--filterbar-h',fb.offsetHeight+'px')}
+ measureFilterbar();window.addEventListener('resize',measureFilterbar);
+ let mapViewSeen=false;
+ function applyViewMode(v){root.dataset.view=v;saveView(v,localStorage);const mapBtn=$('viewMapBtn'),listBtn=$('viewListBtn');if(mapBtn)mapBtn.setAttribute('aria-pressed',String(v==='map'));if(listBtn)listBtn.setAttribute('aria-pressed',String(v==='list'));if(v==='map')setTimeout(()=>{map.invalidateSize();if(!mapViewSeen){mapViewSeen=true;if(state.search&&typeof searchCircle!=='undefined'&&searchCircle)map.fitBounds(searchCircle.getBounds().pad(0.12))}},80)}
+ if($('viewMapBtn'))$('viewMapBtn').onclick=()=>applyViewMode('map');
+ if($('viewListBtn'))$('viewListBtn').onclick=()=>applyViewMode('list');
+ applyViewMode(loadView(localStorage));
+ const fullMapHead=$('mapFullHead'),fullMapBtn=$('fullMapBtn'),closeFullMapBtn=$('closeFullMapBtn'),fullMapStatus=$('fullMapStatus');
+ let lastFocus=null;
+ function fullMapFocusables(){const frame=document.querySelector('.map-frame');return frame?[...frame.querySelectorAll('button,a[href],input,[tabindex]:not([tabindex="-1"])')].filter(el=>el.offsetParent!==null&&!el.hidden):[]}
+ function trapFullMapKey(e){if(e.key==='Escape'){e.preventDefault();closeFullMap();return}if(e.key!=='Tab')return;const f=fullMapFocusables();if(!f.length)return;const first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}
+ function openFullMap(){if(!fullMapHead)return;lastFocus=document.activeElement;root.setAttribute('data-fullmap','');fullMapHead.hidden=false;if(fullMapBtn)fullMapBtn.hidden=true;setTimeout(()=>{map.invalidateSize();if(closeFullMapBtn)closeFullMapBtn.focus()},80);document.addEventListener('keydown',trapFullMapKey)}
+ function closeFullMap(){root.removeAttribute('data-fullmap');if(fullMapHead)fullMapHead.hidden=true;if(fullMapBtn)fullMapBtn.hidden=false;setTimeout(()=>map.invalidateSize(),80);document.removeEventListener('keydown',trapFullMapKey);if(lastFocus&&lastFocus.focus)lastFocus.focus()}
+ if(fullMapBtn)fullMapBtn.onclick=openFullMap;
+ if(closeFullMapBtn)closeFullMapBtn.onclick=closeFullMap;
+ if(fullMapStatus&&typeof describeSearch==='function'&&state.search)fullMapStatus.textContent=describeSearch(state.search);
+ document.addEventListener('hf:search-changed',e=>{if(fullMapStatus&&typeof describeSearch==='function')fullMapStatus.textContent=describeSearch(e.detail)});
+ const searchAreaBtn=$('searchAreaBtn'),SEARCH_AREA_MOVE_MI=0.4;
+ let areaBaseline=null,areaBaselinePending=false;
+ function setAreaBaseline(){const c=map.getCenter();areaBaseline={lat:c.lat,lng:c.lng,zoom:map.getZoom()};areaBaselinePending=false}
+ function syncSearchAreaBtn(){if(!searchAreaBtn||!areaBaseline)return;const c=map.getCenter();const moved=haversineMi({lat:areaBaseline.lat,lng:areaBaseline.lng},{lat:c.lat,lng:c.lng});const changed=moved>SEARCH_AREA_MOVE_MI||map.getZoom()!==areaBaseline.zoom;searchAreaBtn.classList.toggle('is-visible',changed&&!areaBaselinePending)}
+ if(searchAreaBtn){
+  searchAreaBtn.onclick=()=>{const c=map.getCenter();document.dispatchEvent(new CustomEvent('hf:search-near',{detail:{lat:c.lat,lng:c.lng}}))};
+  map.on('moveend',()=>{if(areaBaselinePending){setAreaBaseline();syncSearchAreaBtn()}else syncSearchAreaBtn()});
+  document.addEventListener('hf:search-changed',()=>{areaBaselinePending=true;searchAreaBtn.classList.remove('is-visible');setTimeout(()=>{if(areaBaselinePending){setAreaBaseline();syncSearchAreaBtn()}},600)});
+  areaBaselinePending=true;
+  setTimeout(()=>{if(areaBaselinePending){setAreaBaseline();syncSearchAreaBtn()}},600);
+ }
 })();

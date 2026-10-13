@@ -100,7 +100,7 @@ test('search state persists round-trip; device coords round to 2 decimals; corru
  assert.deepEqual(loc.loadSearch(broken),loc.DEFAULT_SEARCH);
  const weird=mockStorage({'hfsearch:v1':JSON.stringify({mode:'mars',zip:'1',radius:7})});
  assert.deepEqual(loc.loadSearch(weird),{mode:'zip',zip:'07828',lat:40.884959,lng:-74.755657,radius:25});
- assert.equal(loc.describeSearch(loc.DEFAULT_SEARCH),'Within 25 mi of 07828 (Mount Olive area)');
+ assert.equal(loc.describeSearch(loc.DEFAULT_SEARCH),'Within 25 mi of 07828');
  assert.equal(loc.describeSearch({mode:'device',radius:10}),'Near your location · within 10 mi');
 });
 test('ZIP table integrity: 5-digit keys, launch-state bounding box, 07828 present, 4000-4500 entries',()=>{
@@ -176,4 +176,20 @@ test('stopsWithAreaFlags flags route stops outside the current search area witho
  assert.deepEqual(flagged.map(s=>s.outOfArea),[false,true]);
  assert.ok(stops.every(s=>!('outOfArea' in s)));
  assert.deepEqual(loc.stopsWithAreaFlags(stops,null).map(s=>s.outOfArea),[false,false]);
+});
+test('view preference persists to its own key, defaults to list, and survives corrupt values',()=>{
+ const storage=mockStorage();
+ assert.equal(loc.VIEW_KEY,'hfview:v1');
+ assert.equal(loc.loadView(storage),'list');
+ assert.equal(loc.saveView('map',storage),'map');
+ assert.equal(loc.loadView(storage),'map');
+ assert.equal(loc.saveView('list',storage),'list');
+ assert.equal(loc.loadView(storage),'list');
+ assert.equal(loc.saveView('MAP',storage),'list');
+ assert.equal(loc.saveView(7,storage),'list');
+ const broken=mockStorage({'hfview:v1':'{nope'});
+ assert.equal(loc.loadView(broken),'list');
+ const legacy=mockStorage({'hfview:v1':'map'});
+ assert.equal(loc.loadView(legacy),'list');
+ assert.ok(!('hfsearch:v1' in storage._map),'view key write must not touch the search key');
 });

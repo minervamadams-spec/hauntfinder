@@ -1,7 +1,7 @@
 const houseShareDialog=document.getElementById('houseShareDialog');
 let sharedHouse=null;
 function houseLink(house){return 'https://hauntfinder.vercel.app/?house='+house.num+(isReusedSlot(house)?'&entity='+encodeURIComponent(house.entityId):'')}
-function housePost(house){return `We're on the 2026 Hauntfinder!\n\nVisit ${house.name}\n${house.address}\n${[house.dates,house.times].filter(Boolean).join(' · ')||'Check the listing for viewing details.'}\n\nSee our listing: ${houseLink(house)}\nFind nearby displays and build your driving route: https://hauntfinder.vercel.app/\nHave a display to add or update? ${FORM_URL}\n\n#MountOliveNJ #Halloween2026 #HauntFinder`}
+function housePost(house){return `We're on the 2026 Hauntfinder!\n\nVisit ${house.name}\n${house.address}\n${[house.dates,house.times].filter(Boolean).join(' · ')||'Check the listing for viewing details.'}\n\nSee our listing: ${houseLink(house)}\nFind more displays around Mount Olive and nearby communities and build your route: https://hauntfinder.vercel.app/\nHave a display to add or update? ${FORM_URL}\n\n#MountOliveNJ #Halloween2026 #HauntFinder`}
 function listingImage(house,artwork=null){
   const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1080;const c=canvas.getContext('2d');
   c.fillStyle='#100b1e';c.fillRect(0,0,1080,1080);c.strokeStyle='#7837cf';c.lineWidth=8;c.strokeRect(28,28,1024,1024);
