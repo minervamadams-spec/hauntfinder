@@ -13,6 +13,15 @@ const listings=[
   "season": "halloween",
   "year": 2026,
   "participation": "confirmed",
+  "schedule": {
+  "exceptions": [
+   {
+    "date": "2026-10-31",
+    "open": "16:00",
+    "close": "20:00"
+   }
+  ]
+ },
   "dates": "Halloween",
   "times": "4:00 PM–8:00 PM",
   "levels": [
@@ -55,6 +64,10 @@ const listings=[
   "season": "halloween",
   "year": 2026,
   "participation": "confirmed",
+  "schedule": {
+  "startDate": "2026-10-30",
+  "endDate": "2026-10-31"
+ },
   "dates": "Halloween weekend",
   "times": "All weekend",
   "levels": [],
@@ -102,6 +115,38 @@ const listings=[
   "season": "halloween",
   "year": 2026,
   "participation": "confirmed",
+  "schedule": {
+  "weekly": [
+   {
+    "dow": 0,
+    "open": "18:00"
+   },
+   {
+    "dow": 1,
+    "open": "18:00"
+   },
+   {
+    "dow": 2,
+    "open": "18:00"
+   },
+   {
+    "dow": 3,
+    "open": "18:00"
+   },
+   {
+    "dow": 4,
+    "open": "18:00"
+   },
+   {
+    "dow": 5,
+    "open": "18:00"
+   },
+   {
+    "dow": 6,
+    "open": "18:00"
+   }
+  ]
+ },
   "dates": "Anytime",
   "times": "Lights turn on at 6:00 PM",
   "levels": [],
@@ -126,6 +171,13 @@ const listings=[
   "season": "halloween",
   "year": 2026,
   "participation": "confirmed",
+  "schedule": {
+  "exceptions": [
+   {
+    "date": "2026-10-31"
+   }
+  ]
+ },
   "dates": "Halloween",
   "times": "",
   "levels": [],
@@ -149,6 +201,47 @@ const listings=[
   "season": "halloween",
   "year": 2026,
   "participation": "confirmed",
+  "schedule": {
+  "startDate": "2026-10-01",
+  "endDate": "2026-10-31",
+  "weekly": [
+   {
+    "dow": 0,
+    "open": "18:00",
+    "close": "24:00"
+   },
+   {
+    "dow": 1,
+    "open": "18:00",
+    "close": "23:00"
+   },
+   {
+    "dow": 2,
+    "open": "18:00",
+    "close": "23:00"
+   },
+   {
+    "dow": 3,
+    "open": "18:00",
+    "close": "23:00"
+   },
+   {
+    "dow": 4,
+    "open": "18:00",
+    "close": "23:00"
+   },
+   {
+    "dow": 5,
+    "open": "18:00",
+    "close": "24:00"
+   },
+   {
+    "dow": 6,
+    "open": "18:00",
+    "close": "24:00"
+   }
+  ]
+ },
   "dates": "October",
   "times": "Fri–Sun 6:00 PM–12:00 AM · Mon–Thu 6:00 PM–11:00 PM",
   "levels": [
@@ -181,6 +274,9 @@ const listings=[
   "season": "halloween",
   "year": 2026,
   "participation": "confirmed",
+  "schedule": {
+  "startDate": "2026-10-10"
+ },
   "dates": "Opens October 10",
   "times": "",
   "levels": [
@@ -206,6 +302,47 @@ const listings=[
   "season": "halloween",
   "year": 2026,
   "participation": "confirmed",
+  "schedule": {
+  "startDate": "2026-10-09",
+  "endDate": "2026-11-01",
+  "weekly": [
+   {
+    "dow": 0,
+    "open": "18:00",
+    "close": "23:00"
+   },
+   {
+    "dow": 1,
+    "open": "18:00",
+    "close": "23:00"
+   },
+   {
+    "dow": 2,
+    "open": "18:00",
+    "close": "23:00"
+   },
+   {
+    "dow": 3,
+    "open": "18:00",
+    "close": "23:00"
+   },
+   {
+    "dow": 4,
+    "open": "18:00",
+    "close": "23:00"
+   },
+   {
+    "dow": 5,
+    "open": "18:00",
+    "close": "23:00"
+   },
+   {
+    "dow": 6,
+    "open": "18:00",
+    "close": "23:00"
+   }
+  ]
+ },
   "dates": "Now through November 1",
   "times": "6:00 PM–11:00 PM",
   "levels": [
@@ -233,6 +370,9 @@ const listings=[
   "season": "halloween",
   "year": 2026,
   "participation": "confirmed",
+  "schedule": {
+  "startDate": "2026-10-01"
+ },
   "dates": "Opens October 1",
   "times": "After dusk",
   "levels": [
@@ -260,6 +400,45 @@ const listings=[
   "season": "halloween",
   "year": 2026,
   "participation": "confirmed",
+  "schedule": {
+  "weekly": [
+   {
+    "dow": 0,
+    "open": "18:00",
+    "close": "22:00"
+   },
+   {
+    "dow": 1,
+    "open": "18:00",
+    "close": "22:00"
+   },
+   {
+    "dow": 2,
+    "open": "18:00",
+    "close": "22:00"
+   },
+   {
+    "dow": 3,
+    "open": "18:00",
+    "close": "22:00"
+   },
+   {
+    "dow": 4,
+    "open": "18:00",
+    "close": "22:00"
+   },
+   {
+    "dow": 5,
+    "open": "18:00",
+    "close": "22:00"
+   },
+   {
+    "dow": 6,
+    "open": "18:00",
+    "close": "22:00"
+   }
+  ]
+ },
   "dates": "",
   "times": "6:00 PM–10:00 PM",
   "levels": [],
@@ -280,6 +459,15 @@ const listings=[
   "season": "halloween",
   "year": 2026,
   "participation": "confirmed",
+  "schedule": {
+  "exceptions": [
+   {
+    "date": "2026-10-31",
+    "open": "14:00",
+    "close": "22:00"
+   }
+  ]
+ },
   "dates": "October 31, 2026",
   "times": "2:00 PM–10:00 PM",
   "levels": [],
@@ -361,7 +549,7 @@ function iconFor(n){return L.divIcon({className:'',html:pinHTML(n),iconSize:[58,
 function gmapsDirections(address){return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`}
 function isTreatStop(x){return x.kind==='Trick-or-treat stop'}
 function eventIsUpcoming(x){return x.ongoing===true||new Date(x.endAt).getTime()>Date.now()}
-function matchFilter(x){if(!inCurrentSeason(x))return false;if(x.placeholder)return state.category==='displays'&&state.filter==='All'&&(typeof isDefaultArea!=='function'||!state.search||isDefaultArea(state.search));if(state.category==='events')return false;if(state.search&&typeof inSearchArea==='function'&&!inSearchArea(x,state.search))return false;if(isTreatStop(x)!==(state.category==='treats'))return false;if(state.category==='treats')return (state.filter==='All'||x.town===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature));if(state.filter==='All')return true;if(['Family Friendly','Spooky','Scary'].includes(state.filter))return x.levels.includes(state.filter);if(['Walk-through','Drive-by','Walk-by'].includes(state.filter))return x.type.includes(state.filter)||(x.type.includes('Drive or walk by (both)')&&['Drive-by','Walk-by'].includes(state.filter));return x.features.some(f=>featureKey(f)===state.filter)}
+function matchFilter(x){if(!inCurrentSeason(x))return false;if(x.placeholder)return state.category==='displays'&&state.filter==='All'&&(typeof isDefaultArea!=='function'||!state.search||isDefaultArea(state.search));if(state.category==='events')return false;if(state.dateFilter&&state.dateFilter.kind&&typeof schedulesDateMatch==='function'&&!schedulesDateMatch(x,state.dateFilter))return false;if(state.search&&typeof inSearchArea==='function'&&!inSearchArea(x,state.search))return false;if(isTreatStop(x)!==(state.category==='treats'))return false;if(state.category==='treats')return (state.filter==='All'||x.town===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature));if(state.filter==='All')return true;if(['Family Friendly','Spooky','Scary'].includes(state.filter))return x.levels.includes(state.filter);if(['Walk-through','Drive-by','Walk-by'].includes(state.filter))return x.type.includes(state.filter)||(x.type.includes('Drive or walk by (both)')&&['Drive-by','Walk-by'].includes(state.filter));return x.features.some(f=>featureKey(f)===state.filter)}
 function matchingEvents(){const filtered=events.filter(x=>eventIsUpcoming(x)&&inCurrentSeason(x)&&(state.filter==='All'||x.eventType===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature))&&(!state.eventDay||x.ongoing||x.date===state.eventDay)&&(!state.search||typeof inSearchArea!=='function'||inSearchArea(x,state.search)));return typeof orderByDistance==='function'?orderByDistance(filtered,state.search,(a,b)=>new Date(a.startAt)-new Date(b.startAt)):filtered.sort((a,b)=>new Date(a.startAt)-new Date(b.startAt))}
 // Single source of truth for the ordered visible set. Falls back to number
 // order during the very first render, before location.js has loaded.
@@ -371,6 +559,7 @@ function geoEmptyState(){if(!state.search||typeof isDefaultArea!=='function'||ty
 function wireEmptyAction(geoEmpty,formUrl){const btn=document.getElementById('emptyActionBtn');if(!btn)return;btn.hidden=false;if(geoEmpty.next){btn.textContent=`Expand to ${geoEmpty.next} miles`;btn.onclick=()=>document.dispatchEvent(new CustomEvent('hf:expand-radius',{detail:{radius:geoEmpty.next}}))}else{btn.textContent='Add a listing in your area';btn.onclick=()=>window.open(formUrl,'_blank','noopener')}}
 // Radius circle for the current search area, in the site palette.
 let searchCircle=null;
+let openTonightOK=false;
 function syncSearchCircle(){if(typeof L==='undefined'||!map)return;if(searchCircle){map.removeLayer(searchCircle);searchCircle=null}if(!state.search)return;searchCircle=L.circle([state.search.lat,state.search.lng],{radius:state.search.radius*1609.344,color:'#FF7A1A',weight:2,dashArray:'6 6',fillColor:'#FF7A1A',fillOpacity:.05,interactive:false}).addTo(map)}
 // Event pins: purple date badges, shown on the map only on the Events tab.
 const eventMarkers=new Map();
@@ -399,12 +588,18 @@ function listingStatusHTML(x){if(!['temporarily_closed','weather_cancelled'].inc
 function safeListingText(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function listingUpdatedHTML(x){if(!x.updatedAt)return '';const date=new Date(x.updatedAt+'T12:00:00');if(Number.isNaN(date.getTime()))return '';return `<p class="listing-updated">Listing updated <time datetime="${safeListingText(x.updatedAt)}">${date.toLocaleDateString(undefined,{dateStyle:'medium'})}</time></p>`}
 function compactTime(value){return String(value).replace(/:00/g,'').replace(/(\d+)\s*(AM|PM)–(\d+)\s*\2/g,'$1–$3 $2')}
-function treatCardHTML(x){const onRoute=state.route.some(r=>r.num===x.num);return `<article class="card card--compact treat-stop-card ${state.selected===x.num?'is-selected':''}" data-card="${x.num}" tabindex="0" aria-label="${safeListingText(x.name)}"><div class="card__head"><span class="treat-stop-number">${x.num}</span><div class="card__heading"><h3 class="card__name">${safeListingText(x.name)}</h3><span class="card__town">${safeListingText(x.town)}</span>${distanceLabelHTML(x)}</div></div>${listingStatusHTML(x)}<div class="card__body"><p>${safeListingText(x.address)}</p><p>${safeListingText([x.dates,compactTime(x.times)].filter(Boolean).join(' · ')||'Candy hours not specified')}</p></div><div class="chips">${x.features.map(v=>`<span class="chip">${safeListingText(v)}</span>`).join('')}</div>${x.notes?`<details class="card__notes"><summary>Read host notes</summary><div>${safeListingText(x.notes)}</div></details>`:''}<div class="card__actions"><button class="btn btn--route" type="button" data-route="${x.num}" aria-pressed="${onRoute}">${onRoute?'Added ✓':'+ Add to Route'}</button><a class="btn btn--directions" href="${gmapsDirections(x.address)}" target="_blank" rel="noopener">Directions ↗</a></div>${listingUpdatedHTML(x)}</article>`}
-function cardHTML(x){if(x.placeholder)return `<article class="card card--compact card--vacant" aria-label="Listing ${x.num} available"><div class="card__head"><span class="vacant-number">${x.num}</span><div class="card__heading"><h3 class="card__name">Listing number available</h3></div></div><div class="card__body"><p>This number is reserved for the next new listing.</p></div></article>`;if(isTreatStop(x))return treatCardHTML(x);const selected=state.selected===x.num,onRoute=state.route.some(r=>r.num===x.num);return `<article class="card card--compact ${selected?'is-selected':''}" data-card="${x.num}" tabindex="0" aria-label="${safeListingText(x.name)}"><div class="card__head"><div class="card__pin">${pinHTML(x.num)}</div><div class="card__heading"><h3 class="card__name">${safeListingText(x.name)}</h3><div class="card__subline"><span class="card__town">${safeListingText(x.town)}</span>${distanceLabelHTML(x)}<span class="card__scare">${scarePips(x.levels)}</span></div></div></div>${listingStatusHTML(x)}<div class="card__body"><p>${safeListingText(x.address)}</p><p>${safeListingText([x.dates,compactTime(x.times)].filter(Boolean).join(' · ')||'Dates and hours not specified')}</p></div><div class="card__tags">${x.type.map(t=>`<span class="chip chip--type">${safeListingText(t)}</span>`).join('')}<div class="chips">${x.features.map(featureChip).join('')}</div></div><details class="card__notes"><summary>Read host notes</summary><div>${safeListingText(x.notes||'No additional notes yet.')}</div></details><div class="card__actions"><button class="btn btn--route" type="button" data-route="${x.num}" aria-pressed="${onRoute}">${onRoute?'Added ✓':'+ Add to Route'}</button><a class="btn btn--directions" href="${gmapsDirections(x.address)}" target="_blank" rel="noopener">Directions ↗</a></div><div class="card__extras"><button type="button" class="card-rating" data-feedback="${x.num}" data-rating-summary="${x.num}" aria-label="View ratings for ${safeListingText(x.name)}">No ratings yet</button><button type="button" class="btn--feedback" data-report-listing="${x.num}">Report / update</button><button type="button" class="btn--feedback" data-share-house="${x.num}">Share house</button></div>${listingUpdatedHTML(x)}</article>`}
+function treatCardHTML(x){const onRoute=state.route.some(r=>r.num===x.num);return `<article class="card card--compact treat-stop-card ${state.selected===x.num?'is-selected':''}" data-card="${x.num}" tabindex="0" aria-label="${safeListingText(x.name)}"><div class="card__head"><span class="treat-stop-number">${x.num}</span><div class="card__heading"><h3 class="card__name">${safeListingText(x.name)}</h3><span class="card__town">${safeListingText(x.town)}</span>${distanceLabelHTML(x)}${typeof openTonightBadgeHTML==='function'?openTonightBadgeHTML(x,{eligible:openTonightOK}):''}</div></div>${listingStatusHTML(x)}<div class="card__body"><p>${safeListingText(x.address)}</p><p>${safeListingText([x.dates,compactTime(x.times)].filter(Boolean).join(' · ')||((typeof hasScheduleInfo==='function'&&hasScheduleInfo(x))?'Candy hours not specified':'Hours unknown'))}</p></div><div class="chips">${x.features.map(v=>`<span class="chip">${safeListingText(v)}</span>`).join('')}</div>${x.notes?`<details class="card__notes"><summary>Read host notes</summary><div>${safeListingText(x.notes)}</div></details>`:''}<div class="card__actions"><button class="btn btn--route" type="button" data-route="${x.num}" aria-pressed="${onRoute}">${onRoute?'Added ✓':'+ Add to Route'}</button><a class="btn btn--directions" href="${gmapsDirections(x.address)}" target="_blank" rel="noopener">Directions ↗</a></div>${listingUpdatedHTML(x)}</article>`}
+function cardHTML(x){if(x.placeholder)return `<article class="card card--compact card--vacant" aria-label="Listing ${x.num} available"><div class="card__head"><span class="vacant-number">${x.num}</span><div class="card__heading"><h3 class="card__name">Listing number available</h3></div></div><div class="card__body"><p>This number is reserved for the next new listing.</p></div></article>`;if(isTreatStop(x))return treatCardHTML(x);const selected=state.selected===x.num,onRoute=state.route.some(r=>r.num===x.num);return `<article class="card card--compact ${selected?'is-selected':''}" data-card="${x.num}" tabindex="0" aria-label="${safeListingText(x.name)}"><div class="card__head"><div class="card__pin">${pinHTML(x.num)}</div><div class="card__heading"><h3 class="card__name">${safeListingText(x.name)}</h3><div class="card__subline"><span class="card__town">${safeListingText(x.town)}</span>${distanceLabelHTML(x)}${typeof openTonightBadgeHTML==='function'?openTonightBadgeHTML(x,{eligible:openTonightOK}):''}<span class="card__scare">${scarePips(x.levels)}</span></div></div></div>${listingStatusHTML(x)}<div class="card__body"><p>${safeListingText(x.address)}</p><p>${safeListingText([x.dates,compactTime(x.times)].filter(Boolean).join(' · ')||((typeof hasScheduleInfo==='function'&&hasScheduleInfo(x))?'Dates and hours not specified':'Hours unknown'))}</p></div><div class="card__tags">${x.type.map(t=>`<span class="chip chip--type">${safeListingText(t)}</span>`).join('')}<div class="chips">${x.features.map(featureChip).join('')}</div></div><details class="card__notes"><summary>Read host notes</summary><div>${safeListingText(x.notes||'No additional notes yet.')}</div></details><div class="card__actions"><button class="btn btn--route" type="button" data-route="${x.num}" aria-pressed="${onRoute}">${onRoute?'Added ✓':'+ Add to Route'}</button><a class="btn btn--directions" href="${gmapsDirections(x.address)}" target="_blank" rel="noopener">Directions ↗</a></div><div class="card__extras"><button type="button" class="card-rating" data-feedback="${x.num}" data-rating-summary="${x.num}" aria-label="View ratings for ${safeListingText(x.name)}">No ratings yet</button><button type="button" class="btn--feedback" data-report-listing="${x.num}">Report / update</button><button type="button" class="btn--feedback" data-share-house="${x.num}">Share house</button></div>${listingUpdatedHTML(x)}</article>`}
 
-function renderFilters(){const button=f=>`<button class="filter ${FEATURE_ICONS[f]?'filter--feature':''}" type="button" data-filter="${f}" aria-pressed="${state.filter===f}">${featureIcon(f)}${safeListingText(FEATURE_ICONS[f]?.label||f)}</button>`;document.getElementById('filters').innerHTML=`<div class="filter-tier filter-tier--primary"><span class="filterbar__label">Show</span>${filters.filter(f=>!FEATURE_ICONS[f]).map(button).join('')}</div><div class="filter-tier filter-tier--features"><span class="filterbar__label">Features</span>${filters.filter(f=>FEATURE_ICONS[f]).map(button).join('')}</div>`}
+function dateFilterChipsHTML(){
+ const f=state.dateFilter||{};
+ const chip=(kind,label)=>`<button type="button" class="filter filter--date" data-date-filter="${kind}" aria-pressed="${f.kind===kind}">${label}</button>`;
+ const dateInput=f.kind==='date'?`<input type="date" id="dateFilterInput" class="filter-date-input" value="${safeListingText(f.date||'')}" aria-label="Choose a date">`:'';
+ return `<div class="filter-tier filter-tier--date"><span class="filterbar__label">When</span>${chip('tonight','Tonight')}${chip('weekend','This weekend')}${chip('date','Choose a date')}${dateInput}</div>`;
+}
+function renderFilters(){const button=f=>`<button class="filter ${FEATURE_ICONS[f]?'filter--feature':''}" type="button" data-filter="${f}" aria-pressed="${state.filter===f}">${featureIcon(f)}${safeListingText(FEATURE_ICONS[f]?.label||f)}</button>`;document.getElementById('filters').innerHTML=`<div class="filter-tier filter-tier--primary"><span class="filterbar__label">Show</span>${filters.filter(f=>!FEATURE_ICONS[f]).map(button).join('')}</div><div class="filter-tier filter-tier--features"><span class="filterbar__label">Features</span>${filters.filter(f=>FEATURE_ICONS[f]).map(button).join('')}</div>${dateFilterChipsHTML()}`}
 
-function renderCards(){const visible=activeListings();state.page=Math.max(0,Math.min(state.page,Math.ceil(visible.length/3)-1));const geoEmpty=typeof geoEmptyState==='function'?geoEmptyState():null,noResults=document.getElementById('noResults'),nonPlaceholder=visible.filter(x=>!x.placeholder);noResults.dataset.mode=(!visible.length&&geoEmpty)?'geo':'';const noun=state.category==='treats'?'treat stop':'display';document.getElementById('countLine').textContent=state.search?`${nonPlaceholder.length} ${noun}${nonPlaceholder.length===1?'':'s'} within ${state.search.radius} mi${state.filter!=='All'?' · '+state.filter:''}`:`${nonPlaceholder.length} ${noun}${visible.length===1?'':'s'} shown${state.filter!=='All'?' · '+state.filter:''}`;document.getElementById('cardList').innerHTML=visible.slice(state.page*3,state.page*3+3).map(cardHTML).join('');noResults.classList.toggle('is-hidden',visible.length>0);const actionBtn=document.getElementById('emptyActionBtn');if(!visible.length&&geoEmpty){noResults.querySelector('strong').textContent=geoEmpty.headline;document.getElementById('noResultsText').textContent='';wireEmptyAction(geoEmpty,state.category==='treats'?'https://forms.gle/DTuKs27nSUWVbyf1A':FORM_URL)}else{document.getElementById('noResultsText').textContent=`No displays match “${state.filter}” right now.`;if(actionBtn)actionBtn.hidden=true}markerByNum.forEach((m,n)=>{const x=listings.find(v=>v.num===n);if(x&&matchFilter(x))m.addTo(map);else map.removeLayer(m)});syncEventPins();wireCards()}
+function renderCards(){const visible=activeListings();openTonightOK=typeof openTonightEligible==='function'&&typeof todayParts==='function'?openTonightEligible(visible,todayParts().dateStr):false;state.page=Math.max(0,Math.min(state.page,Math.ceil(visible.length/3)-1));const geoEmpty=typeof geoEmptyState==='function'?geoEmptyState():null,noResults=document.getElementById('noResults'),nonPlaceholder=visible.filter(x=>!x.placeholder);noResults.dataset.mode=(!visible.length&&geoEmpty)?'geo':'';const noun=state.category==='treats'?'treat stop':'display';document.getElementById('countLine').textContent=state.search?`${nonPlaceholder.length} ${noun}${nonPlaceholder.length===1?'':'s'} within ${state.search.radius} mi${state.filter!=='All'?' · '+state.filter:''}`:`${nonPlaceholder.length} ${noun}${visible.length===1?'':'s'} shown${state.filter!=='All'?' · '+state.filter:''}`;document.getElementById('cardList').innerHTML=visible.slice(state.page*3,state.page*3+3).map(cardHTML).join('');noResults.classList.toggle('is-hidden',visible.length>0);const actionBtn=document.getElementById('emptyActionBtn');if(!visible.length&&geoEmpty){noResults.querySelector('strong').textContent=geoEmpty.headline;document.getElementById('noResultsText').textContent='';wireEmptyAction(geoEmpty,state.category==='treats'?'https://forms.gle/DTuKs27nSUWVbyf1A':FORM_URL)}else{document.getElementById('noResultsText').textContent=`No displays match “${state.filter}” right now.`;if(actionBtn)actionBtn.hidden=true}markerByNum.forEach((m,n)=>{const x=listings.find(v=>v.num===n);if(x&&matchFilter(x))m.addTo(map);else map.removeLayer(m)});syncEventPins();wireCards()}
 function wireCards(){document.querySelectorAll('[data-card]').forEach(card=>{const n=+card.dataset.card;card.addEventListener('click',e=>{if(e.target.closest('button,a,details'))return;selectListing(n,true)});card.addEventListener('keydown',e=>{if(e.target!==card||!['Enter',' '].includes(e.key))return;e.preventDefault();selectListing(n,true)});card.addEventListener('mouseenter',()=>linkPair(n,true));card.addEventListener('mouseleave',()=>linkPair(n,false));card.addEventListener('focus',()=>linkPair(n,true));card.addEventListener('blur',()=>linkPair(n,false))});document.querySelectorAll('[data-route]').forEach(b=>b.onclick=e=>{e.stopPropagation();toggleRoute(+b.dataset.route)})}
 function linkPair(n,on){if(matchMedia('(pointer:fine)').matches){document.querySelector(`[data-card="${n}"]`)?.classList.toggle('is-linked',on);markerByNum.get(n)?.getElement()?.querySelector('.pin')?.classList.toggle('is-linked',on)}}
 function selectListing(n,scroll=false){if(listings.find(x=>x.num===n)?.placeholder)return;state.selected=n;markerByNum.forEach((m,num)=>m.getElement()?.querySelector('.pin')?.classList.toggle('is-selected',num===n));document.querySelectorAll('[data-card]').forEach(c=>c.classList.toggle('is-selected',+c.dataset.card===n));renderPeek(n);if(scroll&&innerWidth<1024)document.querySelector(`[data-card="${n}"]`)?.scrollIntoView({behavior:'smooth',block:'center'})}

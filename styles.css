@@ -397,3 +397,9 @@ html:not([data-fullmap]) .map-full-head{display:none!important}
 @media(prefers-reduced-motion:reduce){.map-float-btn{transition:none}}
 .locbar__back{min-height:36px;padding:0 12px;background:transparent;color:var(--lime);border:1.5px solid var(--lime);border-radius:4px;font:700 14px/1 var(--f-ui);letter-spacing:.04em;text-transform:uppercase;cursor:pointer}
 .locbar__back:hover{background:var(--chip)}
+
+/* Release 2 Part B: date-filter chips and the Open tonight badge. */
+.filter--date[aria-pressed="true"]{background:var(--violet);border-color:var(--violet);color:var(--cream)}
+.filter-date-input{min-height:40px;padding:0 10px;background:var(--night);color:var(--cream);border:1.5px solid var(--line-strong);border-radius:4px;font:600 15px var(--f-body);color-scheme:dark}
+.filter-tier--date{padding-left:12px;border-left:1.5px solid var(--violet)}
+.card__open-tonight{display:inline-flex;align-items:center;min-height:22px;padding:0 8px;border-radius:11px;background:var(--lime);color:var(--night);font:800 12px/1 var(--f-ui);letter-spacing:.06em;text-transform:uppercase}
