@@ -2,8 +2,8 @@
   "source": "approved-guide.pdf",
   "renderer": "scripts/build-flyer.py",
   "pages": 6,
-  "publicDataSha256": "7e8318d22df124a9dc27db2cbc58e2afc871560d701e9ee6439ffea6fc4b66b2",
-  "pdfSha256": "02c12317ac2baa8c1d8925ea954c2f35c0362b23b1338e9f0f16f92b476a5b14",
+  "publicDataSha256": "13286aa47ece4f83d53c80425dae65094a7fe58cd4072465b2512181407bc979",
+  "pdfSha256": "984251623a0b971643f730319dcb4a6e2561676a911c2571a283bba351be0601",
   "displayIDs": [
     1,
     2,
@@ -23,5 +23,5 @@
   "treatStopIDs": [
     11
   ],
-  "updatedDate": "2026-10-09"
+  "updatedDate": "2026-10-13"
 }

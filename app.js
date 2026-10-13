@@ -6,6 +6,12 @@ const listings=[
   "name": "Adams Family Haunt",
   "town": "Budd Lake",
   "address": "5 N Mount Olive Rd, Budd Lake, NJ",
+  "lat": 40.871773,
+  "lng": -74.734838,
+  "geoVerified": "census-exact 2026-10-13",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
   "dates": "Halloween",
   "times": "4:00 PM–8:00 PM",
   "levels": [
@@ -41,6 +47,12 @@ const listings=[
   "name": "Alcrest Avenue Halloween Display",
   "town": "Budd Lake",
   "address": "24 Alcrest Avenue, Budd Lake, NJ",
+  "lat": 40.882738,
+  "lng": -74.758231,
+  "geoVerified": "census-exact 2026-10-13",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
   "dates": "Halloween weekend",
   "times": "All weekend",
   "levels": [],
@@ -56,6 +68,12 @@ const listings=[
   "name": "Fifth Street Halloween Display",
   "town": "Budd Lake",
   "address": "23 Fifth Street, Budd Lake, NJ",
+  "lat": 40.882825,
+  "lng": -74.737823,
+  "geoVerified": "census-exact 2026-10-13",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
   "dates": "",
   "times": "",
   "levels": [
@@ -74,6 +92,12 @@ const listings=[
   "name": "Snowba's Graveyard",
   "town": "Stanhope",
   "address": "13 Towpath Lane, Stanhope, NJ",
+  "lat": 40.910162,
+  "lng": -74.703173,
+  "geoVerified": "census-exact 2026-10-13",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
   "dates": "Anytime",
   "times": "Lights turn on at 6:00 PM",
   "levels": [],
@@ -91,6 +115,12 @@ const listings=[
   "name": "Rose Lane Halloween Display",
   "town": "Budd Lake",
   "address": "9 Rose Lane, Budd Lake, NJ",
+  "lat": 40.880181,
+  "lng": -74.734232,
+  "geoVerified": "census-exact 2026-10-13",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
   "dates": "Halloween",
   "times": "",
   "levels": [],
@@ -107,6 +137,12 @@ const listings=[
   "name": "Will's House of Horrors",
   "town": "Flanders",
   "address": "20 Tinc Rd, Flanders, NJ",
+  "lat": 40.848066,
+  "lng": -74.721124,
+  "geoVerified": "census-exact 2026-10-13",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
   "dates": "October",
   "times": "Fri–Sun 6:00 PM–12:00 AM · Mon–Thu 6:00 PM–11:00 PM",
   "levels": [
@@ -132,6 +168,12 @@ const listings=[
   "name": "The Walking Dead- End",
   "town": "Budd Lake",
   "address": "14 Sunset Dr, Budd Lake, NJ",
+  "lat": 40.863415,
+  "lng": -74.728724,
+  "geoVerified": "census-exact 2026-10-13",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
   "dates": "Opens October 10",
   "times": "",
   "levels": [
@@ -151,6 +193,12 @@ const listings=[
   "name": "Drakestown Road Display",
   "town": "Flanders",
   "address": "516 Drakestown Road, Flanders, NJ",
+  "lat": 40.826347885107,
+  "lng": -74.734685446478,
+  "geoVerified": "owner-verified 2026-10-09",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
   "dates": "Now through November 1",
   "times": "6:00 PM–11:00 PM",
   "levels": [
@@ -163,9 +211,7 @@ const listings=[
    "Lights"
   ],
   "notes": "Nearest cross street: Cathy Lane.",
-  "kind": "Decorated home/yard display",
-  "lat": 40.826347885107,
-  "lng": -74.734685446478
+  "kind": "Decorated home/yard display"
  },
  {
   "updatedAt": "2026-10-07",
@@ -173,6 +219,12 @@ const listings=[
   "name": "Capone’s",
   "town": "Budd Lake",
   "address": "22 Cedar Manor Ct, Budd Lake, NJ",
+  "lat": 40.874663,
+  "lng": -74.771456,
+  "geoVerified": "census-exact 2026-10-13",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
   "dates": "Opens October 1",
   "times": "After dusk",
   "levels": [
@@ -193,6 +245,12 @@ const listings=[
   "name": "Blaze and Bones Halloween Display",
   "town": "Budd Lake",
   "address": "7 Eisenhower St, Budd Lake, NJ",
+  "lat": 40.885584,
+  "lng": -74.733947,
+  "geoVerified": "census-exact 2026-10-13",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
   "dates": "",
   "times": "6:00 PM–10:00 PM",
   "levels": [],
@@ -207,15 +265,19 @@ const listings=[
   "name": "North Rose Lane Treat Stop",
   "town": "Budd Lake",
   "address": "5 North Rose Lane, Budd Lake, NJ",
+  "lat": 40.879907156751,
+  "lng": -74.734628700993,
+  "geoVerified": "owner-verified 2026-10-09",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
   "dates": "October 31, 2026",
   "times": "2:00 PM–10:00 PM",
   "levels": [],
   "type": [],
   "features": [],
   "notes": "Street parking, fun games, friendly dog.",
-  "kind": "Trick-or-treat stop",
-  "lat": 40.879907156751,
-  "lng": -74.734628700993
+  "kind": "Trick-or-treat stop"
  }
 ];
 listings.sort((a,b)=>a.num-b.num);
@@ -227,6 +289,12 @@ const events=[
   "eventType": "Other",
   "venue": "Skully’s Costume Closet",
   "address": "5 N Mount Olive Rd, Budd Lake, NJ",
+  "lat": 40.871773,
+  "lng": -74.734838,
+  "geoVerified": "census-exact 2026-10-13",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
   "ongoing": true,
   "hours": "Weekdays 5:00 PM–8:00 PM · Weekends 10:00 AM–6:00 PM",
   "cost": "Free",
@@ -248,6 +316,12 @@ const events=[
   "eventType": "Trunk-or-treat",
   "venue": "MOHS Track",
   "address": "18 Corey Road, Flanders",
+  "lat": 40.856693,
+  "lng": -74.711907,
+  "geoVerified": "census-exact 2026-10-13",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
   "date": "2026-10-29",
   "startAt": "2026-10-29T17:30:00-04:00",
   "endAt": "2026-10-29T19:00:00-04:00",
@@ -262,6 +336,8 @@ const events=[
   "notes": "$1 off with a non-perishable food donation. Registration not required."
  }
 ];
+const CURRENT_SEASON={season:'halloween',year:2026};
+function inCurrentSeason(x){return x.season===CURRENT_SEASON.season&&x.year===CURRENT_SEASON.year&&(x.participation||'confirmed')==='confirmed'}
 const filters=['All','Family Friendly','Spooky','Scary','Walk-through','Drive-by','Walk-by','Animatronics','Fog','Music/Sound','Photo Opportunities','Lights','Actors','Costumes Available'];
 const state={filter:'All',selected:null,route:[],startMode:'current',startAddr:'',coords:{},category:'displays',page:0};
 
@@ -276,8 +352,8 @@ function iconFor(n){return L.divIcon({className:'',html:pinHTML(n),iconSize:[58,
 function gmapsDirections(address){return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`}
 function isTreatStop(x){return x.kind==='Trick-or-treat stop'}
 function eventIsUpcoming(x){return x.ongoing===true||new Date(x.endAt).getTime()>Date.now()}
-function matchFilter(x){if(x.placeholder)return state.category==='displays'&&state.filter==='All';if(state.category==='events')return false;if(isTreatStop(x)!==(state.category==='treats'))return false;if(state.category==='treats')return (state.filter==='All'||x.town===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature));if(state.filter==='All')return true;if(['Family Friendly','Spooky','Scary'].includes(state.filter))return x.levels.includes(state.filter);if(['Walk-through','Drive-by','Walk-by'].includes(state.filter))return x.type.includes(state.filter)||(x.type.includes('Drive or walk by (both)')&&['Drive-by','Walk-by'].includes(state.filter));return x.features.some(f=>featureKey(f)===state.filter)}
-function matchingEvents(){return events.filter(x=>eventIsUpcoming(x)&&(state.filter==='All'||x.eventType===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature))&&(!state.eventDay||x.ongoing||x.date===state.eventDay)).sort((a,b)=>new Date(a.startAt)-new Date(b.startAt))}
+function matchFilter(x){if(!inCurrentSeason(x))return false;if(x.placeholder)return state.category==='displays'&&state.filter==='All';if(state.category==='events')return false;if(isTreatStop(x)!==(state.category==='treats'))return false;if(state.category==='treats')return (state.filter==='All'||x.town===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature));if(state.filter==='All')return true;if(['Family Friendly','Spooky','Scary'].includes(state.filter))return x.levels.includes(state.filter);if(['Walk-through','Drive-by','Walk-by'].includes(state.filter))return x.type.includes(state.filter)||(x.type.includes('Drive or walk by (both)')&&['Drive-by','Walk-by'].includes(state.filter));return x.features.some(f=>featureKey(f)===state.filter)}
+function matchingEvents(){return events.filter(x=>eventIsUpcoming(x)&&inCurrentSeason(x)&&(state.filter==='All'||x.eventType===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature))&&(!state.eventDay||x.ongoing||x.date===state.eventDay)).sort((a,b)=>new Date(a.startAt)-new Date(b.startAt))}
 
 const FEATURE_ICONS={
  'Costumes Available':{label:'Costumes Available',path:'M10 5a2 2 0 1 1 3 2l-1 1v3M12 11 2 18v3h20v-3Z'},
@@ -315,8 +391,7 @@ function renderRoute(){document.getElementById('mobileRouteBar').classList.toggl
 
 function buildRoute(){const stops=state.route.map(n=>listings.find(x=>x.num===n));if(!stops.length)return;if(stops.length>10){state.routeMessage='Google Maps supports up to 10 stops here. Split this into smaller routes.';renderRoute();return}const capped=stops.slice(0,10),last=capped.at(-1),wps=capped.slice(0,-1).map(x=>x.address).join('|');const p=new URLSearchParams({api:'1',travelmode:'driving',destination:last.address});if(wps)p.set('waypoints',wps);if(state.startMode==='address'&&state.startAddr.trim())p.set('origin',state.startAddr.trim());else if(state.startCoords)p.set('origin',state.startCoords.lat+','+state.startCoords.lng);window.open(`https://www.google.com/maps/dir/?${p.toString()}`,'_blank','noopener')}
 
-async function geocodeAddress(address){const verified=listings.find(x=>x.address===address&&Number.isFinite(x.lat)&&Number.isFinite(x.lng));if(verified)return {lat:verified.lat,lng:verified.lng};if(address==='22 Cedar Manor Ct, Budd Lake, NJ')return {lat:40.874662837684,lng:-74.771455584376};if(address==='20 Tinc Rd, Flanders, NJ')return {lat:40.848065557922,lng:-74.721123548723};const key='hfgeo:'+address;const cached=localStorage.getItem(key);if(cached)return JSON.parse(cached);const url='https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q='+encodeURIComponent(address);const r=await fetch(url,{headers:{Accept:'application/json'}});const d=await r.json();if(!d.length)throw new Error('Not found: '+address);const out={lat:+d[0].lat,lng:+d[0].lon};localStorage.setItem(key,JSON.stringify(out));await new Promise(r=>setTimeout(r,1050));return out}
-async function loadMarkers(){const bounds=[];for(const x of listings){if(x.placeholder)continue;try{const c=await geocodeAddress(x.address);state.coords[x.num]=c;const m=L.marker([c.lat,c.lng],{icon:iconFor(x.num),keyboard:true,title:`Display ${x.num}: ${x.name}`,zIndexOffset:(listings.filter(v=>v.address===x.address).length>1?1000:100)+x.num}).addTo(map);m.on('click',()=>{selectListing(x.num,true)});m.on('mouseover',()=>linkPair(x.num,true));m.on('mouseout',()=>linkPair(x.num,false));markerByNum.set(x.num,m);bounds.push([c.lat,c.lng])}catch(err){console.warn(err)}}if(bounds.length)map.fitBounds(bounds,{paddingTopLeft:[40,80],paddingBottomRight:[40,40]});setTimeout(()=>map.invalidateSize(),100)}
+async function loadMarkers(){const bounds=[];for(const x of listings){if(x.placeholder||!Number.isFinite(x.lat)||!Number.isFinite(x.lng))continue;const c={lat:x.lat,lng:x.lng};state.coords[x.num]=c;const m=L.marker([c.lat,c.lng],{icon:iconFor(x.num),keyboard:true,title:`Display ${x.num}: ${x.name}`,zIndexOffset:(listings.filter(v=>v.address===x.address).length>1?1000:100)+x.num}).addTo(map);m.on('click',()=>{selectListing(x.num,true)});m.on('mouseover',()=>linkPair(x.num,true));m.on('mouseout',()=>linkPair(x.num,false));markerByNum.set(x.num,m);bounds.push([c.lat,c.lng])}if(bounds.length)map.fitBounds(bounds,{paddingTopLeft:[40,80],paddingBottomRight:[40,40]});setTimeout(()=>map.invalidateSize(),100)}
 
 document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;state.filter=state.filter===b.dataset.filter?'All':b.dataset.filter;renderFilters();renderCards()});document.getElementById('showAllBtn').onclick=()=>{state.filter='All';renderFilters();renderCards()};document.getElementById('shareBtn').onclick=async()=>{const b=document.getElementById('shareBtn'),payload={title:'Hauntfinder',text:'Find Halloween displays and home haunts around Mount Olive and the surrounding area.',url:'https://hauntfinder.vercel.app/'};try{if(navigator.share)await navigator.share(payload);else{await navigator.clipboard.writeText('https://hauntfinder.vercel.app/');b.textContent='Link copied';setTimeout(()=>b.textContent='Share this site',2000)}}catch{}};
 renderFilters();renderCards();renderRoute();loadMarkers();

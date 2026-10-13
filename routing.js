@@ -11,7 +11,7 @@ async function optimizeRoute(){
  if(state.optimizing||state.route.length<2)return;const route=[...state.route];state.optimizing=true;state.routeMessage='Suggesting an order…';renderRoute();
  try{
  if(route.length>10)throw new Error('Suggest an order for up to 10 stops at a time.');
- const points=[];for(const id of route){const house=listings.find(x=>x.num===id);points.push(state.coords[id]||await geocodeAddress(house.address))}
+ const points=[];for(const id of route){const house=listings.find(x=>x.num===id);points.push(state.coords[id]||{lat:house.lat,lng:house.lng})}
  const rad=x=>x*Math.PI/180;
  const matrix=points.map(a=>points.map(b=>{const v=Math.sin(rad(b.lat-a.lat)/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(rad(b.lng-a.lng)/2)**2;return 6371*2*Math.asin(Math.sqrt(Math.min(1,v)))}));
  const order=bestStopOrder(matrix);if(JSON.stringify(route)!==JSON.stringify(state.route))throw new Error('Your stops changed. Suggest an order again.');state.route=[route[0],...order.map(i=>route[i+1])];try{localStorage.setItem('hfroute:2026',JSON.stringify(state.route))}catch{}state.routeMessage='Suggested by distance, keeping your first stop. Check roads and hours in Google Maps.';

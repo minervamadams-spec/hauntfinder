@@ -1,7 +1,10 @@
 const {randomUUID,createHmac}=require('node:crypto');
+const {storageKeys}=require('../lib/keys');
 const HOUSE_IDS=new Set([1,2,3,4,5,6,7,8,9,10,11]);
 const KEY_PREFIX='hauntfinder:2026:';
 const RATE_LIMIT_SCRIPT=`local n=redis.call('INCR',KEYS[1]);if n==1 then redis.call('EXPIRE',KEYS[1],600) end;if n>5 then return 0 end;redis.call('LPUSH',KEYS[2],ARGV[1]);return 1`;
+// Legacy frozen mapping: slot 8 reviews live in the Drakestown entity namespace.
+const reviewKey=house=>storageKeys({season:'halloween',year:2026,num:house,entityId:house===8?'drakestown-road-2026':undefined}).review;
 
 function storageUrl(){return process.env.UPSTASH_REDIS_REST_URL||process.env.KV_REST_API_URL}
 function storageToken(){return process.env.UPSTASH_REDIS_REST_TOKEN||process.env.KV_REST_API_TOKEN}
@@ -10,7 +13,7 @@ async function redis(command){
   const data=await response.json();if(!response.ok||data.error)throw new Error('Storage request failed');return data.result;
 }
 async function reviewsFor(house){
-  const rows=await redis(['LRANGE',KEY_PREFIX+'reviews:'+house+(house===8?':drakestown-road-2026':''),0,199]);
+  const rows=await redis(['LRANGE',reviewKey(house),0,199]);
   return (rows||[]).map(x=>typeof x==='string'?JSON.parse(x):x);
 }
 module.exports=async function handler(req,res){
@@ -37,7 +40,7 @@ module.exports=async function handler(req,res){
     const ip=String(req.headers['x-forwarded-for']||req.socket?.remoteAddress||'unknown').split(',')[0].trim();
     const rateKey=KEY_PREFIX+'rate:'+createHmac('sha256',storageToken()).update(ip).digest('hex');
     const review={id:randomUUID(),house,name,rating,comment,timestamp:new Date().toISOString()};
-    const saved=await redis(['EVAL',RATE_LIMIT_SCRIPT,2,rateKey,KEY_PREFIX+'reviews:'+house+(house===8?':drakestown-road-2026':''),JSON.stringify(review)]);
+    const saved=await redis(['EVAL',RATE_LIMIT_SCRIPT,2,rateKey,reviewKey(house),JSON.stringify(review)]);
     if(!saved){res.setHeader('Retry-After','600');return res.status(429).json({error:'Please wait a few minutes before posting more feedback.'})}
     let reviews;try{reviews=await reviewsFor(house)}catch{reviews=[review]}
     return res.status(201).json({reviews});

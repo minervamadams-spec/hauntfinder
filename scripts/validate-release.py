@@ -12,6 +12,11 @@ assert manifest['pdfSha256']==hashlib.sha256(pdf.read_bytes()).hexdigest(),'PDF 
 doc=fitz.open(pdf)
 assert len(doc)==manifest['pages']
 nums=[x['num'] for x in data['listings']];assert len(nums)==len(set(nums)),'Duplicate listing numbers.'
+for x in data['listings']+data['events']:
+ if x.get('placeholder'):continue
+ for field in ('lat','lng'):
+  assert isinstance(x.get(field),(int,float)) and math.isfinite(x[field]),f'Missing or invalid {field} for: '+x.get('name',str(x.get('num')))
+ assert isinstance(x.get('geoVerified'),str) and x['geoVerified'].strip(),'Missing geoVerified for: '+x.get('name',str(x.get('num')))
 text='\n'.join(p.get_text() for p in doc).upper()
 def normal(s):return s.replace('’',"'").replace('–','-').replace('—','-').upper()
 for x in data['listings']+data['events']:
