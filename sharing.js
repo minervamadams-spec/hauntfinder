@@ -1,11 +1,11 @@
 const houseShareDialog=document.getElementById('houseShareDialog');
 let sharedHouse=null;
 function houseLink(house){return 'https://hauntfinder.vercel.app/?house='+house.num+(isReusedSlot(house)?'&entity='+encodeURIComponent(house.entityId):'')}
-function housePost(house){return `We're on the 2026 Hauntfinder!\n\nVisit ${house.name}\n${house.address}\n${[house.dates,house.times].filter(Boolean).join(' · ')||'Check the listing for viewing details.'}\n\nSee our listing: ${houseLink(house)}\nFind more displays around Mount Olive and nearby communities and build your route: https://hauntfinder.vercel.app/\nHave a display to add or update? ${FORM_URL}\n\n#MountOliveNJ #Halloween2026 #HauntFinder`}
+function housePost(house){return `We're on the 2026 Hauntfinder!\n\nVisit ${house.name}\n${house.address}\n${[house.dates,house.times].filter(Boolean).join(' · ')||'Check the listing for viewing details.'}\n\nSee our listing: ${houseLink(house)}\nFind more displays near you and build your route: https://hauntfinder.vercel.app/\nHave a display to add or update? ${FORM_URL}\n\n#MountOliveNJ #Halloween2026 #HauntFinder`}
 function listingImage(house,artwork=null){
   const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1080;const c=canvas.getContext('2d');
   c.fillStyle='#100b1e';c.fillRect(0,0,1080,1080);c.strokeStyle='#7837cf';c.lineWidth=8;c.strokeRect(28,28,1024,1024);
-  c.fillStyle='#b2e51a';c.font='bold 28px sans-serif';c.fillText('MOUNT OLIVE & SURROUNDING AREA • 2026',70,100);
+  c.fillStyle='#b2e51a';c.font='bold 28px sans-serif';c.fillText('HAUNTFINDER HALLOWEEN GUIDE • 2026',70,100);
   c.fillStyle='#ff8614';c.font='bold 68px sans-serif';c.fillText('HAUNTFINDER',70,192);c.fillStyle='#f5ecd1';c.font='bold 40px sans-serif';c.fillText('LOCAL HOMES. HALLOWEEN FUN.',70,250);
   function lines(text,y,size,color,maxLines=3){c.font=`${size}px sans-serif`;c.fillStyle=color;const words=String(text).split(/\s+/);let line='',count=0;for(const word of words){const next=line?line+' '+word:word;if(c.measureText(next).width>930&&line){if(++count>=maxLines){while(c.measureText(line+'…').width>930)line=line.slice(0,-1);c.fillText(line+'…',70,y);return y+size*1.3}c.fillText(line,70,y);y+=size*1.3;line=word}else line=next}if(line){while(c.measureText(line).width>930)line=line.slice(0,-2)+'…';c.fillText(line,70,y);y+=size*1.3}return y}
   if(artwork){const crops={1:[30,395,490,340],2:[30,765,480,225],3:[30,1010,480,225]};const crop=crops[house.num];if(crop)c.drawImage(artwork,...crop,70,280,940,house.num===1?360:320)}

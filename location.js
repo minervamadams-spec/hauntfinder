@@ -70,11 +70,11 @@ function stopsWithAreaFlags(stops,search){return stops.map(s=>({...s,outOfArea:B
 let zipTablePromise=null;
 function loadZipTable(fetchImpl){const f=fetchImpl||(typeof fetch!=='undefined'?fetch:null);if(!f)return Promise.resolve(null);if(!zipTablePromise)zipTablePromise=f(ZIP_TABLE_URL).then(r=>{if(!r.ok)throw new Error('ZIP table unavailable');return r.json()}).catch(()=>null);return zipTablePromise}
 if(typeof document!=='undefined'&&typeof window!=='undefined'&&document.getElementById('zipInput')){
- const els={input:document.getElementById('zipInput'),search:document.getElementById('zipSearchBtn'),locate:document.getElementById('locateBtn'),status:document.getElementById('locStatus'),radii:[...document.querySelectorAll('[data-radius]')],back:document.getElementById('backToZipBtn')};
+ const els={input:document.getElementById('zipInput'),search:document.getElementById('zipSearchBtn'),locate:document.getElementById('locateBtn'),status:document.getElementById('locStatus'),fullStatus:document.getElementById('fullMapStatus'),radii:[...document.querySelectorAll('[data-radius]')],back:document.getElementById('backToZipBtn')};
  let state=loadSearch(localStorage);
  let lastNonArea=state.mode==='area'?{...DEFAULT_SEARCH}:null;
  const announce=()=>document.dispatchEvent(new CustomEvent('hf:search-changed',{detail:{...state}}));
- const setStatus=msg=>{els.status.textContent=msg};
+ const setStatus=msg=>{els.status.textContent=msg;if(els.fullStatus)els.fullStatus.textContent=msg};
  function syncUI(){
   if(state.mode==='zip')els.input.value=state.zip;
   els.radii.forEach(b=>b.setAttribute('aria-checked',String(+b.dataset.radius===state.radius)));
