@@ -54,6 +54,7 @@ feedbackForm.addEventListener('submit',async e=>{
   finally{if(feedbackHouseId===id)button.disabled=false}
 });
 document.getElementById('aboutBtn').onclick=()=>document.getElementById('aboutDialog').showModal();
+document.getElementById('aboutHauntfinderBtn').onclick=()=>document.getElementById('aboutHauntfinderDialog').showModal();
 document.getElementById('mapKeyBtn').onclick=()=>document.getElementById('mapKeyDialog').showModal();
 
 let reportHouse=null;
