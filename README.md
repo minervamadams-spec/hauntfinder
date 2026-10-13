@@ -14,12 +14,18 @@ Included:
 - Directions links
 - Route planner that opens Google Maps
 - Share button
-- Current 6 real listings from the Google response sheet
+- 11 curated listings (10 displays, 1 treat stop) and 2 events
 
 Notes:
-- Addresses are geocoded in the browser the first time the page loads and then cached locally.
+- Listing and event coordinates are verified at street address at import time (see docs/update-workflow.md) and stored in `app.js`; nothing is geocoded in the visitor's browser.
 - For a public launch, host this folder on a static host such as Cloudflare Pages, Netlify, Vercel, GitHub Pages, or similar.
-- A future version can read approved listings from a public data endpoint instead of hardcoded JavaScript.
+
+## Location search
+
+- Visitors search by ZIP or device location, choose a 5/10/25/50-mile radius, and see results across Displays, Treat Stops and Events sorted nearest-first. Card distances are straight-line (haversine) miles from the search area — driving mileage is always longer and lives in the per-card Directions link.
+- `data/zip-centroids.json` is a static ZIP→centroid table for NJ, NY and PA built from the U.S. Census Bureau 2023 Gazetteer ZCTA file (public domain). Rebuild it with `python3 scripts/build-zip-table.py`; to add a state, add its 3-digit ZIP prefixes to the state list in that script and rerun it.
+- Search preferences live only on the visitor's device (`hfsearch:v1`); no location data is sent to any server or analytics.
+- `location.js` holds the pure distance/search functions and is Node-testable like `routing.js` (`node --test tests/*.test.js`).
 
 ## Community features
 
