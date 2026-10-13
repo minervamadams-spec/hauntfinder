@@ -1,0 +1,18 @@
+const test=require('node:test'),assert=require('node:assert/strict');
+const n=require('../lib/newsletter');
+const zipTable=require('../data/zip-centroids.json');
+const CENTER=zipTable['07001']; // [40.584, -74.2697]
+const EARTH_MI=3958.8;
+const north=(mi)=>({lat:CENTER[0]+mi/EARTH_MI*180/Math.PI,lng:CENTER[1]});
+function item(over){return {identity:'id:'+Math.random(),name:'X',season:'halloween',category:'displays',lat:undefined,lng:undefined,...over}}
+const base=()=>({email:'a@b.com',categories:['displays'],seasons:['halloween'],consent:true});
+test('prefs without zip/radius keeps the existing record shape (no area key)',()=>{const p=n.prefs(base());assert.deepEqual(Object.keys(p).sort(),['categories','email','seasons']);assert.equal(p.area,undefined)});
+test('prefs accepts a zip+radius pair and stores it as area',()=>{const p=n.prefs({...base(),zip:'07001',radius:10});assert.deepEqual(p.area,{zip:'07001',radius:10});const q=n.prefs({...base(),zip:' 07828 ',radius:'25'});assert.deepEqual(q.area,{zip:'07828',radius:25})});
+test('prefs rejects a partial or invalid area instead of guessing',()=>{assert.throws(()=>n.prefs({...base(),zip:'07001'}),/ZIP code and a search radius/);assert.throws(()=>n.prefs({...base(),radius:10}),/ZIP code and a search radius/);assert.throws(()=>n.prefs({...base(),zip:'abc',radius:10}),/ZIP code and a search radius/);assert.throws(()=>n.prefs({...base(),zip:'07001',radius:15}),/ZIP code and a search radius/)});
+test('withinArea: no area or unknown ZIP returns everything (current behavior)',()=>{const items=[item(),item({lat:CENTER[0],lng:CENTER[1]})];assert.deepEqual(n.withinArea(items,null),items);assert.deepEqual(n.withinArea(items,undefined),items);assert.deepEqual(n.withinArea(items,{zip:'99999',radius:5}),items);assert.deepEqual(n.withinArea(items,{zip:'bad',radius:5}),items)});
+test('withinArea keeps in-radius items and drops farther ones, including events',()=>{const near=item({...north(2),category:'events'}),far=item({...north(60)}),edge=item(north(4.5));const out=n.withinArea([near,far,edge],{zip:'07001',radius:5});assert.deepEqual(out,[near,edge])});
+test('withinArea treats the radius edge as inclusive (inside kept, outside dropped)',()=>{const inside=item(north(9.9)),outside=item(north(10.1));assert.deepEqual(n.withinArea([inside,outside],{zip:'07001',radius:10}),[inside]);const atCenter=item({lat:CENTER[0],lng:CENTER[1]});assert.deepEqual(n.withinArea([atCenter],{zip:'07001',radius:5}),[atCenter])});
+test('withinArea never drops items without coordinates',()=>{const unlocated=item();assert.deepEqual(n.withinArea([unlocated],{zip:'07001',radius:5}),[unlocated]);assert.deepEqual(n.withinArea([item({lat:NaN})],{zip:'07001',radius:5}).length,1)});
+test('freshEntries: subscriber without area gets all matching entries, as today',()=>{const s={seasons:['halloween'],categories:['displays','events']},items=[item(),item({category:'events'}),item({season:'holiday'})];assert.deepEqual(n.freshEntries(s,items),[items[0],items[1]])});
+test('freshEntries: subscriber with area gets only in-radius listings and events',()=>{const s={seasons:['halloween'],categories:['displays','events'],area:{zip:'07001',radius:5}},nearL=item(north(2)),farL=item(north(40)),nearE=item({...north(4),category:'events'}),farE=item({...north(50),category:'events'});assert.deepEqual(n.freshEntries(s,[nearL,farL,nearE,farE]),[nearL,nearE])});
+test('freshEntries: area subscriber with unknown ZIP still gets everything',()=>{const s={seasons:['halloween'],categories:['displays'],area:{zip:'99999',radius:5}},items=[item(north(500))];assert.deepEqual(n.freshEntries(s,items),items)});
