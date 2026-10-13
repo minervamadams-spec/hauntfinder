@@ -357,20 +357,3 @@ body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:0}
 .distance-help{display:block;margin-top:8px;font:400 13px/1.35 var(--f-body);color:var(--mist)}
 .empty .btn{margin-top:12px}
 .listing-status .btn{margin-top:6px;min-height:44px}
-
-
-/* Region-neutral Hauntfinder header, October 2026. The old banner image
-   contains embedded Mount Olive lettering, so it must not appear. */
-.hf-header{min-height:210px;height:auto!important;padding:24px max(18px,3vw) 26px!important;background:radial-gradient(ellipse at 90% 10%,#45216a 0%,#201132 43%,#100a1a 100%)!important;overflow:hidden}
-.hf-header__blur,.hf-header__edge{display:none!important}
-.hf-header__scrim{pointer-events:none;position:absolute;inset:0;display:block!important;background:radial-gradient(circle at 8% 80%,rgba(255,121,25,.15),transparent 38%)!important}
-.hf-header__row{position:relative;z-index:1;display:flex!important;align-items:center;justify-content:space-between;gap:24px;max-width:1440px;margin:auto;padding:0!important;min-height:155px}
-.hf-header__brand{flex:1;min-width:0}
-.hf-header__eyebrow{font:800 14px/1.2 var(--f-ui);color:var(--lime);letter-spacing:.16em;margin:0 0 8px;text-transform:uppercase}
-.hf-header__title{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px;height:auto!important;margin:0!important;font:400 clamp(52px,7vw,104px)/.92 var(--f-display);letter-spacing:.015em;color:var(--pumpkin);text-shadow:3px 5px 0 #080611,0 0 20px rgba(255,115,18,.28)}
-.hf-header__year{font:800 clamp(18px,2.2vw,32px)/1 var(--f-ui);color:var(--lime);letter-spacing:.04em;text-shadow:none}
-.hf-header__tagline{font:700 clamp(16px,1.7vw,23px)/1.3 var(--f-ui);color:var(--cream);margin:14px 0 0;max-width:680px}
-.hf-header__copy{flex:0 1 345px;max-width:345px;background:none!important;padding:0!important}
-.hf-header__copy .hf-lede{margin:0;color:var(--cream);font-size:15px;line-height:1.45}
-.hf-header__actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
-@media(max-width:760px){.hf-header{padding:20px 15px 22px!important}.hf-header__row{display:flex!important;flex-direction:column;align-items:stretch;gap:16px;min-height:0}.hf-header__copy{flex:auto;max-width:none}.hf-header__title{font-size:clamp(44px,11vw,78px)}.hf-header__year{font-size:20px}.hf-header__actions{display:flex!important}.hf-header__actions .btn{width:auto;flex:1;min-height:44px}}
