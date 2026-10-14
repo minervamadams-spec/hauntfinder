@@ -119,4 +119,69 @@ function outingLink(stops,base){
  const ids=(stops||[]).map(s=>s.eventId!=null?'evt:'+encodeURIComponent(s.eventId):encodeURIComponent(s.entityId)).filter(Boolean);
  return root+'?outing='+ids.join(',');
 }
-if(typeof module!=='undefined')module.exports={bestStopOrder,migrateRoute,routeEntryKey,toggleRouteEntry,isReusedSlot,legacyEntityId,REUSED_SLOTS_2026,FAVORITES_KEY,loadFavorites,toggleFavoriteEntry,parseOutingParam,outingLink};
+// Phase D (1A): "Suggest order" per spec 9.5 — nearest-first from the starting
+// point by straight-line distance; event stops stay in time order relative to
+// one another. Pure: returns a reordered copy, never mutates the input, needs
+// no globals (safe to require from tests). Stops with unresolvable coordinates
+// or a missing origin keep their relative order (stable ties). The two sorted
+// groups are merged with one stable pass over the original route, so each
+// group's new internal order holds while cross-group interleaving follows the
+// visitor's own route.
+function suggestRouteOrder(route,listings,events,origin){
+ const list=(route||[]).slice();
+ if(list.length<2)return list;
+ const byNum=new Map((listings||[]).map(x=>[x.num,x])),byEvent=new Map((events||[]).map(x=>[String(x.id),x]));
+ const coordOf=stop=>{
+  if(stop.eventId!=null){const ev=byEvent.get(String(stop.eventId));return ev&&Number.isFinite(ev.lat)&&Number.isFinite(ev.lng)?{lat:ev.lat,lng:ev.lng}:null}
+  const house=byNum.get(stop.num);
+  return house&&Number.isFinite(house.lat)&&Number.isFinite(house.lng)?{lat:house.lat,lng:house.lng}:null;
+ };
+ const rad=x=>x*Math.PI/180;
+ const dist=stop=>{
+  const c=coordOf(stop);
+  if(!c||!origin||!Number.isFinite(origin.lat)||!Number.isFinite(origin.lng))return Infinity;
+  const v=Math.sin(rad(c.lat-origin.lat)/2)**2+Math.cos(rad(origin.lat))*Math.cos(rad(c.lat))*Math.sin(rad(c.lng-origin.lng)/2)**2;
+  return 6371*2*Math.asin(Math.sqrt(Math.min(1,v)));
+ };
+ const timeOf=stop=>{
+  if(stop.eventId==null)return Infinity;
+  const ev=byEvent.get(String(stop.eventId)),t=ev?Date.parse(ev.startAt||ev.date||''):NaN;
+  return Number.isFinite(t)?t:Infinity;
+ };
+ const tagged=list.map((stop,i)=>({stop,i}));
+ const others=tagged.filter(o=>o.stop.eventId==null).sort((a,b)=>dist(a.stop)-dist(b.stop)||a.i-b.i);
+ const evts=tagged.filter(o=>o.stop.eventId!=null).sort((a,b)=>timeOf(a.stop)-timeOf(b.stop)||a.i-b.i);
+ const queues={other:others.map(o=>o.stop),event:evts.map(o=>o.stop)};
+ return list.map(stop=>queues[stop.eventId!=null?'event':'other'].shift());
+}
+// Phase D (1A) share format (?route=d10,e2): 'd<num>' = listing slot, 'e<id>' =
+// event. Separate from the legacy ?outing= entity-id format, which stays
+// byte-for-byte intact above. parseRouteParam verifies slots against the
+// current listings (placeholders and duplicates dropped) and events against
+// the events array, returning the same {num,entityId}/{eventId} entries.
+function routeLink(stops,base){
+ const root=typeof base==='string'&&base?base:'https://hauntfinder.vercel.app/';
+ const ids=(stops||[]).map(s=>s.eventId!=null?'e'+encodeURIComponent(s.eventId):s.num!=null?'d'+encodeURIComponent(s.num):'').filter(Boolean);
+ return root+'?route='+ids.join(',');
+}
+function parseRouteParam(str,listings,events){
+ const byNum=new Map((listings||[]).map(x=>[x.num,x])),byEvent=new Map((events||[]).map(x=>[String(x.id),x])),seen=new Set(),out=[];
+ String(str==null?'':str).split(',').forEach(piece=>{
+  let id;try{id=decodeURIComponent(String(piece).trim())}catch(e){return}
+  if(!id)return;
+  if(id.charAt(0)==='e'){
+   const eventId=id.slice(1);
+   if(!byEvent.has(eventId)||seen.has('e:'+eventId))return;
+   seen.add('e:'+eventId);out.push({eventId});
+   return;
+  }
+  if(id.charAt(0)!=='d')return;
+  const num=+id.slice(1);
+  if(!Number.isInteger(num))return;
+  const listing=byNum.get(num);
+  if(!listing||listing.placeholder||seen.has(num))return;
+  seen.add(num);out.push({num,entityId:listing.entityId});
+ });
+ return out;
+}
+if(typeof module!=='undefined')module.exports={bestStopOrder,migrateRoute,routeEntryKey,toggleRouteEntry,isReusedSlot,legacyEntityId,REUSED_SLOTS_2026,FAVORITES_KEY,loadFavorites,toggleFavoriteEntry,parseOutingParam,outingLink,suggestRouteOrder,routeLink,parseRouteParam};

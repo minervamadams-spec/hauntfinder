@@ -19,14 +19,15 @@ test('collapsed planner: persistent toggle lives outside the re-rendered planner
 });
 
 test('expanded state keeps every existing planner control in the render template',()=>{
-  ['route__setup','data-mode="current"','data-mode="address"','id="startAddr"','route__stops-band','id="optimizeRouteBtn"','Suggest order','id="shareOutingBtn"','Share outing','data-move-stop=','data-remove=','No stops yet','id="routeOrderStatus"','route__handoff','up to 10 stops','id="mapRouteBtn"','Map My Route'].forEach(s=>assert.ok(app.includes(s),'planner template lost '+s));
+  ['route__start','route__start-summary','data-start-edit','data-locate','data-mode="current"','data-mode="address"','id="startAddr"','route__stops','route__timeline','draggable="true"','data-stop-key=','id="optimizeRouteBtn"','Suggest order','id="shareOutingBtn"','Share outing','data-move-stop=','data-remove=','No stops yet','id="routeOrderStatus"','route__foot','Up to 10 stops. Drag to reorder.','id="mapRouteBtn"','Get directions ↗','Directions for this route ↗','Displays nearby →','data-nearby-displays'].forEach(s=>assert.ok(app.includes(s),'planner template lost '+s));
+  assert.equal(app.includes('Map My Route'),false,'old chrome label is gone');
 });
 
 test('expand/collapse state machine: aria-expanded, hidden region, hint swap, focus management',()=>{
   assert.ok(app.includes('let routeExpanded=false;'),'session-only flag, no storage key');
   assert.ok(app.includes("t.setAttribute('aria-expanded',String(open))"));
   assert.ok(app.includes('r.hidden=!open'));
-  assert.ok(app.includes("hint.textContent=open?'Collapse':'Expand'"));
+  assert.ok(app.includes("hint.textContent=open?'Hide ▾':'Expand ▴'"));
   assert.ok(app.includes("const f=r.querySelector('button,input');f&&f.focus()"),'focus moves into the planner on expand');
   assert.ok(app.includes('else t.focus()'),'focus returns to the toggle on collapse');
   assert.ok(app.includes("document.getElementById('routeToggle').onclick=()=>setRouteExpanded(!routeExpanded,true)"),'toggle click flips state with focus');
@@ -43,7 +44,7 @@ test('renderRoute serves both the desktop region and the mobile sheet body',()=>
   assert.ok(app.includes("sheetBody=document.getElementById('routeSheetBody')"),'sheet body is a render target');
   assert.ok(app.includes('plannerTargets=[planner,sheetBody].filter(Boolean)'),'missing sheet tolerated');
   assert.ok(app.includes('plannerTargets.forEach(planner=>{planner.innerHTML=html;'),'same markup written to both containers');
-  assert.ok(app.includes("if(sheetBadge)sheetBadge.textContent=state.route.length"),'sheet count badge syncs with the route');
+  assert.ok(app.includes("if(sheetBadge)sheetBadge.textContent=`${state.route.length} stop${state.route.length===1?'':'s'}`"),'sheet count badge syncs with the route');
   assert.ok(app.includes("document.getElementById('mobileRouteCount').textContent="),'mobile summary count syncs');
   assert.ok(app.includes("document.getElementById('mobileMapRouteBtn').disabled=!state.route.length"),'mobile button enabled exactly when stops exist');
 });
@@ -68,18 +69,19 @@ test('mobile summary bar opens the sheet instead of building the route directly'
   assert.ok(layout.includes("$('routeBadge').textContent=state.route.length"),'tab badge still syncs from the route');
 });
 
-test('shared route storage and outing links untouched by the collapse work',()=>{
+test('shared route storage and share links untouched by the collapse work',()=>{
   assert.ok(app.includes("localStorage.setItem('hfroute:2026',JSON.stringify(state.route))"));
   assert.ok(app.includes('function shareOuting(){'),'share outing preserved');
-  assert.ok(app.includes('outingLink(state.route)'),'outing link builder still used');
+  assert.ok(app.includes('routeLink(state.route)'),'route link builder used');
   assert.ok(app.includes('function buildRoute(){'),'Google Maps handoff preserved');
-  assert.ok(app.includes('Google Maps supports up to 10 stops'),'ten-stop cap copy preserved');
+  assert.ok(app.includes('Routes can have up to 10 stops.'),'ten-stop cap copy preserved');
+  assert.equal((app.match(/Routes can have up to 10 stops\./g)||[]).length>=3,true,'cap copy guards the add path and the directions path');
 });
 
 test('toggle bar meets the 44px target size and reads as a compact bar',()=>{
   assert.ok(css.includes('.route-toggle{'),'toggle styles exist');
-  assert.ok(css.includes('min-height:52px'),'toggle target is 52px tall');
-  assert.ok(css.includes('.route-region{margin-top:14px}'),'region spacing');
+  assert.ok(css.includes('.route-toggle{background:transparent;border:0;padding:0;min-height:44px'),'toggle target is 44px tall');
+  assert.ok(css.includes('.route-region{margin-top:18px}'),'region spacing');
   assert.ok(css.includes('.route-sheet>.btn{'),'sheet close button styled');
   assert.ok(css.includes('min-height:44px'),'sheet close button hits 44px');
 });
