@@ -444,3 +444,21 @@ html:not([data-fullmap]) .map-full-head{display:none!important}
 .route-region{margin-top:14px}
 .route-sheet .route{margin-top:12px}
 .route-sheet>.btn{display:block;margin:16px auto 0;min-height:44px}
+
+/* Compact header: retain the complete banner without stretching or cropping. */
+.hf-header__sign{width:auto;max-width:100%;height:auto;max-height:150px;margin-inline:auto;object-fit:contain}
+.hf-header__copy{padding:10px 14px 12px}
+.hf-header__actions{margin-top:8px}
+@media(max-width:600px){
+ .hf-header__sign{max-height:115px}
+}
+@media(min-width:1024px){
+ .hf-header{height:145px;flex:0 0 145px}
+ .hf-header__row{gap:22px;padding-right:24px}
+ .hf-header__title{height:100%;max-width:48%;display:flex;align-items:center}
+ .hf-header__sign{width:auto;height:auto;max-height:145px;object-fit:contain;mask-image:none}
+ .hf-header__copy{padding:0;flex:1;min-width:0}
+ .hf-lede{font-size:16px;line-height:1.35}
+ .hf-header__actions{margin-top:10px}
+ .hf-header__actions .btn{min-height:40px;font-size:16px}
+}
