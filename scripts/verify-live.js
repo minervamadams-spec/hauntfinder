@@ -8,7 +8,7 @@ const path = require('node:path');
 
 const BASE = process.env.HF_BASE || 'https://hauntfinder.vercel.app';
 // Static assets that must match the just-pushed commit byte-for-byte.
-const ASSETS = ['index.html', 'styles.css', 'app.js', 'layout.js', 'alerts-link.js', 'alerts.css', 'community.js', 'photos-ui.js'];
+const ASSETS = ['index.html', 'styles.css', 'app.js', 'layout.js', 'alerts.css', 'community.js', 'photos-ui.js'];
 // Public Google Form links wired in community.js (live HEAD must be 200).
 const FORM_LINK_RE = /(https:\/\/docs\.google\.com\/forms\/d\/e\/[\w-]+\/viewform)/g;
 
@@ -24,7 +24,7 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
   // 1. Site up and serving the app shell.
   const home = await fetch(BASE + '/');
   const homeHtml = await home.text();
-  ok('site responds 200 with app shell', home.status === 200 && homeHtml.includes('alertsDialog'), `status=${home.status}`);
+  ok('site responds 200 with app shell', home.status === 200 && homeHtml.includes('href="alerts.html"') && !homeHtml.includes('id="alertsDialog"'), `status=${home.status}`);
 
   // 2. Every key asset on production matches this checkout (deploy freshness).
   for (const f of ASSETS) {
@@ -33,15 +33,9 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
     ok(`asset live == local: ${f}`, res.status === 200 && remote === localSha(f), res.status === 200 ? '' : `status=${res.status}`);
   }
 
-  // 3. The homepage dialog must carry the usable form itself. A reachable
-  // iframe document is not sufficient: Chromium can show the parent dialog
-  // while suppressing a nested document's paint.
-  ok('alerts dialog contains native signup form', homeHtml.includes('id="alertsInlineForm"') && homeHtml.includes('alerts-link.js') && !homeHtml.includes('Community listing alerts signup'));
-
-  // 4. Alert signup must be visitor-triggered; it must never cover the page
-  // automatically after a refresh.
-  const liveAlertsLink = await (await fetch(BASE + '/alerts-link.js')).text();
-  ok('alerts modal does not auto-open', !liveAlertsLink.includes('open(null)') && !liveAlertsLink.includes('setTimeout('));
+  // 3. Alerts are a standalone page; the homepage must never carry an alert
+  // modal or an embedded form that can obstruct browsing.
+  ok('homepage has a direct alerts-page link and no alerts modal', homeHtml.includes('href="alerts.html"') && !homeHtml.includes('id="alertsDialog"') && !homeHtml.includes('alertsInlineForm'));
 
   // 5. Subscriptions API answers.
   try {
