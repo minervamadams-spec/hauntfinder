@@ -66,6 +66,12 @@ test('Bug B: alerts iframe is not lazy-loaded (blank-iframe fix)',()=>{
  assert.ok(dlg.includes('<iframe'),'iframe present');
  assert.ok(!dlg.includes('loading="lazy"'),'lazy loading removed — src is set on first open and must load immediately');
 });
+test('Bug B: alerts frame src is assigned eagerly at init, not at dialog-open time',()=>{
+ const link=fs.readFileSync(path.join(__dirname,'../alerts-link.js'),'utf8');
+ const openBody=link.split('function open(from){')[1].split('\nfunction ')[0];
+ assert.ok(!openBody.includes('frame.src'),'open() no longer touches frame.src (the open-time assignment raced first paint in Chrome and left the dialog blank)');
+ assert.match(link,/frame\.src='\/alerts\.html\?embed=1';/,'src assigned once at script init so the frame is fully loaded before the dialog can open');
+});
 
 // ---- Bug C: spec scrim for every .site-dialog instance ----
 test('Bug C: all dialogs share the rgba(5,4,8,.6) backdrop; nothing overrides it transparent',()=>{

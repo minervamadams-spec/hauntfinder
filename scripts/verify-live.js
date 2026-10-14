@@ -1,0 +1,78 @@
+// Post-deploy live verification for https://hauntfinder.vercel.app
+// Run after every push/deploy:  node scripts/verify-live.js
+// Exits non-zero with a FAIL line for every broken check.
+const { execSync } = require('node:child_process');
+const crypto = require('node:crypto');
+const fs = require('node:fs');
+const path = require('node:path');
+
+const BASE = process.env.HF_BASE || 'https://hauntfinder.vercel.app';
+// Static assets that must match the just-pushed commit byte-for-byte.
+const ASSETS = ['index.html', 'styles.css', 'app.js', 'layout.js', 'alerts-link.js', 'alerts.css', 'community.js', 'photos-ui.js'];
+// Public Google Form links wired in community.js (live HEAD must be 200).
+const FORM_LINK_RE = /(https:\/\/docs\.google\.com\/forms\/d\/e\/[\w-]+\/viewform)/g;
+
+let failures = 0;
+const ok = (name, pass, detail = '') => {
+  console.log(`${pass ? 'PASS' : 'FAIL'}  ${name}${detail ? '  — ' + detail : ''}`);
+  if (!pass) failures++;
+};
+const sha = (buf) => crypto.createHash('sha256').update(buf).digest('hex');
+const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
+
+(async () => {
+  // 1. Site up and serving the app shell.
+  const home = await fetch(BASE + '/');
+  const homeHtml = await home.text();
+  ok('site responds 200 with app shell', home.status === 200 && homeHtml.includes('alertsDialog'), `status=${home.status}`);
+
+  // 2. Every key asset on production matches this checkout (deploy freshness).
+  for (const f of ASSETS) {
+    const res = await fetch(`${BASE}/${f}`);
+    const remote = sha(Buffer.from(await res.arrayBuffer()));
+    ok(`asset live == local: ${f}`, res.status === 200 && remote === localSha(f), res.status === 200 ? '' : `status=${res.status}`);
+  }
+
+  // 3. Alerts signup frame loads and carries the real form.
+  const alerts = await fetch(BASE + '/alerts.html?embed=1');
+  const alertsHtml = await alerts.text();
+  ok('alerts frame document serves the signup form', alerts.status === 200 && alertsHtml.includes('id="alertsForm"'), `status=${alerts.status}`);
+
+  // 4. Subscriptions API answers.
+  try {
+    const sub = await (await fetch(BASE + '/api/subscriptions')).json();
+    ok('subscriptions API answers with availability', typeof sub.available === 'boolean', `available=${sub.available}`);
+  } catch (e) { ok('subscriptions API answers with availability', false, String(e.message)); }
+
+  // 5. Public photos API answers for a known listing.
+  try {
+    const photos = await (await fetch(`${BASE}/api/photos?num=1&cb=${Date.now()}`)).json();
+    ok('public photos API answers', Array.isArray(photos.photos), `${photos.photos.length} approved`);
+  } catch (e) { ok('public photos API answers', false, String(e.message)); }
+
+  // 6. Admin surface stays locked without a bearer token.
+  const noAuth = await fetch(BASE + '/api/photo-review');
+  ok('photo-review rejects anonymous access', noAuth.status === 403, `status=${noAuth.status}`);
+  const noAuth2 = await fetch(BASE + '/api/host-link');
+  ok('host-link list rejects anonymous access', noAuth2.status === 403, `status=${noAuth2.status}`);
+
+  // 7. Form links wired in the live community.js all resolve.
+  const liveCommunity = await (await fetch(BASE + '/community.js')).text();
+  const formLinks = [...new Set(liveCommunity.match(FORM_LINK_RE) || [])];
+  ok('community.js carries the three Google Form links', formLinks.length === 3, `${formLinks.length} found`);
+  for (const url of formLinks) {
+    try {
+      const r = await fetch(url, { method: 'HEAD', redirect: 'follow' });
+      ok(`form link resolves: ...${url.slice(-28)}`, r.status === 200, `status=${r.status}`);
+    } catch (e) { ok(`form link resolves: ...${url.slice(-28)}`, false, String(e.message)); }
+  }
+
+  // 8. Map library assets reachable (a dead CDN breaks the map silently).
+  try {
+    const lf = await fetch('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', { method: 'HEAD' });
+    ok('leaflet CSS CDN reachable', lf.status === 200, `status=${lf.status}`);
+  } catch (e) { ok('leaflet CSS CDN reachable', false, String(e.message)); }
+
+  console.log(failures ? `\n${failures} check(s) FAILED` : '\nAll live checks passed.');
+  process.exit(failures ? 1 : 0);
+})();

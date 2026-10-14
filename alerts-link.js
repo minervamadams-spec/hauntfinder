@@ -2,9 +2,13 @@
  const dialog=document.getElementById('alertsDialog'),frame=dialog.querySelector('iframe');
  const SEEN_KEY='hf_alerts_seen';
  let opener;
+ // Load the signup frame eagerly at page init, not at dialog-open time:
+ // setting src inside a freshly-shown <dialog> raced the frame's first paint
+ // in Chrome and left the dialog blank.
+ frame.src='/alerts.html?embed=1';
  const markSeen=()=>{try{localStorage.setItem(SEEN_KEY,'1')}catch{}};
  const hasSeen=()=>{try{return localStorage.getItem(SEEN_KEY)==='1'}catch{return true}};
- function open(from){opener=from||null;if(!frame.getAttribute('src'))frame.src='/alerts.html?embed=1';markSeen();dialog.showModal()}
+ function open(from){opener=from||null;markSeen();dialog.showModal()}
  function close(){dialog.close();opener?.focus()}
  document.querySelectorAll('[data-alerts-link]').forEach(link=>link.addEventListener('click',event=>{
   if(event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
