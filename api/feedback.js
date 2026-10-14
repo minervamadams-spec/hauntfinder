@@ -24,7 +24,7 @@ async function redis(command){
 }
 async function reviewsFor(house){
   const rows=await redis(['LRANGE',reviewKey(house),0,199]);
-  return (rows||[]).map(x=>typeof x==='string'?JSON.parse(x):x);
+  return (rows||[]).map(x=>typeof x==='string'?JSON.parse(x):x).filter(r=>r&&r.kind!=='update-request');
 }
 module.exports=async function handler(req,res){
   res.setHeader('Cache-Control','no-store');
