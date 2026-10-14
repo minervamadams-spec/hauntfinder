@@ -38,25 +38,30 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
   // while suppressing a nested document's paint.
   ok('alerts dialog contains native signup form', homeHtml.includes('id="alertsInlineForm"') && homeHtml.includes('alerts-link.js') && !homeHtml.includes('Community listing alerts signup'));
 
-  // 4. Subscriptions API answers.
+  // 4. Alert signup must be visitor-triggered; it must never cover the page
+  // automatically after a refresh.
+  const liveAlertsLink = await (await fetch(BASE + '/alerts-link.js')).text();
+  ok('alerts modal does not auto-open', !liveAlertsLink.includes('open(null)') && !liveAlertsLink.includes('setTimeout('));
+
+  // 5. Subscriptions API answers.
   try {
     const sub = await (await fetch(BASE + '/api/subscriptions')).json();
     ok('subscriptions API answers with availability', typeof sub.available === 'boolean', `available=${sub.available}`);
   } catch (e) { ok('subscriptions API answers with availability', false, String(e.message)); }
 
-  // 5. Public photos API answers for a known listing.
+  // 6. Public photos API answers for a known listing.
   try {
     const photos = await (await fetch(`${BASE}/api/photos?num=1&cb=${Date.now()}`)).json();
     ok('public photos API answers', Array.isArray(photos.photos), `${photos.photos.length} approved`);
   } catch (e) { ok('public photos API answers', false, String(e.message)); }
 
-  // 6. Admin surface stays locked without a bearer token.
+  // 7. Admin surface stays locked without a bearer token.
   const noAuth = await fetch(BASE + '/api/photo-review');
   ok('photo-review rejects anonymous access', noAuth.status === 403, `status=${noAuth.status}`);
   const noAuth2 = await fetch(BASE + '/api/host-link');
   ok('host-link list rejects anonymous access', noAuth2.status === 403, `status=${noAuth2.status}`);
 
-  // 7. Form links wired in the live community.js all resolve.
+  // 8. Form links wired in the live community.js all resolve.
   const liveCommunity = await (await fetch(BASE + '/community.js')).text();
   const formLinks = [...new Set(liveCommunity.match(FORM_LINK_RE) || [])];
   ok('community.js carries the three Google Form links', formLinks.length === 3, `${formLinks.length} found`);
@@ -67,7 +72,7 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
     } catch (e) { ok(`form link resolves: ...${url.slice(-28)}`, false, String(e.message)); }
   }
 
-  // 8. Map library assets reachable (a dead CDN breaks the map silently).
+  // 9. Map library assets reachable (a dead CDN breaks the map silently).
   try {
     const lf = await fetch('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', { method: 'HEAD' });
     ok('leaflet CSS CDN reachable', lf.status === 200, `status=${lf.status}`);
