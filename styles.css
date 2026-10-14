@@ -85,7 +85,7 @@ button{cursor:pointer}
 @media (min-width:1024px){
   .shell{width:min(1296px,calc(100% - 144px))}
   .hf-header{padding:38px 0 88px}.hf-eyebrow{font-size:19px;letter-spacing:.14em}.hf-title__word{font-size:128px;line-height:.86}.hf-title__sub{font-size:60px}.hf-lede{font-size:21px}.hf-header__actions{flex-direction:row;max-width:none}
-  .page-grid{grid-template-columns:minmax(0,1fr) 420px;gap:36px;padding-top:36px}.hf-map{height:520px;aspect-ratio:auto}.map-peek{position:absolute;left:50%;bottom:22px;right:auto;transform:translateX(-50%);margin:0;z-index:660}.map-frame{position:relative}.route-wrap{margin-top:28px}.list-column{position:sticky;top:16px;align-self:start;max-height:calc(100vh - 32px);overflow:auto;padding-right:4px}.filter{min-height:48px;padding:0 16px;font-size:18px}.card-list{gap:14px}.hf-footer{padding:40px 0}.footer-inner{flex-direction:row;align-items:center;justify-content:space-between}
+  .page-grid{grid-template-columns:minmax(0,1fr) 420px;gap:36px;padding-top:36px}.hf-map{height:520px;aspect-ratio:auto}.map-frame{position:relative}.route-wrap{margin-top:28px}.list-column{position:sticky;top:16px;align-self:start;max-height:calc(100vh - 32px);overflow:auto;padding-right:4px}.filter{min-height:48px;padding:0 16px;font-size:18px}.card-list{gap:14px}.hf-footer{padding:40px 0}.footer-inner{flex-direction:row;align-items:center;justify-content:space-between}
 }
 @media (max-width:560px){
   body{font-size:16px}.shell{width:min(100% - 28px,1296px)}.hf-header{padding:24px 0 74px}.hf-eyebrow{font-size:15px}.hf-title__word{font-size:64px}.hf-title__sub{font-size:31px}.hf-lede{font-size:17px}.hf-header__actions{max-width:none}.hf-header__actions .btn{width:100%}.moon{width:92px;height:92px;right:-10px;top:10px;opacity:.88}.bats{right:22%;top:42px;font-size:24px}.page-grid{padding-top:22px}.filter{min-height:52px;font-size:18px;padding:0 14px}.card{padding:16px;gap:16px}.card__name{font-size:23px}.card__facts{font-size:16px}.card__actions{grid-template-columns:1.3fr 1fr}.btn{font-size:17px;padding-inline:12px}.route{grid-template-columns:1fr}.footer-inner h2{font-size:23px}}
@@ -94,7 +94,7 @@ button{cursor:pointer}
 .btn--feedback{grid-column:1/-1;background:var(--chip);border:1.5px solid var(--violet);color:var(--cream);min-height:44px;font-size:17px}
 .community-links{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;margin-top:24px}
 .community-links a{padding-block:10px;overflow-wrap:anywhere}
-.site-dialog{width:min(680px,calc(100% - 28px));max-height:85dvh;padding:24px;background:var(--panel);color:var(--cream);border:2px solid var(--violet);border-top:4px solid var(--violet);border-radius:10px;overflow:auto}
+.site-dialog{position:fixed;inset:0;margin:auto;width:min(680px,calc(100% - 28px));max-height:85dvh;padding:24px;background:var(--panel);color:var(--cream);border:2px solid var(--violet);border-top:4px solid var(--violet);border-radius:10px;overflow:auto}
 .site-dialog::backdrop{background:rgba(5,4,8,.6)}
 .dialog-head{display:flex;align-items:flex-start;gap:16px;justify-content:space-between}
 .dialog-head h2{margin:0;font:800 30px/1.1 var(--f-ui);text-transform:uppercase}
@@ -864,7 +864,11 @@ body.host-panel-open{overflow:hidden}
    week grid gets 7 equal columns with a 120px minimum so it can never
    sliver; below 960px usable the mobile day list carries the page (the
    cards column stays hidden as before). The old 1024–1199 rule left the
-   cards column in an implicit grid track, crushing the week to a sliver. */
+   cards column in an implicit grid track, crushing the week to a sliver.
+   At ≥1200 the D1 anatomy (Issue 3 below) gives events a proper two-column
+   layout — week in the wide LEFT column, event cards in the 440px right
+   column — and the Phase H sticky list-scroll deliberately excludes the
+   events category so that cards column keeps its natural height. */
 @media(min-width:960px) and (max-width:1199px){
  html[data-category="events"] .page-grid{grid-template-columns:minmax(0,1fr)}
  html[data-category="events"] .map-column{grid-column:1;grid-row:auto}
@@ -956,7 +960,7 @@ body:has(dialog[open]){overflow:hidden}
 .about-social__links img{width:52px;height:52px;display:block}
 .about-social__links span{color:var(--mist);font-size:14px}
 .about-social__donate{color:var(--pumpkin);font-weight:700}
-@media(max-width:1023px){.site-dialog{position:fixed;inset:auto 0 0 0;width:100%;max-width:none;border-radius:16px 16px 0 0;max-height:88dvh}}
+@media(max-width:1023px){.site-dialog{position:fixed;inset:auto 0 0 0;margin:0;width:100%;max-width:none;border-radius:16px 16px 0 0;max-height:88dvh}}
 @media(max-width:600px){.footer-inner h2{font-size:21px}.hf-footer .footer-inner .btn--route{width:100%}}
 /* ---- Hotfix 2026-10-15: live issues on the 1A redesign (commit 2f04e79) ---- */
 
@@ -988,7 +992,7 @@ body:has(dialog[open]){overflow:hidden}
    map stays put while browsing every card; overrides the "no internal side
    scroll" rule above (same specificity, later in the sheet). */
 @media(min-width:1200px){
- .list-column{position:sticky!important;top:16px;align-self:start;height:calc(100dvh - 32px)!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain}
+ html:not([data-category="events"]) .list-column{position:sticky!important;top:16px;align-self:start;height:calc(100dvh - 32px)!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain}
 }
 /* .card__namebtn resets with all:unset (see the head block), which also wipes
    focus outlines — re-assert the 2px cream ring with priority over it. */

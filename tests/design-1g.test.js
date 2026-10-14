@@ -66,7 +66,7 @@ test('alerts popup: P0 copy, subscribe/not-now actions, compact lime-accented di
   assert.match(dlg,/<button type="button" class="btn btn--route" id="alertsSubscribeBtn">Subscribe<\/button>/);
   assert.match(dlg,/<button type="button" class="btn btn--outline" id="alertsNotNowBtn">Not now<\/button>/);
   assert.match(dlg,/Shown once on a first visit\. Unsubscribe any time\./);
-  assert.match(dlg,/<iframe title="Community listing alerts signup" loading="lazy"><\/iframe>/,'alerts iframe flow untouched');
+  assert.match(dlg,/<iframe title="Community listing alerts signup"><\/iframe>/,'alerts iframe stays eager (lazy loading inside a dialog renders blank)');
   assert.match(alertsCss,/\.alerts-dialog\{[^}]*width:min\(540px/,'alerts dialog width 540');
   assert.match(alertsCss,/border-top:4px solid #a6e22e/,'lime top accent');
   assert.equal(alertsCss.includes('alerts-dialog-close'),false,'old absolute close button class retired');
