@@ -1,0 +1,9 @@
+{
+  "name": "hauntfinder",
+  "version": "5.0.0",
+  "private": true,
+  "description": "Mount Olive Hauntfinder — community Halloween display, treat stop and event finder.",
+  "dependencies": {
+    "@vercel/blob": "^2.8.2"
+  }
+}
