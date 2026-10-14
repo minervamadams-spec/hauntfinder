@@ -1,38 +1,24 @@
 (() => {
- const dialog=document.getElementById('alertsDialog'),frame=dialog.querySelector('iframe');
+ const dialog=document.getElementById('alertsDialog');
+ const form=document.getElementById('alertsInlineForm');
+ const fields=form.querySelector('.alerts-inline-fields');
+ const status=document.getElementById('alertsInlineStatus');
+ const areaToggle=document.getElementById('alertsInlineAreaToggle');
+ const areaControls=document.getElementById('alertsInlineAreaControls');
+ const zipInput=document.getElementById('alertsInlineZip');
  const SEEN_KEY='hf_alerts_seen';
- let opener;
- // Load the signup frame eagerly at page init, not at dialog-open time:
- // setting src inside a freshly-shown <dialog> raced the frame's first paint
- // in Chrome and left the dialog blank.
- frame.src='/alerts.html?embed=1';
+ let radius=25, opener;
  const markSeen=()=>{try{localStorage.setItem(SEEN_KEY,'1')}catch{}};
  const hasSeen=()=>{try{return localStorage.getItem(SEEN_KEY)==='1'}catch{return true}};
- function open(from){opener=from||null;markSeen();dialog.showModal()}
- function close(){dialog.close();opener?.focus()}
- document.querySelectorAll('[data-alerts-link]').forEach(link=>link.addEventListener('click',event=>{
-  if(event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
-  event.preventDefault();
-  open(link);
- }));
- // Any close — × button, Esc, scrim, Not now, or the iframe's own
- // confirmation — counts as seen, so the first-visit popup never repeats.
+ const post=async body=>{const response=await fetch('/api/subscriptions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await response.json();if(!response.ok)throw new Error(data.error||'Please try again later.');return data};
+ const open=from=>{opener=from||null;markSeen();dialog.showModal()};
+ const close=()=>{dialog.close();opener?.focus()};
+ const area=()=>{if(!areaToggle.checked)return null;const zip=zipInput.value.trim();if(!/^\d{5}$/.test(zip)||![5,10,25,50].includes(radius))throw new Error('Enter a 5-digit ZIP code and choose a distance.');return {zip,radius}};
+ areaToggle.addEventListener('change',()=>{areaControls.hidden=!areaToggle.checked});
+ form.querySelectorAll('[data-alert-radius]').forEach(button=>button.addEventListener('click',()=>{radius=Number(button.dataset.alertRadius);form.querySelectorAll('[data-alert-radius]').forEach(item=>item.setAttribute('aria-checked',String(item===button)))}));
+ document.querySelectorAll('[data-alerts-link]').forEach(link=>link.addEventListener('click',event=>{if(event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;event.preventDefault();open(link)}));
  dialog.addEventListener('close',()=>{markSeen();opener?.focus()});
- window.addEventListener('message',event=>{if(event.origin===location.origin&&event.source===frame.contentWindow&&event.data==='close-alerts')close()});
- document.getElementById('alertsSubscribeBtn').addEventListener('click',()=>{
-  try{frame.contentWindow.focus()}
-  catch(e){window.open('/alerts.html','_blank','noopener')}
- });
- document.getElementById('alertsNotNowBtn').addEventListener('click',()=>close());
- fetch('/api/subscriptions').then(r=>r.json()).then(d=>{
-  if(!d.available)return;
-  document.querySelectorAll('[data-alerts-link]').forEach(x=>{x.hidden=false});
-  if(new URLSearchParams(location.search).get('src')==='alert'||hasSeen())return;
-  // First visit: offer the alert signup once, after a short delay, and never
-  // on top of another dialog.
-  setTimeout(()=>{
-    if(document.querySelector('dialog[open]'))return;
-    open(null);
-  },2000);
- }).catch(()=>{});
+ document.getElementById('alertsNotNowBtn').addEventListener('click',close);
+ form.addEventListener('submit',async event=>{event.preventDefault();const submit=form.querySelector('[type=submit]');try{const chosenArea=area();if(!form.reportValidity())return;submit.disabled=true;status.textContent='Sending your confirmation email…';const data=new FormData(form);const body={action:'subscribe',email:data.get('email'),categories:data.getAll('categories'),seasons:data.getAll('seasons'),consent:data.has('consent'),website:data.get('website')};if(chosenArea)Object.assign(body,chosenArea);const result=await post(body);status.textContent=result.message;fields.hidden=true}catch(error){status.textContent=error.message}finally{submit.disabled=false}});
+ fetch('/api/subscriptions').then(response=>response.json()).then(data=>{if(!data.available){status.textContent='Signup is being set up. Please check back soon.';return}fields.hidden=false;status.textContent='';document.querySelectorAll('[data-alerts-link]').forEach(link=>{link.hidden=false});if(new URLSearchParams(location.search).get('src')==='alert'||hasSeen())return;setTimeout(()=>{if(!document.querySelector('dialog[open]'))open(null)},2000)}).catch(()=>{status.textContent='Signup is temporarily unavailable. Please try again later.'});
 })();
