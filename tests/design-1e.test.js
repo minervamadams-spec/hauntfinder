@@ -76,7 +76,7 @@ test('day selection: toggle, All week reset, ?day= param read + write',()=>{
   assert.ok(layout.includes("!days.includes(state.eventDay)){state.eventDay='';setDayParam('')}"),'stale selected day is cleared');
   const reset=layout.includes("allEventDays').onclick");
   assert.ok(reset,'All week button wired');
-  assert.ok(layout.includes("$('allEventDays').onclick=()=>{state.eventDay='';setDayParam('');state.page=0;renderCards()}"),'All week resets day + param');
+  assert.ok(layout.includes("$('allEventDays').onclick=()=>{state.eventDay='';setDayParam('');renderCards()}"),'All week resets day + param');
 });
 
 /* ---- Right column: heading + count agreement ---- */

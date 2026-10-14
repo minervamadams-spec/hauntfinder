@@ -54,6 +54,7 @@
         slot.innerHTML='';
         const img=document.createElement('img');
         img.loading='lazy';
+        img.decoding='async';
         img.src=data.photos[0].url;
         img.alt='Owner photo for listing '+num;
         slot.appendChild(img);

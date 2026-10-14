@@ -38,7 +38,6 @@ fbq('track', 'PageView');
   <aside class="list-column">
     <div id="contentPanels" class="content-panels">
       <section id="displaysPanel" role="tabpanel" aria-labelledby="displaysTab"><div id="eventsColumnHead" class="events-column-head" hidden><h2 id="eventsDayHeading" class="events-day-heading">All week</h2><span class="events-head-count" id="eventsHeadCount" aria-live="polite"></span></div><div id="countLine" class="count-line" aria-live="polite"></div><div id="treatEmpty" class="treat-empty is-hidden"></div><div id="cardList" class="card-list"></div><div id="noResults" class="empty is-hidden"><strong>Nothing here yet</strong><span id="noResultsText"></span><button type="button" class="btn btn--outline" id="showAllBtn">Show all displays</button><button type="button" class="btn btn--route" id="emptyActionBtn" hidden></button></div></section>
-      <nav id="listingPages" class="listing-pages" aria-label="Listing pages"><button id="previousListings" type="button" class="btn btn--outline">← Previous</button><span id="listingPageSummary" aria-live="polite"></span><button id="nextListings" type="button" class="btn btn--outline">Next →</button></nav>
     </div>
   </aside>
 </main>
@@ -257,6 +256,7 @@ fbq('track', 'PageView');
 <script src="host-update-ui.js"></script>
 <script src="layout.js"></script>
 <script src="chrome-filters.js"></script>
+<script src="url-state.js"></script>
 <script src="card-flip.js"></script>
 <dialog class="site-dialog alerts-dialog" id="alertsDialog" aria-labelledby="alertsTitle">
   <div class="dialog-head"><h2 id="alertsTitle">Get new listing alerts</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close signup">×</button></div>

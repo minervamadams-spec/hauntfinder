@@ -32,7 +32,7 @@ test('open-all-week band: teal band fed by data, + Route per row, never given in
 test('day select and reset: same-day toggle resets, All week clears, selection travels as ?day=',()=>{
   assert.ok(layout.includes("state.eventDay=state.eventDay===day?'':day"),'clicking the selected day resets');
   assert.ok(layout.includes("u.searchParams.set('day',String(+day.slice(8,10)))"),'selected day stored in the URL as ?day=29');
-  assert.ok(layout.includes("$('allEventDays').onclick=()=>{state.eventDay='';setDayParam('');state.page=0;renderCards()}"));
+  assert.ok(layout.includes("$('allEventDays').onclick=()=>{state.eventDay='';setDayParam('');renderCards()}"));
   assert.ok(layout.includes("const dayParam=params.get('day')"),'deep link reads ?day=');
   assert.ok(calendarFn.includes("if(state.eventDay&&!days.includes(state.eventDay)){state.eventDay='';setDayParam('')}"),'stale day selection is dropped when data changes');
 });

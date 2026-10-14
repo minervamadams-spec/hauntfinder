@@ -118,7 +118,7 @@ renderFilters=function(){
  filtersEl.innerHTML=parts;
 };
 
-function commit(session){state.filter=session.filter;state.features=session.features.slice();state.dateFilter=typeof saveDateFilter==='function'?saveDateFilter(session.dateFilter,localStorage):session.dateFilter;state.page=0;renderFilters();renderCards()}
+function commit(session){state.filter=session.filter;state.features=session.features.slice();state.dateFilter=typeof saveDateFilter==='function'?saveDateFilter(session.dateFilter,localStorage):session.dateFilter;renderFilters();renderCards()}
 function paintMenu(dd){const session=dd._chrome||snapshot(),menu=dd.querySelector('.dd__menu');if(menu)menu.innerHTML=menuBody(dd.dataset.dd,session)}
 function updateApply(dd){const session=dd._chrome;if(!session)return;const btn=dd.querySelector('[data-dd-apply]');if(btn)btn.textContent=applyText(session)}
 
@@ -171,7 +171,7 @@ filtersEl.addEventListener('change',e=>{
 document.addEventListener('keydown',e=>{
  if(e.key!=='Escape')return;
  const open=document.querySelector('#filters details.dd[open], details.within-dd[open]');
- if(open)open.open=false;
+ if(open){const summary=open.querySelector('summary');open.open=false;if(summary)summary.focus()}
 });
 document.addEventListener('click',e=>{
  if(e.target.closest&&e.target.closest('#filters details.dd, details.within-dd, .within-dd__menu'))return;

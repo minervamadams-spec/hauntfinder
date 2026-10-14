@@ -25,6 +25,7 @@ function toggleFlip(card){
   const front=card.querySelector('.card-face--front'),back=card.querySelector('.card-face--back');
   if(front)front.setAttribute('aria-hidden',String(flipped));
   if(back)back.setAttribute('aria-hidden',String(!flipped));
+  card.querySelectorAll('[data-flip-open]').forEach(b=>b.setAttribute('aria-pressed',String(flipped)));
 }
 
 cardList.addEventListener('click',e=>{
@@ -59,6 +60,7 @@ window.hfPaintCardFlip=function(num){
     nameBtn.type='button';
     nameBtn.className='card__namebtn';
     nameBtn.dataset.flipOpen=String(num);
+    nameBtn.setAttribute('aria-pressed','false');
     nameBtn.setAttribute('aria-label','Show the photo for '+nameText);
     nameBtn.textContent=nameText;
     nameEl.replaceChildren(nameBtn);
@@ -66,6 +68,7 @@ window.hfPaintCardFlip=function(num){
     pill.type='button';
     pill.className='card__photo-pill';
     pill.dataset.flipOpen=String(num);
+    pill.setAttribute('aria-pressed','false');
     pill.textContent='↻ Photo';
     nameEl.after(pill);
   }
@@ -79,6 +82,7 @@ window.hfPaintCardFlip=function(num){
   img.src=hfPhotoURL(num);
   img.alt='Host photo for listing '+num;
   img.loading='lazy';
+  img.decoding='async';
   const bar=document.createElement('div');
   bar.className='card__back-bar';
   const meta=document.createElement('div');

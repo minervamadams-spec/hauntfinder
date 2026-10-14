@@ -120,7 +120,7 @@ test('segmented toggle: cream selected half, mobile 42x44 icon halves',()=>{
 });
 
 test('events chrome and legacy listeners stay delegated, not deleted',()=>{
-  assert.ok(layout.includes("state.eventDay='';state.page=0;renderFilters();renderCards();return"),'events reset path intact');
+  assert.ok(layout.includes("state.eventDay='';renderFilters();renderCards();return"),'events reset path intact');
   assert.ok(layout.includes("data-date-filter")&&layout.includes("dateFilterInput"),'legacy date chip hooks kept for events');
   assert.ok(app.includes('data-reset-filters')&&layout.includes('data-reset-filters'),'legacy reset hooks kept in sources');
   assert.ok(app.includes("saveDateFilter({kind:null,date:null},localStorage)"),'reset saves the cleared date filter');
