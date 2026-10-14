@@ -49,6 +49,9 @@ module.exports=async function handler(req,res){
   if(!body||typeof body!=='object'||!body.payload||typeof body.payload!=='object')return res.status(400).json({error:'Please use the photo upload form.'});
   try{
     const jsonResponse=await handleUpload({
+      // Public store (hauntfinder-photos) connected with a PHOTOS_ prefix;
+      // fall back to the legacy BLOB_READ_WRITE_TOKEN for older environments.
+      token:process.env.PHOTOS_READ_WRITE_TOKEN||process.env.BLOB_READ_WRITE_TOKEN,
       request:req,
       body,
       onBeforeGenerateToken:async(pathname,clientPayload)=>{
