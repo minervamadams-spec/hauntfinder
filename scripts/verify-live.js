@@ -33,10 +33,10 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
     ok(`asset live == local: ${f}`, res.status === 200 && remote === localSha(f), res.status === 200 ? '' : `status=${res.status}`);
   }
 
-  // 3. Alerts signup frame loads and carries the real form.
-  const alerts = await fetch(BASE + '/alerts.html?embed=1');
-  const alertsHtml = await alerts.text();
-  ok('alerts frame document serves the signup form', alerts.status === 200 && alertsHtml.includes('id="alertsForm"'), `status=${alerts.status}`);
+  // 3. The homepage dialog must carry the usable form itself. A reachable
+  // iframe document is not sufficient: Chromium can show the parent dialog
+  // while suppressing a nested document's paint.
+  ok('alerts dialog contains native signup form', homeHtml.includes('id="alertsInlineForm"') && homeHtml.includes('alerts-link.js') && !homeHtml.includes('Community listing alerts signup'));
 
   // 4. Subscriptions API answers.
   try {
