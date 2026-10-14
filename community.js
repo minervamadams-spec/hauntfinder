@@ -18,7 +18,7 @@ document.querySelectorAll('[data-close-dialog]').forEach(b=>b.onclick=()=>b.clos
 document.querySelectorAll('.site-dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target!==d)return;const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}));
 feedbackDialog.addEventListener('close',()=>feedbackRequest?.abort());
 document.getElementById('cardList').addEventListener('click',e=>{const b=e.target.closest('[data-feedback]');if(b)openFeedback(+b.dataset.feedback)});
-document.getElementById('mobileMapRouteBtn').onclick=buildRoute;
+document.getElementById('mobileMapRouteBtn').onclick=openRouteSheet;
 function displayFeedback(data){
   rememberRating(feedbackHouseId,data);
   const reviews=data.reviews||[];

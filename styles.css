@@ -433,3 +433,13 @@ html:not([data-fullmap]) .map-full-head{display:none!important}
 .card__fav-btn{min-width:44px;min-height:44px;padding:0 10px;font-size:22px;line-height:1;background:transparent;color:var(--pumpkin);border:2px solid var(--pumpkin);border-radius:999px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
 .card__fav-btn[aria-pressed="true"]{background:var(--pumpkin);color:var(--night)}
 .map-peek__fav{min-width:44px;min-height:44px;font-size:19px}
+
+/* v5 Phase G: collapsed route planner — compact toggle bar over an expandable region */
+.route-toggle{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;padding:0 16px;background:var(--filter);border:2px solid var(--line-strong);border-radius:6px;color:var(--cream);font:800 18px/1 var(--f-ui);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.route-toggle:hover{border-color:var(--cream)}
+.route-toggle__title{margin-right:auto}
+.route-toggle__suffix{color:var(--mist);text-transform:none;letter-spacing:0}
+.route-toggle__hint{font-size:13px;color:var(--lime);text-transform:none;letter-spacing:0}
+.route-region{margin-top:14px}
+.route-sheet .route{margin-top:12px}
+.route-sheet>.btn{display:block;margin:16px auto 0;min-height:44px}
