@@ -24,7 +24,10 @@ module.exports=async function handler(req,res){
   const num=Number(req.query&&req.query.num);
   if(!Number.isInteger(num))return res.status(400).json({error:'Please choose a listed home.'});
   if(!HOUSE_IDS.has(num))return res.status(404).json({error:'Unknown listing.'});
-  res.setHeader('Cache-Control','public, max-age=300');
+  // 60s edge cache: short enough that an organizer-approved photo shows on
+  // the next page load shortly after approval (a 5-min cache made approvals
+  // appear to do nothing).
+  res.setHeader('Cache-Control','public, max-age=60');
   if(!storageUrl()||!storageToken())return res.status(200).json({photos:[]});
   try{
     const rows=await redis(['LRANGE',PHOTOS_KEY(num),0,49]);

@@ -33,7 +33,7 @@ test('photos API returns approved records only, validates the listing, fails clo
     res=response();await photosHandler({method:'GET',query:{},headers:{}},res);assert.equal(res.statusCode,400,'missing num rejected');
     res=response();await photosHandler({method:'GET',query:{num:'999'},headers:{}},res);assert.equal(res.statusCode,404,'unknown listing rejected');
     res=response();await photosHandler({method:'GET',query:{num:'1'},headers:{}},res);
-    assert.equal(res.statusCode,200);assert.equal(res.headers['Cache-Control'],'public, max-age=300');
+    assert.equal(res.statusCode,200);assert.equal(res.headers['Cache-Control'],'public, max-age=60');
     assert.deepEqual(res.body.photos,[{id:'a',url:'https://blob/1/a.jpg',pathname:'photos/1/a.jpg'}],'only the approved record is returned, without pending/rejected or review-namespace rows');
     res=response();await photosHandler({method:'GET',query:{num:'2'},headers:{}},res);assert.deepEqual(res.body,{photos:[]},'missing key -> empty array');
     global.fetch=async()=>{throw Error('offline')};res=response();await photosHandler({method:'GET',query:{num:'1'},headers:{}},res);assert.deepEqual(res.body,{photos:[]},'storage outage -> empty array');
