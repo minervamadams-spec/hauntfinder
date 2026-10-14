@@ -1,0 +1,29 @@
+name: Production live QA
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify-production:
+    name: Verify deployed production site
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Wait for the Vercel deployment and verify the live site
+        run: |
+          for attempt in {1..10}; do
+            echo "Live QA attempt $attempt of 10"
+            if node scripts/verify-live.js; then
+              exit 0
+            fi
+            sleep 30
+          done
+          exit 1
