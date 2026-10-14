@@ -135,6 +135,16 @@ function normalizeDateFilter(filter){
  if(filter.kind==='date'&&dateStrOk(filter.date))return {kind:'date',date:filter.date};
  return {kind:null,date:null};
 }
+// Short label for an active date filter, shown in result counts so a
+// date-narrowed count is distinguishable from the area total
+// ("3 displays within 25 mi · Tonight").
+function dateFilterLabel(filter){
+ const f=normalizeDateFilter(filter);
+ if(f.kind==='tonight')return 'Tonight';
+ if(f.kind==='weekend')return 'This weekend';
+ if(f.kind==='date'){const dt=new Date(f.date+'T12:00:00');return isNaN(dt.getTime())?f.date:dt.toLocaleDateString('en-US',{month:'short',day:'numeric'})}
+ return null;
+}
 function loadDateFilter(storage){try{return normalizeDateFilter(JSON.parse(storage.getItem(DATE_FILTER_KEY)||'null'))}catch{return {kind:null,date:null}}}
 function saveDateFilter(filter,storage){const clean=normalizeDateFilter(filter);try{storage.setItem(DATE_FILTER_KEY,JSON.stringify(clean))}catch{}return clean}
 // The predicate date filters AND through: Tonight keeps only listings with
@@ -172,4 +182,4 @@ function eventDays(events){
  else if(days.length>1)label=`${fmtD(days[0])}–${fmtD(days[days.length-1])}`;
  return {days,ongoing,label};
 }
-if(typeof module!=='undefined')module.exports={hoursOn,datesActive,hasScheduleInfo,isOpenAt,hoursLabel,openOnDateLabel,schedulesCompleteFor,openTonightEligible,DATE_FILTER_KEY,todayParts,nextWeekendDates,normalizeDateFilter,loadDateFilter,saveDateFilter,schedulesDateMatch,openTonightBadgeHTML,eventDays};
+if(typeof module!=='undefined')module.exports={hoursOn,datesActive,hasScheduleInfo,isOpenAt,hoursLabel,openOnDateLabel,schedulesCompleteFor,openTonightEligible,DATE_FILTER_KEY,todayParts,nextWeekendDates,normalizeDateFilter,loadDateFilter,saveDateFilter,schedulesDateMatch,openTonightBadgeHTML,eventDays,dateFilterLabel};

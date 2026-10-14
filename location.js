@@ -73,12 +73,14 @@ if(typeof document!=='undefined'&&typeof window!=='undefined'&&document.getEleme
  const els={input:document.getElementById('zipInput'),search:document.getElementById('zipSearchBtn'),locate:document.getElementById('locateBtn'),status:document.getElementById('locStatus'),fullStatus:document.getElementById('fullMapStatus'),radii:[...document.querySelectorAll('[data-radius]')],back:document.getElementById('backToZipBtn')};
  let state=loadSearch(localStorage);
  let lastNonArea=state.mode==='area'?{...DEFAULT_SEARCH}:null;
+ let feedback=''; // transient errors/progress only; the active ZIP + radius controls are the source of truth
  const announce=()=>document.dispatchEvent(new CustomEvent('hf:search-changed',{detail:{...state}}));
- const setStatus=msg=>{els.status.textContent=msg;if(els.fullStatus)els.fullStatus.textContent=msg};
+ const setStatus=msg=>{feedback=msg;els.status.textContent=msg;if(els.fullStatus)els.fullStatus.textContent=describeSearch(state)};
  function syncUI(){
   if(state.mode==='zip')els.input.value=state.zip;
   els.radii.forEach(b=>b.setAttribute('aria-checked',String(+b.dataset.radius===state.radius)));
-  setStatus(describeSearch(state));
+  if(els.fullStatus)els.fullStatus.textContent=describeSearch(state);
+  els.status.textContent=feedback;
   if(els.back){if(state.mode==='area'&&lastNonArea){els.back.hidden=false;els.back.textContent=lastNonArea.mode==='device'?'Back to your location':`Back to ${lastNonArea.zip}`}else els.back.hidden=true}
  }
  async function searchZip(){
@@ -90,7 +92,7 @@ if(typeof document!=='undefined'&&typeof window!=='undefined'&&document.getEleme
   else{const table=await loadZipTable();const hit=table&&table[zip];if(!hit){setStatus(ERR_UNKNOWN_ZIP);return}center={lat:hit[0],lng:hit[1]}}
   state=saveSearch({...state,mode:'zip',zip,lat:center.lat,lng:center.lng},localStorage);
   lastNonArea={...state};
-  syncUI();announce();
+  feedback='';syncUI();announce();
  }
  els.search.onclick=searchZip;
  els.input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();searchZip()}});
@@ -98,17 +100,17 @@ if(typeof document!=='undefined'&&typeof window!=='undefined'&&document.getEleme
   if(!navigator.geolocation){setStatus(ERR_GEOLOCATION);els.input.focus();return}
   setStatus('Locating…');
   navigator.geolocation.getCurrentPosition(
-   pos=>{state=saveSearch({...state,mode:'device',lat:pos.coords.latitude,lng:pos.coords.longitude},localStorage);lastNonArea={...state};syncUI();announce()},
+   pos=>{state=saveSearch({...state,mode:'device',lat:pos.coords.latitude,lng:pos.coords.longitude},localStorage);lastNonArea={...state};feedback='';syncUI();announce()},
    ()=>{setStatus(ERR_GEOLOCATION);els.input.focus()},
    {enableHighAccuracy:false,timeout:10000}
   );
  };
- els.radii.forEach(b=>{b.onclick=()=>{state=saveSearch({...state,radius:+b.dataset.radius},localStorage);syncUI();announce()}});
+ els.radii.forEach(b=>{b.onclick=()=>{state=saveSearch({...state,radius:+b.dataset.radius},localStorage);feedback='';syncUI();announce()}});
  // Empty-state "Expand radius" and deep-link "Show listings near here".
- document.addEventListener('hf:expand-radius',e=>{const radius=e.detail&&e.detail.radius;if(!RADII.includes(radius))return;state=saveSearch({...state,radius},localStorage);syncUI();announce()});
- document.addEventListener('hf:search-near',e=>{const d=e.detail||{};if(!Number.isFinite(d.lat)||!Number.isFinite(d.lng))return;if(state.mode!=='area')lastNonArea={...state};state=saveSearch({...state,mode:'area',lat:round2(d.lat),lng:round2(d.lng)},localStorage);syncUI();announce()});
+ document.addEventListener('hf:expand-radius',e=>{const radius=e.detail&&e.detail.radius;if(!RADII.includes(radius))return;state=saveSearch({...state,radius},localStorage);feedback='';syncUI();announce()});
+ document.addEventListener('hf:search-near',e=>{const d=e.detail||{};if(!Number.isFinite(d.lat)||!Number.isFinite(d.lng))return;if(state.mode!=='area')lastNonArea={...state};state=saveSearch({...state,mode:'area',lat:round2(d.lat),lng:round2(d.lng)},localStorage);feedback='';syncUI();announce()});
  // "Search this area" gets a way back: restore the previous ZIP/device search.
- if(els.back)els.back.onclick=()=>{if(!lastNonArea)return;state=saveSearch({...lastNonArea},localStorage);syncUI();announce()};
+ if(els.back)els.back.onclick=()=>{if(!lastNonArea)return;state=saveSearch({...lastNonArea},localStorage);feedback='';syncUI();announce()};
  syncUI();
  announce();
 }
