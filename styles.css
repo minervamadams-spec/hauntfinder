@@ -540,3 +540,121 @@ body.host-panel-open{overflow:hidden}
   .banner__frame{aspect-ratio:4.2/1}
   .banner__img{object-position:center 52%}
 }
+
+
+/* v6 Phase B (Direction 1A): global chrome — intro strip, nav row (tabs +
+   search), dropdown filter row, segmented List/Map toggle. Appended after
+   existing rules; new classes only, plus later equal-specificity redeclarations
+   of #displaysTab/#treatStopsTab/#eventsTab/.view-toggle/.filterbar states. */
+
+/* ---- Intro strip (spec 6.2): band background, one paragraph, no buttons. */
+.intro-strip{background:var(--band);padding:14px var(--space-10)}
+.intro-strip__copy{max-width:1200px;margin:0 auto;font:400 17px/1.5 var(--f-body);color:var(--text-2)}
+
+/* ---- Filterbar becomes a vertical chrome stack (nav row + filter row). */
+.filterbar{display:flex;flex-direction:column;gap:0;overflow:visible;padding:0;border-bottom:1.5px solid var(--line)}
+.filterbar .nav-row{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;padding:var(--space-2) var(--space-10) 0}
+.filterbar .chrome-row{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);flex-wrap:wrap;padding:var(--space-4) var(--space-10)}
+.filterbar .chrome-row .filters{display:flex;flex-direction:row;flex-wrap:wrap;gap:var(--space-2);width:auto}
+.chrome-row__right{display:flex;align-items:center;gap:var(--space-2);margin-left:auto}
+.chrome-status{display:flex;align-items:center;gap:var(--space-3);padding:0 var(--space-10) 10px}
+.chrome-status:has(#locStatus:empty){padding:0}
+.chrome-status .locbar__status{width:auto;flex-basis:auto;margin:0;font:500 13px/1.4 var(--f-body);letter-spacing:0;color:var(--text-3)}
+
+/* ---- Tabs in the nav row (spec 6.3): text-3 inactive, 4px accent underline. */
+.filterbar .tabs{display:flex;gap:2px;border:0;border-radius:0;overflow:visible;margin:0}
+.filterbar .tabs button{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 var(--space-3);background:transparent;border:0;color:var(--text-3);font:600 15px var(--f-body);letter-spacing:0;text-transform:none;cursor:pointer}
+.filterbar .tabs button+button{border-left:0}
+.filterbar .tabs .tabs__badge{font-size:13px;min-width:22px;height:22px}
+#displaysTab[aria-selected="true"]{background:transparent;color:var(--text);box-shadow:inset 0 -4px 0 0 var(--orange)}
+#treatStopsTab[aria-selected="true"]{background:transparent;color:var(--text);box-shadow:inset 0 -4px 0 0 var(--lime)}
+#eventsTab[aria-selected="true"]{background:transparent;color:var(--text);box-shadow:inset 0 -4px 0 0 var(--purple)}
+
+/* ---- Search cluster (spec 6.3): 260px input, Within dropdown, orange
+   Search, purple location text button. */
+.filterbar .nav-search{display:flex;align-items:center;gap:var(--space-2);flex-wrap:nowrap}
+.nav-search .locbar__zip{display:flex;align-items:center;gap:var(--space-2)}
+.nav-search .locbar__input{width:260px;min-height:44px;background:var(--card);color:var(--text);border:2px solid var(--line-2);border-radius:var(--radius-control);font:600 15px var(--f-body)}
+.nav-search .locbar__input::placeholder{color:var(--text-3)}
+.nav-search .locbar__input:focus{outline:none;border-color:var(--orange)}
+.nav-search .locbar__go{min-height:44px;padding:0 var(--space-4);background:var(--orange);color:#0B0910;border:2px solid var(--orange);border-radius:var(--radius-control);font:700 15px var(--f-cond);letter-spacing:.06em;text-transform:uppercase}
+.nav-search .locbar__locate{min-height:44px;padding:0 var(--space-3);background:transparent;color:var(--purple);border:0;font:600 15px var(--f-body)}
+
+/* ---- "Within 25 mi" dropdown (spec 6.3). The radiogroup and its
+   data-radius buttons keep their legacy classes/attributes. */
+.within-dd{position:relative}
+.within-dd>.locbar__within{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 var(--space-3);background:var(--card);border:2px solid var(--line-2);border-radius:var(--radius-control);color:var(--text-3);font:600 15px var(--f-body);cursor:pointer;list-style:none}
+.within-dd>.locbar__within::-webkit-details-marker{display:none}
+.within-dd .within-dd__value{color:var(--text)}
+.within-dd__caret{color:var(--orange)}
+.within-dd__menu{position:absolute;top:calc(100% + 4px);right:0;z-index:960;width:270px;background:var(--panel);border:2px solid var(--line-2);border-radius:var(--radius-card);box-shadow:var(--shadow-dropdown);padding:var(--space-2)}
+.within-dd__head{display:none;align-items:center;padding:2px var(--space-3) var(--space-2)}
+.within-dd__handle{display:none;width:44px;height:4px;border-radius:3px;background:var(--line-2)}
+.within-dd__title{margin:0;font:400 20px var(--f-display);color:var(--text)}
+.within-dd__menu .locbar__radius{flex-direction:column;gap:0;min-width:0;border:0;border-radius:0;overflow:visible}
+.within-dd__menu .locbar__radius button{width:100%;min-height:44px;padding:0 var(--space-3);background:transparent;color:var(--text);border:0;border-radius:var(--radius-control);text-align:left;font:600 15px var(--f-body)}
+.within-dd__menu .locbar__radius button+button{border-left:0}
+.within-dd__menu .locbar__radius button:hover{background:var(--card)}
+.within-dd__menu .locbar__radius button[aria-checked="true"]{background:#22140A;color:var(--orange)}
+
+/* ---- Share button in the filter row. */
+.chrome-share{min-height:40px;padding:0 var(--space-3);background:transparent;color:var(--text-2);border:2px solid var(--line-2);border-radius:var(--radius-control);font:600 14px var(--f-body)}
+
+/* ---- Dropdown component (spec 8.2). Closed: 40px tall in the desktop
+   filter row, 2px line-2 border, label text-3 + value text + orange caret.
+   Active filter: orange border and #22140A background. */
+.dd{position:relative}
+.dd__btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 var(--space-3);background:var(--card);border:2px solid var(--line-2);border-radius:var(--radius-control);color:var(--text);font:600 15px var(--f-body);cursor:pointer;list-style:none}
+.dd__btn::-webkit-details-marker{display:none}
+.dd__label{color:var(--text-3)}
+.dd__caret{color:var(--orange)}
+.dd--active>.dd__btn{border-color:var(--orange);background:#22140A}
+.dd__menu{position:absolute;top:calc(100% + 4px);left:0;z-index:960;width:270px;background:var(--panel);border:2px solid var(--line-2);border-radius:var(--radius-card);box-shadow:var(--shadow-dropdown);padding:var(--space-2)}
+.dd__sheet-head{display:none;align-items:center;gap:var(--space-2);padding:2px var(--space-3) var(--space-2)}
+.dd__handle{display:none;width:44px;height:4px;border-radius:3px;background:var(--line-2)}
+.dd__title{margin:0;font:400 20px var(--f-display);color:var(--text)}
+.dd__clear-all{margin-left:auto;min-height:36px;padding:0 var(--space-2);background:none;border:0;color:var(--orange);font:600 14px var(--f-body);cursor:pointer}
+.dd__group{margin:0;padding:0;border:0;min-width:0}
+.dd__group legend{padding:0}
+.dd__row{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 var(--space-3);border-radius:var(--radius-control);color:var(--text);font:500 15px var(--f-body);cursor:pointer}
+.dd__row:hover{background:var(--card)}
+.dd__row input{width:18px;height:18px;accent-color:var(--orange)}
+.dd__daterow{display:flex;align-items:center;gap:8px;padding:4px var(--space-3) 8px;color:var(--text-3);font:500 14px var(--f-body)}
+.dd__date{min-height:40px;background:var(--card);color:var(--text);border:2px solid var(--line-2);border-radius:var(--radius-control);padding:0 8px;font:500 15px var(--f-body)}
+.dd__foot{display:flex;gap:var(--space-2);padding:var(--space-2) var(--space-3) var(--space-3)}
+.dd__foot .btn{flex:1;min-height:44px;justify-content:center}
+.btn--primary{background:var(--orange);color:#0B0910;border:2px solid var(--orange);border-radius:var(--radius-control);font:700 15px var(--f-cond);letter-spacing:.06em;text-transform:uppercase}
+
+/* ---- Segmented List/Map toggle (spec 8.3): cream selected half; mobile
+   halves are 42x44 icon buttons. */
+.view-toggle{display:flex;gap:0;border:2px solid var(--line-2);border-radius:var(--radius-control);overflow:hidden}
+.view-toggle button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0 var(--space-3);background:var(--card);color:var(--text-3);border:0;font:600 15px var(--f-body);cursor:pointer}
+.view-toggle button+button{border-left:2px solid var(--line-2)}
+.view-toggle button[aria-pressed="true"]{background:#F6EBD3;color:#0B0910}
+.view-toggle__icon{display:none;width:18px;height:18px}
+
+/* ---- Mobile (spec 6 breakpoints): dropdowns open as bottom sheets with a
+   handle, Rubik Dirt title, Clear all, and a sticky Cancel + Show N footer. */
+@media(max-width:767px){
+  .intro-strip{padding:14px var(--space-4)}
+  .filterbar .nav-row{flex-direction:column;align-items:stretch;gap:var(--space-2);padding:var(--space-2) 12px 0}
+  .filterbar .tabs{width:100%;gap:0}
+  .filterbar .tabs button{flex:1 1 0;justify-content:center;min-width:0;padding:0 var(--space-1);font-size:14px;white-space:nowrap}
+  .filterbar .nav-search{flex-wrap:wrap}
+  .nav-search .locbar__zip{flex:1 1 100%}
+  .nav-search .locbar__input{width:100%;flex:1}
+  .filterbar .chrome-row{gap:var(--space-2);padding:var(--space-3) 12px}
+  .chrome-row__right{margin-left:auto}
+  .chrome-status{padding:0 12px 8px}
+  .dd__btn,.dd--active>.dd__btn,.chrome-share{min-height:44px}
+  .dd[open]>.dd__menu{position:fixed;left:0;right:0;bottom:0;top:auto;width:auto;max-height:80dvh;overflow-y:auto;border-radius:var(--radius-card) var(--radius-card) 0 0;padding:8px 12px calc(12px + env(safe-area-inset-bottom));z-index:1200}
+  .dd__sheet-head{display:flex}
+  .dd__handle{display:block;margin:4px auto 8px}
+  .dd__foot{position:sticky;bottom:0;background:var(--panel);padding:var(--space-2) 0 calc(var(--space-2) + env(safe-area-inset-bottom))}
+  .within-dd[open]>.within-dd__menu{position:fixed;left:0;right:0;bottom:0;top:auto;width:auto;border-radius:var(--radius-card) var(--radius-card) 0 0;padding:8px 12px calc(12px + env(safe-area-inset-bottom));z-index:1200}
+  .within-dd__head{display:flex}
+  .within-dd__handle{display:block;margin:4px auto 8px}
+  .view-toggle button{width:42px;height:44px;padding:0}
+  .view-toggle__text{display:none}
+  .view-toggle__icon{display:block}
+}
