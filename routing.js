@@ -29,9 +29,25 @@ function isReusedSlot(listing){
 // never silently kept; order is preserved and numbers deduped.
 // legacyEntityMap holds old hfentity:n values still on a device; a legacy
 // number saved for a slot whose recorded entity no longer matches is dropped.
-function migrateRoute(saved,listings,legacyEntityMap){
- const byNum=new Map(listings.map(x=>[x.num,x])),seen=new Set(),out=[];
+// v5 Phase F addendum: events join the route with their own discriminated
+// shape — {eventId} only, never {num}. Pass the upcoming/in-season events
+// array as the 4th argument; event entries verify against it (unknown events
+// dropped, duplicates deduped) and can never be read as listing entries.
+// Without that argument, event entries are dropped, exactly as before.
+function routeEntryKey(entry){return entry&&entry.eventId!=null?'e:'+entry.eventId:'n:'+entry.num}
+// Pure add/remove for either entry kind: matching key toggles off; anything
+// else is appended. Order is otherwise preserved, shape untouched.
+function toggleRouteEntry(route,entry){const k=routeEntryKey(entry),out=(route||[]).filter(r=>routeEntryKey(r)!==k);if(out.length===(route||[]).length)out.push(entry);return out}
+function migrateRoute(saved,listings,legacyEntityMap,events){
+ const byNum=new Map(listings.map(x=>[x.num,x])),byEvent=new Map((events||[]).map(x=>[x.id,x])),seen=new Set(),out=[];
  const consider=entry=>{
+  if(entry&&typeof entry==='object'&&entry.eventId!=null){
+   if(entry.num!==undefined)return;
+   const id=String(entry.eventId);
+   if(!byEvent.has(id)||seen.has('e:'+id))return;
+   seen.add('e:'+id);out.push({eventId:id});
+   return;
+  }
   let num,entityId;
   if(typeof entry==='number'||typeof entry==='string'){num=+entry}
   else if(entry&&typeof entry==='object'){num=+entry.num;entityId=entry.entityId}
@@ -45,12 +61,12 @@ function migrateRoute(saved,listings,legacyEntityMap){
  try{const parsed=typeof saved==='string'?JSON.parse(saved):saved;if(Array.isArray(parsed))parsed.forEach(consider)}catch{}
  return out;
 }
-function moveRouteStop(id,direction){if(state.optimizing)return;const i=state.route.findIndex(r=>r.num===id),j=i+direction;if(i<0||j<0||j>=state.route.length)return;[state.route[i],state.route[j]]=[state.route[j],state.route[i]];state.routeMessage='Stop order updated.';try{localStorage.setItem('hfroute:2026',JSON.stringify(state.route))}catch{}renderRoute()}
+function moveRouteStop(id,direction){if(state.optimizing)return;const key=String(id),i=state.route.findIndex(r=>routeEntryKey(r)===key),j=i+direction;if(i<0||j<0||j>=state.route.length)return;[state.route[i],state.route[j]]=[state.route[j],state.route[i]];state.routeMessage='Stop order updated.';try{localStorage.setItem('hfroute:2026',JSON.stringify(state.route))}catch{}renderRoute()}
 async function optimizeRoute(){
  if(state.optimizing||state.route.length<2)return;const route=[...state.route];state.optimizing=true;state.routeMessage='Suggesting an order…';renderRoute();
  try{
  if(route.length>10)throw new Error('Suggest an order for up to 10 stops at a time.');
- const points=[];for(const stop of route){const house=listings.find(x=>x.num===stop.num);points.push(state.coords[stop.num]||{lat:house.lat,lng:house.lng})}
+ const points=[];for(const stop of route){if(stop.eventId!=null){const ev=events.find(x=>x.id===stop.eventId);points.push({lat:ev.lat,lng:ev.lng});continue}const house=listings.find(x=>x.num===stop.num);points.push(state.coords[stop.num]||{lat:house.lat,lng:house.lng})}
  const rad=x=>x*Math.PI/180;
  const matrix=points.map(a=>points.map(b=>{const v=Math.sin(rad(b.lat-a.lat)/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(rad(b.lng-a.lng)/2)**2;return 6371*2*Math.asin(Math.sqrt(Math.min(1,v)))}));
  const order=bestStopOrder(matrix);if(JSON.stringify(route)!==JSON.stringify(state.route))throw new Error('Your stops changed. Suggest an order again.');state.route=[route[0],...order.map(i=>route[i+1])];try{localStorage.setItem('hfroute:2026',JSON.stringify(state.route))}catch{}state.routeMessage='Suggested by distance, keeping your first stop. Check roads and hours in Google Maps.';
@@ -73,11 +89,21 @@ function toggleFavoriteEntry(favs,num,entityId){
 // ambiguous on reused slots, so plain nums are never accepted. Each id is
 // URI-decoded, mapped back to its listing, and unverified/missing/duplicate
 // entries are dropped. Returns the same verified {num, entityId} shape.
-function parseOutingParam(str,listings){
- const byEntity=new Map(listings.map(x=>[x.entityId,x])),seen=new Set(),out=[];
+// v5 Phase F addendum: event stops serialize as 'evt:<event-id>' (still
+// URI-encoded), so an event can never be mistaken for a listing entity id;
+// bare ids keep parsing exactly as before. Event entries come back as
+// {eventId} and verify against the optional events array.
+function parseOutingParam(str,listings,events){
+ const byEntity=new Map(listings.map(x=>[x.entityId,x])),byEvent=new Map((events||[]).map(x=>[x.id,x])),seen=new Set(),out=[];
  String(str==null?'':str).split(',').forEach(piece=>{
   let id;try{id=decodeURIComponent(String(piece).trim())}catch(e){return}
   if(!id)return;
+  if(id.startsWith('evt:')){
+   const eventId=id.slice(4);
+   if(!byEvent.has(eventId)||seen.has('e:'+eventId))return;
+   seen.add('e:'+eventId);out.push({eventId});
+   return;
+  }
   const listing=byEntity.get(id);
   if(!listing||listing.placeholder)return;
   if(seen.has(listing.num))return;
@@ -86,9 +112,11 @@ function parseOutingParam(str,listings){
  return out;
 }
 // Inverse of parseOutingParam: build a shareable ?outing= URL from route stops.
+// Listing stops contribute their bare entity id (unchanged); event stops are
+// prefixed 'evt:' so mixed-category outings round-trip unambiguously.
 function outingLink(stops,base){
  const root=typeof base==='string'&&base?base:'https://hauntfinder.vercel.app/';
- const ids=(stops||[]).map(s=>encodeURIComponent(s.entityId)).filter(Boolean);
+ const ids=(stops||[]).map(s=>s.eventId!=null?'evt:'+encodeURIComponent(s.eventId):encodeURIComponent(s.entityId)).filter(Boolean);
  return root+'?outing='+ids.join(',');
 }
-if(typeof module!=='undefined')module.exports={bestStopOrder,migrateRoute,isReusedSlot,legacyEntityId,REUSED_SLOTS_2026,FAVORITES_KEY,loadFavorites,toggleFavoriteEntry,parseOutingParam,outingLink};
+if(typeof module!=='undefined')module.exports={bestStopOrder,migrateRoute,routeEntryKey,toggleRouteEntry,isReusedSlot,legacyEntityId,REUSED_SLOTS_2026,FAVORITES_KEY,loadFavorites,toggleFavoriteEntry,parseOutingParam,outingLink};

@@ -257,8 +257,8 @@ body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:0}
 #displaysTab[aria-selected="true"]{background:#F6EBD3;color:#0B0910}
 #treatStopsTab[aria-selected="true"]{background:#A6E22E;color:#0B0910}
 #eventsTab[aria-selected="true"]{background:#C49BFF;color:#0B0910}
-.event-calendar{padding:20px;border:1px solid #6B5A85;border-radius:18px;background:#1A1226;min-height:420px}.calendar-heading{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.calendar-heading h2{color:#C49BFF;margin-right:auto}.event-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.event-day{font:inherit;color:#F6EBD3;background:#251936;border:1px solid #6B5A85;border-radius:10px;min-height:230px;padding:12px 5px;display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer}.event-day strong{font-size:26px}.event-day small{font-size:12px;overflow-wrap:anywhere}.event-day[aria-pressed="true"]{border:2px solid #C49BFF;background:#352148}.calendar-note{font-size:14px;color:#c7b9d7}.calendar-chip{padding:5px;border-radius:5px;background:#2EC4B6;color:#0B0910}.calendar-chip[data-type="Trunk-or-treat"]{background:#FF7A1A}.calendar-chip[data-type="Parade"]{background:#C49BFF}.calendar-chip[data-type="Festival"]{background:#A6E22E}.event-date{color:#C49BFF;font-weight:800;font-size:24px}.event-card h3{margin:8px 0}.event-card p{margin:10px 0}.hf-footer .footer-inner{flex-wrap:wrap}
-@media(max-width:650px){.event-calendar{padding:12px;min-height:0}.event-days{gap:4px}.event-day{min-height:155px;padding:9px 3px}.event-day strong{font-size:21px}.event-day small{font-size:10px}.calendar-heading h2{font-size:24px}.tabs button{font-size:14px}}
+.calendar-heading{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.event-card h3{margin:8px 0}.event-card p{margin:10px 0}.hf-footer .footer-inner{flex-wrap:wrap}
+@media(max-width:650px){.tabs button{font-size:14px}}
 
 /* Keep the three category tabs together at every screen size. */
 .list-column .tabs{display:flex;flex-wrap:nowrap;gap:4px;width:100%}
@@ -278,14 +278,22 @@ body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:0}
 
 /* Calendar and compact event cards from the approved handoff. */
 .event-calendar{background:transparent;border:0;border-radius:0;padding:0;min-height:0}
-.calendar-heading{margin-bottom:14px;gap:8px}.calendar-heading h2{font:400 24px/1.2 var(--f-display);text-transform:uppercase;color:var(--cream);margin:0 auto 0 0}.calendar-heading .btn{min-height:40px;font-size:15px;padding:0 12px;border-color:#C49BFF;color:#C49BFF}
+.calendar-heading{margin-bottom:14px;gap:8px}.calendar-heading h2{font:400 24px/1.2 var(--f-display);text-transform:uppercase;color:var(--cream);margin:0}.calendar-heading .btn{min-height:40px;font-size:15px;padding:0 12px;border-color:#C49BFF;color:#C49BFF}
 #allEventDays[aria-pressed=true]{background:#C49BFF;color:var(--night)}
-.event-days{gap:0;border:2px solid var(--line);border-radius:5px;overflow:hidden}
-.event-day{border:0;border-right:1.5px solid var(--line);border-radius:0;background:#100b18;min-height:420px;padding:10px 8px;align-items:stretch;gap:8px;text-align:left}
-.event-day:last-child{border-right:0}.event-day-heading{display:flex;justify-content:space-between;align-items:center;border-bottom:1.5px solid var(--line);padding-bottom:8px;gap:4px}.event-day-heading>span{font:800 14px var(--f-ui);text-transform:uppercase;color:var(--label)}.event-day-heading strong{font:800 29px/1 var(--f-ui)}
-.event-day[aria-pressed=true]{border:0;border-right:1.5px solid var(--line);box-shadow:inset 0 0 0 2px #C49BFF;background:#241632}
-.event-day-items{display:flex;flex-direction:column;gap:7px}.calendar-chip{display:flex;flex-direction:column;gap:3px;padding:7px 6px;background:var(--card);color:var(--cream);border-top:3px solid var(--event-color);border-radius:3px;font-size:13px;line-height:1.25;overflow-wrap:anywhere}.calendar-chip small{font-size:11px;color:var(--label)}
-.event-day--halloween{background:#1a1009}.event-day--halloween strong,.halloween-night{color:var(--pumpkin)}.halloween-night{margin-top:auto;font:800 14px/1.3 var(--f-ui);text-transform:uppercase;letter-spacing:.04em}
+.calendar-range{font:700 14px/1.2 var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:#C49BFF;margin-right:auto}
+.ongoing-band{display:flex;flex-direction:column;gap:8px;margin:0 0 12px;padding:12px;border:1.5px solid #3E5A1A;border-left:4px solid var(--lime);border-radius:6px;background:rgba(166,226,46,.06)}
+.ongoing-band__label{font:800 14px/1.2 var(--f-ui);letter-spacing:.1em;text-transform:uppercase;color:var(--lime)}
+.ongoing-band__items{display:flex;flex-wrap:wrap;gap:8px}
+.ongoing-chip{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-height:44px;padding:8px 12px;background:var(--chip);border:1.5px solid var(--line);border-top:3px solid var(--event-color,var(--lime));border-radius:4px;color:var(--cream);font:600 14px/1.25 var(--f-body);cursor:pointer;text-align:left}
+.ongoing-chip strong{font:800 15px/1.1 var(--f-ui);text-transform:uppercase}
+.ongoing-chip span{font-size:12px;color:var(--mist)}
+.event-days{display:flex;flex-wrap:wrap;gap:8px}
+.event-day{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:76px;min-height:0;padding:8px 12px;background:#100b18;border:1.5px solid var(--line);border-radius:6px;color:var(--cream);font:inherit;cursor:pointer}
+.event-day__wd{font:800 12px/1 var(--f-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--label)}
+.event-day__dom{font:800 26px/1.1 var(--f-ui)}
+.event-day__count{font:600 11px/1.2 var(--f-body);color:var(--mist)}
+.event-day[aria-pressed=true]{border-color:#C49BFF;box-shadow:inset 0 0 0 1px #C49BFF;background:#241632}
+.event-day--halloween{border-color:#5A2E12}.event-day--halloween .event-day__dom{color:var(--pumpkin)}
 .event-legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:12px;font-size:13px;color:var(--mist)}.event-legend span{display:flex;align-items:center;gap:6px}.event-legend span:before{content:'';width:15px;height:4px;background:var(--event-color)}.calendar-note{font-size:12px;margin-bottom:0}
 .events-intro{background:none;padding:0;margin:0 0 12px;border-radius:0}.events-intro h2{font:800 20px var(--f-ui);color:var(--cream);text-transform:uppercase;margin:0}
 .event-card{display:grid;grid-template-columns:54px minmax(0,1fr);gap:12px;padding:12px;border-radius:5px;cursor:default}
@@ -294,8 +302,8 @@ body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:0}
 .event-type-tag{border:1px solid var(--event-color);color:var(--event-color);border-radius:3px;font:600 12px var(--f-body);padding:2px 5px;white-space:nowrap}
 .event-card p{font-size:14px;line-height:1.35;color:var(--mist);margin:6px 0;overflow-wrap:anywhere}
 .event-card .card__notes{background:transparent;padding:0;font-size:13px;margin:8px 0}
-.event-card .card__actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.event-card .btn{min-height:44px;font-size:14px;padding:0 10px}.btn--event-details{background:var(--cream);color:var(--night)}.event-free{color:var(--lime);font-weight:700}
-@media(max-width:650px){.calendar-heading h2{flex-basis:100%;font-size:21px}.event-day{min-height:260px;padding:7px 3px}.event-day-heading{flex-direction:column;align-items:center}.event-day-heading>span{font-size:11px}.event-day-heading strong{font-size:23px}.calendar-chip{font-size:11px;padding:5px 3px}.calendar-chip small{font-size:9px}.halloween-night{font-size:10px}.event-card-title{flex-wrap:wrap}.event-card h3{flex-basis:100%}}
+.event-card .card__actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.event-card .btn{min-height:44px;font-size:14px;padding:0 10px}.btn--event-details{background:var(--cream);color:var(--night)}.event-free{color:var(--lime);font-weight:700}.event-registration{margin:6px 0;font-size:13px;color:var(--mist);border-left:3px solid #C49BFF;padding-left:8px}
+@media(max-width:650px){.calendar-heading h2{flex-basis:100%;font-size:21px}.event-day{min-width:64px;padding:7px 9px}.event-day__dom{font-size:21px}.event-card-title{flex-wrap:wrap}.event-card h3{flex-basis:100%}}
 
 /* Shared footer typography and responsive link row. */
 .hf-footer .footer-links{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px 28px;padding-top:20px;margin-top:0}
@@ -352,8 +360,6 @@ body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:0}
 
 /* Location search: distances, event pins, empty-state action, area notes */
 .card__distance{font:700 14px/1.2 var(--f-ui);letter-spacing:.05em;text-transform:uppercase;color:var(--pumpkin)}
-.event-pin{width:54px;height:54px;display:grid;place-items:center;filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
-.event-pin__badge{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--violet);color:var(--cream);border:2px solid var(--cream);box-shadow:0 2px 8px rgba(0,0,0,.5);font:700 13px/1.1 var(--f-ui);text-transform:uppercase;text-align:center;padding:4px;box-sizing:border-box;cursor:pointer}
 .distance-help{display:block;margin-top:8px;font:400 13px/1.35 var(--f-body);color:var(--mist)}
 .empty .btn{margin-top:12px}
 .listing-status .btn{margin-top:6px;min-height:44px}
@@ -419,7 +425,6 @@ html:not([data-fullmap]) .map-full-head{display:none!important}
 .key-pin{flex:none;display:inline-flex;align-items:center;justify-content:center;width:34px;height:40px;font:800 15px/1 var(--f-ui);color:var(--night)}
 .key-pin--pumpkin{background:var(--pumpkin);border-radius:50% 50% 46% 46%;position:relative}
 .key-pin--pumpkin::before{content:'';position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:6px;height:6px;background:#476522;border-radius:2px}
-.key-pin--event{width:44px;height:44px;border-radius:50%;background:var(--violet);color:var(--cream);border:2px solid var(--cream);font-size:10px;line-height:1.05;text-transform:uppercase;text-align:center}
 .key-circle{flex:none;width:34px;height:34px;border:2px dashed #FF7A1A;border-radius:50%;background:rgba(255,122,26,.05)}
 .key-card{flex:none;display:inline-flex;align-items:center;justify-content:center;width:34px;height:40px;background:#24242b;border:1px dashed #777;border-radius:4px;color:#b9b9c0;font:800 15px/1 var(--f-ui)}
 @media(max-width:560px){.map-key__list li{font-size:14px}}

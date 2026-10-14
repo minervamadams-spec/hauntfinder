@@ -182,4 +182,16 @@ function eventDays(events){
  else if(days.length>1)label=`${fmtD(days[0])}–${fmtD(days[days.length-1])}`;
  return {days,ongoing,label};
 }
-if(typeof module!=='undefined')module.exports={hoursOn,datesActive,hasScheduleInfo,isOpenAt,hoursLabel,openOnDateLabel,schedulesCompleteFor,openTonightEligible,DATE_FILTER_KEY,todayParts,nextWeekendDates,normalizeDateFilter,loadDateFilter,saveDateFilter,schedulesDateMatch,openTonightBadgeHTML,eventDays,dateFilterLabel};
+// Events honor the shared hfdate:v1 date filter by their own day (date or
+// startAt date). Ongoing events are never filtered out by date — the caller
+// skips them before consulting this, mirroring the eventDay strip behavior.
+function eventDateMatch(event,filter,now=new Date()){
+ const f=normalizeDateFilter(filter);
+ if(!f||!f.kind)return true;
+ const day=dateStrOk(event&&event.date)?event.date:(dateStrOk(String((event&&event.startAt)||'').slice(0,10))?String(event.startAt).slice(0,10):null);
+ if(f.kind==='date')return day===f.date;
+ if(f.kind==='tonight')return day===todayParts(now).dateStr;
+ if(f.kind==='weekend')return day!==null&&nextWeekendDates(todayParts(now).dateStr).includes(day);
+ return true;
+}
+if(typeof module!=='undefined')module.exports={hoursOn,datesActive,hasScheduleInfo,isOpenAt,hoursLabel,openOnDateLabel,schedulesCompleteFor,openTonightEligible,DATE_FILTER_KEY,todayParts,nextWeekendDates,normalizeDateFilter,loadDateFilter,saveDateFilter,schedulesDateMatch,openTonightBadgeHTML,eventDays,eventDateMatch,dateFilterLabel};
