@@ -8,9 +8,11 @@ const alertsCss=fs.readFileSync(path.join(ROOT,'alerts.css'),'utf8');
 const app=fs.readFileSync(path.join(ROOT,'app.js'),'utf8');
 const footer=html.split('<footer class="hf-footer">')[1].split('</footer>')[0];
 const FORMS={
-  display:'https://docs.google.com/forms/d/e/1FAIpQLSeGXPJkGkuaRNOC2QXToVD3L85mXez9xYpKJd4ij7P0lskrfQ/viewform',
+  // Verified 2026-10-14 by opening each link (handoff README had them swapped):
+  // ...krfQ = Event form, ...xdg9a6g = Display form.
+  display:'https://docs.google.com/forms/d/e/1FAIpQLSeifnGQbKmB1ofTT1Kb1EsY-aCxo-164AXIr5sIvA-xdg9a6g/viewform',
   treat:'https://docs.google.com/forms/d/e/1FAIpQLScSaoQ7UuSMwxyiDMEQYxXg6HyQhXep_CyEFjYgD7nwQ3kq-w/viewform',
-  event:'https://docs.google.com/forms/d/e/1FAIpQLSeifnGQbKmB1ofTT1Kb1EsY-aCxo-164AXIr5sIvA-xdg9a6g/viewform'};
+  event:'https://docs.google.com/forms/d/e/1FAIpQLSeGXPJkGkuaRNOC2QXToVD3L85mXez9xYpKJd4ij7P0lskrfQ/viewform'};
 
 test('footer row 1: heading, a single picker button, no raw form links',()=>{
   assert.match(footer,/<h2>Want to be added or update your listing\?<\/h2>/);

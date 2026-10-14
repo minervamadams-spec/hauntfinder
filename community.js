@@ -63,9 +63,11 @@ feedbackForm.addEventListener('submit',async e=>{
 document.getElementById('aboutBtn').onclick=()=>document.getElementById('aboutDialog').showModal();
 // 1A Phase G: footer type picker (spec 9.2/P1) and Share this site (spec 9.1).
 const FORM_LINKS={
-  display:'https://docs.google.com/forms/d/e/1FAIpQLSeGXPJkGkuaRNOC2QXToVD3L85mXez9xYpKJd4ij7P0lskrfQ/viewform',
+  // 2026-10-14 verified by opening each link: ...krfQ is the Event form and
+  // ...xdg9a6g is the Display form (the handoff README had them swapped).
+  display:'https://docs.google.com/forms/d/e/1FAIpQLSeifnGQbKmB1ofTT1Kb1EsY-aCxo-164AXIr5sIvA-xdg9a6g/viewform',
   treat:'https://docs.google.com/forms/d/e/1FAIpQLScSaoQ7UuSMwxyiDMEQYxXg6HyQhXep_CyEFjYgD7nwQ3kq-w/viewform',
-  event:'https://docs.google.com/forms/d/e/1FAIpQLSeifnGQbKmB1ofTT1Kb1EsY-aCxo-164AXIr5sIvA-xdg9a6g/viewform'};
+  event:'https://docs.google.com/forms/d/e/1FAIpQLSeGXPJkGkuaRNOC2QXToVD3L85mXez9xYpKJd4ij7P0lskrfQ/viewform'};
 document.querySelectorAll('[data-type-link]').forEach(a=>{a.href=FORM_LINKS[a.dataset.typeLink]});
 document.getElementById('typePickerBtn').onclick=()=>document.getElementById('typeDialog').showModal();
 const shareSiteBtn=document.getElementById('shareSiteBtn');
