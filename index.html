@@ -52,7 +52,7 @@ fbq('track', 'PageView');
   </div>
   <nav class="shell footer-links" id="footerNav" aria-label="Footer">
     <button class="footer-link" type="button" id="aboutBtn">About</button>
-    <a class="alerts-footer-link" href="alerts.html" data-alerts-link hidden>Get alerts</a>
+    <a class="alerts-footer-link" href="alerts.html">Get alerts</a>
     <button class="footer-link" type="button" id="shareSiteBtn">Share this site</button>
     <span class="footer-link" id="siteVisits" hidden title="Counts page loads, including repeat visits, from a starting total of 57.">Site visits: <strong id="siteVisitTotal"></strong></span>
     <a class="footer-link" href="mailto:mtocommunityfinder@gmail.com">Contact us</a>
@@ -258,30 +258,7 @@ fbq('track', 'PageView');
 <script src="chrome-filters.js"></script>
 <script src="url-state.js"></script>
 <script src="card-flip.js"></script>
-<dialog class="site-dialog alerts-dialog" id="alertsDialog" aria-labelledby="alertsTitle">
-  <div class="dialog-head"><h2 id="alertsTitle">Get new listing alerts</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close signup">×</button></div>
-  <p class="dialog-subtitle">Want to know when new displays, treat stops, and events are added near you?</p>
-  <form id="alertsInlineForm" class="alerts-inline-form" novalidate>
-    <p id="alertsInlineStatus" role="status" aria-live="polite">Checking signup availability…</p>
-    <div class="alerts-inline-fields" hidden>
-      <label for="alertsInlineEmail">Your email</label>
-      <input id="alertsInlineEmail" name="email" type="email" maxlength="254" autocomplete="email" required>
-      <fieldset><legend>Categories</legend><label><input type="checkbox" name="categories" value="displays" checked> Displays</label><label><input type="checkbox" name="categories" value="events" checked> Events</label><label><input type="checkbox" name="categories" value="treats" checked> Treat Stops</label></fieldset>
-      <fieldset><legend>Seasons</legend><label><input type="checkbox" name="seasons" value="halloween" checked> Halloween</label><label><input type="checkbox" name="seasons" value="holiday"> Future Holiday listings</label></fieldset>
-      <fieldset><legend>Area <span class="alerts-optional">(optional)</span></legend>
-        <label><input type="checkbox" id="alertsInlineAreaToggle"> Limit alerts to my area</label>
-        <div id="alertsInlineAreaControls" hidden><label for="alertsInlineZip">ZIP code</label><input id="alertsInlineZip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="07828"><div class="alerts-radii" role="radiogroup" aria-label="Alert radius"><button type="button" data-alert-radius="5" aria-checked="false">5 mi</button><button type="button" data-alert-radius="10" aria-checked="false">10 mi</button><button type="button" data-alert-radius="25" aria-checked="true">25 mi</button><button type="button" data-alert-radius="50" aria-checked="false">50 mi</button></div></div>
-      </fieldset>
-      <label><input type="checkbox" name="consent" required> Email me new listings for my selected categories and seasons. I can unsubscribe at any time.</label>
-      <label class="alerts-honeypot" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
-      <div class="alerts-actions"><button type="submit" class="btn btn--route">Send confirmation email</button><button type="button" class="btn btn--outline" id="alertsNotNowBtn">Not now</button></div>
-      <p class="alerts-footnote">Shown once on a first visit. Unsubscribe any time.</p>
-    </div>
-  </form>
-</dialog>
-<script src="alerts-link.js"></script>
-<script>
-(function () {
+<dialog class="site-dial
   fetch('/api/visits', {method: 'POST', credentials: 'same-origin'})
     .then(function (response) { if (!response.ok) throw new Error('Counter unavailable'); return response.json(); })
     .then(function (data) {
