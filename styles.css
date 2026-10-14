@@ -278,24 +278,7 @@ body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:0}
 
 /* Calendar and compact event cards from the approved handoff. */
 .event-calendar{background:transparent;border:0;border-radius:0;padding:0;min-height:0}
-.calendar-heading{margin-bottom:14px;gap:8px}.calendar-heading h2{font:400 24px/1.2 var(--f-display);text-transform:uppercase;color:var(--cream);margin:0}.calendar-heading .btn{min-height:40px;font-size:15px;padding:0 12px;border-color:#C49BFF;color:#C49BFF}
-#allEventDays[aria-pressed=true]{background:#C49BFF;color:var(--night)}
-.calendar-range{font:700 14px/1.2 var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:#C49BFF;margin-right:auto}
-.ongoing-band{display:flex;flex-direction:column;gap:8px;margin:0 0 12px;padding:12px;border:1.5px solid #3E5A1A;border-left:4px solid var(--lime);border-radius:6px;background:rgba(166,226,46,.06)}
-.ongoing-band__label{font:800 14px/1.2 var(--f-ui);letter-spacing:.1em;text-transform:uppercase;color:var(--lime)}
-.ongoing-band__items{display:flex;flex-wrap:wrap;gap:8px}
-.ongoing-chip{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-height:44px;padding:8px 12px;background:var(--chip);border:1.5px solid var(--line);border-top:3px solid var(--event-color,var(--lime));border-radius:4px;color:var(--cream);font:600 14px/1.25 var(--f-body);cursor:pointer;text-align:left}
-.ongoing-chip strong{font:800 15px/1.1 var(--f-ui);text-transform:uppercase}
-.ongoing-chip span{font-size:12px;color:var(--mist)}
-.event-days{display:flex;flex-wrap:wrap;gap:8px}
-.event-day{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:76px;min-height:0;padding:8px 12px;background:#100b18;border:1.5px solid var(--line);border-radius:6px;color:var(--cream);font:inherit;cursor:pointer}
-.event-day__wd{font:800 12px/1 var(--f-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--label)}
-.event-day__dom{font:800 26px/1.1 var(--f-ui)}
-.event-day__count{font:600 11px/1.2 var(--f-body);color:var(--mist)}
-.event-day[aria-pressed=true]{border-color:#C49BFF;box-shadow:inset 0 0 0 1px #C49BFF;background:#241632}
-.event-day--halloween{border-color:#5A2E12}.event-day--halloween .event-day__dom{color:var(--pumpkin)}
-.event-legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:12px;font-size:13px;color:var(--mist)}.event-legend span{display:flex;align-items:center;gap:6px}.event-legend span:before{content:'';width:15px;height:4px;background:var(--event-color)}.calendar-note{font-size:12px;margin-bottom:0}
-.events-intro{background:none;padding:0;margin:0 0 12px;border-radius:0}.events-intro h2{font:800 20px var(--f-ui);color:var(--cream);text-transform:uppercase;margin:0}
+.event-legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:12px;font-size:13px;color:var(--mist)}.event-legend span{display:flex;align-items:center;gap:6px}.event-legend span:before{content:'';width:15px;height:4px;background:var(--event-color)}
 .event-card{display:grid;grid-template-columns:54px minmax(0,1fr);gap:12px;padding:12px;border-radius:5px;cursor:default}
 .event-date-badge{background:var(--event-color);color:var(--night);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;height:66px;font:800 14px/1 var(--f-ui);text-transform:uppercase;gap:4px}.event-date-badge strong{font-size:32px}
 .event-card-content{min-width:0}.event-card-title{display:flex;align-items:flex-start;gap:8px}.event-card h3{font:800 20px/1.12 var(--f-ui);text-transform:uppercase;margin:0;flex:1}
@@ -845,4 +828,66 @@ body.host-panel-open{overflow:hidden}
 }
 @media(min-width:1024px){
  .route-stop__grip,.route-stop__icon{display:none!important}
+}
+
+/* ---- 1A Phase E: events page — week board, day columns, mobile day list (spec 7.3). ---- */
+.events-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.events-title{font:700 32px/1.1 var(--f-cond);margin:0;color:var(--cream)}
+.events-head__actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.events-ics{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0;background:none;border:0;color:var(--purple);font:600 15px/1.2 var(--f-body);cursor:pointer}
+.events-ics img{width:18px;height:18px}
+.events-submit{min-height:40px;font-size:14px}
+.ongoing-band{display:flex;flex-direction:column;gap:8px;margin:0 0 12px;padding:12px;border:1.5px solid var(--allweek-line);border-left:4px solid var(--teal);border-radius:8px;background:var(--allweek-bg)}
+.ongoing-band__label{font:800 13px/1.2 var(--f-cond);letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+.ongoing-band__items{display:flex;flex-direction:column;gap:8px}
+.ongoing-item{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 12px;background:rgba(63,208,192,.05);border:1px solid var(--allweek-line);border-radius:6px}
+.ongoing-item__info{display:flex;flex-direction:column;gap:3px;min-width:0}
+.ongoing-item__name{background:none;border:0;padding:0;text-align:left;font:700 17px/1.15 var(--f-cond);letter-spacing:.04em;text-transform:uppercase;color:var(--cream);cursor:pointer}
+.ongoing-item__name:hover{color:var(--teal)}
+.ongoing-item__meta{font-size:14px;color:var(--text-3)}
+.ongoing-item__route{min-height:44px;padding:0 16px;background:var(--lime);color:#0B0910;border:2px solid var(--lime);border-radius:var(--radius-control);font:700 14px/1 var(--f-cond);letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
+.ongoing-item__route[aria-pressed="true"]{background:var(--cream);border-color:var(--cream);color:#0B0910}
+.events-view{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 10px}
+.events-view__seg{display:inline-grid;grid-template-columns:1fr 1fr;gap:0;padding:3px;border:2px solid var(--line-2);border-radius:999px}
+.events-view__seg button{min-height:40px;padding:0 18px;border:0;border-radius:999px;background:transparent;color:var(--text-3);font:600 15px/1 var(--f-cond);letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
+.events-view__seg button[aria-checked="true"]{background:var(--cream);color:#0B0910}
+.events-view__helper{margin:0;font-size:13px;color:var(--text-3)}
+.event-week{display:none;gap:8px}
+.event-week[data-view="week"]{grid-template-columns:repeat(7,minmax(0,1fr))}
+.event-week[data-view="3days"]{grid-template-columns:repeat(3,minmax(240px,1fr))}
+.event-col{display:flex;flex-direction:column;gap:8px;min-height:300px;padding:10px;background:var(--card);border:1.5px solid var(--line);border-radius:8px;cursor:pointer;text-align:left}
+.event-col:hover{border-color:var(--line-strong)}
+.event-col.is-selected{border-color:var(--orange);box-shadow:inset 0 0 0 1px var(--orange)}
+.event-col--halloween{background:var(--sat-tint);border-color:var(--purple)}
+.event-col__head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.event-col__wd{font:800 13px/1 var(--f-cond);letter-spacing:.08em;text-transform:uppercase;color:var(--text-3)}
+.event-col__dom{font:800 26px/1.1 var(--f-cond);color:var(--cream)}
+.event-col__flag{flex-basis:100%;font:700 11px/1.3 var(--f-cond);letter-spacing:.08em;text-transform:uppercase;color:var(--purple)}
+.event-col__body{display:flex;flex-direction:column;gap:6px}
+.event-col__empty{font-size:13px;color:var(--text-3)}
+.event-chip{display:flex;flex-direction:column;gap:2px;padding:8px 10px 10px;background:var(--night);border:1px solid var(--line);border-top:4px solid var(--event-color,var(--teal));border-radius:6px}
+.event-chip__time{font:700 13px/1.2 var(--f-cond);letter-spacing:.04em;color:var(--text)}
+.event-chip__name{font:600 14px/1.25 var(--f-body);color:var(--cream)}
+.event-chip__meta{font-size:12px;color:var(--text-3)}
+.events-mobile-list{display:block}
+.events-column-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
+.events-day-heading{font:700 26px/1.1 var(--f-cond);letter-spacing:.06em;text-transform:uppercase;margin:0;color:var(--cream)}
+.events-head-count{font-size:15px;color:var(--text-3)}
+.mday{margin-bottom:16px}
+.mday__head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font:700 20px/1.2 var(--f-cond);letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;color:var(--cream)}
+.mday__flag{font-size:12px;letter-spacing:.08em;color:var(--purple)}
+.mday__empty{margin:0;font-size:14px;color:var(--text-3)}
+.mday .card{margin-bottom:10px}
+@media(min-width:960px){
+ .event-week{display:grid}
+ .events-mobile-list{display:none}
+}
+@media(max-width:959px){
+ html[data-category="events"] .list-column{display:none}
+}
+@media(min-width:1024px) and (max-width:1199px){
+ html[data-category="events"] .page-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media(min-width:1200px){
+ html[data-category="events"] .page-grid{grid-template-columns:minmax(0,1fr) 440px}
 }

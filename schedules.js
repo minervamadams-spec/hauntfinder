@@ -194,4 +194,55 @@ function eventDateMatch(event,filter,now=new Date()){
  if(f.kind==='weekend')return day!==null&&nextWeekendDates(todayParts(now).dateStr).includes(day);
  return true;
 }
-if(typeof module!=='undefined')module.exports={hoursOn,datesActive,hasScheduleInfo,isOpenAt,hoursLabel,openOnDateLabel,schedulesCompleteFor,openTonightEligible,DATE_FILTER_KEY,todayParts,nextWeekendDates,normalizeDateFilter,loadDateFilter,saveDateFilter,schedulesDateMatch,openTonightBadgeHTML,eventDays,eventDateMatch,dateFilterLabel};
+// ---- 1A Phase E: Halloween-week grid + ICS export (spec 7.3/9.8). ----
+// The events page week is the seven days ending on Oct 31 of the season
+// year (Sun 25–Sat 31 in 2026), derived from the events' own year field —
+// never hardcoded dates. Pure and require-able for tests.
+function eventWeekDays(list){
+ const year=(Array.isArray(list)?list:[]).map(e=>{const y=+(e&&e.year);return Number.isFinite(y)&&y>1900?y:0}).find(y=>y>0)||new Date().getFullYear();
+ const end=new Date(Date.UTC(year,9,31)),start=new Date(end);
+ start.setUTCDate(end.getUTCDate()-6);
+ const days=[];
+ for(let i=0;i<7;i++){const d=new Date(start);d.setUTCDate(start.getUTCDate()+i);days.push(d.toISOString().slice(0,10))}
+ return days;
+}
+function icsEscape(s){return String(s==null?'':s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\r?\n/g,'\\n')}
+function icsNextDay(day){const d=new Date(Date.UTC(+day.slice(0,4),+day.slice(5,7)-1,+day.slice(8,10)+1));return d.toISOString().slice(0,10)}
+// Pure ICS builder; the caller passes the already-filtered list (Type /
+// Features filters live in matchingEvents) and downloads the string.
+// Documented choices, per spec 9.8 + the no-invented-times rule:
+//  - timed events export startAt/endAt as floating local datetimes;
+//  - date-only events export as all-day spans (DTEND exclusive, +1 day);
+//  - ongoing / open-all-week listings export as seven explicit all-day
+//    VEVENTs (one per Halloween-week day — no RRULE, safest for Apple and
+//    Google) and never carry times, so ambiguous free-text schedules like
+//    "Weekdays 5–8 PM · Weekends 10 AM–6 PM" contribute no DTSTART/DTEND;
+//  - events with no usable date at all are omitted, never guessed.
+function buildEventsICS(list,weekDays,base){
+ const days=Array.isArray(weekDays)&&weekDays.length?weekDays:eventWeekDays(list);
+ const root=typeof base==='string'&&base?base:'https://hauntfinder.vercel.app/';
+ const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Hauntfinder//Events//EN','CALSCALE:GREGORIAN'];
+ const push=(ev,uid,start,end,allDay)=>{
+  lines.push('BEGIN:VEVENT','UID:'+icsEscape(uid)+'@hauntfinder','DTSTAMP:'+days[0].replace(/-/g,'')+'T000000','SUMMARY:'+icsEscape(ev.name||''));
+  if(start)lines.push((allDay?'DTSTART;VALUE=DATE:':'DTSTART:')+start);
+  if(end)lines.push((allDay?'DTEND;VALUE=DATE:':'DTEND:')+end);
+  const loc=[ev.venue,ev.address].filter(Boolean).join(', ');
+  if(loc)lines.push('LOCATION:'+icsEscape(loc));
+  const url=root+'?category=events&event='+encodeURIComponent(ev.id);
+  const desc=[ev.notes?String(ev.notes):'',url].filter(Boolean).join('\n');
+  lines.push('DESCRIPTION:'+icsEscape(desc),'URL:'+url,'END:VEVENT');
+ };
+ (Array.isArray(list)?list:[]).forEach(ev=>{
+  if(!ev||!ev.id)return;
+  if(ev.ongoing){days.forEach(d=>push(ev,ev.id+'-'+d,d.replace(/-/g,''),icsNextDay(d).replace(/-/g,''),true));return}
+  const raw=ev.date&&/^\d{4}-\d{2}-\d{2}$/.test(ev.date)?ev.date:String(ev.startAt||'').slice(0,10);
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(raw))return;
+  const stamp=iso=>{const m=String(iso||'').match(/^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/);return m?m[1].replace(/-/g,'')+'T'+m[2]+m[3]+'00':null};
+  const start=stamp(ev.startAt);
+  if(start){const end=stamp(ev.endAt)||start;push(ev,ev.id,start,end,false);return}
+  push(ev,ev.id,raw.replace(/-/g,''),icsNextDay(raw).replace(/-/g,''),true);
+ });
+ lines.push('END:VCALENDAR');
+ return lines.join('\r\n')+'\r\n';
+}
+if(typeof module!=='undefined')module.exports={hoursOn,datesActive,hasScheduleInfo,isOpenAt,hoursLabel,openOnDateLabel,schedulesCompleteFor,openTonightEligible,DATE_FILTER_KEY,todayParts,nextWeekendDates,normalizeDateFilter,loadDateFilter,saveDateFilter,schedulesDateMatch,openTonightBadgeHTML,eventDays,eventDateMatch,dateFilterLabel,eventWeekDays,buildEventsICS};

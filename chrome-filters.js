@@ -32,6 +32,20 @@ const CHROME_TREAT_FEATURE_OPTIONS=[
  {label:'Stroller friendly',value:'Stroller friendly'},
  {label:'Porch light on',value:'Porch light on'}
 ];
+// 1A Phase E: events get the same dropdown chrome — Type (single, spec 7.3
+// wording verbatim) and Features (multi). Values stay the canonical listing
+// keys ('Trunk-or-treat', etc.) so matchingEvents keeps working unchanged.
+const CHROME_EVENT_TYPE_OPTIONS=[
+ {label:'All types',value:'All'},
+ {label:'Trunk-or-Treat',value:'Trunk-or-treat'},
+ {label:'Parade',value:'Parade'},
+ {label:'Festival',value:'Festival'},
+ {label:'Donation drive/Community collection',value:'Donation drive/Community collection'},
+ {label:'Other',value:'Other'}
+];
+const CHROME_EVENT_FEATURE_OPTIONS=['Free','Open to all','Registration required','Kid-friendly'].map(v=>({label:v,value:v}));
+function chromeEventTypeLabelForValue(value){const hit=CHROME_EVENT_TYPE_OPTIONS.find(o=>o.value===value);return hit?hit.label:'All types'}
+function chromeValueForEventTypeLabel(label){const hit=CHROME_EVENT_TYPE_OPTIONS.find(o=>o.label===label);return hit?hit.value:'All'}
 const CHROME_WHEN_OPTIONS=[
  {kind:'',label:'Any night'},
  {kind:'tonight',label:'Tonight'},
@@ -50,9 +64,9 @@ function chromeWhenLabel(df){if(!df||!df.kind)return 'Any night';if(typeof dateF
 // Live result count for a staged filter session: temporarily swap the state
 // fields, count through the real listing pipeline, then restore (no render).
 // Only ever called in the browser; kept top-level so tests can require it.
-function chromePreviewCount(session){const keepF=state.filter,keepFe=state.features,keepD=state.dateFilter;state.filter=session.filter;state.features=session.features;state.dateFilter=session.dateFilter;let n=0;try{n=typeof activeListings==='function'?activeListings().length:0}catch(err){n=0}state.filter=keepF;state.features=keepFe;state.dateFilter=keepD;return n}
+function chromePreviewCount(session){const keepF=state.filter,keepFe=state.features,keepD=state.dateFilter;state.filter=session.filter;state.features=session.features;state.dateFilter=session.dateFilter;let n=0;try{n=state.category==='events'&&typeof matchingEvents==='function'?matchingEvents().length:typeof activeListings==='function'?activeListings().length:0}catch(err){n=0}state.filter=keepF;state.features=keepFe;state.dateFilter=keepD;return n}
 
-if(typeof module!=='undefined')module.exports={CHROME_SHOW_OPTIONS,CHROME_FEATURE_OPTIONS,CHROME_TREAT_FEATURE_OPTIONS,CHROME_WHEN_OPTIONS,chromeShowLabelForValue,chromeValueForShowLabel,chromeFeatureValue,chromeFeatureLabelForValue,chromeWhenLabel,chromePreviewCount};
+if(typeof module!=='undefined')module.exports={CHROME_SHOW_OPTIONS,CHROME_FEATURE_OPTIONS,CHROME_TREAT_FEATURE_OPTIONS,CHROME_EVENT_TYPE_OPTIONS,CHROME_EVENT_FEATURE_OPTIONS,CHROME_WHEN_OPTIONS,chromeShowLabelForValue,chromeValueForShowLabel,chromeEventTypeLabelForValue,chromeValueForEventTypeLabel,chromeFeatureValue,chromeFeatureLabelForValue,chromeWhenLabel,chromePreviewCount};
 
 if(typeof document==='undefined'){/* Node (tests): mapping helpers only, no DOM wiring. */}
 else{(function(){
@@ -61,7 +75,7 @@ const $=id=>document.getElementById(id);
 const filtersEl=$('filters');
 if(!filtersEl)return;
 const mobileSheets=()=>typeof matchMedia==='function'&&matchMedia('(max-width:767px)').matches;
-const noun=()=>state.category==='treats'?'treat stops':'displays';
+const noun=()=>state.category==='treats'?'treat stops':state.category==='events'?'events':'displays';
 const featureOptions=()=>state.category==='treats'?CHROME_TREAT_FEATURE_OPTIONS:CHROME_FEATURE_OPTIONS;
 
 function snapshot(){return{filter:state.filter,features:Array.isArray(state.features)?state.features.slice():[],dateFilter:Object.assign({kind:null,date:null},state.dateFilter)}}
@@ -82,12 +96,20 @@ function whenMenuHTML(session){
  const dateRow=kind==='date'?`<label class="dd__daterow">Date <input type="date" class="dd__date" value="${df.date||''}" aria-label="Filter date"></label>`:'';
  const foot=mobileSheets()?`<div class="dd__foot"><button type="button" class="btn btn--outline" data-dd-cancel>Cancel</button><button type="button" class="btn btn--primary" data-dd-apply>${applyText(session)}</button></div>`:'';
  return `${sheetHead('When')}<fieldset class="dd__group"><legend>When</legend>${rows}</fieldset>${dateRow}${foot}`}
-function menuBody(kind,session){return kind==='show'?showMenuHTML(session):kind==='features'?featuresMenuHTML(session):whenMenuHTML(session)}
+function typeMenuHTML(session){
+ const rows=CHROME_EVENT_TYPE_OPTIONS.map(o=>`<label class="dd__row"><input type="radio" name="chrome-etype" value="${o.label}"${chromeEventTypeLabelForValue(session.filter)===o.label?' checked':''}><span>${o.label}</span></label>`).join('');
+ const foot=mobileSheets()?`<div class="dd__foot"><button type="button" class="btn btn--outline" data-dd-cancel>Cancel</button><button type="button" class="btn btn--primary" data-dd-apply>${applyText(session)}</button></div>`:'';
+ return `${sheetHead('Type')}<fieldset class="dd__group"><legend>Type</legend>${rows}</fieldset>${foot}`}
+function efeaturesMenuHTML(session){
+ const rows=CHROME_EVENT_FEATURE_OPTIONS.map(o=>`<label class="dd__row"><input type="checkbox" name="chrome-efeature" value="${o.label}"${session.features.includes(o.value)?' checked':''}><span>${o.label}</span></label>`).join('');
+ const foot=`<div class="dd__foot"><button type="button" class="btn btn--outline" data-dd-clear>Clear</button><button type="button" class="btn btn--primary" data-dd-apply>${applyText(session)}</button></div>`;
+ return `${sheetHead('Features')}<fieldset class="dd__group"><legend>Features</legend>${rows}</fieldset>${foot}`}
+function menuBody(kind,session){return kind==='show'?showMenuHTML(session):kind==='features'?featuresMenuHTML(session):kind==='type'?typeMenuHTML(session):kind==='efeatures'?efeaturesMenuHTML(session):whenMenuHTML(session)}
 function ddHTML(kind,label,valueText,active,session){return `<details class="dd${active?' dd--active':''}" data-dd="${kind}"><summary class="dd__btn" aria-expanded="false"><span class="dd__label">${label}</span><span class="dd__value">${valueText}</span><span class="dd__caret" aria-hidden="true">▾</span></summary><div class="dd__menu">${menuBody(kind,session)}</div></details>`}
 
 const prevRenderFilters=renderFilters;
 renderFilters=function(){
- if(state.category==='events'){prevRenderFilters();return}
+ if(state.category==='events'){const session=snapshot(),fN=session.features.length;filtersEl.innerHTML=ddHTML('type','Type',chromeEventTypeLabelForValue(session.filter),session.filter!=='All',session)+ddHTML('efeatures','Features',fN?`${fN} selected`:'Any',fN>0,session);return}
  const session=snapshot(),features=session.features;
  const featuresText=features.length?`${features.length} selected`:'Any';
  const parts=state.category==='treats'
@@ -132,6 +154,8 @@ filtersEl.addEventListener('change',e=>{
   if(!mobileSheets()){commit(session);return}
   if(t.value==='date')paintMenu(dd);
   updateApply(dd);return}
+ if(t.name==='chrome-etype'){session.filter=chromeValueForEventTypeLabel(t.value);if(!mobileSheets()){commit(session);return}updateApply(dd);return}
+ if(t.name==='chrome-efeature'){const i=session.features.indexOf(t.value);if(i>=0)session.features.splice(i,1);else session.features.push(t.value);updateApply(dd);return}
  if(t.name==='chrome-feature'){
   const v=chromeFeatureValue(t.value),i=session.features.indexOf(v);
   if(i>=0)session.features.splice(i,1);else session.features.push(v);

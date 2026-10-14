@@ -95,7 +95,11 @@ test('dropdown anatomy: aria-expanded, fieldset/legend, staging hooks, live coun
   assert.ok(chrome.includes('`Show ${chromePreviewCount(session)} ${noun()}`'),'Show N live result count');
   assert.equal(typeof m.chromePreviewCount,'function','preview-count hook exported');
   assert.ok(chrome.includes("renderFilters=function(){"),'renderFilters override installed');
-  assert.ok(chrome.includes("if(state.category==='events'){prevRenderFilters();return}"),'events branch delegates to layout.js');
+  assert.ok(chrome.includes("ddHTML('type','Type',chromeEventTypeLabelForValue(session.filter)"),'events branch renders the Type dropdown (spec 7.3)');
+  assert.ok(chrome.includes("ddHTML('efeatures','Features'"),'events branch renders the Features dropdown');
+  assert.ok(chrome.includes("if(t.name==='chrome-etype'){session.filter=chromeValueForEventTypeLabel(t.value)"),'Type radio commits the canonical value');
+  assert.ok(chrome.includes("'Donation drive/Community collection'"),'donation type option present');
+  assert.ok(chrome.includes("state.category==='events'&&typeof matchingEvents==='function'?matchingEvents().length"),'live count uses the events pipeline');
   assert.ok(chrome.includes("'Stroller friendly',value:'Stroller friendly'"),'treat feature values canonical');
 });
 
