@@ -541,7 +541,7 @@ const state={filter:'All',selected:null,route:[],favorites:[],startMode:'current
 try{const legacyEntities={};for(const x of listings){const v=localStorage.getItem('hfentity:'+x.num);if(v)legacyEntities[x.num]=v}state.route=migrateRoute(localStorage.getItem('hfroute:2026')||'[]',listings,legacyEntities,events);state.favorites=loadFavorites(localStorage.getItem('hffavs:v1')||'[]',listings,legacyEntities)}catch{}
 
 const map=L.map('map',{scrollWheelZoom:true,tap:true}).setView([40.87,-74.72],12);
-L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,attribution:'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'}).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
 const markerByNum=new Map();
 
 function pinHTML(n){return `<div class="pin" data-pin="${n}"><span class="pin__ring"></span><img src="pumpkin-pin.svg" alt=""><span class="pin__num">${n}</span><span class="pin__check">✓</span></div>`}

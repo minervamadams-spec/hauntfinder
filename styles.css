@@ -488,3 +488,55 @@ body.host-panel-open{overflow:hidden}
 .host-panel__card input[type="file"]{margin:8px 0}
 .host-panel__card .btn{margin-top:12px;min-height:48px}
 .host-panel__status{min-height:22px;margin:10px 0 0;color:var(--lime)}
+
+/* v6 Phase A (Direction 1A): design tokens — variable definitions only;
+   component restyle lands in later phases. */
+:root{
+  --bg:#0B0910;
+  --card:#15101C;
+  --panel:#1A1322;
+  --band:#120D18;
+  --line:#2A2233;
+  --line-2:#3A2F45;
+  --text:#F6EBD3;
+  --text-2:#CFC4B0;
+  --text-3:#A89DB4;
+  --orange:#FF7A1A;
+  --lime:#A6E22E;
+  --purple:#B48CFF;
+  --purple-deep:#7B3FE4;
+  --teal:#3FD0C0;
+  --sat-tint:#1E1430;
+  --allweek-bg:#0E1C1B;
+  --allweek-line:#1F3B39;
+  --err:#FF9A5A;
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:20px;
+  --space-6:24px;
+  --space-8:32px;
+  --space-10:40px;
+  --space-12:48px;
+  --radius-badge:4px;
+  --radius-control:6px;
+  --radius-card:8px;
+  --radius-modal:10px;
+  --shadow-modal:0 30px 80px rgba(0,0,0,.7);
+  --shadow-dropdown:0 16px 40px rgba(0,0,0,.6);
+  --shadow-popup:0 12px 32px rgba(0,0,0,.6);
+  --f-display:'Rubik Dirt',cursive;
+  --f-cond:'Barlow Condensed',sans-serif;
+  --f-body:'Barlow',sans-serif;
+}
+
+/* v6 Phase A: 1A banner — responsive art, edge to edge, high priority. */
+.hf-header.banner{padding:0;background:var(--bg)}
+.banner__title{margin:0;line-height:0}
+.banner__frame{display:block;width:100%;aspect-ratio:5.5/1;overflow:hidden}
+.banner__img{width:100%;height:100%;object-fit:cover;object-position:center 60%;display:block}
+@media(max-width:767px){
+  .banner__frame{aspect-ratio:4.2/1}
+  .banner__img{object-position:center 52%}
+}
