@@ -20,7 +20,7 @@ document.getElementById('writeReviewBtn').onclick=()=>feedbackView(true);
 const dialogOpener=new Map();
 const nativeShowModal=HTMLDialogElement.prototype.showModal;
 HTMLDialogElement.prototype.showModal=function(){if(!dialogOpener.has(this))dialogOpener.set(this,document.activeElement instanceof HTMLElement?document.activeElement:null);return nativeShowModal.call(this)};
-document.querySelectorAll('[data-close-dialog]').forEach(b=>b.onclick=()=>b.closest('dialog').close());
+document.addEventListener('click',e=>{const b=e.target.closest('[data-close-dialog]');if(b)b.closest('dialog').close()});
 document.querySelectorAll('.site-dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target!==d)return;const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)return;if([...d.querySelectorAll('input:not([type=radio]):not([type=checkbox]),textarea')].some(i=>i.value.trim()!==''))return;d.close()}));
 document.querySelectorAll('dialog').forEach(d=>d.addEventListener('close',()=>{const o=dialogOpener.get(d);dialogOpener.delete(d);if(o&&document.contains(o))o.focus()}));
 feedbackDialog.addEventListener('close',()=>feedbackRequest?.abort());
