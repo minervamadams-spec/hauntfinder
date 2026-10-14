@@ -47,23 +47,16 @@
       .then(data=>{
         if(!data||!Array.isArray(data.photos)||!data.photos.length)return;
         if(!peek.querySelector('[data-peek-route="'+num+'"]'))return;
-        peek.querySelector('.peek-photos')?.remove();
-        const strip=document.createElement('div');
-        strip.className='peek-photos';
-        for(const photo of data.photos){
-          const button=document.createElement('button');
-          button.type='button';
-          button.className='peek-photos__thumb';
-          button.setAttribute('aria-label','View host photo larger');
-          const img=document.createElement('img');
-          img.loading='lazy';
-          img.src=photo.url;
-          img.alt='Host photo for listing '+num;
-          button.appendChild(img);
-          button.onclick=()=>{lightboxImg.src=photo.url;lightbox.hidden=false};
-          strip.appendChild(button);
-        }
-        peek.appendChild(strip);
+        // K4 popup (1A Phase F): one owner photo fills the 130px slot; without
+        // photos the slot stays empty and the section is visually omitted.
+        const slot=peek.querySelector('[data-peek-photo]');
+        if(!slot)return;
+        slot.innerHTML='';
+        const img=document.createElement('img');
+        img.loading='lazy';
+        img.src=data.photos[0].url;
+        img.alt='Owner photo for listing '+num;
+        slot.appendChild(img);
       })
       .catch(()=>{});
   };

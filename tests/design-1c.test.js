@@ -19,7 +19,7 @@ const treatCard=app.split('function treatCardHTML')[1].split('function cardHTML'
 const eventCard=layout.split('function eventCard')[1].split('function calendar()')[0];
 
 test('listing card anatomy order: pin, name, town line, address link, hours, scare, tags, actions, meta',()=>{
-  const order=['${pinHTML(x.num)}','card__name','card__subline','card__address','card__hours','card__scare-row','card__tags','card__actions','card__meta'];
+  const order=['${pinHTML(x.num,isTreatStop(x)?\'treat\':\'display\')}','card__name','card__subline','card__address','card__hours','card__scare-row','card__tags','card__actions','card__meta'];
   let at=0;
   for(const s of order){const i=displayCard.indexOf(s,at);assert.ok(i>=0,'display card missing or out of order: '+s);at=i+1}
 });
@@ -40,7 +40,7 @@ test('route button: + Add to route → ✓ On your route, lime then cream; pin �
   assert.ok(css.includes('.card__route-btn{min-height:48px;justify-content:center;background:var(--lime)'),'lime full-width route button');
   assert.ok(css.includes('.card__route-btn[aria-pressed="true"]{background:#F6EBD3;border-color:#F6EBD3;color:#0B0910}'),'cream on-route state');
   assert.ok(css.includes('.card--on-route{border-color:var(--lime)}'),'lime card border on route');
-  assert.ok(css.includes('.card--on-route .pin__check{display:flex}'),'pin ✓ badge on route cards');
+  assert.ok(css.includes('.card--on-route .pin__badge{display:block}'),'pin badge on route cards');
   assert.ok(app.includes('data-route="${x.num}"')&&app.includes('toggleRoute(n)'),'route toggle wiring untouched');
 });
 
@@ -99,7 +99,7 @@ test('photos pipeline: API contract, session cache, peek strip preserved',()=>{
   assert.ok(photos.includes("e.key==='Escape'"),'lightbox Esc preserved');
   assert.ok(photos.includes('inCurrentSeason(listing)'),'season gate preserved');
   assert.ok(photos.includes('.catch(()=>{})'),'fetch failure renders nothing');
-  assert.ok(photos.includes('peek-photos'),'map peek strip preserved');
+  assert.ok(photos.includes('[data-peek-photo]'),'K4 popup photo slot preserved');
   assert.ok(html.indexOf('card-flip.js')>html.indexOf('photos-ui.js'),'card-flip loads after photos-ui');
 });
 

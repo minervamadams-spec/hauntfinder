@@ -95,5 +95,5 @@ test('front-end wiring: renderPeek hook, script include, lazy loading and lightb
   assert.ok(ui.includes("e.key==='Escape'"),'Esc dismisses the lightbox');
   assert.ok(ui.includes("inCurrentSeason(listing)"),'season gate present');
   assert.ok(ui.includes(".catch(()=>{})")||ui.includes('.catch(()=>{'),'fetch failure renders nothing');
-  assert.ok(css.includes('.peek-photos__thumb{')&&css.includes('.photo-lightbox{'),'gallery and lightbox styles exist');
+  assert.ok(css.includes('.map-popup__photo img{')&&css.includes('.photo-lightbox{'),'popup photo and lightbox styles exist');
 });

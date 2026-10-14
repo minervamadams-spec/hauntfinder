@@ -54,7 +54,8 @@ feedbackForm.addEventListener('submit',async e=>{
   finally{if(feedbackHouseId===id)button.disabled=false}
 });
 document.getElementById('aboutBtn').onclick=()=>document.getElementById('aboutDialog').showModal();
-document.getElementById('mapKeyBtn').onclick=()=>document.getElementById('mapKeyDialog').showModal();
+// 1A Phase F: the map key now lives on the map itself (spec 8.7); the old
+// modal key dialog was retired with it.
 
 let reportHouse=null;
 document.getElementById('cardList').addEventListener('click',e=>{const b=e.target.closest('[data-report-listing]');if(!b)return;reportHouse=listings.find(x=>x.num===Number(b.dataset.reportListing));if(!reportHouse)return;document.getElementById('listingReportHouse').textContent=reportHouse.name+' · '+reportHouse.address;document.getElementById('listingReportForm').reset();const today=new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());document.getElementById('listingReportFrom').value=today;document.getElementById('listingReportThrough').min=today;updateReportFields();document.getElementById('listingReportStatus').textContent='';document.getElementById('listingReportDialog').showModal()});
