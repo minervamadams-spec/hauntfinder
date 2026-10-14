@@ -61,7 +61,7 @@ module.exports=async function handler(req,res){
         const rateKey=KEY_PREFIX+'rate:upload:'+createHmac('sha256',storageToken()).update(ip).digest('hex');
         const allowed=await redis(['EVAL',RATE_LIMIT_SCRIPT,1,rateKey]);
         if(!allowed)throw deny(429,'Too many upload attempts. Please try again later.');
-        return{allowedContentTypes:ALLOWED_TYPES,maximumSizeInBytes:MAX_BYTES,addRandomSuffix:true,tokenPayload:JSON.stringify({listingNum})};
+        return{allowedContentTypes:ALLOWED_TYPES,maximumSizeInBytes:MAX_BYTES,addRandomSuffix:true,access:'public',tokenPayload:JSON.stringify({listingNum})};
       },
       onUploadCompleted:async({blob,tokenPayload})=>{
         let listingNum=null;try{listingNum=JSON.parse(tokenPayload||'').listingNum}catch{}
