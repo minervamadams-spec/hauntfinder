@@ -139,7 +139,7 @@ button:disabled{cursor:not-allowed;opacity:.55}
 
 /* Compact feature keys and three-band route layout from the design reference. */
 .filters{display:grid;gap:10px}.filter-tier{display:flex;flex-wrap:wrap;gap:6px}.filter-tier--primary .filter{min-height:44px;padding:0 13px;font-size:17px}.filter-tier--features .filter{min-height:44px;padding:0 10px;background:transparent;border:1.5px solid #4a3a62;color:#e6daff;font:600 14px var(--f-body)}.filter-tier--features .filter svg{width:17px;height:17px}.filter-tier--features .filter[aria-pressed="true"]{background:var(--pumpkin);border-color:var(--pumpkin);color:var(--night)}
-.route{display:flex;flex-direction:column;gap:20px;padding:20px}.route__setup{display:flex;flex-wrap:wrap;gap:16px 28px}.route__setup>p,.route__starting{flex:1 1 250px}.route__starting .route__label{margin-bottom:8px}.seg{gap:0;border:2px solid var(--cream);border-radius:4px;overflow:hidden}.seg button{border:0;border-radius:0;min-height:44px}.seg button+button{border-left:2px solid var(--cream)}.route__stops-band{border-top:1.5px solid #2e2244;padding-top:18px}.route__stops-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.route__stops-head #optimizeRouteBtn{margin:0;min-height:44px;padding:0 10px;font-size:15px}.route__action .route__handoff{margin:0 0 12px;font-size:14px;text-align:center}.stop__controls button{min-width:44px;min-height:44px}.listing-coming-soon{font-size:16px}.hf-footer>.community-links{display:flex;justify-content:center;align-items:center;gap:24px}.hf-footer>.community-links #aboutBtn{font-size:16px}.card__notes{white-space:pre-line}
+.route{display:flex;flex-direction:column;gap:20px;padding:20px}.route__setup{display:flex;flex-wrap:wrap;gap:16px 28px}.route__setup>p,.route__starting{flex:1 1 250px}.route__starting .route__label{margin-bottom:8px}.seg{gap:0;border:2px solid var(--cream);border-radius:4px;overflow:hidden}.seg button{border:0;border-radius:0;min-height:44px}.seg button+button{border-left:2px solid var(--cream)}.route__stops-band{border-top:1.5px solid #2e2244;padding-top:18px}.route__stops-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.route__stops-head #optimizeRouteBtn{margin:0;min-height:44px;padding:0 10px;font-size:15px}.route__action .route__handoff{margin:0 0 12px;font-size:14px;text-align:center}.stop__controls button{min-width:44px;min-height:44px}.listing-coming-soon{font-size:16px}.card__notes{white-space:pre-line}
 @media(min-width:1024px){.list-column{scrollbar-color:#3a2b4d transparent;scrollbar-width:thin}.filter-tier--primary .filter{min-height:40px}.filter-tier--features .filter{min-height:38px}}
 @media(max-width:400px){.stop{flex-wrap:wrap}.stop__controls{margin-left:auto}.stop__meta{flex-basis:calc(100% - 46px)}}
 
@@ -214,13 +214,6 @@ button:disabled{cursor:not-allowed;opacity:.55}
 .tabs button+button{border-left:2px solid var(--line)}
 .tabs #displaysTab[aria-selected=true]{background:var(--cream);color:var(--night)}
 .tabs #treatStopsTab[aria-selected=true]{background:var(--lime);color:var(--night)}
-.category-intro{margin-bottom:14px;padding:14px 16px;background:#1C1330;border-top:4px solid var(--accent,var(--pumpkin));border-radius:4px;font-size:15px;line-height:1.5}
-.category-intro h2{margin:0 0 6px;color:var(--accent,var(--pumpkin));font:800 19px var(--f-ui);text-transform:uppercase}
-.category-intro p{margin:0 0 10px}
-.category-intro a{display:inline-flex;align-items:center;min-height:44px;font-weight:600;color:var(--accent,var(--pumpkin))}
-.category-intro--displays{--accent:var(--pumpkin)}
-.category-intro--treats{--accent:var(--lime)}
-.category-intro--events{--accent:#C49BFF}
 .treat-stop-number{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;flex:none;background:var(--lime);color:var(--night);border-radius:50%;font:800 20px var(--f-ui)}
 .treat-stop-card{border-color:#476522}
 .mobile-route-bar{display:none!important}
@@ -865,11 +858,24 @@ body.host-panel-open{overflow:hidden}
 @media(max-width:959px){
  html[data-category="events"] .list-column{display:none}
 }
-@media(min-width:1024px) and (max-width:1199px){
+/* Hotfix 2026-10-15 (spec 6, 768–1199 band): the events page is a single
+   column — title row, open-all-week band, week grid, legend, then the route
+   panel — with the event cards stacked BELOW the week at full width. The
+   week grid gets 7 equal columns with a 120px minimum so it can never
+   sliver; below 960px usable the mobile day list carries the page (the
+   cards column stays hidden as before). The old 1024–1199 rule left the
+   cards column in an implicit grid track, crushing the week to a sliver. */
+@media(min-width:960px) and (max-width:1199px){
  html[data-category="events"] .page-grid{grid-template-columns:minmax(0,1fr)}
+ html[data-category="events"] .map-column{grid-column:1;grid-row:auto}
+ html[data-category="events"] .list-column{display:block;grid-column:1;grid-row:auto;position:static;height:auto;max-height:none;overflow:visible;width:100%}
+ html[data-category="events"] .event-week{overflow-x:auto}
+ html[data-category="events"] .event-week[data-view="week"]{grid-template-columns:repeat(7,minmax(120px,1fr))}
 }
 @media(min-width:1200px){
  html[data-category="events"] .page-grid{grid-template-columns:minmax(0,1fr) 440px}
+ html[data-category="events"] .map-column{grid-column:1;grid-row:1}
+ html[data-category="events"] .list-column{grid-column:2;grid-row:1/span 2}
 }
 /* ---- 1A Phase F: map key, distances note, K4 popup, treat empty state, map view (spec 8.7/7.1/7.2/9.4). ---- */
 .map-key{position:absolute;left:12px;bottom:12px;z-index:650;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
@@ -952,3 +958,27 @@ body:has(dialog[open]){overflow:hidden}
 .about-social__donate{color:var(--pumpkin);font-weight:700}
 @media(max-width:1023px){.site-dialog{position:fixed;inset:auto 0 0 0;width:100%;max-width:none;border-radius:16px 16px 0 0;max-height:88dvh}}
 @media(max-width:600px){.footer-inner h2{font-size:21px}.hf-footer .footer-inner .btn--route{width:100%}}
+/* ---- Hotfix 2026-10-15: live issues on the 1A redesign (commit 2f04e79) ---- */
+
+/* Issue 3 — spec D1 (≥1200px): the default desktop anatomy is the 520px
+   listings column on the LEFT and the map + route panel in a fluid column
+   on the RIGHT, 24px gap. The 1A blocks had placed the map on the left with
+   the cards on the right. Events at ≥1200 keep their week-left/cards-right
+   two-column anatomy, and map view still takes the full grid width. */
+@media(min-width:1200px){
+  .page-grid{grid-template-columns:520px minmax(0,1fr);gap:24px}
+  .list-column{grid-column:1;grid-row:1/span 2}
+  .map-column{grid-column:2;grid-row:1}
+  .route-wrap{grid-column:2;grid-row:2;width:100%}
+  html[data-view="map"] .map-column{grid-column:1;grid-row:1}
+}
+
+/* Issue 5 — banner: the ≥1024 chrome still imposed the retired header's
+   fixed heights on .hf-header (145px/200px), but the banner art sizes
+   itself by aspect ratio and is taller than that at every desktop width,
+   so resizing clipped the graphic. Height now always comes from the
+   frame's aspect ratio; overflow:hidden only guards (the frame defines
+   the box, nothing inside can exceed it). The HAUNTFINDER wordmark sits
+   at ~55% of the art height and never drifts at 768–1199 (that band
+   crops horizontally only), so center 60% stays at every breakpoint. */
+.hf-header.banner{height:auto;min-height:0;flex:0 0 auto;overflow:hidden}

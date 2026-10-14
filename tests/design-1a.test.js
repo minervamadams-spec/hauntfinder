@@ -42,12 +42,14 @@ test('Phase A tokens: :root defines the full section-5 set',()=>{
   assert.ok(root.includes('0 30px 80px rgba(0,0,0,.7)')&&root.includes('0 16px 40px rgba(0,0,0,.6)')&&root.includes('0 12px 32px rgba(0,0,0,.6)'),'three shadows');
   assert.ok(root.includes("--f-display:'Rubik Dirt',cursive")&&root.includes("--f-cond:'Barlow Condensed',sans-serif")&&root.includes("--f-body:'Barlow',sans-serif"),'font stacks');
 });
-test('Phase A map: CARTO Dark Matter tiles with required attribution',()=>{
-  assert.ok(app.includes("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"),'dark_all tile URL with retina {r}');
-  assert.ok(app.includes('maxZoom:19'),'maxZoom 19');
-  assert.ok(app.includes('https://www.openstreetmap.org/copyright'),'OSM attribution link');
-  assert.ok(app.includes('https://carto.com/attributions'),'CARTO attribution link');
-  assert.equal(app.includes('arcgisonline'),false,'Esri tiles removed');
+test('Phase A map: keyless dark tiles (Esri World Dark Gray Base) with required attribution',()=>{
+  // Hotfix 2026-10-15: CARTO started requiring API keys (watermarked tiles), so
+  // the basemap reverted to the previous keyless dark provider. Still a dark
+  // tile style per spec ("such as CARTO Dark Matter").
+  assert.ok(app.includes("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"),'Esri dark gray tile URL');
+  assert.ok(app.includes('maxZoom:16'),'maxZoom 16');
+  assert.ok(app.includes('Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'),'Esri attribution');
+  assert.equal(app.includes('basemaps.cartocdn.com'),false,'CARTO tiles removed (API key now required)');
 });
 test('app.js public-data preamble hash is unchanged by the tile edit',()=>{
   const head=execSync('git show HEAD:app.js',{cwd:ROOT}).toString();

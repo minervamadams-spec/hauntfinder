@@ -541,7 +541,10 @@ const state={filter:'All',features:[],selected:null,route:[],favorites:[],startM
 try{const legacyEntities={};for(const x of listings){const v=localStorage.getItem('hfentity:'+x.num);if(v)legacyEntities[x.num]=v}state.route=migrateRoute(localStorage.getItem('hfroute:2026')||'[]',listings,legacyEntities,events);state.favorites=loadFavorites(localStorage.getItem('hffavs:v1')||'[]',listings,legacyEntities)}catch{}
 
 const map=L.map('map',{scrollWheelZoom:true,tap:true}).setView([40.87,-74.72],12);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
+// Hotfix 2026-10-15: CARTO Dark Matter now requires an API key (watermarked
+// tiles), so the basemap reverts to the previous keyless dark provider, Esri
+// World Dark Gray Base — still a dark tile style per spec.
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,attribution:'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'}).addTo(map);
 const markerByNum=new Map();
 
 const TREAT_FORM_URL='https://forms.gle/DTuKs27nSUWVbyf1A';
