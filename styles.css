@@ -658,3 +658,102 @@ body.host-panel-open{overflow:hidden}
   .view-toggle__text{display:none}
   .view-toggle__icon{display:block}
 }
+
+
+/* v6 Phase C (Direction 1A): listing cards (8.4), photo/flyer flips, event
+   cards (8.5). Appended after existing rules; equal-specificity redeclarations
+   win by cascade order. */
+
+/* ---- Card base: 1px line border (lime on route), 8px radius, 20/16 padding. */
+.card{gap:14px;padding:20px;border:1px solid var(--line)}
+.card--compact{padding:16px;gap:12px}
+@media(min-width:768px){.card--compact{padding:20px}}
+.card--on-route{border-color:var(--lime)}
+.card--on-route:hover,.card--on-route.is-linked{border-color:var(--lime)}
+.card--on-route .pin__check{display:flex}
+
+/* ---- Head: pin 32px + name (Barlow Condensed 23/700, title case). */
+.card__name{display:inline;font:700 23px/1.1 var(--f-cond);text-transform:none;color:var(--text);letter-spacing:0}
+.card__namebtn{all:unset;cursor:pointer;color:inherit;font:inherit;text-wrap:pretty}
+.card__namebtn:hover{color:var(--orange)}
+.card__photo-pill{display:inline-flex;align-items:center;min-height:24px;margin:2px 0 0 8px;padding:0 10px;border:1px solid var(--orange);border-radius:999px;background:transparent;color:var(--orange);font:700 12px var(--f-cond);letter-spacing:.05em;text-transform:uppercase;cursor:pointer;vertical-align:2px}
+@media(max-width:767px){.card__name{font-size:20px}}
+
+/* ---- Town · distance + OPEN TONIGHT. */
+.card__subline{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;margin-top:4px}
+.card__subline .card__town{font:500 15px/1.3 var(--f-body);color:var(--text-2);letter-spacing:0;text-transform:none}
+.card__subline .card__distance{font:500 15px/1.3 var(--f-body);color:var(--text-2)}
+.card__subline .card__town+.card__distance::before{content:'· '}
+.card__open-tonight{display:inline-flex;align-items:center;min-height:0;padding:0;background:none;color:var(--lime);font:700 13px/1.3 var(--f-cond);letter-spacing:.08em;text-transform:uppercase}
+
+/* ---- Address as the purple directions link; hours; scare level (desktop). */
+.card__address{display:inline-flex;align-items:center;gap:4px;min-height:44px;color:var(--purple);font:600 15px/1.35 var(--f-body);text-decoration:none;overflow-wrap:anywhere}
+.card__address:hover{color:var(--text)}
+.card__hours{margin:0;color:var(--text);font:400 15px/1.4 var(--f-body)}
+.card__scare-row{margin:0}
+.card__scare{font-size:13px;color:var(--text-3)}
+@media(max-width:767px){.card__scare-row{display:none}}
+
+/* ---- Feature/type tags: labeled text pills, 28px, fully rounded. */
+.card__tags{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.card__tags .chip,.card__tags .chips .chip{display:inline-flex;align-items:center;gap:5px;min-height:28px;padding:0 10px;background:transparent;border:1px solid var(--line-2);border-radius:999px;color:var(--text-2);font:500 13px/1 var(--f-body)}
+.card__tags .feature-chip svg{width:13px;height:13px}
+
+/* ---- Actions: full-width route button + 44px square favorite. */
+.card--compact .card__actions{grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0;align-items:stretch}
+.card__route-btn{min-height:48px;justify-content:center;background:var(--lime);color:#0B0910;border:2px solid var(--lime);border-radius:var(--radius-control);font:700 15px var(--f-cond);letter-spacing:.05em;text-transform:uppercase}
+.card__route-btn[aria-pressed="true"]{background:#F6EBD3;border-color:#F6EBD3;color:#0B0910}
+.card--compact .card__fav-btn{width:48px;min-width:48px;min-height:48px;padding:0;border-radius:var(--radius-control);border:2px solid var(--line-2);background:transparent;color:var(--text-2);font-size:20px}
+.card--compact .card__fav-btn[aria-pressed="true"]{background:transparent;border-color:var(--orange);color:var(--orange)}
+
+/* ---- Meta row (13px, 1px divider): Host notes + rating left, Report/Share right. */
+.card__meta{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--line);font:500 13px var(--f-body);color:var(--text-3)}
+.card__meta-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;min-width:0}
+.card__meta-right{display:flex;align-items:center;gap:8px;margin-left:auto}
+.card__metalink{min-height:44px;display:inline-flex;align-items:center;padding:0 4px;background:none;border:0;color:var(--text-3);font:500 13px var(--f-body);cursor:pointer;text-decoration:none}
+.card__metalink:hover{color:var(--purple)}
+.card--compact .card__notes{display:block;margin:0;padding:0;background:transparent;font-size:13px;white-space:normal}
+.card__notes summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;color:var(--purple);font:600 13px var(--f-body)}
+.card__notes summary::-webkit-details-marker{display:none}
+.card__notes div{padding:10px 12px;white-space:pre-line;font-size:13px;line-height:1.5;background:var(--card);border:1px solid var(--line);border-radius:var(--radius-control);color:var(--text-2);margin-top:2px}
+.card-rating{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0;background:none;border:0;color:var(--text-3);font:500 13px var(--f-body);cursor:pointer}
+.card-rating:hover{color:var(--purple)}
+.card-rating__stars{color:var(--orange);letter-spacing:1px;font-size:13px}
+.card-rating__text{white-space:nowrap}
+
+/* ---- Photo / flyer flip (8.4 K2, 8.5 K2c). */
+.card--flip{padding:0;cursor:default}
+.card--flip .card-face{padding:16px}
+@media(min-width:768px){.card--flip .card-face{padding:20px}}
+.card-flip{perspective:1400px}
+.card-flip__inner{display:grid;transition:transform .6s cubic-bezier(.3,.7,.3,1);transform-style:preserve-3d}
+.card-face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.card-face--back{transform:rotateY(180deg);display:flex;flex-direction:column;gap:0;padding:0!important;overflow:hidden}
+.card--flip.is-flipped .card-flip__inner{transform:rotateY(180deg)}
+.card__photo{flex:1;width:100%;min-height:240px;object-fit:cover;display:block}
+.card__flyer{flex:1;width:100%;min-height:0;aspect-ratio:8.5/11;object-fit:contain;background:var(--band);display:block}
+.card__back-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:var(--card);border-top:1px solid var(--line)}
+.card__back-meta{display:flex;flex-direction:column;gap:2px;min-width:0}
+.card__back-meta strong{font:700 17px/1.2 var(--f-cond);color:var(--text)}
+.card__back-meta span{font:500 13px/1.3 var(--f-body);color:var(--text-2)}
+.card__details-btn{min-height:44px;padding:0 16px;background:#F6EBD3;color:#0B0910;border:0;border-radius:var(--radius-control);font:700 14px var(--f-cond);letter-spacing:.05em;text-transform:uppercase;cursor:pointer;flex:none}
+@media(prefers-reduced-motion:reduce){
+ .card-flip__inner{transition:opacity 150ms ease;transform:none!important}
+ .card-face{transition:opacity 150ms ease}
+ .card-face--back{opacity:0}
+ .card--flip.is-flipped .card-face--front{opacity:0}
+ .card--flip.is-flipped .card-face--back{opacity:1}
+}
+
+/* ---- Event card (8.5): 4px type-color top border, type pill, 19px date/time. */
+.event-card{display:flex;flex-direction:column;gap:10px;padding:16px;border-top:4px solid var(--event-color,var(--teal));border-radius:var(--radius-card);cursor:default}
+@media(min-width:768px){.event-card{padding:20px}}
+.event-card__head{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap}
+.event-card__name{margin:0;flex:1;min-width:0;font:700 21px/1.15 var(--f-cond);color:var(--text)}
+@media(max-width:767px){.event-card__name{font-size:19px}}
+.event-type-pill{display:inline-flex;align-items:center;min-height:26px;padding:0 10px;border-radius:999px;background:var(--event-color,var(--teal));color:#0B0910;font:700 12px var(--f-cond);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.event-card__datetime{margin:0;font:700 19px/1.25 var(--f-body);color:var(--text)}
+.event-card__details{margin:0;font:400 14px/1.5 var(--f-body);color:var(--text-2)}
+.event-card__url{color:var(--purple);text-decoration:none}
+.card__actions--event{grid-template-columns:minmax(0,1fr)}
+.event-card__meta{display:flex;justify-content:flex-end;gap:8px;padding-top:10px;border-top:1px solid var(--line)}
