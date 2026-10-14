@@ -344,12 +344,13 @@ body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:0}
 @media(max-width:560px){
  .locbar{gap:8px}
  .locbar__label{width:100%;font-size:14px}
- .locbar__zip{flex:1;min-width:0}
+ .locbar__zip{flex:1;min-width:176px}
  .locbar__input{flex:1;width:auto;min-width:0}
  .locbar__locate-long{display:none}
  .locbar__locate-short{display:inline}
  .locbar .btn{padding:0 12px}
- .locbar__radius button{flex:1;min-height:44px;padding:0 8px}
+ .locbar__radius{flex:1;min-width:240px}
+ .locbar__radius button{flex:1;min-height:44px;padding:0 8px;white-space:nowrap}
  .locbar__status{font-size:13px}
 }
 @media(min-width:1024px){
