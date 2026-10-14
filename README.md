@@ -33,7 +33,7 @@ Notes:
 
 - Mobile: route planner follows the house cards; a fixed bottom route button appears once a stop is selected.
 - Each house opens an accessible feedback dialog with name, a 1–5 crow rating, comment and an automatic server timestamp. Feedback appears publicly immediately.
-- Footer includes the original illustrated flyer for houses 1–3, a printable current guide for all houses, Skully’s Closet information, donation details, Facebook, Instagram and email links.
+- Footer keeps the listing forms, a single About dialog (Hauntfinder + Skully + costume closet), Skully’s Closet information, donation details, Facebook, Instagram and email links.
 
 ## Activate shared feedback
 
