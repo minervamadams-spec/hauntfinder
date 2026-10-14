@@ -14,8 +14,15 @@ feedbackForm.addEventListener('change',paintSelectedRating);
 function feedbackView(write){feedbackForm.hidden=!write;document.getElementById('reviewPanel').hidden=write;document.getElementById('readReviewsBtn').setAttribute('aria-pressed',String(!write));document.getElementById('writeReviewBtn').setAttribute('aria-pressed',String(write));feedbackDialog.scrollTop=0}
 document.getElementById('readReviewsBtn').onclick=()=>feedbackView(false);
 document.getElementById('writeReviewBtn').onclick=()=>feedbackView(true);
+// 1A Phase G: shared modal behavior (spec 8.8) — close buttons, scrim clicks
+// guarded while a form inside has typed content, and focus returned to the
+// opener when a dialog closes.
+const dialogOpener=new Map();
+const nativeShowModal=HTMLDialogElement.prototype.showModal;
+HTMLDialogElement.prototype.showModal=function(){if(!dialogOpener.has(this))dialogOpener.set(this,document.activeElement instanceof HTMLElement?document.activeElement:null);return nativeShowModal.call(this)};
 document.querySelectorAll('[data-close-dialog]').forEach(b=>b.onclick=()=>b.closest('dialog').close());
-document.querySelectorAll('.site-dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target!==d)return;const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}));
+document.querySelectorAll('.site-dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target!==d)return;const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)return;if([...d.querySelectorAll('input:not([type=radio]):not([type=checkbox]),textarea')].some(i=>i.value.trim()!==''))return;d.close()}));
+document.querySelectorAll('dialog').forEach(d=>d.addEventListener('close',()=>{const o=dialogOpener.get(d);dialogOpener.delete(d);if(o&&document.contains(o))o.focus()}));
 feedbackDialog.addEventListener('close',()=>feedbackRequest?.abort());
 document.getElementById('cardList').addEventListener('click',e=>{const b=e.target.closest('[data-feedback]');if(b)openFeedback(+b.dataset.feedback)});
 document.getElementById('mobileMapRouteBtn').onclick=openRouteSheet;
@@ -54,6 +61,19 @@ feedbackForm.addEventListener('submit',async e=>{
   finally{if(feedbackHouseId===id)button.disabled=false}
 });
 document.getElementById('aboutBtn').onclick=()=>document.getElementById('aboutDialog').showModal();
+// 1A Phase G: footer type picker (spec 9.2/P1) and Share this site (spec 9.1).
+const FORM_LINKS={
+  display:'https://docs.google.com/forms/d/e/1FAIpQLSeGXPJkGkuaRNOC2QXToVD3L85mXez9xYpKJd4ij7P0lskrfQ/viewform',
+  treat:'https://docs.google.com/forms/d/e/1FAIpQLScSaoQ7UuSMwxyiDMEQYxXg6HyQhXep_CyEFjYgD7nwQ3kq-w/viewform',
+  event:'https://docs.google.com/forms/d/e/1FAIpQLSeifnGQbKmB1ofTT1Kb1EsY-aCxo-164AXIr5sIvA-xdg9a6g/viewform'};
+document.querySelectorAll('[data-type-link]').forEach(a=>{a.href=FORM_LINKS[a.dataset.typeLink]});
+document.getElementById('typePickerBtn').onclick=()=>document.getElementById('typeDialog').showModal();
+const shareSiteBtn=document.getElementById('shareSiteBtn');
+shareSiteBtn.onclick=async()=>{
+  const shareData={title:'Hauntfinder',text:'Find Halloween displays, treat stops, and events near you.',url:'https://hauntfinder.vercel.app/'};
+  if(navigator.share){try{await navigator.share(shareData);return}catch(e){if(e&&e.name==='AbortError')return}}
+  try{await navigator.clipboard.writeText(shareData.url);shareSiteBtn.textContent='Link copied';setTimeout(()=>{shareSiteBtn.textContent='Share this site'},3000)}catch{window.prompt('Copy this link:',shareData.url)}
+};
 // 1A Phase F: the map key now lives on the map itself (spec 8.7); the old
 // modal key dialog was retired with it.
 
