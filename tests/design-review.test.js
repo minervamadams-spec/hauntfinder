@@ -4,8 +4,8 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const read=f=>fs.readFileSync(path.join(__dirname,'..',f),'utf8');
 const html=read('index.html'),css=read('styles.css'),app=read('app.js'),layout=read('layout.js'),chrome=read('chrome-filters.js'),community=read('community.js');
 
-test('P1: pins and card badges are numbered 1..N in list order while data-pin keeps the listing number',()=>{
-  assert.match(app,/labelMap\.clear\(\);visible\.filter\(x=>!x\.placeholder\)\.forEach\(\(x,i\)=>labelMap\.set\(x\.num,i\+1\)\)/);
+test('P1 (reversed by owner): pins and card badges keep the stable listing number, so shared links and what hosts were told stay correct',()=>{
+  assert.equal(/labelMap\.set\(/.test(app),false,'no renumbering');
   assert.match(app,/<span class="pin__num">\$\{pinLabel\(n\)\}<\/span>/);
   assert.match(app,/relabelPins\(\)/);
 });
