@@ -84,12 +84,15 @@ test('map is a compact 240px mobile surface and fills the desktop workspace rail
 });
 test('desktop uses the designed filters, results and map workspace rails',()=>{
   assert.match(html,/<aside class="filter-rail" id="filterRail"/,'filter rail is real page structure');
+  assert.match(html,/class="filterbar__rail-head" aria-hidden="true"/,'desktop rail heading shares the control row');
   const v7=css.split('/* ---- v7 compact workspace')[1]||'';
   assert.match(v7,/height:100%!important;min-height:0;padding:0;gap:0;display:grid;grid-template-columns:260px minmax\(300px,440px\) minmax\(320px,1fr\)/);
   assert.match(v7,/\.filter-rail\{grid-column:1;grid-row:1;display:flex;flex-direction:column;min-height:0;padding:14px;overflow-y:auto/);
   assert.match(v7,/\.list-column\{grid-column:2;grid-row:1;display:block;min-height:0;height:auto!important;max-height:none!important;padding:0;overflow-y:auto!important/);
   assert.match(v7,/\.map-column\{grid-column:3;grid-row:1;display:block;min-width:0;min-height:0;width:auto;position:relative/);
   assert.match(v7,/\.route-wrap\{grid-column:3;grid-row:1;z-index:700;align-self:end/);
+  assert.match(v7,/\.filterbar \.tabs\{grid-column:2/,'tabs begin above the results rail, not above filters');
+  assert.match(v7,/\.filterbar \.nav-search\{grid-column:3/,'search controls align with the map rail');
   assert.equal(css.includes('html[data-view='),false,'no Map/List view states left in the stylesheet');
 });
 test('desktop rail exposes direct filter chips and the Leaflet canvas resizes after its grid cell changes',()=>{
@@ -106,6 +109,9 @@ test('cards stay a compact single column in the results rail and mobile flow',()
   assert.match(block,/html:not\(\[data-category="events"\]\) #cardList\{display:flex;flex-direction:column/);
   assert.equal(block.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),false);
   assert.match(block,/\.card--compact\{padding:12px 14px;gap:8px;min-height:0\}/);
+  const v7=css.split('/* ---- v7 compact workspace')[1]||'';
+  assert.match(v7,/\.card--compact \.card__route-btn\{min-height:36px!important/,'desktop cards use compact route actions');
+  assert.match(v7,/\.card--compact \.card__address\{min-height:26px/,'desktop cards do not waste a 44px address target row');
 });
 test('events: calendar presentation kept, no map fabricated, route planner keeps its place beside the week',()=>{
   assert.match(layout,/if\(mf\)mf\.hidden=event/,'events still hide the map');
