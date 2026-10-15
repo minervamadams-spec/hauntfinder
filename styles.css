@@ -1022,3 +1022,14 @@ body:has(dialog[open]){overflow:hidden}
 .about-page .about-article h2{margin:26px 0 8px;font:700 22px/1.2 var(--f-ui);color:var(--cream)}
 .about-page .about-article p{margin:10px 0;line-height:1.6}
 @media(max-width:600px){.subpage-main h1{font-size:28px}.subpage-nav{justify-content:flex-start}}
+
+/* Listing page (page-first step 3): form controls outside the old dialogs. */
+.listing-page .listing-meta{color:var(--pumpkin);font-weight:600;margin:0 0 14px}
+.listing-jump{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0 0 8px}
+.listing-jump a{color:var(--mist);font-weight:600;padding:6px 0;border-bottom:2px solid transparent}.listing-jump a:hover{color:var(--pumpkin);border-bottom-color:var(--pumpkin)}
+.listing-section{margin:28px 0 0;padding:22px 20px;border:2px solid var(--violet);border-top-width:4px;border-radius:10px;background:var(--panel);scroll-margin-top:16px}
+.listing-section h2{margin:0 0 10px;font:800 26px/1.1 var(--f-ui);text-transform:uppercase}
+.listing-section h3{font:800 22px var(--f-ui)}
+.listing-page input:not([type=radio]),.listing-page textarea,.listing-page select{display:block;width:100%;box-sizing:border-box;margin:6px 0 18px;border:1px solid var(--line-strong);border-radius:4px;padding:12px;background:var(--night);color:var(--cream);font:inherit}
+.listing-page textarea{resize:vertical;min-height:120px}
+.listing-page .honeypot input{margin:0}

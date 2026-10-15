@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Listing</title>
+  <meta name="description" content="Visitor feedback, listing updates, and sharing for a Hauntfinder listing.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700;800&family=Rubik+Dirt:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="listing" class="subpage">
+<a class="skip-link" href="#listingMain">Skip to content</a>
+<header class="subpage-head">
+  <nav class="subpage-nav" aria-label="Site">
+    <a class="subpage-nav__home" href="/">← Hauntfinder map</a>
+    <span class="subpage-nav__links">
+      <a href="/" data-subnav="map">Map</a>
+      <a href="submit.html" data-subnav="submit">Submit</a>
+      <a href="about.html" data-subnav="about">About</a>
+      <a href="alerts.html" data-subnav="alerts">Get alerts</a>
+    </span>
+  </nav>
+</header>
+<main id="listingMain" class="subpage-main listing-page">
+  <h1 id="listingTitle">Listing</h1>
+  <p class="subpage-dek" id="listingStatus" role="status">Loading listing…</p>
+  <noscript><p class="subpage-dek">This page needs JavaScript to load the listing. <a href="/">Return to the Hauntfinder map</a> to browse and read listing details.</p></noscript>
+  <div id="listingBody" hidden>
+    <p class="listing-meta" id="listingMeta"></p>
+    <nav class="listing-jump" aria-label="On this page">
+      <a href="#feedback">Visitor feedback</a>
+      <a href="#report-update">Report an update</a>
+      <a href="#share">Share</a>
+      <a id="listingOnMap" href="/">See on the map</a>
+    </nav>
+
+    <section id="feedback" class="listing-section" aria-labelledby="feedbackHeading">
+      <h2 id="feedbackHeading">Visitor feedback</h2>
+      <p id="feedbackStatus" role="status"></p>
+      <section id="feedbackList" aria-label="Visitor comments" aria-live="polite"></section>
+      <form id="feedbackForm">
+        <h3>Tell us about your visit</h3>
+        <label for="feedbackName">Name <small>(first name or nickname)</small></label>
+        <input id="feedbackName" name="name" maxlength="60" autocomplete="given-name" required>
+        <fieldset class="crow-rating"><legend>Your rating</legend><div id="crowChoices"></div><small>1 skeleton = needs work · 5 skeletons = loved it. Rate your visit, not how scary it was.</small></fieldset>
+        <label for="feedbackComment">Your feedback</label>
+        <textarea id="feedbackComment" name="comment" rows="4" maxlength="1500" required placeholder="What did you enjoy? What would help other visitors?"></textarea>
+        <label class="honeypot" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+        <p class="form-note">Your name, rating, comment and submission time will appear publicly. Keep feedback about the display and avoid personal information. The time is added automatically.</p>
+        <button class="btn btn--route" id="feedbackSubmit" type="submit" disabled>Post Feedback</button>
+        <p id="feedbackFormStatus" role="status"></p>
+      </form>
+    </section>
+
+    <section id="report-update" class="listing-section" aria-labelledby="reportHeading">
+      <h2 id="reportHeading">Weather alerts &amp; listing updates</h2>
+      <p>Help us keep the map current. Reports go to the organizer for review.</p>
+      <form id="listingReportForm">
+        <label for="listingReportType">What should visitors know?</label>
+        <select id="listingReportType" required><option value="Weather cancellation">Weather cancellation</option><option value="Temporarily closed">Temporarily closed</option><option value="Incorrect listing details">Incorrect listing details</option><option value="Display no longer available">Display no longer available</option></select>
+        <div id="listingReportDates"><label for="listingReportFrom">Affected date</label><input id="listingReportFrom" type="date" required><label for="listingReportThrough">Through (optional, for several nights)</label><input id="listingReportThrough" type="date"></div>
+        <label for="listingReportNotes" id="listingReportNotesLabel">Note (optional)</label>
+        <textarea id="listingReportNotes" rows="3" maxlength="1500" placeholder="Optional reason, changed details, or host announcement link."></textarea>
+        <p class="form-note">This is a short notice, separate from the full listing form. Your listing is already identified. It prepares an email for organizer review; press Send in your email app. The map changes after review.</p>
+        <button class="btn btn--route" type="submit">Prepare update email</button>
+        <p id="listingReportStatus" role="status"></p>
+      </form>
+      <p><a class="btn btn--outline" href="https://forms.gle/msXn5jNgMF3Aet3N9" target="_blank" rel="noopener">Host: update your listing ↗</a></p>
+    </section>
+
+    <section id="share" class="listing-section" aria-labelledby="shareHeading">
+      <h2 id="shareHeading">Share this house</h2>
+      <p>Listed here? Use this suggested post and listing image to invite visitors.</p>
+      <label for="houseShareText">Suggested social post</label>
+      <textarea id="houseShareText" rows="8" readonly></textarea>
+      <div class="share-actions"><button type="button" class="btn btn--route" id="copyHousePost">Copy post</button><button type="button" class="btn btn--outline" id="shareHousePost">Share post</button></div>
+      <img id="houseShareImage" alt="Shareable image of this house listing" class="share-preview">
+      <div class="share-actions"><button id="saveHouseImage" class="btn btn--route" type="button">Save / share image</button><a id="downloadHouseImage" class="btn btn--outline" download>Download image</a></div>
+      <p class="form-note">On a phone, use Save / share image, then choose Save Image if your device offers it. Otherwise download the image, or press and hold its preview. Attach it to your post and review before publishing.</p>
+      <p id="houseShareStatus" role="status"></p>
+    </section>
+  </div>
+</main>
+<footer class="subpage-foot">
+  <a href="/">Hauntfinder map</a> · <a href="alerts.html">Get alerts</a> · <a href="mailto:mtocommunityfinder@gmail.com">Contact us</a>
+</footer>
+<script src="routing.js"></script>
+<script src="listing.js"></script>
+<script src="page.js"></script>
+</body>
+</html>
