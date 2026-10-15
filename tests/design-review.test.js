@@ -105,3 +105,10 @@ test('QA fix: the selected card keeps its on-screen position when the list re-re
   assert.match(app,/getVisibleParent\(lm\)/);
   assert.match(css,/\.leaflet-marker-icon\.is-linked \.hf-cluster\{transform:scale\(1\.1\)\}/);
 });
+
+test('QA fix 2: card hover links its pin regardless of the pointer media query (Codex probe had no fine pointer)',()=>{
+  const fn=app.split('function linkPair(n,on){')[1].split('\nfunction ')[0];
+  assert.equal(fn.includes('pointer:fine'),false);
+  assert.match(fn,/is-linked/);
+  assert.match(css,/\.pin\.is-linked\{transform:scale\(1\.08\)\}/);
+});
