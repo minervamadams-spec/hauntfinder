@@ -961,23 +961,22 @@ html[data-fullmap] .map-key,html[data-fullmap] .map-note{display:none}
 .listing-map figcaption{margin-top:8px}.listing-map figcaption a{color:var(--pumpkin);font-weight:700}
 @media(min-width:768px){.listing-map__canvas{height:280px}}
 
-/* ---- Single-scroll, map-first homepage (layout brief 2026-10-15) ----
-   One vertical scroll surface: banner, intro, tabs/search/filters, map, result
-   count + cards, pagination, then the route planner. The split card/map pane,
-   the sticky scrolling card column and the Map/List switch are gone. Displays
-   and Treat Stops share this structure; Events keeps its week/calendar
-   presentation (no map) with the route planner beside the week as before. */
+/* ---- Compact directory layout homepage (layout brief 2026-10-15) ----
+   Results are the desktop priority: a normal document-flow card list sits left
+   of a sticky, interactive map. Phone layouts retain the map-before-results
+   order but keep the map deliberately short. Neither layout creates a second
+   results scroll surface. */
 .banner__frame{max-height:180px}
-.intro-strip{padding:8px var(--space-10)}
-.intro-strip__copy{font-size:16px;line-height:1.4}
+.intro-strip{padding:6px var(--space-10)}
+.intro-strip__copy{font-size:15px;line-height:1.35}
 @media(max-width:767px){
  .banner__frame{max-height:140px}
- .intro-strip{padding:10px var(--space-4)}
+ .intro-strip{padding:8px var(--space-4)}
  .intro-strip__copy{font-size:15px}
 }
-html:not([data-category="events"]) .page-grid{display:flex;flex-direction:column;align-items:stretch;gap:20px}
+html:not([data-category="events"]) .page-grid{display:flex;flex-direction:column;align-items:stretch;gap:16px}
 html:not([data-category="events"]) .map-column,html:not([data-category="events"]) .list-column,html:not([data-category="events"]) .route-wrap{width:100%;align-self:stretch;margin-top:0}
-html:not([data-category="events"]):not([data-fullmap]) .map-frame{height:400px;flex:none}
+html:not([data-category="events"]):not([data-fullmap]) .map-frame{height:240px;flex:none}
 html:not([data-category="events"]) .hf-map{height:100%;aspect-ratio:auto}
 html:not([data-category="events"]) .count-line{margin:0 0 12px}
 /* The on-map key and distance note only ever showed in the retired Map view;
@@ -986,14 +985,28 @@ html:not([data-category="events"]) .count-line{margin:0 0 12px}
 .map-key,.map-note{display:none}
 .count-line{scroll-margin-top:12px}
 .listing-pages[hidden]{display:none}
-@media(min-width:900px){
- html:not([data-category="events"]) #cardList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
-}
+html:not([data-category="events"]) #cardList{display:flex;flex-direction:column;gap:12px}
+html:not([data-category="events"]) .card--compact{padding:12px 14px;gap:8px;min-height:0}
+html:not([data-category="events"]) .card--compact .card__actions{margin-top:4px}
+html:not([data-category="events"]) .card--compact .card__meta{margin-top:0;padding-top:8px}
 @media(max-width:1023px){
  .count-line{scroll-margin-top:calc(var(--filterbar-h,0px) + 12px)}
 }
-@media(max-width:767px){
- html:not([data-category="events"]):not([data-fullmap]) .map-frame{height:320px}
+@media(min-width:1024px){
+ html:not([data-category="events"]) .page-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(360px,1fr);gap:24px;align-items:start}
+ html:not([data-category="events"]) .list-column{grid-column:1;grid-row:1;min-width:0}
+ html:not([data-category="events"]) .map-column{grid-column:2;grid-row:1;min-width:0}
+ html:not([data-category="events"]):not([data-fullmap]) .map-frame{height:clamp(360px,calc(100dvh - var(--filterbar-h,0px) - 32px),620px);position:sticky;top:16px}
+ html:not([data-category="events"]) .route-wrap{grid-column:1;grid-row:2}
+ html:not([data-category="events"]) .card--compact{padding:14px 16px}
+}
+@media(max-width:600px){
+ .filterbar .tabs{overflow:hidden}
+ .filterbar .tabs button{flex:1 1 0!important;min-width:0!important;gap:3px;padding:0 2px;font-size:12px;letter-spacing:0}
+ .filterbar .tabs .tabs__badge{min-width:19px;height:19px;padding:0 2px;font-size:11px}
+ .filterbar .chrome-row{align-items:stretch}
+ .filterbar .chrome-row__right{width:100%;margin-left:0}
+ .filterbar .chrome-share{width:100%}
 }
 /* Events: the route planner moved out of the map column in the markup, so it
    is placed beside/under the week explicitly to keep the events layout. */

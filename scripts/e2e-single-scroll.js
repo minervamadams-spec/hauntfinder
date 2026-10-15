@@ -1,4 +1,4 @@
-// Browser checks for the single-scroll, map-first homepage at 1280px and 390px.
+// Browser checks for the compact directory homepage at 1280px and 390px.
 //   node scripts/e2e-single-scroll.js [base-url]      (default http://localhost:8765)
 // Needs the `playwright` package and a Chromium build (set HF_CHROMIUM to an
 // executable path if Playwright's bundled browser is not installed).
@@ -43,15 +43,15 @@ const countOf=t=>+(String(t).match(/^(\d+)/)||[0,0])[1];
     let d=await p.evaluate(probe);
     ok(T+'banner within cap',d.banner.height>0&&d.banner.height<=(desktop?180:140)+0.5,`${Math.round(d.banner.height)}px`);
     ok(T+'intro kept'+(desktop?' on one line':''),d.intro&&d.intro.height>0&&(!desktop||d.intro.height<=d.introLH*1.2),`${Math.round(d.intro.height)}px`);
-    ok(T+'order: filters, map, count, cards, pager',d.filterbar.bottom<=d.mapFrame.top+1&&d.mapFrame.bottom<=d.countLine.top&&d.countLine.bottom<=d.firstCard.top&&d.lastCard.bottom<=d.pager.top,JSON.stringify({fb:Math.round(d.filterbar.bottom),map:[Math.round(d.mapFrame.top),Math.round(d.mapFrame.bottom)],count:Math.round(d.countLine.top),card:Math.round(d.firstCard.top),pager:Math.round(d.pager.top)}));
-    ok(T+'map full width and sized',desktop?d.mapFrame.height>=360&&d.mapFrame.height<=420:Math.abs(d.mapFrame.height-320)<=20,`${Math.round(d.mapFrame.height)}px tall, ${Math.round(d.mapFrame.width)}px wide`);
+    ok(T+(desktop?'desktop: results left, map right':'mobile: filters, map, count, cards, pager'),desktop?d.filterbar.bottom<=d.mapFrame.top+1&&d.filterbar.bottom<=d.countLine.top+1&&d.mapFrame.left>d.countLine.left&&d.countLine.bottom<=d.firstCard.top&&d.lastCard.bottom<=d.pager.top:d.filterbar.bottom<=d.mapFrame.top+1&&d.mapFrame.bottom<=d.countLine.top&&d.countLine.bottom<=d.firstCard.top&&d.lastCard.bottom<=d.pager.top,JSON.stringify({fb:Math.round(d.filterbar.bottom),map:[Math.round(d.mapFrame.top),Math.round(d.mapFrame.bottom),Math.round(d.mapFrame.left)],count:[Math.round(d.countLine.top),Math.round(d.countLine.left)],card:Math.round(d.firstCard.top),pager:Math.round(d.pager.top)}));
+    ok(T+'map sized for this viewport',desktop?d.mapFrame.height>=360&&d.mapFrame.height<=620:Math.abs(d.mapFrame.height-240)<=20,`${Math.round(d.mapFrame.height)}px tall, ${Math.round(d.mapFrame.width)}px wide`);
     ok(T+'map visible before scrolling',d.mapFrame.vTop<vp.height,`map top at ${Math.round(d.mapFrame.vTop)}px`);
     ok(T+'route planner after the results',d.route.top>=d.pager.bottom);
     ok(T+'no nested scroll areas',d.scrollers.length===0,d.scrollers.join(', '));
     ok(T+'no horizontal overflow',!d.overflowX);
     const total=countOf(d.countText);
     ok(T+'page 1 shows 8 cards',d.cardNums.length===Math.min(8,total),`${d.cardNums.length} of ${total}`);
-    ok(T+'card columns',d.cardCols===(desktop?2:1),`${d.cardCols}`);
+    ok(T+'card column stays compact',d.cardCols===1,`${d.cardCols}`);
     ok(T+'tab count == count line == pins',d.tabCount===total&&d.pins.length===total,`tab ${d.tabCount}, count ${total}, pins ${d.pins.length}`);
     ok(T+'pager position',d.pageStatus===`Page 1 of ${Math.ceil(total/8)} · 1–8 of ${total}`&&d.prevDisabled&&!d.nextDisabled,d.pageStatus);
 
@@ -85,7 +85,7 @@ const countOf=t=>+(String(t).match(/^(\d+)/)||[0,0])[1];
     await p.click('#treatStopsTab');await p.waitForTimeout(300);
     let t=await p.evaluate(probe);const treats=countOf(t.countText);
     ok(T+'Treat Stops: page reset, counts agree, pager hidden for one page',t.category==='treats'&&t.page===0&&t.cardNums.length===treats&&t.pins.length===treats&&t.tabCount===treats&&(treats>8||!t.pager),`${treats} treat stop(s)`);
-    ok(T+'Treat Stops: map first, no nested scroll, no overflow',t.mapFrame&&t.mapFrame.bottom<=t.firstCard.top&&t.scrollers.length===0&&!t.overflowX);
+    ok(T+'Treat Stops: responsive map, no nested scroll, no overflow',t.mapFrame&&t.scrollers.length===0&&!t.overflowX);
     await p.click('#displaysTab');await p.waitForTimeout(300);
     ok(T+'back to Displays starts on page 1',(await p.evaluate(probe)).page===0);
 
@@ -101,7 +101,7 @@ const countOf=t=>+(String(t).match(/^(\d+)/)||[0,0])[1];
     await go('?house=12&view=map');await p.waitForTimeout(800);
     const dl=await p.evaluate(()=>{const pin=document.querySelector('.leaflet-marker-pane [data-pin="12"]');const b=pin.getBoundingClientRect(),m=document.getElementById('map').getBoundingClientRect(),fb=document.querySelector('.filterbar').getBoundingClientRect(),mf=document.querySelector('.map-frame').getBoundingClientRect();const cx=b.left+b.width/2,cy=b.top+b.height/2,top=document.elementFromPoint(cx,b.bottom-4);const sticky=getComputedStyle(document.querySelector('.filterbar')).position==='sticky';return {zoom:map.getZoom(),selected:state.selected,pinSelected:pin.classList.contains('is-selected'),onTop:!!top&&!!top.closest('[data-pin="12"]'),dx:Math.round(cx-(m.left+m.width/2)),tipDy:Math.round(b.bottom-(m.top+m.height/2)),peek:!document.getElementById('mapPeek').classList.contains('is-hidden'),mapTop:Math.round(mf.top),mapBottom:Math.round(mf.bottom),under:sticky?Math.round(fb.bottom):0}});
     ok(T+'deep link: pin 12 selected, centered, visible, popup open',dl.zoom===15&&dl.selected===12&&dl.pinSelected&&dl.onTop&&Math.abs(dl.dx)<=3&&Math.abs(dl.tipDy)<=3&&dl.peek,JSON.stringify(dl));
-    ok(T+'deep link: map sits directly under the filters, fully on screen',dl.mapTop>=dl.under-2&&dl.mapBottom<=vp.height+2,JSON.stringify({mapTop:dl.mapTop,mapBottom:dl.mapBottom,filtersEnd:dl.under}));
+    ok(T+'deep link: map stays in its responsive position',desktop?dl.mapTop>=dl.under-2&&dl.mapTop<vp.height:dl.mapTop>=dl.under-2&&dl.mapBottom<=vp.height+2,JSON.stringify({mapTop:dl.mapTop,mapBottom:dl.mapBottom,filtersEnd:dl.under}));
     await go('?house=8&entity=drakestown-road-2026');
     const d8=await p.evaluate(()=>({sel:state.selected,shown:!!document.querySelector('[data-card="8"].is-selected')}));
     ok(T+'?house= link to a page-2 listing opens the page with its card selected',d8.sel===8&&d8.shown,JSON.stringify(d8));

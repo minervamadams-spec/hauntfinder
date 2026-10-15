@@ -1,13 +1,12 @@
-// Single-scroll, map-first homepage (layout brief 2026-10-15).
-// Node-level checks: pagination logic, page order in the markup, and the CSS
-// contract (banner caps, map heights, no nested results scroll, no split pane).
+// Compact directory homepage (layout brief 2026-10-15).
+// Node-level checks: pagination logic and the responsive CSS contract.
 // Rendered behavior at 1280px and 390px is covered by scripts/e2e-single-scroll.js.
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const ROOT=path.join(__dirname,'..');
 const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
 const html=read('index.html'),css=read('styles.css'),app=read('app.js'),layout=read('layout.js'),urlState=read('url-state.js');
 const F=require('../listing-format.js');
-const block=css.split('/* ---- Single-scroll, map-first homepage')[1]||'';
+const block=css.split('/* ---- Compact directory layout homepage')[1]||'';
 
 // ---- Pagination (8 per page) ----
 test('pagination: eight cards per page with page position',()=>{
@@ -52,7 +51,7 @@ test('pagination controls: Previous/Next buttons and a live page position under 
 });
 
 // ---- Page order ----
-test('order: banner, intro, tabs/search/filters, map, count + cards, pagination; route planner after the results',()=>{
+test('markup order keeps the map before results for the compact mobile flow',()=>{
   const at=s=>{const i=html.indexOf(s);assert.ok(i>-1,s);return i};
   const seq=['class="hf-header banner"','class="intro-strip"','class="filterbar"','class="map-frame"','id="countLine"','id="cardList"','id="resultsPager"','id="routeSection"'];
   for(let i=1;i<seq.length;i++)assert.ok(at(seq[i-1])<at(seq[i]),seq[i-1]+' before '+seq[i]);
@@ -74,22 +73,26 @@ test('banner caps: 180px desktop, 140px mobile; intro stays and is compact',()=>
   assert.match(block,/@media\(max-width:767px\)\{[^}]*\.banner__frame\{max-height:140px\}/);
   assert.match(html,/<p class="intro-strip__copy">Find decorated homes/);
 });
-test('map heights: 400px desktop (360-420 band), 320px mobile; full map overlay keeps working',()=>{
-  assert.match(block,/html:not\(\[data-category="events"\]\):not\(\[data-fullmap\]\) \.map-frame\{height:400px/);
-  assert.match(block,/@media\(max-width:767px\)\{[^}]*html:not\(\[data-category="events"\]\):not\(\[data-fullmap\]\) \.map-frame\{height:320px/);
+test('map is a compact 240px mobile surface and a sticky desktop side panel; full map overlay keeps working',()=>{
+  assert.match(block,/html:not\(\[data-category="events"\]\):not\(\[data-fullmap\]\) \.map-frame\{height:240px/);
+  assert.match(block,/\.map-frame\{height:clamp\(360px,calc\(100dvh - var\(--filterbar-h,0px\) - 32px\),620px\);position:sticky/);
   assert.match(css,/html\[data-fullmap\] \.map-frame\{position:fixed;inset:0;height:100dvh/,'full map overlay rule intact');
 });
-test('no nested results scrolling and no split pane for Displays and Treat Stops',()=>{
+test('desktop has results left and a sticky map right, with no nested results scrolling',()=>{
   assert.equal(/\.list-column\{[^}]*overflow-y:auto/.test(css),false,'no scrolling card column anywhere');
   assert.equal(css.includes('position:sticky!important;top:16px;align-self:start;height:calc(100dvh - 32px)'),false,'Phase H sticky list removed');
-  assert.match(block,/html:not\(\[data-category="events"\]\) \.page-grid\{display:flex;flex-direction:column/);
+  assert.match(block,/\.page-grid\{display:grid;grid-template-columns:minmax\(0,1.7fr\) minmax\(360px,1fr\)/);
+  assert.match(block,/\.list-column\{grid-column:1;grid-row:1;min-width:0\}/);
+  assert.match(block,/\.map-column\{grid-column:2;grid-row:1;min-width:0\}/);
   assert.equal(css.includes('html[data-view='),false,'no Map/List view states left in the stylesheet');
 });
 test('map key and distance note stay hidden as in the default view (they would cover the map and its attribution)',()=>{
   assert.match(block,/\.map-key,\.map-note\{display:none\}/);
 });
-test('cards: two-column grid on desktop where space permits, one column on mobile',()=>{
-  assert.match(block,/@media\(min-width:900px\)\{[^}]*html:not\(\[data-category="events"\]\) #cardList\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
+test('cards stay a compact single column at every viewport',()=>{
+  assert.match(block,/html:not\(\[data-category="events"\]\) #cardList\{display:flex;flex-direction:column/);
+  assert.equal(block.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),false);
+  assert.match(block,/\.card--compact\{padding:12px 14px;gap:8px;min-height:0\}/);
 });
 test('events: calendar presentation kept, no map fabricated, route planner keeps its place beside the week',()=>{
   assert.match(layout,/if\(mf\)mf\.hidden=event/,'events still hide the map');
@@ -107,8 +110,8 @@ test('deep link: ?house=N&view=map centers the pin and brings the map under the 
 });
 
 // ---- Live QA gate ----
-test('live QA gate: verify-live checks the map-first homepage and hashes url-state.js',()=>{
+test('live QA gate: verify-live checks the compact directory homepage and hashes url-state.js',()=>{
   const verify=read('scripts/verify-live.js');
   assert.ok(verify.includes("'url-state.js'"));
-  assert.match(verify,/homepage is map-first with the card pager and no Map\/List switch/);
+  assert.match(verify,/homepage has the compact directory map, card pager and no Map\/List switch/);
 });

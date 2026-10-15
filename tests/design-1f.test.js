@@ -143,8 +143,8 @@ test('pin click scrolls the card with scrollTo, never scrollIntoView',()=>{
 });
 
 /* ---- Map view (frame 1B) ---- */
-test('map-first layout: map spans the content width above the cards; single map instance',()=>{
-  assert.ok(css.includes('html:not([data-category="events"]) .page-grid{display:flex;flex-direction:column;align-items:stretch'),'one column: map, then cards');
+test('compact directory layout: mobile map precedes cards, desktop has results-left and sticky map-right; single map instance',()=>{
+  assert.ok(css.includes('html:not([data-category="events"]) .page-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(360px,1fr)'),'desktop results-left/map-right grid');
   assert.ok(!layout.includes("saveView(v,localStorage)"),'no Map/List preference is stored');
   assert.equal((html.match(/id="map" class="hf-map"/g)||[]).length,1,'one Leaflet container');
   assert.ok(layout.includes("map.invalidateSize()"),'size refreshed on view switch');

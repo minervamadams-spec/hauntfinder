@@ -22,9 +22,9 @@ test('When filter defaults to Any night on every load; no stale persisted date',
   assert.match(css,/\.event-day\{/, 'when chips remain styled');
 });
 
-test('≥1200px: the D1 split is superseded by the single-scroll map-first column; events keep week-left/cards-right',()=>{
-  assert.ok(!css.includes('grid-template-columns:520px minmax(0,1fr)'),'no 520px card column split');
-  assert.ok(css.includes('html:not([data-category="events"]) .page-grid{display:flex;flex-direction:column'),'displays/treats: one column');
+test('≥1024px: displays/treats use a compact results-left, sticky-map-right directory; events keep week-left/cards-right',()=>{
+  assert.ok(!css.includes('grid-template-columns:520px minmax(0,1fr)'),'no legacy 520px card column split');
+  assert.ok(css.includes('html:not([data-category="events"]) .page-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(360px,1fr)'),'displays/treats: results-left, map-right grid');
   const eventsLarge=css.split('@media(min-width:1200px)')[1].split('/* ---- Hotfix')[0];
   assert.match(eventsLarge,/html\[data-category="events"\] \.page-grid\{grid-template-columns:minmax\(0,1fr\) 440px\}/,'events keep week-left/cards-right at ≥1200');
   assert.match(eventsLarge,/html\[data-category="events"\] \.map-column\{grid-column:1;grid-row:1\}/);
