@@ -94,6 +94,17 @@
       "decision": "imported_host_map_pin_confirmed_by_minerva",
       "entityId": "harvesters-of-souls-2026",
       "publicAddress": "11 Jackson Ave, Washington, NJ 07882"
+    },
+    {
+      "row": 10,
+      "fingerprint": "7cea09dc3c9a11e916322fcddb3cc836722765ebdabd86369408c0e6898de81f",
+      "fingerprintColumns": 15,
+      "listingId": 13,
+      "decision": "imported_consented_new_entity_exact_address_verified",
+      "entityId": "glens-terror-drive-2026",
+      "publicAddress": "34 Glen Ave, Mine Hill, NJ 07803",
+      "scheduleEvidence": "Submitted Friday–Sunday 7–10; host public post describes nighttime hours. Latest submission controls days.",
+      "photoDecision": "submitted_photo_pending_review"
     }
   ],
   "treatStops": {
