@@ -18,8 +18,8 @@ const displayCard=app.split('function cardHTML')[1].split('function dateFilterCh
 const treatCard=app.split('function treatCardHTML')[1].split('function cardHTML')[0];
 const eventCard=layout.split('function eventCard')[1].split('function calendar()')[0];
 
-test('listing card anatomy order: pin, name, town line, address link, hours, scare, tags, actions, meta',()=>{
-  const order=['${pinHTML(x.num,isTreatStop(x)?\'treat\':\'display\')}','card__name','card__subline','card__address','card__hours','card__scare-row','card__tags','card__actions','card__meta'];
+test('listing card anatomy order: pin, name, town line, address link, hours row (with Host notes), tags (with scare level), actions, meta',()=>{
+  const order=['${pinHTML(x.num,isTreatStop(x)?\'treat\':\'display\')}','card__name','card__subline','card__address','card__hours-row','card__hours','card__notes','card__tags','card__scare','card__actions','card__meta'];
   let at=0;
   for(const s of order){const i=displayCard.indexOf(s,at);assert.ok(i>=0,'display card missing or out of order: '+s);at=i+1}
 });
@@ -55,10 +55,11 @@ test('feature tags are text pills (28px, line-2 border), never icon-only',()=>{
   assert.ok(css.includes('min-height:28px;padding:0 10px;background:transparent;border:1px solid var(--line-2);border-radius:999px'),'28px fully-rounded text pills');
 });
 
-test('meta row: 13px with divider, Host notes + rating left, Report/Share right',()=>{
+test('meta row: 13px with divider, rating left, Report/Share right; Host notes lives on the hours row',()=>{
   assert.ok(css.includes('.card__meta{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--line);font:500 13px var(--f-body);color:var(--text-3)}'),'meta row styling');
   assert.ok(displayCard.indexOf('#report-update">Report</a>')<displayCard.indexOf('#share">Share</a>'),'Report before Share');
   assert.ok(displayCard.includes('<summary>Host notes</summary>'),'Host notes link kept as collapsed details');
+  assert.ok(displayCard.indexOf('<summary>Host notes</summary>')<displayCard.indexOf('card__tags'),'Host notes sits on the hours row, above the tags');
   assert.ok(displayCard.includes('data-rating-summary="${x.num}"')&&displayCard.includes('href="${listingPageHref(x)}#feedback"'),'rating summary kept; it links to the listing feedback section');
 });
 
@@ -73,7 +74,7 @@ test('ratings render in the spec format with orange stars',()=>{
 test('OPEN TONIGHT and scare level follow the spec (lime label; scare desktop-only)',()=>{
   assert.ok(displayCard.includes('openTonightBadgeHTML(x,{eligible:openTonightOK})'),'open-tonight gate preserved');
   assert.ok(css.includes('.card__open-tonight{')&&css.includes('color:var(--lime);font:700 13px/1.3 var(--f-cond)'),'lime OPEN TONIGHT label');
-  assert.ok(css.includes('@media(max-width:767px){.card__scare-row{display:none}}'),'scare level hidden on mobile');
+  assert.ok(css.includes('@media(max-width:767px){.card__tags .card__scare{display:none}}'),'scare level hidden on mobile');
 });
 
 test('photo flip mechanics: pill, Y rotation, perspective, backface, reduced-motion crossfade',()=>{
@@ -140,4 +141,12 @@ test('app.js public-data preamble hash is untouched by the card edits',()=>{
   const hash=s=>crypto.createHash('sha256').update(s.split('const filters=')[0]).digest('hex');
   assert.ok(head.includes('const filters='),'HEAD has the split marker');
   assert.equal(hash(app),hash(head),'preamble hash identical to committed HEAD');
+});
+
+test('card layout spec: scare level leads the tags row; route button 30px / min 118px / 13px',()=>{
+  assert.ok(displayCard.includes('<div class="card__tags">${x.levels.length?`<span class="card__scare">'),'scare level is first in the tags row');
+  assert.ok(!displayCard.includes('card__scare-row'),'no separate scare row');
+  const meta=displayCard.split('<div class="card__meta">')[1];
+  assert.ok(!meta.includes('card__notes'),'Host notes is not in the meta row');
+  assert.ok(css.includes('height:30px;min-height:30px!important;min-width:118px;padding:0 9px;font-size:13px'),'route button sizing');
 });

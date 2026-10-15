@@ -1587,3 +1587,14 @@ html[data-category="events"]{--acc:#B48CFF}
 .pin--event-sq::after{inset:-5px;border-radius:12px}
 .leaflet-marker-icon.is-linked .hf-cluster{box-shadow:0 0 0 3px #0B0910,0 0 0 5px #F6EBD3}
 .card.is-linked{outline:2px solid #F6EBD3;outline-offset:-2px}
+
+/* ---- card layout spec (docs/card-layout-spec-2026-10-15.md) ---- */
+/* Host notes on the hours row; scare level (Family Friendly) leads the tags row */
+.card__hours-row{display:flex;flex-wrap:wrap;align-items:center;gap:0 12px;min-width:0}
+.card__hours-row .card__hours{flex:0 1 auto;min-width:0}
+.card__hours-row .card__notes{flex:0 0 auto}
+.card__hours-row .card__notes[open]{flex:1 0 100%;order:9}
+.card__tags .card__scare{display:inline-flex;align-items:center;font:500 13px/1 var(--f-body);color:var(--text-3)}
+@media(max-width:767px){.card__tags .card__scare{display:none}}
+/* route button: 30px tall, min 118px wide, 13px type; both states the same width */
+@media(min-width:1024px){html:not([data-category="events"]) body .card--compact .card__actions .card__route-btn{height:30px;min-height:30px!important;min-width:118px;padding:0 9px;font-size:13px;flex:none;white-space:nowrap}}
