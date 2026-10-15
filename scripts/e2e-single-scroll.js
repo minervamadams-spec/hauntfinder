@@ -87,9 +87,20 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
     // ---- Events ----
     await go('?category=events');
     const e=await p.evaluate(probe);
-    ok(T+'Events: calendar shown, no map, no pager',!!e.calendar&&!e.mapFrame&&!e.hasPager);
-    ok(T+'Events: no nested scroll, no overflow',e.scrollers.length===0&&!e.overflowX,e.scrollers.join(', ')||'none');
+    ok(T+'Events: no overflow',!e.overflowX);
     ok(T+'Events: tab count matches events',e.tabCount===(await p.evaluate(()=>matchingEvents().length)));
+    if(desktop){
+      const ev=await p.evaluate(()=>{const days=[...document.querySelectorAll('#cardList .ev-day')];return {weekGrid:!!document.getElementById('eventCalendar')&&document.getElementById('eventCalendar').getClientRects().length>0,days:days.length,open:!!document.querySelector('#cardList .ev-open'),key:!!document.querySelector('#cardList .ev-key'),pins:[...document.querySelectorAll('.leaflet-marker-pane [data-event-pin]')].length,withCoords:matchingEvents().filter(x=>Number.isFinite(x.lat)&&Number.isFinite(x.lng)).length,circle:document.querySelectorAll('.leaflet-overlay-pane path').length,count:document.getElementById('eventsDayHeading').textContent}});
+      ok(T+'Events: day blocks, Open all week box and key replace the week grid',!ev.weekGrid&&ev.days>=7&&ev.open&&ev.key,JSON.stringify(ev));
+      ok(T+'Events: map shows one pin per mappable event, no radius circle',!!e.mapFrame&&ev.pins===ev.withCoords&&ev.pins>0&&ev.circle===0,JSON.stringify({pins:ev.pins,coords:ev.withCoords,circle:ev.circle}));
+      ok(T+'Events: count line matches',countOf(ev.count)===e.tabCount,ev.count);
+      ok(T+'Events: nested scroll only in filter rail and results rail',e.scrollers.every(x=>x.includes('filter-rail')||x.includes('list-column')),e.scrollers.join(', ')||'none');
+      const lastPin=await p.evaluate(()=>{const pins=[...document.querySelectorAll('.leaflet-marker-pane [data-event-pin]')];return pins.length});
+      await p.click(`.leaflet-marker-pane [data-event-pin="${lastPin}"]`);await p.waitForTimeout(700);
+      ok(T+'Events: pin click selects its card and brings it into view',await p.evaluate(()=>{const c=document.querySelector('#cardList .event-card.is-selected');if(!c)return false;const b=c.getBoundingClientRect(),a=document.querySelector('.list-column').getBoundingClientRect();return b.top>=a.top-1&&b.bottom<=a.bottom+1}));
+    }else{
+      ok(T+'Events (mobile): calendar day list shown, no map, no nested scroll',!!e.calendar&&!e.mapFrame&&e.scrollers.length===0,e.scrollers.join(', ')||'none');
+    }
 
     // ---- Deep links ----
     await go('?house=8&entity=drakestown-road-2026');

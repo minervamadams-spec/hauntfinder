@@ -84,9 +84,9 @@ test('events right column: column head markup, heading + count from the same ren
   assert.ok(html.includes('id="eventsColumnHead"'),'column head container in markup');
   assert.ok(html.includes('id="eventsDayHeading"'),'day heading in markup');
   assert.ok(html.includes('id="eventsHeadCount"'),'head count in markup');
-  assert.ok(layout.includes("$('eventsDayHeading').textContent=state.eventDay?"),'heading reflects the selected day');
-  assert.ok(layout.includes("$('eventsHeadCount').textContent=`${items.length} event${items.length===1?'':'s'}`"),'count reflects the same items array that renders the cards');
-  assert.ok(layout.includes("$('cardList').innerHTML=items.map(eventCard).join('')"),'events render full cards with no pagination');
+  assert.ok(layout.includes("$('eventsDayHeading').textContent=`${items.length} event${items.length===1?'':'s'}${state.search?' within '+state.search.radius+' mi':''}`"),'v7 count line: events (within radius) from the rendered items array');
+  assert.ok(layout.includes("$('eventsHeadCount').textContent=''"),'count lives in the heading; head count slot stays empty');
+  assert.ok(layout.includes("$('cardList').innerHTML=eventsRailHTML(items)"),'events render full cards with no pagination');
   assert.ok(layout.includes("$('eventsColumnHead').hidden=!event"),'column head hidden off the events tab');
   assert.ok(layout.includes("$('countLine').hidden=event"),'display count line hidden on events');
 });

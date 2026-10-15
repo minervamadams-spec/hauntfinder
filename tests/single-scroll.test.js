@@ -80,7 +80,7 @@ test('v7 header uses the supplied scene strip, contained sign, and hides the int
 test('map is a compact 240px mobile surface and fills the desktop workspace rail; full map overlay keeps working',()=>{
   const v7=css.split('/* ---- v7 compact workspace')[1]||'';
   assert.match(block,/html:not\(\[data-category="events"\]\):not\(\[data-fullmap\]\) \.map-frame\{height:240px/);
-  assert.match(v7,/html:not\(\[data-category="events"\]\):not\(\[data-fullmap\]\) \.map-frame\{height:100%;min-height:0;position:static/);
+  assert.match(v7,/html:not\(\[data-hf-rail="off"\]\):not\(\[data-fullmap\]\) \.map-frame\{height:100%;min-height:0;position:static/);
   assert.match(css,/html\[data-fullmap\] \.map-frame\{position:fixed;inset:0;height:100dvh/,'full map overlay rule intact');
 });
 test('desktop uses the designed filters, results and map workspace rails',()=>{
@@ -114,7 +114,7 @@ test('cards stay a compact single column in the results rail and mobile flow',()
   assert.match(v7,/\.card--compact \.card__route-btn\{min-height:36px!important/,'desktop cards use compact route actions');
   assert.match(v7,/\.card--compact \.card__address\{min-height:26px/,'desktop cards do not waste a 44px address target row');
 });
-test('events: calendar presentation kept, no map fabricated, route planner keeps its place beside the week',()=>{
+test('events (v7): map with event pins fills the right rail; day blocks replace the desktop week grid; route planner keeps its place',()=>{
   assert.match(layout,/if\(mf\)mf\.hidden=event/,'events still hide the map');
   assert.match(block,/html\[data-category="events"\] \.route-wrap\{order:1;width:100%;margin-top:0\}/);
   assert.match(block,/html\[data-category="events"\] \.list-column\{order:2\}/);
@@ -134,4 +134,28 @@ test('live QA gate: verify-live checks the compact directory homepage and hashes
   const verify=read('scripts/verify-live.js');
   assert.ok(verify.includes("'url-state.js'"));
   assert.match(verify,/homepage has the compact directory map, continuous result rail and no Map\/List switch/);
+});
+
+// ---- Events tab (v7): list rail with day blocks + map with event pins ----
+test('events v7: rail lists Open all week, then one block per day of Halloween week, then the type key',()=>{
+  const fn=layout.split('function eventsRailHTML(items){')[1].split('\n renderCards=')[0];
+  assert.match(fn,/ev-open__label">Open all week/);
+  assert.match(fn,/Halloween week · /);
+  assert.match(fn,/ev-day__empty">No events yet/);
+  assert.match(fn,/Trick-or-treat night/);
+  assert.match(fn,/class="ev-key"/);
+  assert.match(layout,/\$\('cardList'\)\.innerHTML=eventsRailHTML\(items\)/);
+  assert.equal(layout.includes("''}}</p>`"),false,'no stray } after event details');
+});
+test('events v7: count line carries Add all events to your calendar and proxies the existing handler',()=>{
+  assert.match(html,/id="railAddAll"[^>]*>[\s\S]*?Add all events to your calendar/);
+  assert.match(layout,/\$\('railAddAll'\)\.addEventListener\('click',\(\)=>\$\('addAllToCalendar'\)\.click\(\)\)/);
+});
+test('events v7: >=1024 hides the week grid and shows the map; event pins select their card in the rail',()=>{
+  assert.match(css,/#eventCalendar\{display:none!important\}/);
+  assert.match(css,/html\[data-category="events"\] \.map-column\{align-self:stretch;height:100%\}/);
+  assert.match(layout,/mf\.hidden=event&&innerWidth<1024/);
+  assert.match(app,/function syncEventPins\(\)\{[^\n]*state\.category==='events'\)\{if\(innerWidth<1024\)return;matchingEvents\(\)[^\n]*eventSquareIcon\(i\+1\)[^\n]*selectEventCard\(ev\.id\)/);
+  assert.match(app,/function selectEventCard\(id\)\{/);
+  assert.match(app,/if\(!state\.search\|\|innerWidth>=1024\)return;searchCircle=/,'v7: no radius circle on desktop');
 });

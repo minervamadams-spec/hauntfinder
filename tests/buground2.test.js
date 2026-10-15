@@ -88,10 +88,10 @@ test('Bug D: events anatomy is paired at every breakpoint â€” single column 960â
  assert.ok(!/\.list-column\{position:sticky!important/.test(css),'single-scroll layout: the Phase H sticky scrolling column is gone, so no category gets a height-clipped card column');
 });
 
-test('Bug D: only the desktop directory work rails scroll; the Events and mobile flows stay in normal document flow',()=>{
+test('Bug D: only the desktop work rails scroll (v7: Events joins the three-rail layout at >=1024); mobile stays in normal document flow',()=>{
  assert.match(css,/html:not\(\[data-category="events"\]\) \.filter-rail\{display:block;grid-column:1;grid-row:1\/span 2;min-width:0;overflow-y:auto/,'desktop filter rail is intentionally scrollable');
  assert.match(css,/html:not\(\[data-category="events"\]\) \.list-column\{display:block;grid-column:2;grid-row:1\/span 2;min-width:0;min-height:0;height:auto!important;max-height:none!important;overflow-y:auto!important/,'desktop result rail is intentionally scrollable');
- assert.ok(!/html\[data-category="events"\] \.list-column\{[^}]*overflow-y:auto/.test(css),'Events cards retain their non-scrolling calendar flow');
+ assert.match(css,/html\[data-category="events"\] \.list-column\{grid-column:2;grid-row:1;align-self:stretch;min-height:0;height:auto!important;max-height:none!important;overflow-y:auto!important/,'v7 Events results rail scrolls on desktop like the directory tabs');
 });
 
 test('Bug D: pinned mobile route bar cannot survive into the desktop band',()=>{

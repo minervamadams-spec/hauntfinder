@@ -39,7 +39,7 @@ test('tab wiring: all three tabs get click and keyboard handlers',()=>{
 
 test('content/state agreement: every category branch ends in sync()',()=>{
   const body=layout.split('renderCards=function(){if(state.category')[1].split('renderRoute=function')[0];
-  assert.ok(body.includes('sync();return'),'events branch syncs chrome (badges, count, calendar visibility)');
+  assert.ok(body.includes('sync();if(innerWidth>=1024){map.invalidateSize();syncEventPins()}return'),'events branch syncs chrome (badges, count, calendar visibility)');
   assert.ok(body.includes('originalCards();sync()'),'displays/treats branch syncs after the base render');
   assert.match(layout,/document\.documentElement\.dataset\.category=state\.category/,'data-category mirrors state for CSS scoping');
   assert.match(layout,/\$\('eventsColumnHead'\)\.hidden=!event/,'events column heading toggles with the tab');
