@@ -76,6 +76,7 @@ const view=()=>{
     ok(T+'reload keeps the edited route',JSON.stringify((await v()).keys)===JSON.stringify(s.keys));
     await go('/');
     const homeCount=await p.evaluate(()=>document.getElementById('routeBadge').textContent);
+    if(await p.isHidden('#routeLink'))await p.click('#routeToggle');
     await p.click('#routeLink');await p.waitForLoadState('networkidle');
     ok(T+'homepage "Your route" CTA is a same-tab link to /route.html',(await p.evaluate(()=>location.pathname))==='/route.html'&&p.context().pages().length===1,homeCount);
     await p.click('[data-remove-stop]');await p.waitForTimeout(100);
