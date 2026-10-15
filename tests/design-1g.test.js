@@ -24,12 +24,12 @@ test('footer row 1: heading, a single picker button, no raw form links',()=>{
   assert.match(css,/\.hf-footer \.footer-inner \.btn--route\{min-height:52px\}/,'primary action is 52px tall');
 });
 
-test('footer row 2: About · Get alerts · Share this site · counter · Contact us in order',()=>{
-  const order=[footer.indexOf('href="about.html"'),footer.indexOf('alerts-footer-link'),footer.indexOf('id="shareSiteBtn"'),footer.indexOf('id="siteVisits"'),footer.indexOf('mailto:mtocommunityfinder@gmail.com')];
+test('footer row 2: About · Get alerts · Share this site · Contact us in order (the visit counter is no longer shown publicly)',()=>{
+  const order=[footer.indexOf('href="about.html"'),footer.indexOf('alerts-footer-link'),footer.indexOf('id="shareSiteBtn"'),footer.indexOf('mailto:mtocommunityfinder@gmail.com')];
   assert.deepEqual(order,[...order].sort((a,b)=>a-b),'nav items in spec order');
-  assert.match(footer,/<span class="footer-link" id="siteVisits" hidden[^>]*>Site visits: <strong id="siteVisitTotal"><\/strong><\/span>/,'counter starts empty, not hardcoded');
+  assert.equal(footer.includes('siteVisits'),false,'no public site-visit counter');
   assert.match(html,/fetch\('\/api\/visits', \{method: 'POST', credentials: 'same-origin'\}\)/,'live visit counter POST kept');
-  assert.match(html,/document\.getElementById\('siteVisitTotal'\)\.textContent = data\.visits\.toLocaleString\(\)/);
+  assert.equal(html.includes('siteVisitTotal'),false,'the response is no longer rendered');
   assert.match(footer,/href="mailto:mtocommunityfinder@gmail\.com">Contact us/);
   assert.equal(/MTOCommunityFinder@gmail\.com/.test(footer),false,'legacy email spelling gone from footer');
   assert.match(footer,/class="alerts-footer-link" href="alerts\.html">Get alerts</,'alerts is a plain same-tab link to the standalone page');

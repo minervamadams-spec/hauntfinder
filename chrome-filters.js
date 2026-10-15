@@ -40,7 +40,7 @@ const CHROME_EVENT_TYPE_OPTIONS=[
  {label:'Trunk-or-Treat',value:'Trunk-or-treat'},
  {label:'Parade',value:'Parade'},
  {label:'Festival',value:'Festival'},
- {label:'Donation drive/Community collection',value:'Donation drive/Community collection'},
+ {label:'Donation drive',value:'Donation drive/Community collection'},
  {label:'Other',value:'Other'}
 ];
 const CHROME_EVENT_FEATURE_OPTIONS=['Free','Open to all','Registration required','Kid-friendly'].map(v=>({label:v,value:v}));
@@ -132,7 +132,7 @@ function railFiltersHTML(){
 // Filter panel collapse (v7): 260px <-> 44px. Starts collapsed below 1100px.
 const railRoot=document.documentElement;
 function railSetCollapsed(on){railRoot.dataset.rail=on?'collapsed':'open';const t=document.getElementById('railToggle');if(t)t.setAttribute('aria-expanded',String(!on));const b=document.getElementById('railExpand');if(b)b.setAttribute('aria-expanded',String(!on));railBadge();setTimeout(()=>{if(typeof map!=='undefined'&&map&&map.invalidateSize)map.invalidateSize()},60)}
-function railBadge(){const n=railActiveCount(),el=document.getElementById('railBadge');if(el){el.textContent=String(n);el.hidden=!n}const fb=document.getElementById('filtersBtn'),fc=document.getElementById('filtersBtnCount');if(fc){fc.textContent=String(n);fc.hidden=!n}if(fb)fb.classList.toggle('is-active',n>0);if(typeof window!=='undefined'&&window.hfSheetSync)window.hfSheetSync()}
+function railBadge(){const n=railActiveCount(),el=document.getElementById('railBadge');if(el){el.textContent=String(n);el.hidden=!n}const hc=document.getElementById('railHeadCount');if(hc){hc.textContent=String(n);hc.hidden=!n}const fb=document.getElementById('filtersBtn'),fc=document.getElementById('filtersBtnCount');if(fc){fc.textContent=String(n);fc.hidden=!n}if(fb)fb.classList.toggle('is-active',n>0);if(typeof window!=='undefined'&&window.hfSheetSync)window.hfSheetSync()}
 if(typeof matchMedia==='function'&&document.getElementById('railToggle')){railSetCollapsed(innerWidth<1100);
  document.getElementById('railToggle').addEventListener('click',()=>railSetCollapsed(railRoot.dataset.rail!=='collapsed'));
  document.getElementById('railExpand').addEventListener('click',()=>railSetCollapsed(false))}

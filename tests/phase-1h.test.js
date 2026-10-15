@@ -67,7 +67,7 @@ test('counts agree: the active tab badge mirrors the count line (filtered visibl
 test('focus rules: 2px cream ring, no outline:none survivors, all:unset compensated',()=>{
  assert.match(css,/:focus-visible\{outline:2px solid #F6EBD3;outline-offset:2px\}/,'global rule is 2px cream');
  assert.match(phaseH,/:focus-visible\{outline:2px solid #F6EBD3!important;outline-offset:2px!important\}/,'tail block re-asserts over all:unset');
- assert.ok(!/(^|[;\s{])outline:none/.test(css),'no outline:none remains anywhere');
+ assert.ok(!/(^|[;\s{])outline:none/.test(css.replace(':focus:not(:focus-visible){outline:none}','')),'no outline:none remains anywhere except the mouse-only :focus:not(:focus-visible) reset');
 });
 
 test('clickable photo pill meets the 44px target',()=>{

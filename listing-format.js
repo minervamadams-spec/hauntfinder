@@ -12,7 +12,9 @@ function listingCategory(x){return x&&x.kind===LISTING_TREAT_KIND?'Treat stop':'
 // hasScheduleInfo comes from schedules.js; on the homepage's very first render
 // schedules.js has not loaded yet, so the check is made at call time.
 function listingHoursText(x){
- const text=[x.dates,x.times?compactTime(x.times):''].filter(Boolean).join(' · ');
+ // "Halloween weekend" + "All weekend" says the same thing twice: show the dates alone.
+ const timesText=x.times?compactTime(x.times):'',repeats=timesText&&x.dates&&/^all\s+weekend$/i.test(timesText.trim())&&/weekend/i.test(x.dates);
+ const text=[x.dates,repeats?'':timesText].filter(Boolean).join(' · ');
  if(text)return text;
  const scheduled=typeof hasScheduleInfo==='function'?hasScheduleInfo:(typeof require==='function'?require('./schedules').hasScheduleInfo:null);
  if(scheduled&&scheduled(x))return listingCategory(x)==='Treat stop'?'Candy hours not specified':'Dates and hours not specified';

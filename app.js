@@ -653,6 +653,7 @@ const map=L.map('map',{scrollWheelZoom:true,tap:true}).setView([40.87,-74.72],12
 // Hotfix 2026-10-15: CARTO Dark Matter now requires an API key (watermarked
 // tiles), so the basemap reverts to the previous keyless dark provider, Esri
 // World Dark Gray Base — still a dark tile style per spec.
+map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,attribution:'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'}).addTo(map);
 const markerByNum=new Map();
 // Overlapping pins cluster (34px circle in the tab's accent colour); clustering stops at zoom 15, where a cluster click spiderfies.
@@ -719,7 +720,7 @@ const FEATURE_ICONS={
 function featureKey(value){const f=String(value).trim().toLowerCase().replace(/\s*\/\s*/g,'/');if(f==='live actors')return 'Actors';return Object.keys(FEATURE_ICONS).find(k=>k.toLowerCase().replace(/\s*\/\s*/g,'/')===f)||value}
 function featureIcon(value){const item=FEATURE_ICONS[featureKey(value)];return item?`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${item.path}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`:''}
 function featureChip(value){const key=featureKey(value),item=FEATURE_ICONS[key];return item?`<span class="chip feature-chip">${featureIcon(key)}<span>${safeListingText(item.label)}</span></span>`:`<span class="chip">${safeListingText(value)}</span>`}
-function scarePips(levels){const order=['Family Friendly','Spooky','Scary'];return `<span class="pips">${order.map(x=>`<span class="pip ${levels.includes(x)?'is-on':''}"></span>`).join('')}</span>${safeListingText(levels.length?levels.join(' · '):'Not specified')}`}
+function scarePips(levels){const order=['Family Friendly','Spooky','Scary'],top=order.filter(x=>levels.includes(x)).pop()||'';return `<span class="pips" title="${safeListingText(levels.length?levels.join(' · '):'Not specified')}">${order.map(x=>`<span class="pip ${levels.includes(x)?'is-on':''}"></span>`).join('')}</span>${safeListingText(top||'Not specified')}`}
 function listingStatusHTML(x){if(!['temporarily_closed','weather_cancelled'].includes(x.status))return '';if(x.statusUntil&&new Date(x.statusUntil).getTime()<Date.now())return '';return `<div class="listing-status" role="note"><strong>${x.status==='weather_cancelled'?'Weather cancellation':'Temporarily closed'}</strong>${x.statusNote?`<span>${safeListingText(x.statusNote)}</span>`:''}${x.statusUntil?`<small>Through ${safeListingText(new Date(x.statusUntil).toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'}))}</small>`:''}<small>Check the host’s updates before visiting.</small></div>`}
 function safeListingText(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function listingUpdatedHTML(x){if(!x.updatedAt)return '';const date=new Date(x.updatedAt+'T12:00:00');if(Number.isNaN(date.getTime()))return '';return `<p class="listing-updated">Listing updated <time datetime="${safeListingText(x.updatedAt)}">${date.toLocaleDateString(undefined,{dateStyle:'medium'})}</time></p>`}

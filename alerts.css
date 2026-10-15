@@ -24,3 +24,22 @@
 .alerts-inline-fields input[type=email],.alerts-inline-fields input[type=text]{width:100%;min-height:44px;padding:12px;border:1px solid #b19fc0;border-radius:6px;font:inherit;background:#fff8e6;color:#160d20}
 .alerts-inline-form .alerts-actions{margin-top:0}
 .alerts-optional{font-weight:400;font-size:.9em}
+
+/* ---- Alerts page matches the main site (design review round 3) ---- */
+.alerts-page{font-family:'Barlow',system-ui,sans-serif;font-size:16px;color:#F6EBD3;background:#0B0910;padding:24px 16px 48px}
+.alerts-box{border:1px solid #2E2638;border-radius:12px;background:#15101C;padding:24px}
+.alerts-box h1{font:800 34px/1.1 'Barlow Condensed',system-ui,sans-serif;letter-spacing:.02em;text-transform:uppercase;margin:6px 0 12px;color:#F6EBD3}
+.alerts-box p,.alerts-box label{font:400 16px/1.55 'Barlow',system-ui,sans-serif;color:#F6EBD3}
+.alerts-box .form-note{font-size:14px;color:#A89DB4}
+.alerts-box a{color:#B48CFF;text-decoration:none}.alerts-box a:hover{text-decoration:underline}
+.alerts-box input[type=email],.alerts-box input[type=text]{width:100%;box-sizing:border-box;height:44px;padding:0 12px;border:1px solid #3A3046;border-radius:6px;background:#16111E;color:#F6EBD3;font:400 16px 'Barlow',system-ui,sans-serif}
+.alerts-box input[type=email]:focus-visible,.alerts-box input[type=text]:focus-visible,.alerts-box input[type=checkbox]:focus-visible{outline:2px solid #B48CFF;outline-offset:2px}
+.alerts-box fieldset{padding:12px 16px;margin:18px 0;border:1px solid #2E2638;border-radius:8px}
+.alerts-box legend{padding:0 6px;font:700 13px 'Barlow Condensed',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#B9AECB}
+.alerts-box fieldset label,.alerts-box .consent{display:flex;align-items:center;gap:10px;min-height:44px;margin:0}
+.alerts-box .consent{align-items:flex-start;padding:10px 0}
+.alerts-box input[type=checkbox]{width:18px;height:18px;flex:none;accent-color:#FF7A1A;margin:0}
+.alerts-radii button{border:1px solid #3A3046;color:#CFC4B0;background:transparent;font:600 15px 'Barlow',system-ui,sans-serif}
+.alerts-radii button[aria-checked="true"]{background:rgba(255,122,26,.16);border-color:#FF7A1A;color:#FFB27A}
+.alerts-box .btn--route{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;border:0;border-radius:22px;background:#A6E22E;color:#120E18;font:800 14px 'Barlow Condensed',system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.alerts-box .btn--route:disabled{background:#3A3046;color:#A89DB4;cursor:not-allowed}

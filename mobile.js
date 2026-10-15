@@ -28,7 +28,7 @@
  function sheetSync(){const [one,many]=noun(),n=resultCount();$('sheetShow').textContent=`Show ${n} ${n===1?one:many}`;$('sheetTitle').textContent='Filters · '+(state.category==='treats'?'Treat Stops':state.category==='events'?'Events':'Displays')}
  window.hfSheetSync=sheetSync;
  // ---- menu drawer ----
- function openMenu(){$('menuDrawer').hidden=false;$('menuBtn').setAttribute('aria-expanded','true');const v=$('railVisitTotal');if(v&&v.textContent){$('menuVisitTotal').textContent=v.textContent;$('menuVisits').hidden=false}}
+ function openMenu(){$('menuDrawer').hidden=false;$('menuBtn').setAttribute('aria-expanded','true');}
  function closeMenu(){$('menuDrawer').hidden=true;$('menuBtn').setAttribute('aria-expanded','false')}
  $('menuBtn').addEventListener('click',openMenu);
  $('menuDrawer').addEventListener('click',e=>{if(e.target.closest('[data-close-menu]'))closeMenu()});

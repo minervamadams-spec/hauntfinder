@@ -268,6 +268,25 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       ok(T+'filter footer is a fixed 2-column link block; scrollbars are thin',pf.sb==='thin'&&pf.foot==='grid'&&pf.cols===2,JSON.stringify(pf));
       await p.setViewportSize({width:1280,height:800});
     }
+    // ---- Design review round 3 ----
+    if(desktop){
+      await go('?category=displays');await p.waitForTimeout(2500);
+      const r3=await p.evaluate(()=>({caret:getComputedStyle(document.querySelector('.filterbar__rail-caret')).display,sa:getComputedStyle(document.getElementById('searchAreaBtn')).visibility,att:!!document.querySelector('.leaflet-control-attribution img, .leaflet-attribution-flag'),visits:/Site visits/i.test(document.body.innerText),alc:[...document.querySelectorAll('#cardList .card__hours')].map(e=>e.textContent).find(t=>/Halloween weekend/.test(t)),scare:(()=>{const e=document.querySelector('#cardList .card__scare');return e?e.textContent.trim():''})(),pipsTitle:!!document.querySelector('#cardList .pips[title]')}));
+      ok(T+'round 3: caret shown, Search this area hidden after 2.5s, no Leaflet flag, no Site visits, Alcrest hours without repetition, scare shows one level with a tooltip',r3.caret!=='none'&&r3.sa==='hidden'&&!r3.att&&!r3.visits&&r3.alc==='Halloween weekend'&&!/·/.test(r3.scare)&&r3.pipsTitle,JSON.stringify(r3));
+      await p.click('#filterRail [data-rail-filter="show"][data-value="Drive-by"]');await p.waitForTimeout(250);
+      const hc=await p.evaluate(()=>({head:document.getElementById('railHeadCount').textContent,shown:!document.getElementById('railHeadCount').hidden}));
+      await p.click('#railToggle');await p.waitForTimeout(250);
+      const col=await p.evaluate(()=>({caret:getComputedStyle(document.querySelector('.filterbar__rail-caret')).display}));
+      await p.click('#railToggle');await p.waitForTimeout(250);
+      ok(T+'round 3: the filter header shows the active count; the caret hides when collapsed',hc.shown&&hc.head==='1'&&col.caret==='none',JSON.stringify({hc,col}));
+      await p.click('#filterRail .filter-rail__clear');await p.waitForTimeout(250);
+      await p.click('#cardList [data-route]');await p.waitForTimeout(200);
+      const row=await p.evaluate(()=>{const rows=[...document.querySelectorAll('#cardList .card__actions')].slice(0,4);return rows.map(a=>new Set([...a.children].filter(k=>k.getClientRects().length).map(k=>Math.round(k.getBoundingClientRect().top))).size)});
+      await p.click('#routeToggle');await p.waitForTimeout(250);
+      const rp=await p.evaluate(()=>({w:Math.round(document.querySelector('.route-wrap').getBoundingClientRect().width),outline:getComputedStyle(document.getElementById('routeToggle')).outlineStyle}));
+      ok(T+'round 3: action rows stay on one line with a card on the route; route panel is at most 420px; no focus ring after a mouse click',row.every(n=>n===1)&&rp.w<=420&&rp.outline==='none',JSON.stringify({row,rp}));
+      await p.click('#routeToggle');await p.evaluate(()=>localStorage.clear());
+    }
     // ---- Codex QA defects: hover pin growth, scroll kept across filter changes ----
     if(desktop){
       await go('?category=displays');

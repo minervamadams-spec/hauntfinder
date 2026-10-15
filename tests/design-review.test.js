@@ -118,3 +118,30 @@ test('mobile spec supersedes the 760px rule: below 1024px the header is 56px wit
   assert.match(css,/html body \.hf-header \.intro-strip__copy\{display:none\}/);
   assert.match(html,/class="menu-drawer__tag">Find decorated homes/);
 });
+
+// ---- Round 3 ----
+test('round 3: the filter header shows a ◀ caret (open) and an active-filter count; collapsed hides the caret',()=>{
+  assert.match(html,/id="railToggle"[^>]*>.*id="railHeadCount" hidden><\/span><span class="filterbar__rail-caret" aria-hidden="true">◀<\/span><\/button>/);
+  assert.match(chrome,/railHeadCount/);
+  assert.match(css,/html\[data-rail="collapsed"\] \.filterbar \.filterbar__rail-head \.filterbar__rail-caret\{display:none\}/);
+});
+test('round 3: action row never wraps and both route states share a width; route panel max 420px; focus ring is keyboard-only',()=>{
+  assert.match(css,/html body \.card--compact \.card__actions\{flex-wrap:nowrap!important/);
+  assert.match(css,/\.card__route-btn\{flex:none;min-width:132px/);
+  assert.match(css,/html \.route-wrap\{width:min\(420px,calc\(100% - 24px\)\)!important\}/);
+  assert.match(css,/:focus:not\(:focus-visible\)\{outline:none\}/);
+});
+test('round 3: Alerts page uses the site fonts and controls, with the slim nav; About body copy is 17px/1.6 in 680px',()=>{
+  const alerts=read('alerts.html'),ac=read('alerts.css');
+  assert.match(alerts,/family=Barlow\+Condensed/);assert.match(alerts,/← Hauntfinder map/);
+  assert.match(ac,/accent-color:#FF7A1A/);assert.match(ac,/height:44px;padding:0 12px;border:1px solid #3A3046;border-radius:6px;background:#16111E/);
+  assert.match(css,/\.about-article p\{font-size:17px;line-height:1\.6;color:#E8DEC8/);
+  assert.match(css,/\.about-article\{max-width:680px/);
+});
+test('round 3: Donation drive label (value unchanged), hours without a repeated weekend, highest scare level with a tooltip, no public visit counter, Leaflet prefix without the flag',()=>{
+  assert.match(chrome,/\{label:'Donation drive',value:'Donation drive\/Community collection'\}/);
+  assert.match(app,/class=.pips. title=.\$\{safeListingText\(levels\.length\?levels\.join/);
+  assert.match(app,/setPrefix\('<a href="https:\/\/leafletjs\.com"/);
+  assert.equal(html.includes('siteVisits'),false);assert.equal(html.includes('railVisits'),false);
+  assert.match(html,/fetch\('\/api\/visits'/,'counting continues');
+});

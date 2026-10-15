@@ -94,7 +94,7 @@ test('events right column: column head markup, heading + count from the same ren
 /* ---- Filters: Type + Features (chrome-filters) ---- */
 test('events filters: Type dropdown options and Features multi-select wording',()=>{
   const labels=CHROME_EVENT_TYPE_OPTIONS.map(o=>o.label);
-  assert.deepEqual(labels,['All types','Trunk-or-Treat','Parade','Festival','Donation drive/Community collection','Other']);
+  assert.deepEqual(labels,['All types','Trunk-or-Treat','Parade','Festival','Donation drive','Other']);
   assert.equal(chromeValueForEventTypeLabel('Trunk-or-Treat'),'Trunk-or-treat','canonical value behind the label');
   assert.equal(chromeEventTypeLabelForValue('Trunk-or-treat'),'Trunk-or-Treat');
   assert.deepEqual(CHROME_EVENT_FEATURE_OPTIONS.map(o=>o.label),['Free','Open to all','Registration required','Kid-friendly']);
