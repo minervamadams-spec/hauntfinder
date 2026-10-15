@@ -43,7 +43,7 @@ Executed routes, all failed:
 
 **Pre-run risk for whenever the pipeline next fires**: form edits moved approval columns (Display R–X, Treat I–O, Event AB–AH) and inserted feature/flyer-link columns. Header-name matching survives; fixed-letter column lookups will misread. Verify the task matches by header name before its next import.
 
-**Unblock (one minute, owner's choice)**: (a) each of the 3 sheets → Share → General access → "Anyone with the link" → Viewer; or (b) install + authorize the Kimi Google Drive plugin.
+**Unblock (owner action):** the sheets stay private — public link sharing is not an acceptable option for form-response data. Accepted paths only: (a) authorize the Kimi Google Drive/Sheets connector (install card presented to owner), or (b) grant a dedicated importer identity Viewer access to exactly these three sheets. On first authorized read: dry-run report → review → import → deploy. Publishing never precedes the dry-run review.
 
 ## 3. Phase status
 
