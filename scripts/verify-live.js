@@ -37,6 +37,18 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
   // modal or an embedded form that can obstruct browsing.
   ok('homepage has a direct alerts-page link and no alerts modal', homeHtml.includes('href="alerts.html"') && !homeHtml.includes('id="alertsDialog"') && !homeHtml.includes('alertsInlineForm'));
 
+  // 4. Page-first routes: the two shipped subpages serve real controls and
+  // stay dialog-free; the homepage footer points at them.
+  const FORMS_RE=/https:\/\/docs\.google\.com\/forms\/d\/e\/[\w-]+\/viewform/g;
+  const submitRes=await fetch(BASE + '/submit.html');
+  const submitHtml=await submitRes.text();
+  const submitLinks=[...new Set(submitHtml.match(FORMS_RE)||[])];
+  ok('submit page serves three form options with no dialog', submitRes.status===200 && submitLinks.length===3 && !submitHtml.includes('<dialog'), `${submitLinks.length} form links`);
+  const aboutRes=await fetch(BASE + '/about.html');
+  const aboutHtml=await aboutRes.text();
+  ok('about page serves the community story with no dialog', aboutRes.status===200 && aboutHtml.includes('The Family Behind the Skeleton House') && !aboutHtml.includes('<dialog'), `status=${aboutRes.status}`);
+  ok('homepage footer links to the page-first routes', homeHtml.includes('href="submit.html"') && homeHtml.includes('href="about.html"'));
+
   // 5. Subscriptions API answers.
   try {
     const sub = await (await fetch(BASE + '/api/subscriptions')).json();

@@ -48,10 +48,10 @@ fbq('track', 'PageView');
       <h2>Want to be added or update your listing?</h2>
       <p>Submit or update a display, treat stop, or Halloween event.</p>
     </div>
-    <button class="btn btn--route" type="button" id="typePickerBtn">Submit or update a listing</button>
+    <a class="btn btn--route" href="submit.html">Submit or update a listing</a>
   </div>
   <nav class="shell footer-links" id="footerNav" aria-label="Footer">
-    <button class="footer-link" type="button" id="aboutBtn">About</button>
+    <a class="footer-link" href="about.html">About</a>
     <a class="alerts-footer-link" href="alerts.html">Get alerts</a>
     <button class="footer-link" type="button" id="shareSiteBtn">Share this site</button>
     <span class="footer-link" id="siteVisits" hidden title="Counts page loads, including repeat visits, from a starting total of 57.">Site visits: <strong id="siteVisitTotal"></strong></span>
@@ -258,7 +258,7 @@ fbq('track', 'PageView');
 <script src="chrome-filters.js"></script>
 <script src="url-state.js"></script>
 <script src="card-flip.js"></script>
-<dialog class="site-dial
+<script>(function () {
   fetch('/api/visits', {method: 'POST', credentials: 'same-origin'})
     .then(function (response) { if (!response.ok) throw new Error('Counter unavailable'); return response.json(); })
     .then(function (data) {

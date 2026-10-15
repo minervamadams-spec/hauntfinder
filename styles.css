@@ -1001,3 +1001,29 @@ body:has(dialog[open]){overflow:hidden}
    in earlier phases (.map-float-btn, .map-key__toggle span, and anything
    added later are all covered by the universal guard). */
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* ---- Page-first subpages: shared shell for /submit.html and /about.html
+   (plan step 1–2, 2026-10-15). Static-first: every page is complete with
+   JavaScript disabled; page.js only adds route validation and nav state. */
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--pumpkin);color:var(--night);padding:10px 16px;font-weight:700;z-index:10;border-radius:0 0 8px 0}
+.skip-link:focus{left:0}
+.subpage-head{border-bottom:1px solid var(--line-strong);padding:12px 18px}
+.subpage-nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 18px;max-width:860px;margin:0 auto}
+.subpage-nav__home{font:700 18px/1.2 var(--f-ui);color:var(--cream);text-decoration:none}
+.subpage-nav__home:hover{color:var(--pumpkin)}
+.subpage-nav__links{display:flex;flex-wrap:wrap;gap:4px 14px}
+.subpage-nav__links a{color:var(--mist);text-decoration:none;font-weight:600;padding:6px 2px;border-bottom:2px solid transparent}
+.subpage-nav__links a:hover{color:var(--cream)}
+.subpage-nav__links a[aria-current="page"]{color:var(--pumpkin);border-bottom-color:var(--pumpkin)}
+.subpage-main{max-width:760px;margin:0 auto;padding:28px 18px 48px}
+.subpage-main h1{margin:0 0 10px;font:400 34px/1.1 var(--f-display);color:var(--cream)}
+.subpage-dek{color:var(--mist);font-size:17px;line-height:1.5;margin:0 0 22px}
+.subpage-foot{border-top:1px solid var(--line-strong);padding:18px;text-align:center;color:var(--mist);font-size:14px}
+.subpage-foot a{color:var(--mist)}
+.subpage-foot a:hover{color:var(--cream)}
+/* About page: reuse the dialog article styles, minus the dialog scroll cap. */
+.about-page .about-article{max-height:none;overflow:visible;padding-right:0;margin-top:14px}
+.about-page .about-article h2{margin:22px 0 10px;font:400 30px/1.15 var(--f-display);text-transform:none;color:var(--cream)}
+.about-page .about-article h3{margin:26px 0 8px;font:700 22px/1.2 var(--f-ui);color:var(--cream)}
+.about-page .about-article p{margin:10px 0;line-height:1.6}
+@media(max-width:600px){.subpage-main h1{font-size:28px}.subpage-nav{justify-content:flex-start}}

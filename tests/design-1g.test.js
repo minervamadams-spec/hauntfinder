@@ -18,12 +18,14 @@ test('footer row 1: heading, a single picker button, no raw form links',()=>{
   assert.match(footer,/<h2>Want to be added or update your listing\?<\/h2>/);
   assert.equal((footer.match(/btn--form/g)||[]).length,0,'old three form buttons gone');
   assert.equal(footer.includes('forms.gle'),false,'no raw form links in the footer');
-  assert.match(footer,/<button class="btn btn--route" type="button" id="typePickerBtn">Submit or update a listing<\/button>/);
+  assert.match(footer,/<a class="btn btn--route" href="submit\.html">Submit or update a listing<\/a>/,'footer CTA is a normal link to the page-first route');
+  assert.equal(html.includes('id="typePickerBtn"'),false,'old dialog-opening button gone');
+  assert.equal(/getElementById\('typePickerBtn'\)/.test(community),false,'typePickerBtn opener wiring removed');
   assert.match(css,/\.hf-footer \.footer-inner \.btn--route\{min-height:52px\}/,'primary action is 52px tall');
 });
 
 test('footer row 2: About · Get alerts · Share this site · counter · Contact us in order',()=>{
-  const order=[footer.indexOf('id="aboutBtn"'),footer.indexOf('alerts-footer-link'),footer.indexOf('id="shareSiteBtn"'),footer.indexOf('id="siteVisits"'),footer.indexOf('mailto:mtocommunityfinder@gmail.com')];
+  const order=[footer.indexOf('href="about.html"'),footer.indexOf('alerts-footer-link'),footer.indexOf('id="shareSiteBtn"'),footer.indexOf('id="siteVisits"'),footer.indexOf('mailto:mtocommunityfinder@gmail.com')];
   assert.deepEqual(order,[...order].sort((a,b)=>a-b),'nav items in spec order');
   assert.match(footer,/<span class="footer-link" id="siteVisits" hidden[^>]*>Site visits: <strong id="siteVisitTotal"><\/strong><\/span>/,'counter starts empty, not hardcoded');
   assert.match(html,/fetch\('\/api\/visits', \{method: 'POST', credentials: 'same-origin'\}\)/,'live visit counter POST kept');
@@ -52,7 +54,7 @@ test('type picker dialog: verbatim subtitle, three options, canonical form URLs'
   assert.ok(picker.includes('>Event<')&&picker.includes('Trunk-or-treat, parade, festival, or other'),'event option');
   for(const [k,u] of Object.entries(FORMS))assert.ok(community.includes(u),k+' canonical URL in FORM_LINKS');
   assert.match(community,/a\.href=FORM_LINKS\[a\.dataset\.typeLink\]/,'option hrefs filled from FORM_LINKS');
-  assert.match(community,/document\.getElementById\('typePickerBtn'\)\.onclick=\(\)=>document\.getElementById\('typeDialog'\)\.showModal\(\)/,'footer button opens the picker');
+  assert.equal(/getElementById\('typePickerBtn'\)\.onclick/.test(community),false,'footer button no longer opens the picker (page-first)');
   assert.match(css,/\.type-dialog\{[^}]*width:min\(560px/,'picker width 560');
   assert.match(css,/\.type-dialog\{[^}]*border-top-color:var\(--pumpkin\)/,'pumpkin top accent');
   assert.equal(html.includes('Display Form'),false,'old footer form buttons gone from the page');
