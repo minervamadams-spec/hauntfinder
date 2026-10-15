@@ -475,7 +475,65 @@ const listings=[
   "features": [],
   "notes": "Street parking, fun games, friendly dog.",
   "kind": "Trick-or-treat stop"
- }
+ },
+ {
+  "updatedAt": "2026-10-14",
+  "num": 12,
+  "entityId": "harvesters-of-souls-2026",
+  "name": "Harvesters of Souls",
+  "town": "Washington",
+  "address": "11 Jackson Ave, Washington, NJ 07882",
+  "lat": 40.7598742,
+  "lng": -74.9764089,
+  "geoVerified": "host-provided Google Maps exact address pin, owner confirmed 2026-10-14",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "schedule": {
+    "startDate": "2026-10-01",
+    "endDate": "2026-10-31",
+    "weekly": [
+      {
+        "dow": 0,
+        "open": "18:00",
+        "close": "22:00"
+      },
+      {
+        "dow": 6,
+        "open": "18:00",
+        "close": "22:00"
+      }
+    ],
+    "exceptions": [
+      {
+        "date": "2026-10-31",
+        "open": "18:00",
+        "close": "22:00"
+      }
+    ]
+  },
+  "dates": "Weekends in October and Halloween",
+  "times": "6:00 PM–10:00 PM",
+  "levels": [
+    "Family Friendly",
+    "Spooky",
+    "Scary"
+  ],
+  "type": [
+    "Drive-by",
+    "Walk-up",
+    "Walk-through"
+  ],
+  "features": [
+    "Music / Sound",
+    "Photo opportunities",
+    "Fog",
+    "Lights",
+    "Animatronics"
+  ],
+  "notes": "",
+  "kind": "Home haunt/walk-through"
+}
 ];
 listings.sort((a,b)=>a.num-b.num);
 const events=[

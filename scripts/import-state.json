@@ -85,6 +85,15 @@
       "decision": "imported_address_town_confirmed_by_minerva",
       "entityId": "drakestown-road-2026",
       "publicAddress": "516 Drakestown Road, Flanders, NJ"
+    },
+    {
+      "row": 9,
+      "fingerprint": "a3250e265a5dfdd11edf1f9b4f1799fd3cceda4a4492c99e380a2f444246aa0f",
+      "fingerprintColumns": 14,
+      "listingId": 12,
+      "decision": "imported_host_map_pin_confirmed_by_minerva",
+      "entityId": "harvesters-of-souls-2026",
+      "publicAddress": "11 Jackson Ave, Washington, NJ 07882"
     }
   ],
   "treatStops": {
