@@ -184,4 +184,21 @@ function parseRouteParam(str,listings,events){
  });
  return out;
 }
-if(typeof module!=='undefined')module.exports={bestStopOrder,migrateRoute,routeEntryKey,toggleRouteEntry,isReusedSlot,legacyEntityId,REUSED_SLOTS_2026,FAVORITES_KEY,loadFavorites,toggleFavoriteEntry,parseOutingParam,outingLink,suggestRouteOrder,routeLink,parseRouteParam};
+// Shared route store for pages outside the homepage (/listing.html). Same key,
+// entry shape, legacy-entity migration and ten-stop cap as the homepage's
+// state.route (app.js), so a stop added on a listing page is the same stop on
+// the map. Storage is passed in; blocked storage reads as an empty route.
+const ROUTE_KEY='hfroute:2026',ROUTE_MAX=10;
+function loadSavedRoute(storage,listings,events){
+ try{const legacy={};for(const x of listings){const v=storage.getItem('hfentity:'+x.num);if(v)legacy[x.num]=v}return migrateRoute(storage.getItem(ROUTE_KEY)||'[]',listings,legacy,events)}catch{return []}
+}
+function saveRoute(storage,route){try{storage.setItem(ROUTE_KEY,JSON.stringify(route));return true}catch{return false}}
+// Add or remove one listing, exactly like the homepage's toggleRoute.
+function toggleListingStop(route,listing){
+ const list=route||[];
+ if(!listing||listing.placeholder||!Number.isInteger(listing.num)||!listing.entityId)return {route:list,added:false,error:'This listing cannot be added to a route.'};
+ const on=list.some(r=>r.num===listing.num);
+ if(!on&&list.length>=ROUTE_MAX)return {route:list,added:false,error:'Routes can have up to 10 stops.'};
+ return on?{route:list.filter(r=>r.num!==listing.num),added:false}:{route:[...list,{num:listing.num,entityId:listing.entityId}],added:true};
+}
+if(typeof module!=='undefined')module.exports={bestStopOrder,ROUTE_KEY,ROUTE_MAX,loadSavedRoute,saveRoute,toggleListingStop,migrateRoute,routeEntryKey,toggleRouteEntry,isReusedSlot,legacyEntityId,REUSED_SLOTS_2026,FAVORITES_KEY,loadFavorites,toggleFavoriteEntry,parseOutingParam,outingLink,suggestRouteOrder,routeLink,parseRouteParam};

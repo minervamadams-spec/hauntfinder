@@ -45,7 +45,16 @@
  if(eventId){if(matchingEvents().some(x=>x.id===eventId)){selectTab('events');renderCards();$('cardList').scrollIntoView({block:'nearest'});const ev=events.find(x=>x.id===eventId);if(state.search&&!inSearchArea(ev,state.search))insertAreaNote(ev)}}
  else if(['events','treats','displays'].includes(params.get('category')))selectTab(params.get('category'));
  const linked=Number(params.get('house')),house=listings.find(x=>x.num===linked&&!x.placeholder);
- if(house&&(!isReusedSlot(house)||params.get('entity')===house.entityId)){selectListing(linked);if(state.search&&!inSearchArea(house,state.search))insertAreaNote(house)}
+ if(house&&(!isReusedSlot(house)||params.get('entity')===house.entityId)){selectListing(linked);if(params.get('view')==='map'){state.linkedHouse=house.num;focusLinkedHouse()}if(state.search&&!inSearchArea(house,state.search))insertAreaNote(house)}
+ // /listing.html "See on the map" (?house=N&view=map): center that house's pin;
+ // plain ?house= share links keep their card-first behavior. Runs now
+ // (desktop map already visible) and again on the first switch to map view,
+ // after Leaflet can measure the newly shown map (mobile ?view=map). In map
+ // view the page scrolls so the map sits under the sticky filterbar, undoing
+ // the card scroll the older ?house= handler makes. Leaflet drops a setView
+ // issued mid zoom-animation (the search-area fit), so it re-applies once
+ // that animation's zoomend fires.
+ function focusLinkedHouse(){const x=listings.find(v=>v.num===state.linkedHouse);if(!x||!Number.isFinite(x.lat)||!Number.isFinite(x.lng))return;const go=()=>{map.invalidateSize();map.setView([x.lat,x.lng],15,{animate:false})};go();map.once('zoomend',go);if(root.dataset.view==='map'){const mf=document.querySelector('.map-frame'),fb=document.querySelector('.filterbar');if(mf){const under=fb&&getComputedStyle(fb).position==='sticky'?fb.offsetHeight:0;window.scrollTo({top:Math.max(0,mf.getBoundingClientRect().top+window.scrollY-under)})}}}
  // ---- Release 5: shareable outings (?outing=entity-id,entity-id). ----
  const outingParam=params.get('outing');
  if(outingParam){const stops=parseOutingParam(outingParam,listings,events);if(stops.length){state.route=stops;try{localStorage.setItem('hfroute:2026',JSON.stringify(state.route))}catch{}state.routeMessage='Shared outing loaded.';if(stops[0].eventId!=null){if(state.category!=='events')selectTab('events')}else{const first=listings.find(x=>x.num===stops[0].num);if(first){const cat=isTreatStop(first)?'treats':'displays';if(state.category!==cat)selectTab(cat)}}renderRoute();renderCards();const note=document.createElement('div');note.className='listing-status';note.setAttribute('role','note');const strong=document.createElement('strong');strong.textContent='Shared outing.';const span=document.createElement('span');span.textContent=' These stops were added to your route — rearrange or remove them anytime.';note.append(strong,span);document.getElementById('cardList').before(note);document.getElementById('routePlanner')?.scrollIntoView({block:'nearest'})}}
@@ -59,7 +68,7 @@
  function measureFilterbar(){const fb=document.querySelector('.filterbar');if(fb)root.style.setProperty('--filterbar-h',fb.offsetHeight+'px')}
  measureFilterbar();window.addEventListener('resize',measureFilterbar);
  let mapViewSeen=false;
- function applyViewMode(v){root.dataset.view=v;saveView(v,localStorage);const mapBtn=$('viewMapBtn'),listBtn=$('viewListBtn');if(mapBtn)mapBtn.setAttribute('aria-pressed',String(v==='map'));if(listBtn)listBtn.setAttribute('aria-pressed',String(v==='list'));if(v==='map')setTimeout(()=>{map.invalidateSize();if(!mapViewSeen){mapViewSeen=true;if(state.search&&typeof searchCircle!=='undefined'&&searchCircle)map.fitBounds(searchCircle.getBounds().pad(0.12))}},80)}
+ function applyViewMode(v){root.dataset.view=v;saveView(v,localStorage);const mapBtn=$('viewMapBtn'),listBtn=$('viewListBtn');if(mapBtn)mapBtn.setAttribute('aria-pressed',String(v==='map'));if(listBtn)listBtn.setAttribute('aria-pressed',String(v==='list'));if(v==='map')setTimeout(()=>{map.invalidateSize();if(!mapViewSeen){mapViewSeen=true;if(state.linkedHouse!=null)focusLinkedHouse();else if(state.search&&typeof searchCircle!=='undefined'&&searchCircle)map.fitBounds(searchCircle.getBounds().pad(0.12))}},80)}
  window.hfApplyView=applyViewMode;
  if($('viewMapBtn'))$('viewMapBtn').onclick=()=>applyViewMode('map');
  if($('viewListBtn'))$('viewListBtn').onclick=()=>applyViewMode('list');

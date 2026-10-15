@@ -1024,7 +1024,7 @@ body:has(dialog[open]){overflow:hidden}
 @media(max-width:600px){.subpage-main h1{font-size:28px}.subpage-nav{justify-content:flex-start}}
 
 /* Listing page (page-first step 3): form controls outside the old dialogs. */
-.listing-page .listing-meta{color:var(--pumpkin);font-weight:600;margin:0 0 14px}
+.listing-page .listing-meta{color:var(--pumpkin);font-weight:600;margin:0 0 4px}
 .listing-jump{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0 0 8px}
 .listing-jump a{color:var(--mist);font-weight:600;padding:6px 0;border-bottom:2px solid transparent}.listing-jump a:hover{color:var(--pumpkin);border-bottom-color:var(--pumpkin)}
 .listing-section{margin:28px 0 0;padding:22px 20px;border:2px solid var(--violet);border-top-width:4px;border-radius:10px;background:var(--panel);scroll-margin-top:16px}
@@ -1033,3 +1033,12 @@ body:has(dialog[open]){overflow:hidden}
 .listing-page input:not([type=radio]),.listing-page textarea,.listing-page select{display:block;width:100%;box-sizing:border-box;margin:6px 0 18px;border:1px solid var(--line-strong);border-radius:4px;padding:12px;background:var(--night);color:var(--cream);font:inherit}
 .listing-page textarea{resize:vertical;min-height:120px}
 .listing-page .honeypot input{margin:0}
+/* Listing page parity with the cards: category + type, hours, route, map preview. */
+.listing-kind{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 12px}.listing-kind__types{display:contents}
+.listing-kind__category{font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:12px;padding:4px 9px}
+.listing-page .listing-hours{color:var(--cream);font-weight:600;margin:0 0 14px}
+.listing-route{margin:0 0 14px}.listing-route .card__route-btn{display:inline-flex;align-items:center;padding:0 22px;width:auto;cursor:pointer}.listing-route p{margin:8px 0 0}
+.listing-map{margin:14px 0 0}
+.listing-map__canvas{height:220px;border:2px solid var(--violet);border-radius:10px;overflow:hidden;cursor:pointer;background:var(--night)}
+.listing-map figcaption{margin-top:8px}.listing-map figcaption a{color:var(--pumpkin);font-weight:700}
+@media(min-width:768px){.listing-map__canvas{height:280px}}

@@ -8,7 +8,7 @@ const path = require('node:path');
 
 const BASE = process.env.HF_BASE || 'https://hauntfinder.vercel.app';
 // Static assets that must match the just-pushed commit byte-for-byte.
-const ASSETS = ['index.html', 'styles.css', 'app.js', 'layout.js', 'alerts.css', 'community.js', 'photos-ui.js', 'listing.html', 'listing.js', 'page.js'];
+const ASSETS = ['index.html', 'styles.css', 'app.js', 'layout.js', 'alerts.css', 'community.js', 'photos-ui.js', 'listing.html', 'listing.js', 'page.js', 'listing-format.js', 'routing.js', 'schedules.js'];
 // Public Google Form links wired in community.js (live HEAD must be 200).
 const FORM_LINK_RE = /(https:\/\/docs\.google\.com\/forms\/d\/e\/[\w-]+\/viewform)/g;
 
@@ -50,6 +50,7 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
   const listingRes=await fetch(BASE + '/listing.html?id=12');
   const listingHtml=await listingRes.text();
   ok('listing page serves feedback, report and share sections with no dialog (listing.html?id=12)', listingRes.status===200 && ['id="feedback"','id="report-update"','id="share"'].every(s=>listingHtml.includes(s)) && !listingHtml.includes('<dialog'), `status=${listingRes.status}`);
+  ok('listing page carries category/type, hours, add-to-route, map preview and the map-view link (listing.html?id=12)', ['id="listingCategory"','id="listingTypes"','id="listingHours"','id="listingRouteBtn"','id="listingMap"','id="listingOnMap"','<script src="listing-format.js"></script>'].every(s=>listingHtml.includes(s)));
   try {
     const appLive=await (await fetch(BASE + '/app.js')).text();
     ok('listing #12 Harvesters of Souls is in the live listing data', appLive.includes('"entityId": "harvesters-of-souls-2026"') && appLive.includes('"num": 12'));

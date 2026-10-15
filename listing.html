@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700;800&family=Rubik+Dirt:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="listing" class="subpage">
@@ -29,13 +30,24 @@
   <p class="subpage-dek" id="listingStatus" role="status">Loading listing…</p>
   <noscript><p class="subpage-dek">This page needs JavaScript to load the listing. <a href="/">Return to the Hauntfinder map</a> to browse and read listing details.</p></noscript>
   <div id="listingBody" hidden>
+    <p class="listing-kind"><span class="chip listing-kind__category" id="listingCategory"></span><span class="listing-kind__types" id="listingTypes"></span></p>
     <p class="listing-meta" id="listingMeta"></p>
+    <p class="listing-hours" id="listingHours"></p>
+    <div class="listing-route">
+      <button class="btn card__route-btn" id="listingRouteBtn" type="button" aria-pressed="false">+ Add to route</button>
+      <p id="listingRouteStatus" role="status"></p>
+    </div>
     <nav class="listing-jump" aria-label="On this page">
       <a href="#feedback">Visitor feedback</a>
       <a href="#report-update">Report an update</a>
       <a href="#share">Share</a>
       <a id="listingOnMap" href="/">See on the map</a>
     </nav>
+
+    <figure class="listing-map" id="listingMapWrap" hidden>
+      <div id="listingMap" class="listing-map__canvas"></div>
+      <figcaption><a id="listingMapLink" href="/">See on the map</a></figcaption>
+    </figure>
 
     <section id="feedback" class="listing-section" aria-labelledby="feedbackHeading">
       <h2 id="feedbackHeading">Visitor feedback</h2>
@@ -87,7 +99,10 @@
 <footer class="subpage-foot">
   <a href="/">Hauntfinder map</a> · <a href="alerts.html">Get alerts</a> · <a href="mailto:mtocommunityfinder@gmail.com">Contact us</a>
 </footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script src="routing.js"></script>
+<script src="schedules.js"></script>
+<script src="listing-format.js"></script>
 <script src="listing.js"></script>
 <script src="page.js"></script>
 </body>

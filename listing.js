@@ -10,8 +10,12 @@ const SECTIONS=['feedback','report-update','share'];
 const SITE='https://hauntfinder.vercel.app/';
 const REPORT_TO='MTOCommunityFinder@gmail.com';
 const isReused=(typeof isReusedSlot==='function')?isReusedSlot:require('./routing').isReusedSlot;
+// Shared with the homepage: hours/category formatting (listing-format.js) and
+// the hfroute:2026 route store (routing.js).
+const fmt=(typeof listingHoursText==='function')?{listingHoursText,listingCategory}:require('./listing-format');
+const routeStore=(typeof toggleListingStop==='function')?{loadSavedRoute,saveRoute,toggleListingStop}:require('./routing');
 
-function loadListingData(src){return new Function(String(src).split('const filters=')[0]+';return {listings,FORM_URL}')()}
+function loadListingData(src){return new Function(String(src).split('const filters=')[0]+';return {listings,events,FORM_URL}')()}
 function parseSection(hash){const h=String(hash||'').replace(/^#/,'');return SECTIONS.includes(h)?h:null}
 function parseListingParams(search,listings){
   const p=new URLSearchParams(search),ids=p.getAll('id');
@@ -20,6 +24,16 @@ function parseListingParams(search,listings){
   if(!listing||listing.placeholder)return {ok:false,reason:'We could not find that listing.'};
   if(isReused(listing)&&p.get('entity')!==listing.entityId)return {ok:false,reason:'That listing number now belongs to a different listing.'};
   return {ok:true,listing};
+}
+// Category + type, as the homepage tab and card chips show them.
+function kindSummary(house){return {category:fmt.listingCategory(house),types:Array.isArray(house.type)?house.type.slice():[]}}
+// "See on the map": the homepage deep link (entity-gated for reused slots),
+// opened in map view so phones land on the map, not the card list.
+function mapLink(house){return '/?house='+house.num+(isReused(house)?'&entity='+encodeURIComponent(house.entityId):'')+'&view=map'}
+// Map preview only for a stored, verified street-address pin; never geocoded.
+function mapTarget(house){
+  if(!house||!Number.isFinite(house.lat)||!Number.isFinite(house.lng)||typeof house.geoVerified!=='string'||!house.geoVerified.trim())return null;
+  return {lat:house.lat,lng:house.lng,kind:fmt.listingCategory(house)==='Treat stop'?'treat':'display',href:mapLink(house)};
 }
 function houseLink(house,reused){return SITE+'?house='+house.num+(reused?'&entity='+encodeURIComponent(house.entityId):'')}
 function housePost(house,link,formUrl){return `We're on the 2026 Hauntfinder!\n\nVisit ${house.name}\n${house.address}\n${[house.dates,house.times].filter(Boolean).join(' · ')||'Check the listing for viewing details.'}\n\nSee our listing: ${link}\nFind more displays near you and build your route: ${SITE}\nHave a display to add or update? ${formUrl}\n\n#MountOliveNJ #Halloween2026 #HauntFinder`}
@@ -30,7 +44,7 @@ function reportMailto(house,r){
   const body=`House: ${house.name}\nAddress: ${house.address}\nListing: ${houseLink(house,isReused(house))}\nReport type: ${r.type}\n${closure?'Affected dates: '+r.from+(r.through?' through '+r.through:'')+'\n':''}\n${notes}`;
   return {href:'mailto:'+REPORT_TO+'?subject='+encodeURIComponent('Haunt Finder listing report: '+r.type+' — '+house.name)+'&body='+encodeURIComponent(body)};
 }
-if(typeof module!=='undefined')module.exports={SECTIONS,loadListingData,parseSection,parseListingParams,houseLink,housePost,reportMailto};
+if(typeof module!=='undefined')module.exports={SECTIONS,loadListingData,parseSection,parseListingParams,houseLink,housePost,reportMailto,kindSummary,mapLink,mapTarget};
 if(typeof document==='undefined')return;
 
 const $=id=>document.getElementById(id);
@@ -44,19 +58,56 @@ async function start(){
   catch{return fail('The listing data could not be loaded right now.')}
   const parsed=parseListingParams(location.search,data.listings);
   if(!parsed.ok)return fail(parsed.reason);
-  render(parsed.listing,data.FORM_URL);
+  render(parsed.listing,data);
 }
 
-function render(house,formUrl){
-  const reused=isReused(house),link=houseLink(house,reused);
+function render(house,data){
+  const reused=isReused(house),link=houseLink(house,reused),kind=kindSummary(house);
   document.title=house.name+' · Hauntfinder';
   $('listingTitle').textContent=house.name;
   $('listingStatus').hidden=true;$('listingBody').hidden=false;
-  $('listingMeta').textContent=[house.address,[house.dates,house.times].filter(Boolean).join(' · ')].filter(Boolean).join(' — ');
-  $('listingOnMap').href='/?house='+house.num+(reused?'&entity='+encodeURIComponent(house.entityId):'');
-  wireFeedback(house);wireReport(house);wireShare(house,link,formUrl);
+  $('listingCategory').textContent=kind.category;
+  $('listingTypes').innerHTML=kind.types.map(t=>`<span class="chip chip--type">${escapeHTML(t)}</span>`).join('');
+  $('listingMeta').textContent=house.address;
+  $('listingHours').textContent=fmt.listingHoursText(house);
+  $('listingOnMap').href=mapLink(house);
+  wireRoute(house,data);renderMap(house,kind);
+  wireFeedback(house);wireReport(house);wireShare(house,link,data.FORM_URL);
   const section=parseSection(location.hash);
   if(section)$(section).scrollIntoView();
+}
+
+// ---- Add to route (same hfroute:2026 store and entries as the homepage) ----
+function wireRoute(house,data){
+  const btn=$('listingRouteBtn'),status=$('listingRouteStatus');
+  const storage=(()=>{try{return window.localStorage}catch{return null}})();
+  const current=()=>routeStore.loadSavedRoute(storage,data.listings,data.events);
+  const paint=()=>{const on=current().some(r=>r.num===house.num);btn.setAttribute('aria-pressed',String(on));btn.textContent=on?'✓ On your route':'+ Add to route'};
+  btn.addEventListener('click',()=>{
+    const r=routeStore.toggleListingStop(current(),house);
+    if(r.error){status.textContent=r.error;return}
+    if(!routeStore.saveRoute(storage,r.route)){status.textContent='Your route could not be saved on this device.';return}
+    paint();
+    status.innerHTML=r.added?`Added to your route (${r.route.length} of 10 stops). <a href="/">Open the map</a> to plan directions.`:'Removed from your route.';
+  });
+  window.addEventListener('storage',e=>{if(e.key===null||e.key==='hfroute:2026')paint()});
+  paint();
+}
+
+// ---- Map preview (stored verified pin, same tiles and pin art as the homepage) ----
+function renderMap(house,kind){
+  const t=mapTarget(house),wrap=$('listingMapWrap');
+  $('listingMapLink').href=mapLink(house);
+  if(!t||typeof L==='undefined'){wrap.hidden=true;return}
+  wrap.hidden=false;
+  const el=$('listingMap');
+  el.setAttribute('role','img');el.setAttribute('aria-label',`Map preview: ${kind.category} ${house.num}, ${house.name}, ${house.address}`);
+  const m=L.map(el,{zoomControl:false,dragging:false,touchZoom:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,tap:false}).setView([t.lat,t.lng],15);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,attribution:'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'}).addTo(m);
+  const w=matchMedia('(max-width:767px)').matches?28:38,h=Math.round(w*56/48);
+  const pin=`<div class="pin pin--${t.kind}" data-pin="${house.num}"><img class="pin__art" src="assets/icons/pin-${t.kind==='treat'?'treat-stop':'display'}.svg" alt=""><span class="pin__num">${house.num}</span></div>`;
+  L.marker([t.lat,t.lng],{icon:L.divIcon({className:'',html:pin,iconSize:[w,h],iconAnchor:[w/2,h]}),interactive:false,keyboard:false}).addTo(m);
+  m.on('click',()=>{location.href=t.href});
 }
 
 // ---- Feedback (same /api/feedback contract the dialog used) ----
