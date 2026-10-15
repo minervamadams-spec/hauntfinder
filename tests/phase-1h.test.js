@@ -26,7 +26,7 @@ test('URL filter state module exists, loads after chrome-filters, and only owns 
  assert.ok(urlState.includes("u.searchParams.set('category',state.category)"),'category always written');
  assert.ok(urlState.includes("u.searchParams.set('show',state.filter)"),'non-default show written');
  assert.ok(urlState.includes("state.features.join(',')"),'features comma-joined');
- assert.ok(urlState.includes("u.searchParams.set('view','map')"),'view=map only when map');
+ assert.ok(!urlState.includes("u.searchParams.set('view','map')"),'view=map is a one-shot instruction, never written back (no Map/List state)');
  assert.ok(urlState.includes("window.hfApplyView"),'view restore goes through the exposed applyViewMode');
  assert.ok(layout.includes('window.hfApplyView=applyViewMode'),'layout.js exposes applyViewMode');
  assert.ok(urlState.includes("new CustomEvent('hf:expand-radius',{detail:{radius:mi}})"),'mi restore reuses the radius event');
@@ -48,14 +48,13 @@ test('url-state when param round-trips through the exported helpers',()=>{
  assert.deepEqual(m.HF_URL_RADII,[5,10,25,50]);
 });
 
-test('continuous card list: pagination chrome and page math are gone',()=>{
+test('card pages (single-scroll brief): the old Phase-1 pager stays retired; one 8-card pager lives in app.js',()=>{
  ['listingPages','previousListings','nextListings','listingPageSummary'].forEach(s=>assert.ok(!html.includes(s),'index.html drops '+s));
- assert.ok(!layout.includes('function pages('),'pages() removed');
- assert.ok(!layout.includes('state.page'),'layout.js keeps no page state');
- assert.ok(!app.includes('state.page'),'app.js keeps no page state');
+ assert.ok(!layout.includes('function pages('),'old pages() stays removed');
  assert.ok(!chrome.includes('state.page'),'chrome-filters.js keeps no page state');
- assert.ok(app.includes('visible.map(cardHTML)'),'every visible card renders');
- assert.match(css,/\.listing-pages \.btn\{[^}]*min-height:44px/,'orphaned pager styles harmless');
+ assert.ok(app.includes('visible.slice(pg.start,pg.end).map(cardHTML)'),'one page of cards renders');
+ assert.ok(html.includes('id="resultsPager"'),'single pager under the cards');
+ assert.match(css,/\.listing-pages \.btn\{[^}]*min-height:44px/,'pager buttons keep 44px targets');
 });
 
 test('counts agree: the active tab badge mirrors the count line (filtered visible, non-placeholder)',()=>{
@@ -118,8 +117,7 @@ test('photos decode off the main thread',()=>{
  assert.ok(flip.includes("img.loading='lazy'")&&photos.includes("img.loading='lazy'"),'lazy loading kept');
 });
 
-test('list column scrolls internally at >=1200px only',()=>{
- assert.match(phaseH,/@media\(min-width:1200px\)\{[^}]*\.list-column\{position:sticky!important;top:16px;align-self:start;height:calc\(100dvh - 32px\)!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain\}/,'desktop internal scroll rule');
- assert.ok(phaseH.indexOf('.list-column{position:sticky!important')>phaseH.indexOf('@media(min-width:1200px)'),'sticky rule is scoped inside the >=1200px media');
+test('list column never scrolls internally (single-scroll layout)',()=>{
+ assert.ok(!phaseH.includes('.list-column{position:sticky!important'),'Phase H internal scroll rule removed');
  assert.match(css,/@media\(max-width:1023px\)\{[^}]*\.list-column\{max-height:none;height:auto;overflow:visible\}/,'mobile keeps natural document flow');
 });

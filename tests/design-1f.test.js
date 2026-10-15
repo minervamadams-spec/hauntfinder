@@ -143,12 +143,9 @@ test('pin click scrolls the card with scrollTo, never scrollIntoView',()=>{
 });
 
 /* ---- Map view (frame 1B) ---- */
-test('map view: toggle keeps aria states; map fills the grid width; single map instance',()=>{
-  assert.ok(layout.includes("mapBtn.setAttribute('aria-pressed',String(v==='map'))"),'map toggle aria');
-  assert.ok(layout.includes("listBtn.setAttribute('aria-pressed',String(v==='list'))"),'list toggle aria');
-  assert.ok(layout.includes("saveView(v,localStorage)"),'view choice persists');
-  assert.ok(css.includes('html[data-view="map"] .page-grid{grid-template-columns:minmax(0,1fr)}'),'map spans the full grid width');
-  assert.ok(css.includes('html[data-view="map"] .page-grid>.list-column{display:none}'),'list column hidden in map view');
+test('map-first layout: map spans the content width above the cards; single map instance',()=>{
+  assert.ok(css.includes('html:not([data-category="events"]) .page-grid{display:flex;flex-direction:column;align-items:stretch'),'one column: map, then cards');
+  assert.ok(!layout.includes("saveView(v,localStorage)"),'no Map/List preference is stored');
   assert.equal((html.match(/id="map" class="hf-map"/g)||[]).length,1,'one Leaflet container');
   assert.ok(layout.includes("map.invalidateSize()"),'size refreshed on view switch');
 });

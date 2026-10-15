@@ -19,7 +19,7 @@ test('Bug A: renderCards feeds the count line, card list, and marker sync from t
  const body=app.split('function renderCards(){')[1].split('\nfunction ')[0];
  const visibleAt=body.indexOf('const visible=activeListings()');
  const countAt=body.indexOf('countLine').textContent===undefined?body.indexOf("getElementById('countLine')"):body.indexOf('countLine');
- const cardsAt=body.indexOf("cardList').innerHTML=visible.map(cardHTML)");
+ const cardsAt=body.indexOf("cardList').innerHTML=visible.slice(pg.start,pg.end).map(cardHTML)");
  const markersAt=body.indexOf('syncListingMarkers(visible)');
  assert.ok(visibleAt===0,'visible is the first thing computed');
  assert.ok(visibleAt<countAt&&countAt<cardsAt,'count line derives from visible');
@@ -80,18 +80,18 @@ test('Bug C: all dialogs share the rgba(5,4,8,.6) backdrop; nothing overrides it
 });
 
 // ---- Bug D: paired set/reset across every breakpoint boundary ----
-test('Bug D: events anatomy is paired at every breakpoint — single column 960–1199, D1 two-column >=1200, and the Phase H sticky scroll stays out of events',()=>{
+test('Bug D: events anatomy is paired at every breakpoint — single column 960–1199, two-column >=1200, and no sticky scroll column anywhere',()=>{
  const band=css.split('@media(min-width:960px) and (max-width:1199px)')[1].split('@media(min-width:1200px)')[0];
  assert.ok(band.includes('html[data-category="events"] .page-grid{grid-template-columns:minmax(0,1fr)}'),'960–1199 single column');
  assert.ok(band.includes('html[data-category="events"] .list-column{display:block;grid-column:1;grid-row:auto;position:static;height:auto;max-height:none;overflow:visible;width:100%}'),'960–1199 cards stack below the week with explicit static/flow reset');
  const large=css.split('html[data-category="events"] .page-grid{grid-template-columns:minmax(0,1fr) 440px}')[1];
  assert.ok(large.includes('html[data-category="events"] .map-column{grid-column:1;grid-row:1}'),'>=1200 week takes the wide left column');
  assert.ok(large.includes('html[data-category="events"] .list-column{grid-column:2;grid-row:1/span 2}'),'>=1200 event cards take the 440px right column');
- assert.match(css,/html:not\(\[data-category="events"\]\) \.list-column\{position:sticky!important;top:16px;align-self:start;height:calc\(100dvh - 32px\)!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain\}/,'Phase H sticky scroll scoped to non-events so the events cards column never gets height-clipped');
+ assert.ok(!/\.list-column\{position:sticky!important/.test(css),'single-scroll layout: the Phase H sticky scrolling column is gone, so no category gets a height-clipped card column');
 });
 
-test('Bug D: >=1200 internal list scroll excludes the events category',()=>{
- assert.match(css,/html:not\(\[data-category="events"\]\) \.list-column\{position:sticky!important;top:16px;align-self:start;height:calc\(100dvh - 32px\)!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain\}/,'sticky scroll scoped to non-events');
+test('Bug D: no internal list scroll at any width or category (single-scroll layout)',()=>{
+ assert.ok(!/\.list-column\{[^}]*overflow-y:auto/.test(css),'no scrolling card column');
 });
 
 test('Bug D: pinned mobile route bar cannot survive into the desktop band',()=>{
@@ -108,12 +108,12 @@ test('Bug D: map popup peek has no stale translateX(-50%) residue from the retir
  peekRules.forEach(r=>assert.ok(!r.includes('transform'),'no transform residue on .map-peek: '+r));
 });
 
-test('Bug D: view toggle and full-map float button are desktop-safe pairs',()=>{
- assert.match(css,/\.view-toggle\{display:none\}/,'view toggle hidden by default');
- assert.match(css,/@media\(max-width:1023px\)\{[^}]*\.view-toggle\{display:flex;/,'view toggle only appears below 1024');
+test('Bug D: Map/List toggle retired; full-map float button stays desktop-safe',()=>{
+ assert.ok(!css.includes('.view-toggle'),'map-first layout has no Map/List toggle styles');
  assert.match(css,/@media\(min-width:1024px\)\{[^}]*\.map-float-btn--full\{display:none\}/,'full-map button hidden at desktop');
 });
 
-test('Bug D: data-view and data-fullmap states restore automatically (attribute-scoped rules only)',()=>{
- ['html[data-view="map"] .page-grid>.list-column{display:none}','html[data-view="list"] .map-key,html[data-view="list"] .map-note{display:none}','html[data-fullmap] .map-key,html[data-fullmap] .map-note{display:none}','html:not([data-fullmap]) .map-full-head{display:none!important}'].forEach(s=>assert.ok(css.includes(s),'attribute-scoped (self-restoring) rule: '+s.slice(0,70)));
+test('Bug D: data-fullmap states restore automatically (attribute-scoped rules only); no Map/List view states remain',()=>{
+ assert.ok(!css.includes('html[data-view='),'no Map/List view rules');
+ ['html[data-fullmap] .map-key,html[data-fullmap] .map-note{display:none}','html:not([data-fullmap]) .map-full-head{display:none!important}'].forEach(s=>assert.ok(css.includes(s),'attribute-scoped (self-restoring) rule: '+s.slice(0,70)));
 });

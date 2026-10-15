@@ -8,7 +8,7 @@ const path = require('node:path');
 
 const BASE = process.env.HF_BASE || 'https://hauntfinder.vercel.app';
 // Static assets that must match the just-pushed commit byte-for-byte.
-const ASSETS = ['index.html', 'styles.css', 'app.js', 'layout.js', 'alerts.css', 'community.js', 'photos-ui.js', 'listing.html', 'listing.js', 'page.js', 'listing-format.js', 'routing.js', 'schedules.js'];
+const ASSETS = ['index.html', 'styles.css', 'app.js', 'layout.js', 'alerts.css', 'community.js', 'photos-ui.js', 'listing.html', 'listing.js', 'page.js', 'listing-format.js', 'routing.js', 'schedules.js', 'url-state.js'];
 // Public Google Form links wired in community.js (live HEAD must be 200).
 const FORM_LINK_RE = /(https:\/\/docs\.google\.com\/forms\/d\/e\/[\w-]+\/viewform)/g;
 
@@ -32,6 +32,10 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
     const remote = sha(Buffer.from(await res.arrayBuffer()));
     ok(`asset live == local: ${f}`, res.status === 200 && remote === localSha(f), res.status === 200 ? '' : `status=${res.status}`);
   }
+
+  // 2b. Single-scroll, map-first homepage: map before the cards, one 8-card
+  // pager, no Map/List switch.
+  ok('homepage is map-first with the card pager and no Map/List switch', homeHtml.indexOf('class="map-frame"')>-1 && homeHtml.indexOf('class="map-frame"')<homeHtml.indexOf('id="cardList"') && homeHtml.includes('id="resultsPager"') && !homeHtml.includes('class="view-toggle"'));
 
   // 3. Alerts are a standalone page; the homepage must never carry an alert
   // modal or an embedded form that can obstruct browsing.

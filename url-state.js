@@ -55,18 +55,17 @@ function hfWriteURL(){
    u.searchParams.set('zip',String(state.search.zip));
    u.searchParams.set('mi',String(state.search.radius));
   }
-  if(document.documentElement.dataset.view==='map')u.searchParams.set('view','map');
   if(state.category==='events'&&state.eventDay)u.searchParams.set('day',String(+state.eventDay.slice(8,10)));
   history.replaceState(null,'',u);
  }catch(err){/* never break rendering over a URL write */}
 }
 
 // Write after every render (covers filters, when, zip/mi via hf:search-changed,
-// day toggles) and whenever the map/list view flips (onclick binds the closure
-// directly, so observe the html[data-view] attribute instead of wrapping).
+// day toggles). view=map is a one-shot instruction (show the map, see
+// restore) and is never written back: the map-first layout has no Map/List
+// state to share.
 const prevRenderCards=renderCards;
 renderCards=function(){const out=prevRenderCards.apply(this,arguments);hfWriteURL();return out};
-new MutationObserver(()=>hfWriteURL()).observe(document.documentElement,{attributes:true,attributeFilter:['data-view']});
 
 // ---- Restore: URL params override the tab defaults selectTab just reset. ----
 (function restore(){
@@ -85,7 +84,7 @@ new MutationObserver(()=>hfWriteURL()).observe(document.documentElement,{attribu
  const when=hfParseWhen(params.get('when'));
  if(when&&typeof normalizeDateFilter==='function')state.dateFilter=normalizeDateFilter(when);
  else if(when)state.dateFilter=when;
- // view: only map is written; list is the default.
+ // view=map: bring the map on screen (and center a linked ?house= pin).
  if(params.get('view')==='map'&&typeof window.hfApplyView==='function')window.hfApplyView('map');
  renderFilters();
  renderCards();

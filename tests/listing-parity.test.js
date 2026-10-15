@@ -68,9 +68,9 @@ test('map: listing page loads the same Leaflet build and draws the preview; See 
   assert.match(css,/\.listing-map__canvas\{/);
 });
 test('map: homepage deep link centers the linked house, including on the first switch to map view',()=>{
-  assert.match(layout,/if\(params\.get\('view'\)==='map'\)\{state\.linkedHouse=house\.num;focusLinkedHouse\(\)\}/,'only the map-view link from the listing page re-centers; plain ?house= share links are unchanged');
+  assert.match(layout,/if\(params\.get\('view'\)==='map'\)\{state\.linkedHouse=house\.num;focusLinkedHouse\(\);applyViewMode\('map'\)\}/,'only the map-view link from the listing page re-centers; plain ?house= share links are unchanged');
   assert.match(layout,/function focusLinkedHouse\(\)\{/);
-  assert.match(layout,/if\(state\.linkedHouse!=null\)focusLinkedHouse\(\);else if\(state\.search/);
+  assert.match(layout,/if\(state\.linkedHouse!=null\)focusLinkedHouse\(\);else bringMapIntoView\(\)/,'once the layout settles the pin is re-centered');
 });
 
 // ---- 3. Add to route: shared state/storage ----

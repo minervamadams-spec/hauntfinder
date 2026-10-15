@@ -22,13 +22,9 @@ test('When filter defaults to Any night on every load; no stale persisted date',
   assert.match(css,/\.event-day\{/, 'when chips remain styled');
 });
 
-test('≥1200px default desktop anatomy is D1: 520px listings LEFT, map + route RIGHT, 24px gap',()=>{
-  const block=css.split('Issue 3 — spec D1')[1].split('Issue 5 — banner')[0];
-  assert.match(block,/grid-template-columns:520px minmax\(0,1fr\);gap:24px/);
-  assert.match(block,/\.list-column\{grid-column:1;grid-row:1\/span 2\}/,'cards take the left column');
-  assert.match(block,/\.map-column\{grid-column:2;grid-row:1\}/,'map takes the right column');
-  assert.match(block,/\.route-wrap\{grid-column:2;grid-row:2;width:100%\}/,'route panel sits under the map');
-  assert.match(block,/html\[data-view="map"\] \.map-column\{grid-column:1/,'map view keeps a single full-width column (no implicit sliver track)');
+test('≥1200px: the D1 split is superseded by the single-scroll map-first column; events keep week-left/cards-right',()=>{
+  assert.ok(!css.includes('grid-template-columns:520px minmax(0,1fr)'),'no 520px card column split');
+  assert.ok(css.includes('html:not([data-category="events"]) .page-grid{display:flex;flex-direction:column'),'displays/treats: one column');
   const eventsLarge=css.split('@media(min-width:1200px)')[1].split('/* ---- Hotfix')[0];
   assert.match(eventsLarge,/html\[data-category="events"\] \.page-grid\{grid-template-columns:minmax\(0,1fr\) 440px\}/,'events keep week-left/cards-right at ≥1200');
   assert.match(eventsLarge,/html\[data-category="events"\] \.map-column\{grid-column:1;grid-row:1\}/);
@@ -54,8 +50,8 @@ test('banner: no fixed height can clip the art; frame/img stay viewport-relative
   assert.match(art,/\@media\(max-width:767px\)\{[^}]*aspect-ratio:4\.2\/1/,'mobile crop ratio');
   const hotfix=css.split('/* Issue 5 — banner')[1];
   assert.match(hotfix,/\.hf-header\.banner\{height:auto;min-height:0;flex:0 0 auto;overflow:hidden\}/,'retired 145px/200px header heights can no longer clip the banner');
-  const fixedPxHeights=[...css.matchAll(/\.banner[^{]*\{[^}]*\bheight:\s*\d+px/g)];
-  assert.deepEqual(fixedPxHeights,[],'no fixed px height on any .banner wrapper');
+  const fixedPxHeights=[...css.matchAll(/\.banner[^{]*\{[^}]*(?<![-\w])height:\s*\d+px/g)];
+  assert.deepEqual(fixedPxHeights,[],'no fixed px height on any .banner wrapper (max-height caps crop via object-fit instead)');
   const bannerWidths=[...css.matchAll(/\.banner[^{]*\{[^}]*\bwidth:\s*(\d+(?:\.\d+)?)%/g)].map(m=>parseFloat(m[1]));
   assert.ok(bannerWidths.every(w=>w<=100),'no .banner wrapper wider than 100% ('+bannerWidths.join(',')+')');
   assert.equal(css.includes('.hf-footer>.community-links'),false,'dead footer community-links rule removed');

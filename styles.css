@@ -339,8 +339,7 @@ button.footer-link{cursor:pointer}
 .empty .btn{margin-top:12px}
 .listing-status .btn{margin-top:6px;min-height:44px}
 
-/* Phase 5: mobile map/list views, full-screen map, search-this-area. */
-.view-toggle{display:none}
+/* Phase 5: full-screen map (mobile), search-this-area. */
 .map-float-btn{position:absolute;z-index:650;min-height:44px;padding:0 16px;border:2px solid var(--night);border-radius:22px;background:var(--cream);color:var(--night);font:800 15px/1 var(--f-ui);letter-spacing:.05em;text-transform:uppercase;box-shadow:0 4px 14px rgba(0,0,0,.55);cursor:pointer;transition:opacity .18s ease,transform .18s ease,visibility .18s}
 .map-float-btn--search{left:50%;transform:translate(-50%,8px);bottom:14px;opacity:0;visibility:hidden;pointer-events:none;background:var(--pumpkin)}
 .map-float-btn--search.is-visible{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0)}
@@ -354,16 +353,6 @@ button.footer-link{cursor:pointer}
 html[data-fullmap]{overflow:hidden}
 html:not([data-fullmap]) .map-full-head{display:none!important}
 @media(max-width:1023px){
- .view-toggle{display:flex;gap:0;margin:0 0 10px;border:2px solid var(--line-strong);border-radius:4px;overflow:hidden;width:max-content}
- .view-toggle button{min-height:44px;padding:0 18px;background:var(--filter);color:var(--cream);border:0;font:800 16px/1 var(--f-ui);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
- .view-toggle button+button{border-left:2px solid var(--line-strong)}
- .view-toggle button[aria-pressed="true"]{background:var(--pumpkin);color:var(--night)}
- /* List view hides the inline map so the page scrolls freely. */
- html[data-view="list"] .map-frame,html[data-view="list"] .map-info{display:none}
- /* Map view keeps the tabs, hides the card list, and fills the viewport under the sticky filterbar. */
- html[data-view="map"] .page-grid>.list-column{order:-1;margin-bottom:0}
- html[data-view="map"] .content-panels,html[data-view="map"] .listing-pages{display:none}
- html[data-view="map"] .map-frame{position:sticky;top:var(--filterbar-h,150px);height:calc(100dvh - var(--filterbar-h,150px) - env(safe-area-inset-bottom));aspect-ratio:auto;z-index:400}
  .map-float-btn--search{bottom:calc(96px + env(safe-area-inset-bottom))}
  .map-float-btn--full{bottom:calc(12px + env(safe-area-inset-bottom))}
  body:has(.mobile-route-bar:not(.is-hidden)) .map-float-btn--full{bottom:calc(84px + env(safe-area-inset-bottom))}
@@ -501,7 +490,7 @@ body.host-panel-open{overflow:hidden}
 /* v6 Phase B (Direction 1A): global chrome — intro strip, nav row (tabs +
    search), dropdown filter row, segmented List/Map toggle. Appended after
    existing rules; new classes only, plus later equal-specificity redeclarations
-   of #displaysTab/#treatStopsTab/#eventsTab/.view-toggle/.filterbar states. */
+   of #displaysTab/#treatStopsTab/#eventsTab/.filterbar states. */
 
 /* ---- Intro strip (spec 6.2): band background, one paragraph, no buttons. */
 .intro-strip{background:var(--band);padding:14px var(--space-10)}
@@ -581,13 +570,6 @@ body.host-panel-open{overflow:hidden}
 .dd__foot .btn{flex:1;min-height:44px;justify-content:center}
 .btn--primary{background:var(--orange);color:#0B0910;border:2px solid var(--orange);border-radius:var(--radius-control);font:700 15px var(--f-cond);letter-spacing:.06em;text-transform:uppercase}
 
-/* ---- Segmented List/Map toggle (spec 8.3): cream selected half; mobile
-   halves are 42x44 icon buttons. */
-.view-toggle{display:flex;gap:0;border:2px solid var(--line-2);border-radius:var(--radius-control);overflow:hidden}
-.view-toggle button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0 var(--space-3);background:var(--card);color:var(--text-3);border:0;font:600 15px var(--f-body);cursor:pointer}
-.view-toggle button+button{border-left:2px solid var(--line-2)}
-.view-toggle button[aria-pressed="true"]{background:#F6EBD3;color:#0B0910}
-.view-toggle__icon{display:none;width:18px;height:18px}
 
 /* ---- Mobile (spec 6 breakpoints): dropdowns open as bottom sheets with a
    handle, Rubik Dirt title, Clear all, and a sticky Cancel + Show N footer. */
@@ -610,9 +592,6 @@ body.host-panel-open{overflow:hidden}
   .within-dd[open]>.within-dd__menu{position:fixed;left:0;right:0;bottom:0;top:auto;width:auto;border-radius:var(--radius-card) var(--radius-card) 0 0;padding:8px 12px calc(12px + env(safe-area-inset-bottom));z-index:1200}
   .within-dd__head{display:flex}
   .within-dd__handle{display:block;margin:4px auto 8px}
-  .view-toggle button{width:42px;height:44px;padding:0}
-  .view-toggle__text{display:none}
-  .view-toggle__icon{display:block}
 }
 
 
@@ -917,13 +896,6 @@ body.host-panel-open{overflow:hidden}
 .treat-empty__body{margin:0;font-size:15px;color:var(--text-3)}
 .treat-empty__actions{display:flex;gap:10px;flex-wrap:wrap}
 .treat-empty__actions .btn{min-height:44px}
-/* Map view (frame 1B): the single map instance takes the full grid width. */
-@media(min-width:960px){
- html[data-view="map"] .page-grid{grid-template-columns:minmax(0,1fr)}
- html[data-view="map"] .page-grid>.list-column{display:none}
- html[data-view="map"] .map-frame{height:calc(100dvh - var(--filterbar-h,150px) - 24px)}
-}
-html[data-view="list"] .map-key,html[data-view="list"] .map-note{display:none}
 html[data-fullmap] .map-key,html[data-fullmap] .map-note{display:none}
 @media(max-width:959px){
  .map-popup{width:100%}
@@ -960,18 +932,8 @@ body:has(dialog[open]){overflow:hidden}
 @media(max-width:600px){.footer-inner h2{font-size:21px}.hf-footer .footer-inner .btn--route{width:100%}}
 /* ---- Hotfix 2026-10-15: live issues on the 1A redesign (commit 2f04e79) ---- */
 
-/* Issue 3 — spec D1 (≥1200px): the default desktop anatomy is the 520px
-   listings column on the LEFT and the map + route panel in a fluid column
-   on the RIGHT, 24px gap. The 1A blocks had placed the map on the left with
-   the cards on the right. Events at ≥1200 keep their week-left/cards-right
-   two-column anatomy, and map view still takes the full grid width. */
-@media(min-width:1200px){
-  .page-grid{grid-template-columns:520px minmax(0,1fr);gap:24px}
-  .list-column{grid-column:1;grid-row:1/span 2}
-  .map-column{grid-column:2;grid-row:1}
-  .route-wrap{grid-column:2;grid-row:2;width:100%}
-  html[data-view="map"] .map-column{grid-column:1;grid-row:1}
-}
+/* Issue 3 (D1 split: cards left, map right at ≥1200px) is superseded by the
+   single-scroll, map-first block at the end of this sheet. */
 
 /* Issue 5 — banner: the ≥1024 chrome still imposed the retired header's
    fixed heights on .hf-header (145px/200px), but the banner art sizes
@@ -984,12 +946,6 @@ body:has(dialog[open]){overflow:hidden}
 .hf-header.banner{height:auto;min-height:0;flex:0 0 auto;overflow:hidden}
 
 /* ---- Phase H: continuous list + a11y/motion hardening. ---- */
-/* Continuous card list: at ≥1200px the list column scrolls internally so the
-   map stays put while browsing every card; overrides the "no internal side
-   scroll" rule above (same specificity, later in the sheet). */
-@media(min-width:1200px){
- html:not([data-category="events"]) .list-column{position:sticky!important;top:16px;align-self:start;height:calc(100dvh - 32px)!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain}
-}
 /* .card__namebtn resets with all:unset (see the head block), which also wipes
    focus outlines — re-assert the 2px cream ring with priority over it. */
 :focus-visible{outline:2px solid #F6EBD3!important;outline-offset:2px!important}
@@ -1042,3 +998,46 @@ body:has(dialog[open]){overflow:hidden}
 .listing-map__canvas{height:220px;border:2px solid var(--violet);border-radius:10px;overflow:hidden;cursor:pointer;background:var(--night)}
 .listing-map figcaption{margin-top:8px}.listing-map figcaption a{color:var(--pumpkin);font-weight:700}
 @media(min-width:768px){.listing-map__canvas{height:280px}}
+
+/* ---- Single-scroll, map-first homepage (layout brief 2026-10-15) ----
+   One vertical scroll surface: banner, intro, tabs/search/filters, map, result
+   count + cards, pagination, then the route planner. The split card/map pane,
+   the sticky scrolling card column and the Map/List switch are gone. Displays
+   and Treat Stops share this structure; Events keeps its week/calendar
+   presentation (no map) with the route planner beside the week as before. */
+.banner__frame{max-height:180px}
+.intro-strip{padding:8px var(--space-10)}
+.intro-strip__copy{font-size:16px;line-height:1.4}
+@media(max-width:767px){
+ .banner__frame{max-height:140px}
+ .intro-strip{padding:10px var(--space-4)}
+ .intro-strip__copy{font-size:15px}
+}
+html:not([data-category="events"]) .page-grid{display:flex;flex-direction:column;align-items:stretch;gap:20px}
+html:not([data-category="events"]) .map-column,html:not([data-category="events"]) .list-column,html:not([data-category="events"]) .route-wrap{width:100%;align-self:stretch;margin-top:0}
+html:not([data-category="events"]):not([data-fullmap]) .map-frame{height:400px;flex:none}
+html:not([data-category="events"]) .hf-map{height:100%;aspect-ratio:auto}
+html:not([data-category="events"]) .count-line{margin:0 0 12px}
+/* The on-map key and distance note only ever showed in the retired Map view;
+   the default view kept them hidden, and they would cover the 400px map and
+   its attribution, so they stay hidden. */
+.map-key,.map-note{display:none}
+.count-line{scroll-margin-top:12px}
+.listing-pages[hidden]{display:none}
+@media(min-width:900px){
+ html:not([data-category="events"]) #cardList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+}
+@media(max-width:1023px){
+ .count-line{scroll-margin-top:calc(var(--filterbar-h,0px) + 12px)}
+}
+@media(max-width:767px){
+ html:not([data-category="events"]):not([data-fullmap]) .map-frame{height:320px}
+}
+/* Events: the route planner moved out of the map column in the markup, so it
+   is placed beside/under the week explicitly to keep the events layout. */
+html[data-category="events"] .route-wrap{order:1;width:100%;margin-top:0}
+html[data-category="events"] .list-column{order:2}
+@media(min-width:1200px){
+ html[data-category="events"] .page-grid{grid-template-rows:auto 1fr}
+ html[data-category="events"] .route-wrap{grid-column:1;grid-row:2;align-self:start}
+}

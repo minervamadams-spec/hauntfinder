@@ -43,9 +43,9 @@ test('nav row: tablist with ids and accent badges sits beside the search cluster
 });
 
 test('search wiring ids survive the restructure',()=>{
-  for(const id of ['zipInput','zipSearchBtn','locateBtn','locStatus','backToZipBtn','shareBtn','viewMapBtn','viewListBtn'])
+  for(const id of ['zipInput','zipSearchBtn','locateBtn','locStatus','backToZipBtn','shareBtn'])
     assert.ok(html.includes(`id="${id}"`),id+' present');
-  assert.ok(html.includes('class="view-toggle"'),'view toggle class preserved for layout.js sync');
+  assert.ok(!html.includes('class="view-toggle"'),'Map/List toggle retired by the single-scroll, map-first layout');
   assert.match(html,/class="locbar__radius" role="radiogroup" aria-label="Search radius"/,'radius radiogroup intact');
   assert.deepEqual([...html.matchAll(/data-radius="(\d+)"/g)].map(x=>+x[1]).slice(0,4),[5,10,25,50],'radii 5/10/25/50');
   assert.ok(html.includes('<details class="within-dd">'),'Within dropdown wraps the radiogroup');
@@ -112,12 +112,10 @@ test('mobile: bottom-sheet chrome at the 768 breakpoint with Rubik Dirt title',(
   assert.ok(css.includes('.dd__clear-all'),'Clear all control');
 });
 
-test('segmented toggle: cream selected half, mobile 42x44 icon halves',()=>{
-  assert.ok(css.includes('.view-toggle button[aria-pressed="true"]{background:#F6EBD3;color:#0B0910}'),'cream selected half');
-  assert.ok(css.includes('.view-toggle button{width:42px;height:44px;padding:0}'),'mobile half size');
-  assert.ok(html.includes('aria-label="Map view"')&&html.includes('aria-label="List view"'),'mobile aria labels');
-  assert.ok(html.includes('assets/icons/icon-map.svg')&&html.includes('assets/icons/icon-list.svg'),'toggle icons');
-  assert.ok(layout.includes("applyViewMode(loadView(localStorage))"),'toggle wiring untouched');
+test('Map/List toggle retired: no buttons, styles or stored preference (map-first layout)',()=>{
+  assert.ok(!css.includes('.view-toggle'),'no toggle styles');
+  assert.ok(!html.includes('aria-label="Map view"')&&!html.includes('aria-label="List view"'),'no toggle buttons');
+  assert.ok(!layout.includes("applyViewMode(loadView(localStorage))"),'no stored Map/List preference restored');
 });
 
 test('events chrome and legacy listeners stay delegated, not deleted',()=>{
