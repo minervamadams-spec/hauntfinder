@@ -42,6 +42,8 @@
   if(EVENT_FORM_URL){$('submitEvent').href=EVENT_FORM_URL;$('submitEvent').hidden=false}}
  // v7 Events: Open-all-week box, then one block per day of Halloween week, then the type key.
  $('railAddAll').addEventListener('click',()=>$('addAllToCalendar').click());
+ // Deep links: late re-renders (search area, pin reveal) must not leave the linked card scrolled out of the rail.
+ function showCardInRail(n){const lc=document.querySelector('.list-column'),c=document.querySelector(`#cardList [data-card="${n}"]`);if(!lc||!c)return;const pb=lc.getBoundingClientRect(),cb=c.getBoundingClientRect();if(cb.top<pb.top||cb.bottom>pb.bottom)lc.scrollTop+=cb.top-pb.top-Math.max(0,(lc.clientHeight-cb.height)/2)}
  // Keep the selected card where it was on screen when the list re-renders (filters, route changes).
  function listAnchor(){const lc=document.querySelector('.list-column'),c=document.querySelector('#cardList .is-selected');return lc&&c?{n:c.dataset.card,off:c.getBoundingClientRect().top-lc.getBoundingClientRect().top}:null}
  function restoreAnchor(a){if(!a)return false;const lc=document.querySelector('.list-column'),c=document.querySelector(`#cardList [data-card="${a.n}"]`);if(!lc||!c)return false;lc.scrollTop+=c.getBoundingClientRect().top-lc.getBoundingClientRect().top-a.off;lastListKey=listKey();return true}
@@ -74,7 +76,7 @@
  if(eventId){if(matchingEvents().some(x=>x.id===eventId)){selectTab('events');renderCards();$('cardList').scrollIntoView({block:'nearest'});const ev=events.find(x=>x.id===eventId);if(state.search&&!inSearchArea(ev,state.search))insertAreaNote(ev)}}
  else if(['events','treats','displays'].includes(params.get('category')))selectTab(params.get('category'));
  const linked=Number(params.get('house')),house=listings.find(x=>x.num===linked&&!x.placeholder);
- if(house&&(!isReusedSlot(house)||params.get('entity')===house.entityId)){selectListing(linked,innerWidth>=1024);if(params.get('view')==='map'){state.linkedHouse=house.num;focusLinkedHouse();applyViewMode('map')}if(state.search&&!inSearchArea(house,state.search))insertAreaNote(house)}
+ if(house&&(!isReusedSlot(house)||params.get('entity')===house.entityId)){selectListing(linked,innerWidth>=1024);if(innerWidth>=1024)[0,300,900,1800].forEach(t=>setTimeout(()=>showCardInRail(linked),t));if(params.get('view')==='map'){state.linkedHouse=house.num;focusLinkedHouse();applyViewMode('map')}if(state.search&&!inSearchArea(house,state.search))insertAreaNote(house)}
  // /listing.html "See on the map" (?house=N&view=map): center that house's pin
  // at zoom 15 and bring the map on screen under the filters. Plain ?house=
  // share links keep their card-first behavior. Runs now and again once the

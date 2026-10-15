@@ -46,7 +46,7 @@ test('results rail: no pagination controls or page-jump state remain in markup o
   assert.equal(/state\.page\b/.test(app+layout),false);
 });
 test('results rail: ?house= deep links select their card without any page jump',()=>{
-  assert.match(layout,/selectListing\(linked,innerWidth>=1024\);if\(params\.get\('view'\)==='map'\)\{state\.linkedHouse=house\.num/);
+  assert.match(layout,/selectListing\(linked,innerWidth>=1024\);if\(innerWidth>=1024\)\[0,300,900,1800\]\.forEach\(t=>setTimeout\(\(\)=>showCardInRail\(linked\),t\)\);if\(params\.get\('view'\)==='map'\)\{state\.linkedHouse=house\.num/);
   assert.match(layout,/selectListing=function\(n,scroll=false\)\{[^\n]*renderCards\(\)\}originalSelect\(n,scroll\)/);
   assert.equal(layout.includes('pageFor'),false,'no page-jump state');
 });
