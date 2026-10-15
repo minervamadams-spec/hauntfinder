@@ -1097,7 +1097,7 @@ html[data-category="events"] .list-column{order:2}
 }
 
 /* ---- v7 compact workspace: supplied design handoff (2026-10-15) ---- */
-.hf-header.banner{height:112px;box-sizing:border-box;display:grid;grid-template-columns:clamp(220px,18vw,300px) minmax(0,1fr);align-items:center;padding:0 24px;background:var(--night) url('assets/scene-strip-v2.png') center/auto 112px repeat-x;border-bottom:2px solid var(--violet)}
+.hf-header.banner{height:112px;box-sizing:border-box;display:grid;grid-template-columns:clamp(220px,18vw,300px) minmax(0,1fr);align-items:center;padding:0 24px;background:var(--night) url('assets/scene-strip-v3.png') center/auto 112px repeat-x;border-bottom:2px solid var(--violet)}
 .banner__title{display:flex;align-items:center;height:100%}
 .banner__frame{width:auto;height:clamp(64px,8vw,100px);aspect-ratio:auto;overflow:visible}
 .banner__img{width:auto;height:100%;object-fit:contain;object-position:center;filter:drop-shadow(0 6px 10px rgba(0,0,0,.7))}

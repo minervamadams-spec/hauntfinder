@@ -24,7 +24,7 @@ test('v7 banner: supplied transparent sign over the supplied scene strip, dimens
   const bannerBlock=html.split('<picture class="banner__frame">')[1].split('</picture>')[0];
   assert.equal(/loading="lazy"/.test(bannerBlock),false,'banner never lazy-loaded');
   const cssBlock=css.split('/* ---- v7 compact workspace')[1];
-  assert.ok(cssBlock.includes('scene-strip-v2.png')&&cssBlock.includes('height:112px'),'desktop scene strip header');
+  assert.ok(cssBlock.includes('scene-strip-v3.png')&&cssBlock.includes('height:112px'),'desktop scene strip header');
   assert.ok(cssBlock.includes('object-fit:contain'),'the sign is contained rather than cropped');
 });
 test('Phase A icons: all 12 SVGs present in assets/icons',()=>{

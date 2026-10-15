@@ -45,7 +45,7 @@ test('events 768–1199: single column, cards stacked below the week, 7 columns 
 
 test('banner: v7 uses the supplied scene strip and separate sign, with a deliberately compact fixed workspace header',()=>{
   const v7=css.split('/* ---- v7 compact workspace')[1];
-  assert.match(v7,/\.hf-header\.banner\{height:112px;[^}]*scene-strip-v2\.png/,'desktop is the supplied 112px scene strip');
+  assert.match(v7,/\.hf-header\.banner\{height:112px;[^}]*scene-strip-v3\.png/,'desktop is the supplied 112px scene strip');
   assert.match(v7,/\.banner__frame\{width:auto;height:clamp\(64px,8vw,100px\)/,'transparent sign is contained rather than crop-filled');
   assert.match(v7,/\.banner__img\{width:auto;height:100%;object-fit:contain/,'sign uses contain, so its artwork cannot be cut off');
   assert.match(v7,/@media\(max-width:1023px\)\{[\s\S]*?\.hf-header\.banner\{height:96px/,'mobile/tablet uses a shorter scene strip');
