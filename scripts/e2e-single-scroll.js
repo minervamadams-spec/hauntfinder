@@ -207,6 +207,15 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       const hp=await p.evaluate(()=>{const n=+document.querySelector('#cardList [data-card]').dataset.card,m=markerByNum.get(n),el=m.getElement(),par=el?null:listingCluster.getVisibleParent(m),t=el||(par&&par.getElement());const inner=el?el.querySelector('.pin'):t&&t.querySelector('.hf-cluster');const w0=inner.offsetWidth,w1=inner.getBoundingClientRect().width;return {clustered:!el,grew:w1>=w0+2,w0,w1:Math.round(w1)}});
       ok(T+'hovering a card enlarges its pin (or its cluster when grouped)',hp.grew,JSON.stringify(hp));
     }
+    // ---- Header breakpoint: the intro line is hidden only below 760px ----
+    if(desktop){
+      for(const [w,show] of [[759,false],[760,true],[900,true],[1023,true]]){
+        await p.setViewportSize({width:w,height:800});await go('');
+        const hd=await p.evaluate(()=>{const i=document.querySelector('.intro-strip__copy'),r=i.getBoundingClientRect(),l=document.querySelector('.banner__img').getBoundingClientRect();return {shown:getComputedStyle(i).display!=='none'&&r.height>0,overlap:r.height>0&&r.left<l.right-1,overflow:document.documentElement.scrollWidth>innerWidth}});
+        ok(`${w}px: intro line ${show?'shown':'hidden'}, no logo overlap, no overflow`,hd.shown===show&&!hd.overlap&&!hd.overflow,JSON.stringify(hd));
+      }
+      await p.setViewportSize({width:1280,height:800});
+    }
     // ---- Deep links ----
     await go('?house=8&entity=drakestown-road-2026');
     const d8=await p.evaluate(()=>{const pin=document.querySelector('.leaflet-marker-pane [data-pin="8"]');return {sel:state.selected,card:!!document.querySelector('#cardList [data-card="8"].is-selected'),pin:!!pin&&pin.classList.contains('is-selected')}});
