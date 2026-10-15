@@ -37,6 +37,7 @@ test('pagination: cards render one page; pins and the count line use the full re
   assert.match(fn,/syncListingMarkers\(visible\)/,'every matching pin stays on the map');
   assert.match(fn,/nonPlaceholder\.length/,'count line counts all results, not the page');
   assert.match(layout,/state\.pageFor=n;/,'pin/card selection jumps to the card page');
+  assert.match(fn,/state\.dateFilter&&state\.dateFilter\.kind\?\[state\.dateFilter\.kind,state\.dateFilter\.date\|\|null\]:null/,'page key compares the date filter by meaning: an empty filter normalized from null to {kind:null} is not a filter change (it reset ?house= deep links to page 1)');
 });
 test('pagination controls: Previous/Next buttons and a live page position under the cards',()=>{
   const nav=html.match(/<nav id="resultsPager"[^>]*>[\s\S]*?<\/nav>/);

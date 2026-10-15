@@ -102,6 +102,9 @@ const countOf=t=>+(String(t).match(/^(\d+)/)||[0,0])[1];
     const dl=await p.evaluate(()=>{const pin=document.querySelector('.leaflet-marker-pane [data-pin="12"]');const b=pin.getBoundingClientRect(),m=document.getElementById('map').getBoundingClientRect(),fb=document.querySelector('.filterbar').getBoundingClientRect(),mf=document.querySelector('.map-frame').getBoundingClientRect();const cx=b.left+b.width/2,cy=b.top+b.height/2,top=document.elementFromPoint(cx,b.bottom-4);const sticky=getComputedStyle(document.querySelector('.filterbar')).position==='sticky';return {zoom:map.getZoom(),selected:state.selected,pinSelected:pin.classList.contains('is-selected'),onTop:!!top&&!!top.closest('[data-pin="12"]'),dx:Math.round(cx-(m.left+m.width/2)),tipDy:Math.round(b.bottom-(m.top+m.height/2)),peek:!document.getElementById('mapPeek').classList.contains('is-hidden'),mapTop:Math.round(mf.top),mapBottom:Math.round(mf.bottom),under:sticky?Math.round(fb.bottom):0}});
     ok(T+'deep link: pin 12 selected, centered, visible, popup open',dl.zoom===15&&dl.selected===12&&dl.pinSelected&&dl.onTop&&Math.abs(dl.dx)<=3&&Math.abs(dl.tipDy)<=3&&dl.peek,JSON.stringify(dl));
     ok(T+'deep link: map sits directly under the filters, fully on screen',dl.mapTop>=dl.under-2&&dl.mapBottom<=vp.height+2,JSON.stringify({mapTop:dl.mapTop,mapBottom:dl.mapBottom,filtersEnd:dl.under}));
+    await go('?house=8&entity=drakestown-road-2026');
+    const d8=await p.evaluate(()=>({sel:state.selected,shown:!!document.querySelector('[data-card="8"].is-selected')}));
+    ok(T+'?house= link to a page-2 listing opens the page with its card selected',d8.sel===8&&d8.shown,JSON.stringify(d8));
     ok(T+'no page errors',errors.length===0,errors.join(' | '));
     await ctx.close();
   }
