@@ -32,18 +32,18 @@ Notes:
 ## Community features
 
 - Mobile: route planner follows the house cards; a fixed bottom route button appears once a stop is selected.
-- Each house opens an accessible feedback dialog with name, a 1–5 crow rating, comment and an automatic server timestamp. Feedback appears publicly immediately.
-- Footer keeps the listing forms, a single About dialog (Hauntfinder + Skully + costume closet), Skully’s Closet information, donation details, Facebook, Instagram and email links.
+- Each house’s listing page (`listing.html?id=N`) has an accessible feedback section with name, a 1–5 crow rating, comment and an automatic server timestamp. Feedback appears publicly immediately.
+- Footer keeps the listing forms, a link to the About page (`about.html`: Hauntfinder + Skully + costume closet), Skully’s Closet information, donation details, Facebook, Instagram and email links.
 
 ## Activate shared feedback
 
-Feedback uses a Vercel Node function at `/api/feedback` and durable Upstash Redis storage. No database credentials are shipped to the browser. Without configuration, visitors can preview the form but cannot post, and the dialog says setup is pending.
+Feedback uses a Vercel Node function at `/api/feedback` and durable Upstash Redis storage. No database credentials are shipped to the browser. Without configuration, visitors can preview the form but cannot post, and the feedback section says setup is pending.
 
 1. In the Vercel `hauntfinder` project, open Storage and connect an Upstash Redis database.
 2. Set production environment variables `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` from that database's REST connection settings. Some Marketplace connections use `KV_REST_API_URL` and `KV_REST_API_TOKEN` instead; these aliases are supported too.
 3. Redeploy the production branch, then open a home's feedback window to confirm posting is available.
 
-Comments are stored per home and season, newest first. The dialog shows the latest 200 reviews; its average reflects those reviews. Posts are limited to five per ten minutes per hashed IP; raw IP addresses are not saved. Each comment has an email report link containing its review ID. Remove reported comments from the database list if needed.
+Comments are stored per home and season, newest first. The listing page shows the latest 200 reviews; its average reflects those reviews. Posts are limited to five per ten minutes per hashed IP; raw IP addresses are not saved. Each comment has an email report link containing its review ID. Remove reported comments from the database list if needed.
 
 Run backend checks with `node --test tests/feedback.test.js`.
 
