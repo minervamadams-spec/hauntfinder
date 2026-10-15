@@ -97,7 +97,9 @@ test('desktop uses the designed filters, results and map workspace rails',()=>{
   assert.equal(css.includes('html[data-view='),false,'no Map/List view states left in the stylesheet');
 });
 test('desktop rail exposes direct filter chips and the Leaflet canvas resizes after its grid cell changes',()=>{
-  assert.match(chromeFilters,/const desktopRail=.*state\.category!=='events'/,'direct rail is limited to directory categories');
+  assert.match(chromeFilters,/const desktopRail=.*min-width:1024px/,'direct chip rail applies to every tab at >=1024 (v7: Events gets Type and Features chips)');
+  assert.match(chromeFilters,/railChip\('event-type'/);
+  assert.match(chromeFilters,/railChip\('event-feature'/);
   assert.match(chromeFilters,/function railFiltersHTML\(\)/,'rail renders working controls rather than decorative labels');
   assert.match(chromeFilters,/railChip\('when'/,'time filters are direct buttons');
   assert.match(chromeFilters,/railChip\('feature'/,'feature filters are direct buttons');

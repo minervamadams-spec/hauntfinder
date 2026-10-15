@@ -77,7 +77,7 @@ if(!filtersEl)return;
 const mobileSheets=()=>typeof matchMedia==='function'&&matchMedia('(max-width:767px)').matches;
 // The compact rail is for listings and treat stops. Events intentionally keep
 // their calendar presentation and existing compact filter controls.
-const desktopRail=()=>typeof matchMedia==='function'&&matchMedia('(min-width:1024px)').matches&&state.category!=='events';
+const desktopRail=()=>typeof matchMedia==='function'&&matchMedia('(min-width:1024px)').matches;
 const noun=()=>state.category==='treats'?'treat stops':state.category==='events'?'events':'displays';
 const featureOptions=()=>state.category==='treats'?CHROME_TREAT_FEATURE_OPTIONS:CHROME_FEATURE_OPTIONS;
 
