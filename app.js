@@ -590,9 +590,9 @@ listings.sort((a,b)=>a.num-b.num);
 const events=[
  {
   "id": "skullys-costume-closet",
-  "updatedAt": "2026-10-08",
+  "updatedAt": "2026-10-15",
   "name": "Skully's Costume Closet",
-  "eventType": "Other",
+  "eventType": "Donation drive/Community collection",
   "venue": "Skully’s Costume Closet",
   "address": "5 N Mount Olive Rd, Budd Lake, NJ",
   "lat": 40.871773,
