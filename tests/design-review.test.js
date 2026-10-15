@@ -4,10 +4,13 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const read=f=>fs.readFileSync(path.join(__dirname,'..',f),'utf8');
 const html=read('index.html'),css=read('styles.css'),app=read('app.js'),layout=read('layout.js'),chrome=read('chrome-filters.js'),community=read('community.js');
 
-test('P1 (reversed by owner): pins and card badges keep the stable listing number, so shared links and what hosts were told stay correct',()=>{
-  assert.equal(/labelMap\.set\(/.test(app),false,'no renumbering');
-  assert.match(app,/<span class="pin__num">\$\{pinLabel\(n\)\}<\/span>/);
-  assert.match(app,/relabelPins\(\)/);
+test('owner decision 2026-10-15: pins and card badges are icons only; listing numbers stay internal (links, routes, reviews) and are never shown',()=>{
+  assert.equal(app.includes('pin__num'),false,'no number element in pins');
+  assert.equal(/labelMap|pinLabel|relabelPins/.test(app),false,'no renumbering machinery');
+  assert.match(app,/data-pin="\$\{n\}"/,'the stable id is still an attribute for linking');
+  assert.equal(/Display \$\{x\.num\}/.test(app),false,'accessible names use the listing name, not a number');
+  assert.match(app,/data-event-pin="\$\{n\}"><\/div>/,'event pins are plain squares');
+  assert.equal(read('listing.js').includes('pin__num'),false);
 });
 test('P1: overlapping pins cluster as a stacked-ring group marker, stop clustering at zoom 15 and spiderfy',()=>{
   assert.match(html,/leaflet\.markercluster@1\.5\.3/);

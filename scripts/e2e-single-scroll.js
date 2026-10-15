@@ -192,8 +192,8 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
         ok(T+tab+': tab badge is a bare number',/^\d+$/.test(r.badge),r.badge);
       }
       await go('?category=displays');
-      const dv=await p.evaluate(()=>{const cards=[...document.querySelectorAll('#cardList [data-card]')],labels=cards.map(c=>+c.querySelector('.pin__num').textContent),markers=cards.map(c=>{const n=+c.dataset.card,m=markerByNum.get(n);return m&&m.options.icon.options.html.includes(`pin__num">${n}<`)});return {labels,sequential:cards.every((c,i)=>+c.dataset.card===labels[i]),match:markers.every(Boolean),clusters:document.querySelectorAll('.hf-cluster').length,h:Math.round(cards[0].getBoundingClientRect().height)}});
-      ok(T+'pin numbers are the stable listing numbers and match card badges',dv.sequential&&dv.match,dv.labels.join(','));
+      const dv=await p.evaluate(()=>({nums:document.querySelectorAll('.pin__num').length,pinText:[...document.querySelectorAll('.leaflet-marker-pane .pin')].every(p=>p.textContent.trim()===''),clusters:document.querySelectorAll('.hf-cluster').length,h:Math.round(document.querySelector('#cardList [data-card]').getBoundingClientRect().height)}));
+      ok(T+'pins and card badges are icons only (no listing numbers shown)',dv.nums===0&&dv.pinText,JSON.stringify({nums:dv.nums}));
       ok(T+'overlapping pins cluster',dv.clusters>=1,`${dv.clusters} cluster(s)`);
       ok(T+'display card with tags is <=190px tall',dv.h<=190,`${dv.h}px`);
       const sb=await p.evaluate(()=>{const x=id=>document.getElementById(id).getBoundingClientRect().left;return {zip:x('zipInput'),within:document.querySelector('.within-dd').getBoundingClientRect().left,go:x('zipSearchBtn'),locate:x('locateBtn'),goText:document.getElementById('zipSearchBtn').textContent,within_text:document.getElementById('locbarWithin').textContent.trim(),bar:Math.round(document.querySelector('.nav-search').getBoundingClientRect().height)}});
