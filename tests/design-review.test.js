@@ -112,3 +112,9 @@ test('QA fix 2: card hover links its pin regardless of the pointer media query (
   assert.match(fn,/is-linked/);
   assert.match(css,/\.pin\.is-linked\{transform:scale\(1\.08\)\}/);
 });
+
+test('v7: the intro line shows from 760px up and is hidden only below 760px',()=>{
+  assert.match(css,/@media\(min-width:760px\) and \(max-width:1023px\)\{\s*\.hf-header\.banner\{grid-template-columns:clamp\(215px,28vw,260px\) minmax\(0,1fr\)/);
+  assert.match(css,/\.intro-strip__copy\{display:block;font-size:13px/);
+  assert.match(css,/@media\(max-width:1023px\)\{[\s\S]*?\.intro-strip__copy\{display:none\}/,'the base rule still hides it on phones; the 760+ band overrides it');
+});

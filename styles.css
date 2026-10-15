@@ -1353,3 +1353,9 @@ html[data-category="events"]{--acc:#B48CFF}
 
 .leaflet-marker-icon.is-linked .hf-cluster{transform:scale(1.1)}
 .hf-cluster{transition:transform .15s ease}
+/* v7: the intro line is hidden only below 760px (it was hidden below 1024px) */
+@media(min-width:760px) and (max-width:1023px){
+ .hf-header.banner{grid-template-columns:clamp(215px,28vw,260px) minmax(0,1fr);padding:0 16px;background-position:left center}
+ .banner__title{justify-content:flex-start}
+ .intro-strip__copy{display:block;font-size:13px;line-height:1.35;padding:0 12px;text-shadow:0 1px 3px #000,0 0 12px rgba(18,14,24,.9)}
+}
