@@ -188,5 +188,6 @@ test('app.js preamble unchanged; map pins and deep links preserved',()=>{
   const head=execSync('git show HEAD:app.js',{cwd:ROOT,encoding:'utf8'});
   assert.ok(head.includes('const filters='),'HEAD has the split marker');
   assert.equal(hash(app),hash(head),'preamble before const filters= is byte-identical to HEAD');
-  assert.ok(html.includes('?category=events&event=')||layout.includes('?category=events&event='),'event deep links intact');
+  const about=fs.readFileSync(path.join(ROOT,'about.html'),'utf8');
+  assert.ok(html.includes('?category=events&event=')||layout.includes('?category=events&event=')||about.includes('?category=events&event='),'event deep links intact');
 });

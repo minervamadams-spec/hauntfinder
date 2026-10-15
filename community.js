@@ -60,20 +60,9 @@ feedbackForm.addEventListener('submit',async e=>{
   }catch(e){if(feedbackHouseId===id)status.textContent=e.message.startsWith('Feedback')||e.message.startsWith('Please')?e.message:'Your feedback was not saved. Please try again.'}
   finally{if(feedbackHouseId===id)button.disabled=false}
 });
-// About moved to /about.html (page-first plan step 2, 2026-10-15); the footer
-// link is an ordinary anchor now and the aboutDialog markup stays only until
-// the replacement passes production QA (plan step 5).
-// 1A Phase G: footer type picker (spec 9.2/P1) and Share this site (spec 9.1).
-const FORM_LINKS={
-  // 2026-10-14 verified by opening each link: ...krfQ is the Event form and
-  // ...xdg9a6g is the Display form (the handoff README had them swapped).
-  display:'https://docs.google.com/forms/d/e/1FAIpQLSeifnGQbKmB1ofTT1Kb1EsY-aCxo-164AXIr5sIvA-xdg9a6g/viewform',
-  treat:'https://docs.google.com/forms/d/e/1FAIpQLScSaoQ7UuSMwxyiDMEQYxXg6HyQhXep_CyEFjYgD7nwQ3kq-w/viewform',
-  event:'https://docs.google.com/forms/d/e/1FAIpQLSeGXPJkGkuaRNOC2QXToVD3L85mXez9xYpKJd4ij7P0lskrfQ/viewform'};
-document.querySelectorAll('[data-type-link]').forEach(a=>{a.href=FORM_LINKS[a.dataset.typeLink]});
-// Submission moved to /submit.html (page-first plan step 2); the footer button
-// is a normal link now. The typeDialog markup and these href fills stay until
-// the replacement passes production QA (plan step 5).
+// About lives at /about.html and submission at /submit.html (page-first plan
+// steps 2 and 5, 2026-10-15): the old dialogs and their wiring are removed.
+// 1A Phase G: Share this site (spec 9.1).
 const shareSiteBtn=document.getElementById('shareSiteBtn');
 shareSiteBtn.onclick=async()=>{
   const shareData={title:'Hauntfinder',text:'Find Halloween displays, treat stops, and events near you.',url:'https://hauntfinder.vercel.app/'};

@@ -16,7 +16,7 @@ const FORMS={
 test('submit page: three visible type options link straight to the verified Google Forms',()=>{
   const links=[...submit.matchAll(/<a class="type-option" data-type-link="(\w+)" href="([^"]+)" target="_blank" rel="noopener">/g)].map(m=>[m[1],m[2]]);
   assert.deepEqual(links,Object.entries(FORMS),'display/treat/event options with canonical URLs');
-  for(const [k,url] of Object.entries(FORMS))assert.ok(community.includes(url),k+' URL matches FORM_LINKS in community.js');
+  assert.equal(/docs\.google\.com\/forms/.test(community),false,'community.js no longer carries form URLs (wiring removed with the dialog)');
 });
 test('submit page: ordinary page, not a dialog — usable shell, no modal markup',()=>{
   assert.equal(submit.includes('<dialog'),false,'no dialog markup');
@@ -48,10 +48,11 @@ test('shared shell: route whitelist validator rejects unknown pages and marks th
   assert.match(pageJs,/ROUTES\.includes\(page\)/,'validation check');
   assert.match(pageJs,/aria-current/, 'current-route marking');
 });
-test('shared shell: styles give subpages their own layout and free the article from dialog scroll',()=>{
+test('shared shell: styles give subpages their own layout and real heading styles',()=>{
   assert.match(css,/\.subpage-nav\{[^}]*justify-content:space-between/,'header nav');
   assert.match(css,/\.subpage-main\{[^}]*max-width:760px/,'constrained reading column');
-  assert.match(css,/\.about-page \.about-article\{max-height:none;overflow:visible/,'page article not capped at 60dvh');
+  assert.match(css,/\.about-page \.about-article h1\{[^}]*var\(--f-display\)/,'article title styled as display heading');
+  assert.match(css,/\.about-page \.about-article h2\{[^}]*font:700 22px/,'section headings styled');
   assert.match(css,/\.skip-link/,'skip link styled');
 });
 
@@ -61,6 +62,8 @@ test('homepage footer: About and Submit are normal links, dialog openers fully r
   assert.match(html,/<a class="btn btn--route" href="submit\.html">Submit or update a listing<\/a>/);
   assert.equal(html.includes('id="aboutBtn"'),false,'about opener button gone');
   assert.equal(/getElementById\('aboutBtn'\)|getElementById\('typePickerBtn'\)/.test(community),false,'no dialog-opener wiring remains in community.js');
+  assert.equal(html.includes('id="aboutDialog"')||html.includes('id="typeDialog"'),false,'both retired dialogs removed from the DOM');
+  assert.equal(/FORM_LINKS|data-type-link/.test(community),false,'orphaned form-link wiring removed from community.js');
 });
 test('homepage: corrupted dialog fragment that silently killed the visit counter is repaired',()=>{
   assert.equal(html.includes('<dialog class="site-dial\n'),false,'dangling unclosed dialog tag gone');

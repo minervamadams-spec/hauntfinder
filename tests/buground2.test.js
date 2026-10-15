@@ -75,7 +75,7 @@ test('Bug C: all dialogs share the rgba(5,4,8,.6) backdrop; nothing overrides it
  assert.match(css,/\.site-dialog::backdrop\{background:rgba\(5,4,8,\.6\)\}/,'shared scrim rule');
  assert.ok(!/::backdrop\{[^}]*transparent/.test(css+alertsCss),'no transparent backdrop override anywhere');
  const dialogs=[...html.matchAll(/<dialog class="([^"]*)"/g)].map(m=>m[1]);
- assert.ok(dialogs.length>=5,'dialogs found');
+ assert.ok(dialogs.length>=4,'dialogs found (feedback, listing report, house share, route sheet)');
  dialogs.forEach(c=>assert.ok(c.includes('site-dialog')||c.includes('route-sheet'),'every dialog uses the shared skin ('+c+')'));
 });
 

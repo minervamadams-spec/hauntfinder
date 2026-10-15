@@ -44,20 +44,10 @@ test('Share this site: native share with clipboard fallback and a 3-second toast
   assert.match(community,/title:'Hauntfinder',text:'Find Halloween displays, treat stops, and events near you\.'/);
 });
 
-test('type picker dialog: verbatim subtitle, three options, canonical form URLs',()=>{
-  const picker=html.split('id="typeDialog"')[1].split('</dialog>')[0];
-  assert.match(html,/<dialog class="site-dialog type-dialog" id="typeDialog" aria-labelledby="typePickerTitle">/);
-  assert.match(picker,/What are you listing\? Each form opens in Google Forms in a new tab\. To update, choose the same type and use the same name\. Listings are reviewed before they appear\./);
-  assert.deepEqual([...picker.matchAll(/data-type-link="(\w+)"/g)].map(m=>m[1]),['display','treat','event'],'three type options');
-  assert.ok(picker.includes('>Display<')&&picker.includes('Decorated home or Halloween display'),'display option');
-  assert.ok(picker.includes('>Treat stop<')&&picker.includes('Handing out treats on Halloween night'),'treat option');
-  assert.ok(picker.includes('>Event<')&&picker.includes('Trunk-or-treat, parade, festival, or other'),'event option');
-  for(const [k,u] of Object.entries(FORMS))assert.ok(community.includes(u),k+' canonical URL in FORM_LINKS');
-  assert.match(community,/a\.href=FORM_LINKS\[a\.dataset\.typeLink\]/,'option hrefs filled from FORM_LINKS');
-  assert.equal(/getElementById\('typePickerBtn'\)\.onclick/.test(community),false,'footer button no longer opens the picker (page-first)');
-  assert.match(css,/\.type-dialog\{[^}]*width:min\(560px/,'picker width 560');
-  assert.match(css,/\.type-dialog\{[^}]*border-top-color:var\(--pumpkin\)/,'pumpkin top accent');
-  assert.equal(html.includes('Display Form'),false,'old footer form buttons gone from the page');
+test('type picker dialog fully retired (page-first plan step 5)',()=>{
+  assert.equal(html.includes('id="typeDialog"'),false,'typeDialog markup removed');
+  assert.equal(/FORM_LINKS|data-type-link/.test(community),false,'FORM_LINKS and href-fill wiring removed');
+  assert.equal(/\.type-dialog|\.type-picker-sub/.test(css),false,'orphaned picker styles removed');
 });
 
 test('alerts is page-first: standalone page, no popup, no iframe, no auto-open',()=>{
@@ -77,8 +67,8 @@ test('shared modal behavior: scrim guard, focus return, scroll lock, bottom shee
   assert.match(css,/\.site-dialog\{[^}]*border-radius:10px/,'10px radius');
   assert.match(css,/border-top:4px solid var\(--violet\)/,'4px context-colored top border');
   assert.match(css,/rgba\(5,4,8,\.6\)/,'scrim color');
-  assert.match(css,/\.about-dialog\{[^}]*width:min\(760px/,'about width 760');
-  assert.match(css,/\.about-article\{[^}]*max-height:60dvh[^}]*overflow:auto/,'long-form About scrolls internally');
+  assert.equal(/\.about-dialog/.test(css),false,'about dialog styles removed with the dialog');
+  assert.equal(/\.about-article\{[^}]*max-height:60dvh/.test(css),false,'dialog scroll cap removed from about-article');
   assert.match(css,/@media\(max-width:1023px\)\{[^}]*\.site-dialog\{position:fixed;inset:auto 0 0 0/,'mobile bottom sheets');
 });
 

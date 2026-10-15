@@ -67,10 +67,10 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
   const noAuth2 = await fetch(BASE + '/api/host-link');
   ok('host-link list rejects anonymous access', noAuth2.status === 403, `status=${noAuth2.status}`);
 
-  // 8. Form links wired in the live community.js all resolve.
-  const liveCommunity = await (await fetch(BASE + '/community.js')).text();
-  const formLinks = [...new Set(liveCommunity.match(FORM_LINK_RE) || [])];
-  ok('community.js carries the three Google Form links', formLinks.length === 3, `${formLinks.length} found`);
+  // 8. Form links wired in the live submit page all resolve.
+  const liveSubmit = await (await fetch(BASE + '/submit.html')).text();
+  const formLinks = [...new Set(liveSubmit.match(FORM_LINK_RE) || [])];
+  ok('submit page carries the three Google Form links', formLinks.length === 3, `${formLinks.length} found`);
   for (const url of formLinks) {
     try {
       const r = await fetch(url, { method: 'HEAD', redirect: 'follow' });
