@@ -48,13 +48,13 @@ test('url-state when param round-trips through the exported helpers',()=>{
  assert.deepEqual(m.HF_URL_RADII,[5,10,25,50]);
 });
 
-test('card pages (single-scroll brief): the old Phase-1 pager stays retired; one 8-card pager lives in app.js',()=>{
+test('card pages (v7): the pager is retired for a continuous result rail',()=>{
  ['listingPages','previousListings','nextListings','listingPageSummary'].forEach(s=>assert.ok(!html.includes(s),'index.html drops '+s));
  assert.ok(!layout.includes('function pages('),'old pages() stays removed');
  assert.ok(!chrome.includes('state.page'),'chrome-filters.js keeps no page state');
- assert.ok(app.includes('visible.slice(pg.start,pg.end).map(cardHTML)'),'one page of cards renders');
- assert.ok(html.includes('id="resultsPager"'),'single pager under the cards');
- assert.match(css,/\.listing-pages \.btn\{[^}]*min-height:44px/,'pager buttons keep 44px targets');
+ assert.ok(app.includes('visible.map(cardHTML)'),'all matching cards render in the rail');
+ assert.ok(!html.includes('id="pagePrev"'),'previous control is removed');
+ assert.ok(!html.includes('id="pageNext"'),'next control is removed');
 });
 
 test('counts agree: the active tab badge mirrors the count line (filtered visible, non-placeholder)',()=>{

@@ -8,8 +8,17 @@ const html=read('index.html'),css=read('styles.css'),app=read('app.js'),layout=r
 const F=require('../listing-format.js');
 const block=css.split('/* ---- Compact directory layout homepage')[1]||'';
 
+test('v7 continuous rail renders every matching card and retires visible pager controls',()=>{
+  const fn=app.split('function renderCards(){')[1].split('\nfunction ')[0];
+  assert.match(fn,/visible\.map\(cardHTML\)/);
+  assert.equal(fn.includes('resolveResultsPage('),false);
+  assert.match(fn,/syncListingMarkers\(visible\)/);
+  assert.equal(html.includes('id="pagePrev"'),false);
+  assert.equal(html.includes('id="pageNext"'),false);
+});
+
 // ---- Pagination (8 per page) ----
-test('pagination: eight cards per page with page position',()=>{
+test.skip('retired pagination: eight cards per page with page position',()=>{
   assert.equal(F.RESULTS_PAGE_SIZE,8);
   assert.deepEqual(F.resolveResultsPage({prevKey:'a',key:'a',page:0,total:13}),{page:0,pages:2,start:0,end:8});
   assert.deepEqual(F.resolveResultsPage({prevKey:'a',key:'a',page:1,total:13}),{page:1,pages:2,start:8,end:13});
@@ -17,19 +26,19 @@ test('pagination: eight cards per page with page position',()=>{
   assert.deepEqual(F.resolveResultsPage({prevKey:'a',key:'a',page:0,total:1}),{page:0,pages:1,start:0,end:1});
   assert.deepEqual(F.resolveResultsPage({prevKey:'a',key:'a',page:0,total:0}),{page:0,pages:1,start:0,end:0});
 });
-test('pagination: filter, category or search changes reset to page 1; same results keep the page; out-of-range pages clamp',()=>{
+test.skip('retired pagination: filter, category or search changes reset to page 1; same results keep the page; out-of-range pages clamp',()=>{
   assert.equal(F.resolveResultsPage({prevKey:'displays|All',key:'displays|Spooky',page:1,total:13}).page,0,'filter change');
   assert.equal(F.resolveResultsPage({prevKey:'displays|All',key:'treats|All',page:1,total:13}).page,0,'category change');
   assert.equal(F.resolveResultsPage({prevKey:'k',key:'k',page:1,total:13}).page,1,'route toggle / re-render keeps the page');
   assert.equal(F.resolveResultsPage({prevKey:'k',key:'k',page:5,total:13}).page,1,'clamped to the last page');
   assert.equal(F.resolveResultsPage({prevKey:'k',key:'k',page:-3,total:13}).page,0,'clamped to the first page');
 });
-test('pagination: selecting a listing opens the page that holds its card, even after a filter reset',()=>{
+test.skip('retired pagination: selecting a listing opens the page that holds its card, even after a filter reset',()=>{
   assert.equal(F.resolveResultsPage({prevKey:'k',key:'k',page:0,total:13,focusIndex:11}).page,1);
   assert.equal(F.resolveResultsPage({prevKey:'k',key:'changed',page:0,total:13,focusIndex:9}).page,1,'focus wins over the reset');
   assert.equal(F.resolveResultsPage({prevKey:'k',key:'k',page:1,total:13,focusIndex:-1}).page,1,'not in results: page unchanged');
 });
-test('pagination: cards render one page; pins and the count line use the full result set',()=>{
+test.skip('retired pagination: cards render one page; pins and the count line use the full result set',()=>{
   const fn=app.split('function renderCards(){')[1].split('\nfunction ')[0];
   assert.match(fn,/resolveResultsPage\(/);
   assert.match(fn,/visible\.slice\(pg\.start,pg\.end\)\.map\(cardHTML\)/,'only the current page renders as cards');
@@ -38,7 +47,7 @@ test('pagination: cards render one page; pins and the count line use the full re
   assert.match(layout,/state\.pageFor=n;/,'pin/card selection jumps to the card page');
   assert.match(fn,/state\.dateFilter&&state\.dateFilter\.kind\?\[state\.dateFilter\.kind,state\.dateFilter\.date\|\|null\]:null/,'page key compares the date filter by meaning: an empty filter normalized from null to {kind:null} is not a filter change (it reset ?house= deep links to page 1)');
 });
-test('pagination controls: Previous/Next buttons and a live page position under the cards',()=>{
+test.skip('retired pagination controls: Previous/Next buttons and a live page position under the cards',()=>{
   const nav=html.match(/<nav id="resultsPager"[^>]*>[\s\S]*?<\/nav>/);
   assert.ok(nav,'pager present');
   assert.match(nav[0],/aria-label="Result pages"/);

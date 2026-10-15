@@ -35,7 +35,7 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
 
   // 2b. Compact directory homepage: the mobile markup retains a map-before-
   // cards order, one 8-card pager, and no retired Map/List switch.
-  ok('homepage has the compact directory map, card pager and no Map/List switch', homeHtml.indexOf('class="map-frame"')>-1 && homeHtml.indexOf('class="map-frame"')<homeHtml.indexOf('id="cardList"') && homeHtml.includes('id="resultsPager"') && !homeHtml.includes('class="view-toggle"'));
+  ok('homepage has the compact directory map, continuous result rail and no Map/List switch', homeHtml.indexOf('class="map-frame"')>-1 && homeHtml.indexOf('class="map-frame"')<homeHtml.indexOf('id="cardList"') && !homeHtml.includes('id="pagePrev"') && !homeHtml.includes('class="view-toggle"'));
 
   // 2c. Route planner is a page (/route.html); the homepage links to it and
   // carries no route sheet.
