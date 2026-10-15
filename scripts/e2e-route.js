@@ -114,6 +114,16 @@ const view=()=>{
     await p.evaluate(()=>toggleRoute(12));
     const cap=await p.evaluate(()=>({n:state.route.length,msg:document.getElementById('routeStatus').textContent}));
     ok(T+'ten-stop cap holds with the homepage message',cap.n===10&&cap.msg==='Routes can have up to 10 stops.',JSON.stringify(cap));
+    ok(T+'homepage has no dialogs',await p.evaluate(()=>document.querySelectorAll('dialog').length===0));
+    // Card actions open the listing page sections in the same tab.
+    await p.evaluate(()=>localStorage.clear());await go('/?category=displays');
+    const links=await p.evaluate(()=>{const c=document.querySelector('#cardList [data-card]'),n=c.dataset.card;return {n,rate:c.querySelector('.card-rating').getAttribute('href'),report:[...c.querySelectorAll('.card__metalink')].map(a=>a.getAttribute('href')),targets:[...c.querySelectorAll('.card-rating,.card__metalink')].map(a=>a.target||'')}});
+    ok(T+'card Rate/Report/Share link to the listing sections, same tab',links.rate===`listing.html?id=${links.n}#feedback`&&links.report.join()===`listing.html?id=${links.n}#report-update,listing.html?id=${links.n}#share`&&links.targets.every(t=>!t),JSON.stringify(links));
+    await p.click('#cardList [data-card] .card__metalink');await p.waitForLoadState('networkidle');await p.waitForTimeout(300);
+    const landed=await p.evaluate(()=>{const s=document.getElementById('report-update'),b=s.getBoundingClientRect();return {path:location.pathname,hash:location.hash,title:document.getElementById('listingTitle').textContent,inView:b.top<innerHeight&&b.bottom>0}});
+    ok(T+'Report lands on the listing report section',landed.path==='/listing.html'&&landed.hash==='#report-update'&&landed.inView&&landed.title!=='Listing not found',JSON.stringify(landed));
+    await go('/?house=8&entity=drakestown-road-2026');
+    ok(T+'reused slot #8 card links keep the entity',await p.evaluate(()=>{const c=document.querySelector('[data-card="8"]');return !!c&&c.querySelector('.card-rating').getAttribute('href')==='listing.html?id=8&entity=drakestown-road-2026#feedback'}));
     ok(T+'no page errors',errors.length===0,errors.join(' | '));
     await ctx.close();
   }

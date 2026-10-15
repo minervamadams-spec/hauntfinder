@@ -57,9 +57,9 @@ test('feature tags are text pills (28px, line-2 border), never icon-only',()=>{
 
 test('meta row: 13px with divider, Host notes + rating left, Report/Share right',()=>{
   assert.ok(css.includes('.card__meta{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--line);font:500 13px var(--f-body);color:var(--text-3)}'),'meta row styling');
-  assert.ok(displayCard.indexOf('data-report-listing')<displayCard.indexOf('data-share-house'),'Report before Share');
+  assert.ok(displayCard.indexOf('#report-update">Report</a>')<displayCard.indexOf('#share">Share</a>'),'Report before Share');
   assert.ok(displayCard.includes('<summary>Host notes</summary>'),'Host notes link kept as collapsed details');
-  assert.ok(displayCard.includes('data-rating-summary="${x.num}"')&&displayCard.includes('data-feedback="${x.num}"'),'rating wiring kept');
+  assert.ok(displayCard.includes('data-rating-summary="${x.num}"')&&displayCard.includes('href="${listingPageHref(x)}#feedback"'),'rating summary kept; it links to the listing feedback section');
 });
 
 test('ratings render in the spec format with orange stars',()=>{
@@ -128,13 +128,11 @@ test('event report/share: mailto report and shareable event link',()=>{
   assert.ok(flip.includes('?category=events&event='),'share link uses the existing URL contract');
 });
 
-test('favorites storage and dialog wiring unchanged',()=>{
+test('favorites storage unchanged; card actions link to the listing page sections',()=>{
   assert.ok(app.includes('hffavs:v1'),'favorites storage key untouched');
   assert.ok(app.includes('data-fav="${x.num}"'),'favorite buttons kept');
-  assert.ok(app.includes('data-report-listing="${x.num}"'),'report dialog hook kept');
-  assert.ok(app.includes('data-share-house="${x.num}"'),'share dialog hook kept');
-  assert.ok(community.includes("getElementById('cardList').addEventListener('click',e=>{const b=e.target.closest('[data-feedback]')"),'feedback dialog hook kept');
-  assert.ok(community.includes("e.target.closest('[data-report-listing]')"),'listing report dialog hook kept');
+  for(const h of ['#feedback','#report-update','#share'])assert.ok(app.includes('href="${listingPageHref(x)}'+h+'"'),h+' link');
+  assert.ok(!community.includes('[data-feedback]')&&!community.includes('[data-report-listing]'),'dialog hooks removed');
 });
 
 test('app.js public-data preamble hash is untouched by the card edits',()=>{

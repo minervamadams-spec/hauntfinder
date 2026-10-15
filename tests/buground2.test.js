@@ -57,11 +57,12 @@ test('Bug A: late-arriving centroid data changes the visible set through the sha
 // ---- Bug B: alerts went page-first (Codex a17a8b5): standalone alerts.html
 //      instead of an iframe inside a modal — the blank-iframe class of bug is
 //      structurally impossible now. ----
-test('Bug B: dialogs carry explicit centered-modal positioning that no UA quirk can drop',()=>{
- assert.match(css,/\.site-dialog\{position:fixed;inset:0;margin:auto;width:min\(680px,calc\(100% - 28px\)\)/,'base .site-dialog is explicitly fixed+centered');
- assert.match(css,/@media\(max-width:1023px\)\{\.site-dialog\{position:fixed;inset:auto 0 0 0;margin:0;width:100%;max-width:none;border-radius:16px 16px 0 0;max-height:88dvh\}\}/,'mobile bottom sheet paired with explicit margin reset');
+test('Bug B: the homepage keeps no dialogs (page-first): no modal positioning left to drop',()=>{
+ assert.ok(!html.includes('<dialog'),'no dialog markup on the homepage');
+ assert.ok(!css.includes('.site-dialog'),'no dialog skin left in the stylesheet');
  assert.ok(!html.includes('alerts-dialog'),'alerts dialog markup retired with the iframe approach');
 });
+
 test('Bug B: alerts CTA is a plain same-tab link to the standalone page (no iframe, no modal)',()=>{
  assert.ok(!html.includes('alertsDialog'),'no alerts dialog remains in the markup');
  const m=html.match(/<a class="alerts-footer-link" href="alerts.html"[^>]*>/);
@@ -71,12 +72,9 @@ test('Bug B: alerts CTA is a plain same-tab link to the standalone page (no ifra
 });
 
 // ---- Bug C: spec scrim for every .site-dialog instance ----
-test('Bug C: all dialogs share the rgba(5,4,8,.6) backdrop; nothing overrides it transparent',()=>{
- assert.match(css,/\.site-dialog::backdrop\{background:rgba\(5,4,8,\.6\)\}/,'shared scrim rule');
+test('Bug C: no dialogs remain, so no scrim can be overridden transparent',()=>{
  assert.ok(!/::backdrop\{[^}]*transparent/.test(css+alertsCss),'no transparent backdrop override anywhere');
- const dialogs=[...html.matchAll(/<dialog class="([^"]*)"/g)].map(m=>m[1]);
- assert.ok(!dialogs.some(c=>c.includes('route-sheet')),'route sheet retired (route planning lives on /route.html)');
- dialogs.forEach(c=>assert.ok(c.includes('site-dialog'),'every remaining dialog uses the shared skin ('+c+')'));
+ assert.deepEqual([...html.matchAll(/<dialog/g)],[],'no dialogs on the homepage');
 });
 
 // ---- Bug D: paired set/reset across every breakpoint boundary ----

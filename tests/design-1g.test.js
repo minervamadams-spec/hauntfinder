@@ -59,17 +59,12 @@ test('alerts is page-first: standalone page, no popup, no iframe, no auto-open',
   assert.match(alertsPage,/alerts\.js/,'standalone page loads its controller');
 });
 
-test('shared modal behavior: scrim guard, focus return, scroll lock, bottom sheets',()=>{
-  assert.match(community,/i\.value\.trim\(\)!==''/,'scrim click guarded while a form has typed content');
-  assert.match(community,/HTMLDialogElement\.prototype\.showModal/,'opener tracking wraps showModal');
-  assert.match(community,/if\(o&&document\.contains\(o\)\)o\.focus\(\)/,'focus returned to the opener on close');
-  assert.match(css,/body:has\(dialog\[open\]\)\{overflow:hidden\}/,'background scroll locked');
-  assert.match(css,/\.site-dialog\{[^}]*border-radius:10px/,'10px radius');
-  assert.match(css,/border-top:4px solid var\(--violet\)/,'4px context-colored top border');
-  assert.match(css,/rgba\(5,4,8,\.6\)/,'scrim color');
+test('shared modal behavior retired with the last homepage dialogs (page-first plan step 5)',()=>{
+  assert.equal(/HTMLDialogElement\.prototype\.showModal/.test(community),false,'no showModal wrapper left');
+  assert.equal(css.includes('body:has(dialog[open])'),false,'no dialog scroll lock left');
+  assert.equal(css.includes('.site-dialog'),false,'no dialog skin left');
   assert.equal(/\.about-dialog/.test(css),false,'about dialog styles removed with the dialog');
   assert.equal(/\.about-article\{[^}]*max-height:60dvh/.test(css),false,'dialog scroll cap removed from about-article');
-  assert.match(css,/@media\(max-width:1023px\)\{[^}]*\.site-dialog\{position:fixed;inset:auto 0 0 0/,'mobile bottom sheets');
 });
 
 test('app.js public-data preamble hash is untouched by Phase G',()=>{

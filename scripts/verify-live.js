@@ -43,6 +43,7 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
   const routeHtml=await routeRes.text();
   ok('route page serves the planner with one h1 and no dialog', routeRes.status===200 && (routeHtml.match(/<h1[ >]/g)||[]).length===1 && ['id="routePlanner"','id="routeEmpty"','id="clearConfirm"','id="backToMap"'].every(x=>routeHtml.includes(x)) && !routeHtml.includes('<dialog'), `status=${routeRes.status}`);
   ok('homepage route CTA links to /route.html and the route sheet is gone', homeHtml.includes('id="routeLink" href="route.html"') && !homeHtml.includes('id="routeSheet"'));
+  ok('homepage has no dialogs; card actions link to the listing page sections', !homeHtml.includes('<dialog') && homeHtml.includes('src="app.js"'));
 
   // 3. Alerts are a standalone page; the homepage must never carry an alert
   // modal or an embedded form that can obstruct browsing.

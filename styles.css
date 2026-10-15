@@ -94,15 +94,6 @@ button{cursor:pointer}
 .btn--feedback{grid-column:1/-1;background:var(--chip);border:1.5px solid var(--violet);color:var(--cream);min-height:44px;font-size:17px}
 .community-links{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;margin-top:24px}
 .community-links a{padding-block:10px;overflow-wrap:anywhere}
-.site-dialog{position:fixed;inset:0;margin:auto;width:min(680px,calc(100% - 28px));max-height:85dvh;padding:24px;background:var(--panel);color:var(--cream);border:2px solid var(--violet);border-top:4px solid var(--violet);border-radius:10px;overflow:auto}
-.site-dialog::backdrop{background:rgba(5,4,8,.6)}
-.dialog-head{display:flex;align-items:flex-start;gap:16px;justify-content:space-between}
-.dialog-head h2{margin:0;font:800 30px/1.1 var(--f-ui);text-transform:uppercase}
-.dialog-close{flex:none;width:44px;height:44px;color:var(--cream);border:1px solid var(--line-strong);background:var(--night);border-radius:4px;font-size:28px}
-.dialog-subtitle{color:var(--pumpkin);font-weight:600}
-.site-dialog h3{font:800 22px var(--f-ui)}
-.site-dialog input:not([type=radio]),.site-dialog textarea{display:block;width:100%;margin:6px 0 18px;border:1px solid var(--line-strong);border-radius:4px;padding:12px;background:var(--night);color:var(--cream);font:inherit}
-.site-dialog textarea{resize:vertical;min-height:120px}
 .form-note{font-size:14px;color:var(--mist)}
 .honeypot{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .crow-rating{margin:0 0 18px;padding:0;border:0}.crow-rating legend{margin-bottom:8px}
@@ -117,10 +108,9 @@ button{cursor:pointer}
 .mobile-route-bar{display:none}
 button:disabled{cursor:not-allowed;opacity:.55}
 @media(min-width:1024px){.map-column{grid-column:1;grid-row:1}.list-column{grid-column:2;grid-row:1/span 2}.route-wrap{grid-column:1;grid-row:2;margin-top:0}}
-@media(max-width:1023px){.route-wrap{margin-top:0}.mobile-route-bar:not(.is-hidden){display:flex;position:fixed;bottom:0;left:0;right:0;z-index:900;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:var(--night);border-top:2px solid var(--lime);box-shadow:0 -4px 18px #0008}.mobile-route-bar .btn{min-height:48px}.mobile-route-bar span{font-size:15px}body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:100px}.site-dialog{padding:18px}}
+@media(max-width:1023px){.route-wrap{margin-top:0}.mobile-route-bar:not(.is-hidden){display:flex;position:fixed;bottom:0;left:0;right:0;z-index:900;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:var(--night);border-top:2px solid var(--lime);box-shadow:0 -4px 18px #0008}.mobile-route-bar .btn{min-height:48px}.mobile-route-bar span{font-size:15px}body:has(.mobile-route-bar:not(.is-hidden)){padding-bottom:100px}}
 
 [hidden]{display:none!important}
-.feedback-tabs{display:flex;gap:10px;margin:20px 0}.feedback-tabs button{flex:1;min-height:48px;padding:12px;border:2px solid var(--violet);border-radius:4px;background:var(--night);color:var(--cream);font:600 17px var(--f-body);cursor:pointer}.feedback-tabs button[aria-pressed="true"]{background:var(--lime);border-color:var(--lime);color:var(--night)}
 .crow-choice.is-filled span{color:var(--lime);border-color:var(--lime);background:var(--chip)}
 .visitor-review{margin:16px 0;padding:20px;border:1px solid var(--line-strong);border-left:4px solid var(--violet);border-radius:6px;background:var(--night)}.visitor-review time{display:block;margin-top:8px;color:var(--mist);font-size:14px}.visitor-review p{line-height:1.6}.review-report{font-size:13px}
 .card__title-row{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap}.card-rating{display:inline-flex;align-items:center;gap:4px;padding:4px 7px;border:1px solid var(--line-strong);border-radius:4px;background:var(--chip);color:var(--lime);font:600 13px var(--f-body);cursor:pointer;min-height:44px}.card-rating svg{width:14px;height:22px}.card-rating small{color:var(--mist)}
@@ -877,7 +867,6 @@ html[data-fullmap] .map-key,html[data-fullmap] .map-note{display:none}
 /* 1A Phase G: footer rebuild (spec 8.10/8.11), listing type picker (9.2/P1),
    alerts first-visit popup (9.1/P0), About community feature article (P6),
    and shared modal behavior (8.8). */
-body:has(dialog[open]){overflow:hidden}
 .footer-inner h2{font-size:24px}
 .hf-footer .footer-inner .btn--route{min-height:52px}
 .alerts-dialog{border-top-color:#a6e22e}
@@ -902,7 +891,6 @@ body:has(dialog[open]){overflow:hidden}
 .about-social__links img{width:52px;height:52px;display:block}
 .about-social__links span{color:var(--mist);font-size:14px}
 .about-social__donate{color:var(--pumpkin);font-weight:700}
-@media(max-width:1023px){.site-dialog{position:fixed;inset:auto 0 0 0;margin:0;width:100%;max-width:none;border-radius:16px 16px 0 0;max-height:88dvh}}
 @media(max-width:600px){.footer-inner h2{font-size:21px}.hf-footer .footer-inner .btn--route{width:100%}}
 /* ---- Hotfix 2026-10-15: live issues on the 1A redesign (commit 2f04e79) ---- */
 

@@ -61,52 +61,6 @@ fbq('track', 'PageView');
 
 <div class="mobile-route-bar" id="mobileRouteBar"><div><strong>Your route</strong><span id="mobileRouteCount" aria-live="polite">0 stops</span></div><a class="btn btn--map-route" id="mobileMapRouteBtn" href="route.html">Plan route</a></div>
 
-
-
-<dialog class="site-dialog" id="feedbackDialog" aria-labelledby="feedbackTitle">
-  <div class="dialog-head"><h2 id="feedbackTitle">Visitor Feedback</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close feedback">×</button></div>
-  <p id="feedbackHouse" class="dialog-subtitle"></p>
-  <div class="feedback-tabs" aria-label="Feedback views"><button type="button" id="readReviewsBtn" aria-pressed="true">Read reviews</button><button type="button" id="writeReviewBtn" aria-pressed="false">Write a review</button></div>
-  <div id="reviewPanel"><p id="feedbackStatus" role="status"></p>
-  <section id="feedbackList" aria-label="Visitor comments" aria-live="polite"></section></div>
-  <form id="feedbackForm" hidden>
-    <h3>Tell us about your visit</h3>
-    <label for="feedbackName">Name <small>(first name or nickname)</small></label>
-    <input id="feedbackName" name="name" maxlength="60" autocomplete="given-name" required>
-    <fieldset class="crow-rating"><legend>Your rating</legend><div id="crowChoices"></div><small>1 skeleton = needs work · 5 skeletons = loved it. Rate your visit, not how scary it was.</small></fieldset>
-    <label for="feedbackComment">Your feedback</label>
-    <textarea id="feedbackComment" name="comment" rows="4" maxlength="1500" required placeholder="What did you enjoy? What would help other visitors?"></textarea>
-    <label class="honeypot" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
-    <p class="form-note">Your name, rating, comment and submission time will appear publicly. Keep feedback about the display and avoid personal information. The time is added automatically.</p>
-    <button class="btn btn--route" id="feedbackSubmit" type="submit" disabled>Post Feedback</button>
-    <p id="feedbackFormStatus" role="status"></p>
-  </form>
-</dialog>
-
-
-
-
-<dialog class="site-dialog" id="listingReportDialog" aria-labelledby="listingReportTitle">
-  <div class="dialog-head"><h2 id="listingReportTitle">Weather alerts &amp; listing updates</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close listing report">×</button></div>
-  <p id="listingReportHouse" class="dialog-subtitle"></p><p>Help us keep the map current. Reports go to the organizer for review.</p>
-  <form id="listingReportForm"><label for="listingReportType">What should visitors know?</label><select id="listingReportType" required><option value="Weather cancellation">Weather cancellation</option><option value="Temporarily closed">Temporarily closed</option><option value="Incorrect listing details">Incorrect listing details</option><option value="Display no longer available">Display no longer available</option></select>
-  <div id="listingReportDates"><label for="listingReportFrom">Affected date</label><input id="listingReportFrom" type="date" required><label for="listingReportThrough">Through (optional, for several nights)</label><input id="listingReportThrough" type="date"></div>
-  <label for="listingReportNotes" id="listingReportNotesLabel">Note (optional)</label><textarea id="listingReportNotes" rows="3" maxlength="1500" placeholder="Optional reason, changed details, or host announcement link."></textarea>
-  <p class="form-note">This is a short notice, separate from the full listing form. Your listing is already identified. It prepares an email for organizer review; press Send in your email app. The map changes after review.</p><button class="btn btn--route" type="submit">Prepare update email</button><p id="listingReportStatus" role="status"></p></form>
-  <a class="btn btn--outline" href="https://forms.gle/msXn5jNgMF3Aet3N9" target="_blank" rel="noopener">Host: update your listing ↗</a>
-</dialog>
-
-<dialog class="site-dialog" id="houseShareDialog" aria-labelledby="houseShareTitle">
-  <div class="dialog-head"><h2 id="houseShareTitle">Share this house</h2><button type="button" class="dialog-close" data-close-dialog aria-label="Close house sharing">×</button></div>
-  <p>Listed here? Use this suggested post and listing image to invite visitors.</p>
-  <label for="houseShareText">Suggested social post</label><textarea id="houseShareText" rows="8" readonly></textarea>
-  <div class="share-actions"><button type="button" class="btn btn--route" id="copyHousePost">Copy post</button><button type="button" class="btn btn--outline" id="shareHousePost">Share post</button></div>
-  <img id="houseShareImage" alt="Shareable image of this house listing" class="share-preview">
-  <div class="share-actions"><button id="saveHouseImage" class="btn btn--route" type="button">Save / share image</button><a id="downloadHouseImage" class="btn btn--outline" download>Download image</a></div>
-  <p class="form-note">On a phone, use Save / share image, then choose Save Image if your device offers it. Otherwise download the image, or press and hold its preview. Attach it to your post and review before publishing.</p><p id="houseShareStatus" role="status"></p>
-  <div class="share-actions"><a class="btn btn--outline" href="https://forms.gle/msXn5jNgMF3Aet3N9" target="_blank" rel="noopener">Add/Update a Listing ↗</a><a class="btn btn--route" href="https://hauntfinder.vercel.app/">Find houses &amp; plan your route</a></div>
-</dialog>
-
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script src="routing.js"></script>
 <script src="listing-format.js"></script>
@@ -135,5 +89,4 @@ fbq('track', 'PageView');
 </script>
 </body>
 </html>
-
 
