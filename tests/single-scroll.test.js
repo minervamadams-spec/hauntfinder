@@ -4,7 +4,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const ROOT=path.join(__dirname,'..');
 const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
-const html=read('index.html'),css=read('styles.css'),app=read('app.js'),layout=read('layout.js'),urlState=read('url-state.js');
+const html=read('index.html'),css=read('styles.css'),app=read('app.js'),layout=read('layout.js'),urlState=read('url-state.js'),chromeFilters=read('chrome-filters.js');
 const F=require('../listing-format.js');
 const block=css.split('/* ---- Compact directory layout homepage')[1]||'';
 
@@ -78,18 +78,26 @@ test('map is a compact 240px mobile surface and a sticky desktop side panel; ful
   assert.match(block,/\.map-frame\{height:clamp\(360px,calc\(100dvh - var\(--filterbar-h,0px\) - 32px\),620px\);position:sticky/);
   assert.match(css,/html\[data-fullmap\] \.map-frame\{position:fixed;inset:0;height:100dvh/,'full map overlay rule intact');
 });
-test('desktop has results left and a sticky map right, with no nested results scrolling',()=>{
-  assert.equal(/\.list-column\{[^}]*overflow-y:auto/.test(css),false,'no scrolling card column anywhere');
-  assert.equal(css.includes('position:sticky!important;top:16px;align-self:start;height:calc(100dvh - 32px)'),false,'Phase H sticky list removed');
-  assert.match(block,/\.page-grid\{display:grid;grid-template-columns:minmax\(0,1.7fr\) minmax\(360px,1fr\)/);
-  assert.match(block,/\.list-column\{grid-column:1;grid-row:1;min-width:0\}/);
-  assert.match(block,/\.map-column\{grid-column:2;grid-row:1;min-width:0\}/);
+test('desktop uses the designed filters, results and map workspace rails',()=>{
+  assert.match(html,/<aside class="filter-rail" id="filterRail"/,'filter rail is real page structure');
+  assert.match(block,/html:not\(\[data-category="events"\]\) \.page-grid\{width:100%;max-width:none;padding:0;gap:0;display:grid;grid-template-columns:minmax\(250px,\.58fr\) minmax\(420px,1fr\) minmax\(520px,1\.8fr\)/);
+  assert.match(block,/html:not\(\[data-category="events"\]\) \.filter-rail\{display:block;grid-column:1;grid-row:1\/span 2;min-width:0;overflow-y:auto/);
+  assert.match(block,/html:not\(\[data-category="events"\]\) \.list-column\{display:block;grid-column:2;grid-row:1\/span 2;min-width:0;min-height:0;height:auto!important;max-height:none!important;overflow-y:auto!important/);
+  assert.match(block,/html:not\(\[data-category="events"\]\) \.map-column\{display:block;grid-column:3;grid-row:1;min-width:0;min-height:0;width:auto\}/);
+  assert.match(block,/html:not\(\[data-category="events"\]\) \.route-wrap\{grid-column:3;grid-row:2/);
   assert.equal(css.includes('html[data-view='),false,'no Map/List view states left in the stylesheet');
+});
+test('desktop rail exposes direct filter chips and the Leaflet canvas resizes after its grid cell changes',()=>{
+  assert.match(chromeFilters,/const desktopRail=.*state\.category!=='events'/,'direct rail is limited to directory categories');
+  assert.match(chromeFilters,/function railFiltersHTML\(\)/,'rail renders working controls rather than decorative labels');
+  assert.match(chromeFilters,/railChip\('when'/,'time filters are direct buttons');
+  assert.match(chromeFilters,/railChip\('feature'/,'feature filters are direct buttons');
+  assert.match(layout,/new ResizeObserver\(\(\)=>\{if\(resizeQueued\)return;resizeQueued=true;requestAnimationFrame/,'map remeasures after its desktop grid cell settles');
 });
 test('map key and distance note stay hidden as in the default view (they would cover the map and its attribution)',()=>{
   assert.match(block,/\.map-key,\.map-note\{display:none\}/);
 });
-test('cards stay a compact single column at every viewport',()=>{
+test('cards stay a compact single column in the results rail and mobile flow',()=>{
   assert.match(block,/html:not\(\[data-category="events"\]\) #cardList\{display:flex;flex-direction:column/);
   assert.equal(block.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),false);
   assert.match(block,/\.card--compact\{padding:12px 14px;gap:8px;min-height:0\}/);

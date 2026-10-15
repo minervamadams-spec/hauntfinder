@@ -75,6 +75,9 @@ const $=id=>document.getElementById(id);
 const filtersEl=$('filters');
 if(!filtersEl)return;
 const mobileSheets=()=>typeof matchMedia==='function'&&matchMedia('(max-width:767px)').matches;
+// The compact rail is for listings and treat stops. Events intentionally keep
+// their calendar presentation and existing compact filter controls.
+const desktopRail=()=>typeof matchMedia==='function'&&matchMedia('(min-width:1024px)').matches&&state.category!=='events';
 const noun=()=>state.category==='treats'?'treat stops':state.category==='events'?'events':'displays';
 const featureOptions=()=>state.category==='treats'?CHROME_TREAT_FEATURE_OPTIONS:CHROME_FEATURE_OPTIONS;
 
@@ -107,8 +110,20 @@ function efeaturesMenuHTML(session){
 function menuBody(kind,session){return kind==='show'?showMenuHTML(session):kind==='features'?featuresMenuHTML(session):kind==='type'?typeMenuHTML(session):kind==='efeatures'?efeaturesMenuHTML(session):whenMenuHTML(session)}
 function ddHTML(kind,label,valueText,active,session){return `<details class="dd${active?' dd--active':''}" data-dd="${kind}"><summary class="dd__btn" aria-expanded="false"><span class="dd__label">${label}</span><span class="dd__value">${valueText}</span><span class="dd__caret" aria-hidden="true">▾</span></summary><div class="dd__menu">${menuBody(kind,session)}</div></details>`}
 
+function railChip(action,value,label,pressed){return `<button type="button" class="filter filter--rail" data-rail-filter="${action}" data-value="${String(value).replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" aria-pressed="${pressed}">${label}</button>`}
+function railSection(label,body){return `<section class="filter-rail__section"><h3>${label}</h3><div class="filter-rail__chips">${body}</div></section>`}
+function railFiltersHTML(){
+ const when=CHROME_WHEN_OPTIONS.slice(0,3).map(o=>railChip('when',o.kind,o.label,Boolean(state.dateFilter&&state.dateFilter.kind===o.kind))).concat(railChip('when-date','halloween','Halloween',Boolean(state.dateFilter&&state.dateFilter.kind==='date'&&/\-10-31$/.test(state.dateFilter.date||'')))).join('');
+ if(state.category==='treats')return railSection('When',when)+railSection('Features',featureOptions().map(o=>railChip('feature',o.value,o.label,state.features.includes(o.value))).join(''));
+ if(state.category==='events')return railSection('Type',CHROME_EVENT_TYPE_OPTIONS.map(o=>railChip('event-type',o.value,o.label,state.filter===o.value)).join(''))+railSection('Features',CHROME_EVENT_FEATURE_OPTIONS.map(o=>railChip('event-feature',o.value,o.label,state.features.includes(o.value))).join(''));
+ const visit=CHROME_SHOW_OPTIONS.filter(o=>['Drive-by','Walk-up','Walk-through'].includes(o.value)).map(o=>railChip('show',o.value,o.label,state.filter===o.value)).join('');
+ const scares=CHROME_SHOW_OPTIONS.filter(o=>['Family Friendly','Spooky','Scary'].includes(o.value)).map(o=>railChip('show',o.value,o.label,state.filter===o.value)).join('');
+ return railSection('When',when)+railSection('How to visit',visit)+railSection('Scare level',scares)+railSection('Features',featureOptions().map(o=>railChip('feature',o.value,o.label,state.features.includes(o.value))).join(''));
+}
+
 const prevRenderFilters=renderFilters;
 renderFilters=function(){
+ if(desktopRail()){filtersEl.innerHTML=railFiltersHTML();return}
  if(state.category==='events'){const session=snapshot(),fN=session.features.length;filtersEl.innerHTML=ddHTML('type','Type',chromeEventTypeLabelForValue(session.filter),session.filter!=='All',session)+ddHTML('efeatures','Features',fN?`${fN} selected`:'Any',fN>0,session);return}
  const session=snapshot(),features=session.features;
  const featuresText=features.length?`${features.length} selected`:'Any';
@@ -132,6 +147,16 @@ filtersEl.addEventListener('toggle',e=>{
 },true);
 
 filtersEl.addEventListener('click',e=>{
+ const rail=e.target.closest('[data-rail-filter]');
+ if(rail){
+  const action=rail.dataset.railFilter,value=rail.dataset.value;
+  if(action==='show')state.filter=state.filter===value?'All':value;
+  else if(action==='feature'||action==='event-feature'){const i=state.features.indexOf(value);if(i>=0)state.features.splice(i,1);else state.features.push(value)}
+  else if(action==='event-type')state.filter=state.filter===value?'All':value;
+  else if(action==='when')state.dateFilter={kind:state.dateFilter&&state.dateFilter.kind===value?null:value,date:null};
+  else if(action==='when-date'){const year=(typeof todayParts==='function'?todayParts().dateStr.slice(0,4):String(new Date().getFullYear()));const date=`${year}-10-31`;state.dateFilter=state.dateFilter&&state.dateFilter.kind==='date'&&state.dateFilter.date===date?{kind:null,date:null}:{kind:'date',date};}
+  renderFilters();renderCards();return;
+ }
  const apply=e.target.closest('[data-dd-apply]');
  if(apply){const dd=apply.closest('details.dd');if(dd&&dd._chrome)commit(dd._chrome);return}
  const cancel=e.target.closest('[data-dd-cancel]');
@@ -206,6 +231,9 @@ document.addEventListener('click',e=>{
 function paintWithin(){const label=document.querySelector('.within-dd__value');if(label&&state.search)label.textContent=state.search.radius+' mi'}
 document.addEventListener('hf:search-changed',paintWithin);
 paintWithin();
+
+let railWasDesktop=desktopRail();
+window.addEventListener('resize',()=>{const next=desktopRail();if(next!==railWasDesktop){railWasDesktop=next;renderFilters()}});
 
 // Replace the chips layout.js painted during its own load.
 renderFilters();

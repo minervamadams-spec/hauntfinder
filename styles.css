@@ -1053,3 +1053,45 @@ html[data-category="events"] .list-column{order:2}
  .route-page .route-stop__controls{margin-left:auto}
  .route-page .route__foot-row{flex-direction:column;align-items:stretch;gap:10px}
 }
+
+/* ---- Compact three-rail directory (design handoff 2026-10-15) ---- */
+.filter-rail{background:var(--panel);border-right:1px solid var(--line);padding:18px 16px}
+.filter-rail__head{display:flex;align-items:center;gap:12px;margin:0 0 18px;color:var(--cream)}
+.filter-rail__head span{color:var(--orange);font-size:20px}
+.filter-rail__head h2{margin:0;font:700 19px var(--f-cond);letter-spacing:.08em;text-transform:uppercase}
+.filter-rail .filters{display:grid;gap:16px}
+.filter-rail .filter-tier{display:flex;flex-wrap:wrap;gap:8px;padding:0;border:0}
+.filter-rail .filter-tier--primary{display:grid;grid-template-columns:1fr}
+.filter-rail .filterbar__label{grid-column:1/-1;margin:0 0 2px}
+.filter-rail .filter{min-height:38px;padding:0 12px;font-size:14px}
+.filter-rail .filter-tier--features summary{width:100%;padding:0;font-size:13px}
+.filter-rail .filter-tier--features[open] summary{margin-bottom:2px}
+.filter-rail .filter-tier--features .filter{min-height:36px;padding:0 11px;font-size:13px}
+
+@media(min-width:1024px){
+ .filterbar{border-bottom:1px solid var(--line)}
+ .filterbar .nav-row{padding:8px 28px;min-height:58px}
+ .filterbar .chrome-row{position:absolute;right:28px;bottom:8px;padding:0}
+ .filterbar .chrome-share{min-height:36px}
+ html:not([data-category="events"]) .page-grid{width:100%;max-width:none;padding:0;gap:0;display:grid;grid-template-columns:minmax(250px,.58fr) minmax(420px,1fr) minmax(520px,1.8fr);grid-template-rows:minmax(0,1fr) auto;height:calc(100dvh - 286px)!important;min-height:520px;overflow:hidden!important;background:var(--night)}
+ html:not([data-category="events"]) .filter-rail{display:block;grid-column:1;grid-row:1/span 2;min-width:0;overflow-y:auto;overscroll-behavior:contain}
+ html:not([data-category="events"]) .list-column{display:block;grid-column:2;grid-row:1/span 2;min-width:0;min-height:0;height:auto!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain;padding:16px;border-right:1px solid var(--line);background:var(--night)}
+ html:not([data-category="events"]) .content-panels,html:not([data-category="events"]) .content-panels>section{height:auto!important;overflow:visible!important;padding:0}
+ html:not([data-category="events"]) .map-column{display:block;grid-column:3;grid-row:1;min-width:0;min-height:0;width:auto}
+ html:not([data-category="events"]):not([data-fullmap]) .map-frame{height:100%;min-height:0;position:static;top:auto;border-width:2px;border-radius:0}
+ html:not([data-category="events"]) .route-wrap{grid-column:3;grid-row:2;width:auto;margin:0;border-width:3px 0 0;border-radius:0;padding:14px 20px}
+ html:not([data-category="events"]) .map-info{margin:0;padding:6px 10px}
+ html:not([data-category="events"]) #cardList{gap:10px}
+ html:not([data-category="events"]) .card--compact{padding:14px;gap:8px}
+ html:not([data-category="events"]) .card__actions{grid-template-columns:minmax(0,1fr) 44px}
+ html:not([data-category="events"]) .card__route{min-height:42px}
+}
+@media(max-width:1023px){
+ .filter-rail{order:0;border-right:0;border-bottom:1px solid var(--line);padding:14px}
+ .filter-rail__head{margin-bottom:12px}
+ .filter-rail .filters{gap:10px}
+ html:not([data-category="events"]) .page-grid{gap:16px}
+ html:not([data-category="events"]) .map-column{order:1}
+ html:not([data-category="events"]) .list-column{order:2}
+ html:not([data-category="events"]) .route-wrap{order:3}
+}

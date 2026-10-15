@@ -15,7 +15,7 @@ const probe=()=>{
   const cards=[...document.querySelectorAll('#cardList [data-card]')];
   const pins=[...document.querySelectorAll('.leaflet-marker-pane [data-pin]')].map(p=>+p.dataset.pin);
   return {banner:r(document.querySelector('.banner__frame')),intro:r(document.querySelector('.intro-strip__copy')),introFont:parseFloat(getComputedStyle(document.querySelector('.intro-strip__copy')).fontSize),introLH:parseFloat(getComputedStyle(document.querySelector('.intro-strip__copy')).lineHeight),
-    filterbar:r(document.querySelector('.filterbar')),mapFrame:visible(document.querySelector('.map-frame'))?r(document.querySelector('.map-frame')):null,
+    filterbar:r(document.querySelector('.filterbar')),filterRail:r(document.getElementById('filterRail')),listRail:r(document.querySelector('.list-column')),mapFrame:visible(document.querySelector('.map-frame'))?r(document.querySelector('.map-frame')):null,
     countLine:r(document.getElementById('countLine')),countText:document.getElementById('countLine').textContent,firstCard:r(cards[0]),lastCard:r(cards[cards.length-1]),
     cardNums:cards.map(c=>+c.dataset.card),cardCols:new Set(cards.map(c=>Math.round(c.getBoundingClientRect().left))).size,
     pager:visible(document.getElementById('resultsPager'))?r(document.getElementById('resultsPager')):null,pageStatus:document.getElementById('pageStatus').textContent,
@@ -43,11 +43,11 @@ const countOf=t=>+(String(t).match(/^(\d+)/)||[0,0])[1];
     let d=await p.evaluate(probe);
     ok(T+'banner within cap',d.banner.height>0&&d.banner.height<=(desktop?180:140)+0.5,`${Math.round(d.banner.height)}px`);
     ok(T+'intro kept'+(desktop?' on one line':''),d.intro&&d.intro.height>0&&(!desktop||d.intro.height<=d.introLH*1.2),`${Math.round(d.intro.height)}px`);
-    ok(T+(desktop?'desktop: results left, map right':'mobile: filters, map, count, cards, pager'),desktop?d.filterbar.bottom<=d.mapFrame.top+1&&d.filterbar.bottom<=d.countLine.top+1&&d.mapFrame.left>d.countLine.left&&d.countLine.bottom<=d.firstCard.top&&d.lastCard.bottom<=d.pager.top:d.filterbar.bottom<=d.mapFrame.top+1&&d.mapFrame.bottom<=d.countLine.top&&d.countLine.bottom<=d.firstCard.top&&d.lastCard.bottom<=d.pager.top,JSON.stringify({fb:Math.round(d.filterbar.bottom),map:[Math.round(d.mapFrame.top),Math.round(d.mapFrame.bottom),Math.round(d.mapFrame.left)],count:[Math.round(d.countLine.top),Math.round(d.countLine.left)],card:Math.round(d.firstCard.top),pager:Math.round(d.pager.top)}));
-    ok(T+'map sized for this viewport',desktop?d.mapFrame.height>=360&&d.mapFrame.height<=620:Math.abs(d.mapFrame.height-240)<=20,`${Math.round(d.mapFrame.height)}px tall, ${Math.round(d.mapFrame.width)}px wide`);
+    ok(T+(desktop?'desktop: filters, results, map work rails':'mobile: filters, map, count, cards, pager'),desktop?d.filterbar.bottom<=d.mapFrame.top+1&&d.filterRail.left<d.listRail.left&&d.listRail.left<d.mapFrame.left&&d.countLine.bottom<=d.firstCard.top&&d.lastCard.bottom<=d.pager.top:d.filterbar.bottom<=d.filterRail.top+1&&d.filterRail.bottom<=d.mapFrame.top+1&&d.mapFrame.bottom<=d.countLine.top&&d.countLine.bottom<=d.firstCard.top&&d.lastCard.bottom<=d.pager.top,JSON.stringify({fb:Math.round(d.filterbar.bottom),filters:[Math.round(d.filterRail.top),Math.round(d.filterRail.left)],list:[Math.round(d.listRail.top),Math.round(d.listRail.left)],map:[Math.round(d.mapFrame.top),Math.round(d.mapFrame.bottom),Math.round(d.mapFrame.left)],count:[Math.round(d.countLine.top),Math.round(d.countLine.left)],card:Math.round(d.firstCard.top),pager:Math.round(d.pager.top)}));
+    ok(T+'map sized for this viewport',desktop?d.mapFrame.height>=360:Math.abs(d.mapFrame.height-240)<=20,`${Math.round(d.mapFrame.height)}px tall, ${Math.round(d.mapFrame.width)}px wide`);
     ok(T+'map visible before scrolling',d.mapFrame.vTop<vp.height,`map top at ${Math.round(d.mapFrame.vTop)}px`);
-    ok(T+'route planner after the results',d.route.top>=d.pager.bottom);
-    ok(T+'no nested scroll areas',d.scrollers.length===0,d.scrollers.join(', '));
+    ok(T+'route planner is under the map on desktop and after results on mobile',desktop?d.route.left>=d.mapFrame.left&&d.route.top>=d.mapFrame.bottom:d.route.top>=d.pager.bottom);
+    ok(T+(desktop?'only intentional filter/results work rails scroll':'no nested scroll areas'),desktop?d.scrollers.every(s=>s.includes('filter-rail')||s.includes('list-column')):d.scrollers.length===0,d.scrollers.join(', '));
     ok(T+'no horizontal overflow',!d.overflowX);
     const total=countOf(d.countText);
     ok(T+'page 1 shows 8 cards',d.cardNums.length===Math.min(8,total),`${d.cardNums.length} of ${total}`);
@@ -85,7 +85,7 @@ const countOf=t=>+(String(t).match(/^(\d+)/)||[0,0])[1];
     await p.click('#treatStopsTab');await p.waitForTimeout(300);
     let t=await p.evaluate(probe);const treats=countOf(t.countText);
     ok(T+'Treat Stops: page reset, counts agree, pager hidden for one page',t.category==='treats'&&t.page===0&&t.cardNums.length===treats&&t.pins.length===treats&&t.tabCount===treats&&(treats>8||!t.pager),`${treats} treat stop(s)`);
-    ok(T+'Treat Stops: responsive map, no nested scroll, no overflow',t.mapFrame&&t.scrollers.length===0&&!t.overflowX);
+    ok(T+'Treat Stops: responsive map and expected rail scrolling only',t.mapFrame&&!t.overflowX&&(desktop?t.scrollers.every(s=>s.includes('filter-rail')||s.includes('list-column')):t.scrollers.length===0));
     await p.click('#displaysTab');await p.waitForTimeout(300);
     ok(T+'back to Displays starts on page 1',(await p.evaluate(probe)).page===0);
 
