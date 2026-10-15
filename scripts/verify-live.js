@@ -8,7 +8,7 @@ const path = require('node:path');
 
 const BASE = process.env.HF_BASE || 'https://hauntfinder.vercel.app';
 // Static assets that must match the just-pushed commit byte-for-byte.
-const ASSETS = ['index.html', 'styles.css', 'app.js', 'layout.js', 'alerts.css', 'community.js', 'photos-ui.js'];
+const ASSETS = ['index.html', 'styles.css', 'app.js', 'layout.js', 'alerts.css', 'community.js', 'photos-ui.js', 'listing.html', 'listing.js', 'page.js'];
 // Public Google Form links wired in community.js (live HEAD must be 200).
 const FORM_LINK_RE = /(https:\/\/docs\.google\.com\/forms\/d\/e\/[\w-]+\/viewform)/g;
 
@@ -47,6 +47,13 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
   const aboutRes=await fetch(BASE + '/about.html');
   const aboutHtml=await aboutRes.text();
   ok('about page serves the community story with no dialog', aboutRes.status===200 && aboutHtml.includes('The Family Behind the Skeleton House') && !aboutHtml.includes('<dialog'), `status=${aboutRes.status}`);
+  const listingRes=await fetch(BASE + '/listing.html?id=12');
+  const listingHtml=await listingRes.text();
+  ok('listing page serves feedback, report and share sections with no dialog (listing.html?id=12)', listingRes.status===200 && ['id="feedback"','id="report-update"','id="share"'].every(s=>listingHtml.includes(s)) && !listingHtml.includes('<dialog'), `status=${listingRes.status}`);
+  try {
+    const appLive=await (await fetch(BASE + '/app.js')).text();
+    ok('listing #12 Harvesters of Souls is in the live listing data', appLive.includes('"entityId": "harvesters-of-souls-2026"') && appLive.includes('"num": 12'));
+  } catch (e) { ok('listing #12 Harvesters of Souls is in the live listing data', false, String(e.message)); }
   ok('homepage footer links to the page-first routes', homeHtml.includes('href="submit.html"') && homeHtml.includes('href="about.html"'));
 
   // 5. Subscriptions API answers.
