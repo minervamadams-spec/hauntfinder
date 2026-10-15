@@ -44,7 +44,7 @@ test('about page: full article with headings, pull quotes, community info and so
 
 // ---- Shared shell: validator, nav state, styles ----
 test('shared shell: route whitelist validator rejects unknown pages and marks the current nav item',()=>{
-  assert.match(pageJs,/const ROUTES = \['submit', 'about'\]/,'canonical route set');
+  assert.match(pageJs,/const ROUTES = \['submit', 'about', 'listing'\]/,'canonical route set');
   assert.match(pageJs,/ROUTES\.includes\(page\)/,'validation check');
   assert.match(pageJs,/aria-current/, 'current-route marking');
 });
