@@ -1110,6 +1110,9 @@ html[data-category="events"] .list-column{order:2}
 
 @media(min-width:1024px){
  html,body{height:100dvh;overflow:hidden}
+ /* The three-rail application owns the viewport; standalone pages keep normal document scroll. */
+ html:has(body.subpage){height:auto;overflow-y:auto}
+ body.subpage{height:auto;min-height:100dvh;overflow-y:auto}
  .app{height:100dvh!important;display:grid;grid-template-rows:112px 48px minmax(0,1fr);overflow:hidden!important}
  .filterbar{grid-row:2;min-height:0;border-bottom:1px solid var(--line)}
  .filterbar .nav-row{height:48px;box-sizing:border-box;padding:0;display:grid;grid-template-columns:260px minmax(300px,440px) minmax(320px,1fr);gap:0;align-items:stretch}

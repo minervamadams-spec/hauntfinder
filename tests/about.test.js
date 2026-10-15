@@ -2,6 +2,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
 const community=fs.readFileSync(path.join(__dirname,'../community.js'),'utf8');
 const about=fs.readFileSync(path.join(__dirname,'../about.html'),'utf8');
+const css=fs.readFileSync(path.join(__dirname,'../styles.css'),'utf8');
 const article=about.split('class="about-article"')[1].split('class="about-social"')[0];
 
 test('the About dialog is fully removed from the homepage (page-first plan step 5)',()=>{
@@ -27,3 +28,7 @@ test('P6 section headings and spot-check copy are present verbatim',()=>{['Two H
 test('P6 pull quotes keep their Mt. Olive Online citations',()=>{assert.match(article,/<blockquote><p>“We believe in sharing the love with our community\.”<\/p><cite>Mt\. Olive Online<\/cite><\/blockquote>/);assert.match(article,/<blockquote><p>“Halloween should be fun for everyone, and no one should have to skip out on dressing up because of the cost\.”<\/p><cite>Mt\. Olive Online<\/cite><\/blockquote>/)});
 test('social row: 52px icon links with aria labels, Follow Skully, and the spec email for donations',()=>{const social=about.split('class="about-social"')[1];assert.match(social,/href="https:\/\/www\.facebook\.com\/SkullyRAdams" target="_blank" rel="noopener" aria-label="Facebook"><img src="assets\/icons\/social-facebook\.svg" alt="" width="52" height="52"><\/a>/);assert.match(social,/href="https:\/\/www\.instagram\.com\/skullyadams\/" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets\/icons\/social-instagram\.svg" alt="" width="52" height="52"><\/a>/);assert.match(social,/>Follow Skully</);assert.match(social,/href="mailto:mtocommunityfinder@gmail\.com">Ask about donating/);assert.equal(about.includes('MTOCommunityFinder@gmail.com'),false,'legacy email spelling gone from About copy');assert.equal(about.includes('minervamadams@gmail.com'),false)});
 test('page links to the Adams Family Haunt listing and the costume closet event without identity tokens',()=>{assert.match(article,/href="\/\?house=1"/);assert.match(article,/href="\/\?category=events&event=skullys-costume-closet"/)});
+test('standalone About page overrides the desktop app scroll lock',()=>{
+  assert.match(css,/html:has\(body\.subpage\)\{[^}]*overflow-y:auto/,'the document can scroll on desktop subpages');
+  assert.match(css,/body\.subpage\{[^}]*overflow-y:auto/,'the subpage body can scroll on desktop');
+});
