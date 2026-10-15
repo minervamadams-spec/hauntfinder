@@ -1350,3 +1350,6 @@ html[data-category="events"]{--acc:#B48CFF}
  html[data-category="events"] .events-column-head .events-head-count{display:none}
  .events-ics--rail{height:20px;line-height:1.2;display:inline-flex;align-items:center}
 }
+
+.leaflet-marker-icon.is-linked .hf-cluster{transform:scale(1.1)}
+.hf-cluster{transition:transform .15s ease}

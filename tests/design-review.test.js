@@ -97,3 +97,11 @@ test('round 2: tab row is 48px with the underline on the row line; Search this a
   assert.match(css,/\.route-wrap\.is-empty \.route-toggle\{height:40px/);
   assert.match(html,/route-toggle__empty">Add stops from the list/);
 });
+
+// ---- Codex QA defects (c87977e) ----
+test('QA fix: the selected card keeps its on-screen position when the list re-renders; a hovered card also lights its cluster',()=>{
+  assert.match(layout,/function listAnchor\(\)/);assert.match(layout,/function restoreAnchor\(a\)/);
+  assert.match(layout,/const anchor=listAnchor\(\);originalCards\(\);if\(!restoreAnchor\(anchor\)\)keepListScroll\(\)/);
+  assert.match(app,/getVisibleParent\(lm\)/);
+  assert.match(css,/\.leaflet-marker-icon\.is-linked \.hf-cluster\{transform:scale\(1\.1\)\}/);
+});

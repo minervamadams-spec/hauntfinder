@@ -192,6 +192,21 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       ok(T+'filter footer is a fixed 2-column link block; scrollbars are thin',pf.sb==='thin'&&pf.foot==='grid'&&pf.cols===2,JSON.stringify(pf));
       await p.setViewportSize({width:1280,height:800});
     }
+    // ---- Codex QA defects: hover pin growth, scroll kept across filter changes ----
+    if(desktop){
+      await go('?category=displays');
+      const hv=await p.evaluate(()=>{const lc=document.querySelector('.list-column'),c=[...document.querySelectorAll('#cardList [data-card]')].filter(c=>/Drive-by/.test(c.textContent)).pop();c.scrollIntoView({block:'center'});return +c.dataset.card});
+      await p.waitForTimeout(200);
+      await p.click(`#cardList [data-card="${hv}"] .card__nametext`);await p.waitForTimeout(700);
+      const before=await p.evaluate(n=>{const lc=document.querySelector('.list-column').getBoundingClientRect(),c=document.querySelector(`#cardList [data-card="${n}"]`).getBoundingClientRect();return {off:Math.round(c.top-lc.top),st:document.querySelector('.list-column').scrollTop}},hv);
+      await p.click('#filterRail [data-rail-filter="show"][data-value="Drive-by"]');await p.waitForTimeout(500);
+      const after=await p.evaluate(n=>{const lc=document.querySelector('.list-column').getBoundingClientRect(),c=document.querySelector(`#cardList [data-card="${n}"]`);if(!c)return null;const b=c.getBoundingClientRect();const l=document.querySelector('.list-column');return {off:Math.round(b.top-lc.top),visible:b.top>=lc.top-1&&b.bottom<=lc.bottom+1,clamped:l.scrollTop===0||l.scrollTop>=l.scrollHeight-l.clientHeight-1}},hv);
+      ok(T+'filter change keeps the selected card where it was in the results rail',!!after&&after.visible&&(Math.abs(after.off-before.off)<=2||after.clamped),JSON.stringify({before,after}));
+      await p.click('#filterRail .filter-rail__clear');await p.waitForTimeout(300);
+      await p.hover('#cardList [data-card]');await p.waitForTimeout(300);
+      const hp=await p.evaluate(()=>{const n=+document.querySelector('#cardList [data-card]').dataset.card,m=markerByNum.get(n),el=m.getElement(),par=el?null:listingCluster.getVisibleParent(m),t=el||(par&&par.getElement());const inner=el?el.querySelector('.pin'):t&&t.querySelector('.hf-cluster');const w0=inner.offsetWidth,w1=inner.getBoundingClientRect().width;return {clustered:!el,grew:w1>=w0+2,w0,w1:Math.round(w1)}});
+      ok(T+'hovering a card enlarges its pin (or its cluster when grouped)',hp.grew,JSON.stringify(hp));
+    }
     // ---- Deep links ----
     await go('?house=8&entity=drakestown-road-2026');
     const d8=await p.evaluate(()=>{const pin=document.querySelector('.leaflet-marker-pane [data-pin="8"]');return {sel:state.selected,card:!!document.querySelector('#cardList [data-card="8"].is-selected'),pin:!!pin&&pin.classList.contains('is-selected')}});
