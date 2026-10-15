@@ -16,8 +16,8 @@
  window.hfSetMobileView=v=>{if(isMobile())setView(v,{keepSelection:true})};
  $('viewToggle').addEventListener('click',()=>setView(root.dataset.mview==='map'?'list':'map'));
  // ---- sheets ----
- function openSheet(name){root.dataset.sheet=name;const b=name==='route'?$('routeBarBtn'):$('filtersBtn');if(b)b.setAttribute('aria-expanded','true');if(name==='route'){$('routePanel').hidden=false;$('routeBarBtn').setAttribute('aria-expanded','true')}}
- function closeSheet(){const was=root.dataset.sheet;delete root.dataset.sheet;if(was==='route'){$('routePanel').hidden=true;$('routeBarBtn').setAttribute('aria-expanded','false')}if(was==='filters')$('filtersBtn').setAttribute('aria-expanded','false')}
+ function openSheet(name){root.dataset.sheet=name;const b=name==='route'?$('routeBarBtn'):$('filtersBtn');if(b)b.setAttribute('aria-expanded','true');if(name==='route'){$('routePanel').hidden=false;$('routeBarBtn').setAttribute('aria-expanded','true');root.setAttribute('data-route-open','');syncRouteBadges()}}
+ function closeSheet(){const was=root.dataset.sheet;delete root.dataset.sheet;if(was==='route'){$('routePanel').hidden=true;$('routeBarBtn').setAttribute('aria-expanded','false');root.removeAttribute('data-route-open');syncRouteBadges()}if(was==='filters')$('filtersBtn').setAttribute('aria-expanded','false')}
  $('filtersBtn').addEventListener('click',()=>{openSheet('filters');sheetSync()});
  $('sheetClose').addEventListener('click',closeSheet);$('sheetShow').addEventListener('click',closeSheet);
  $('sheetClear').addEventListener('click',()=>{const b=document.querySelector('#filters [data-rail-clear]');if(b)b.click();else{state.filter='All';state.features=[];renderFilters();renderCards()}sheetSync()});

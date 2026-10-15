@@ -148,3 +148,14 @@ test('round 3: Donation drive label (value unchanged), hours without a repeated 
   assert.equal(html.includes('siteVisits'),false);assert.equal(html.includes('railVisits'),false);
   assert.match(html,/fetch\('\/api\/visits'/,'counting continues');
 });
+
+test('owner spec: card and pin link by highlight (ring + enlarge, card outline); route stop numbers show only while the route is open',()=>{
+  assert.match(css,/\.pin\.is-linked::after\{border-color:#F6EBD3\}/);
+  assert.match(css,/\.card\.is-linked\{outline:2px solid #F6EBD3/);
+  assert.match(css,/\.pin__stop\{position:absolute;/);
+  assert.match(app,/function routeOpen\(\)\{return document\.documentElement\.hasAttribute\('data-route-open'\)\}/);
+  assert.match(app,/function syncRouteBadges\(\)/);
+  assert.match(layout,/root\.toggleAttribute\('data-route-open',open\);syncRouteBadges\(\)/);
+  assert.match(layout,/window\.linkEvent=linkEvent/);
+  assert.match(read('mobile.js'),/root\.setAttribute\('data-route-open',''\)/);
+});

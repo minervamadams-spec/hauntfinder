@@ -287,6 +287,26 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       ok(T+'round 3: action rows stay on one line with a card on the route; route panel is at most 420px; no focus ring after a mouse click',row.every(n=>n===1)&&rp.w<=420&&rp.outline==='none',JSON.stringify({row,rp}));
       await p.click('#routeToggle');await p.evaluate(()=>localStorage.clear());
     }
+    // ---- Owner decision: icons only; card and pin link by highlight; route stop numbers only while the route is open ----
+    if(desktop){
+      await go('?category=displays');
+      const hl=await p.evaluate(()=>{const n=[...markerByNum.keys()].find(k=>markerByNum.get(k).getElement());return n});
+      await p.hover(`#cardList [data-card="${hl}"]`);await p.waitForTimeout(250);
+      const ring=await p.evaluate(n=>{const pin=markerByNum.get(n).getElement().querySelector('.pin');return {linked:pin.classList.contains('is-linked'),ring:getComputedStyle(pin,'::after').borderTopColor}},hl);
+      ok(T+'hovering a card enlarges and rings its pin',ring.linked&&ring.ring!=='rgba(0, 0, 0, 0)',JSON.stringify(ring));
+      await p.mouse.move(5,5);await p.waitForTimeout(150);
+      await p.evaluate(n=>markerByNum.get(n).fire('mouseover'),hl);await p.waitForTimeout(150);
+      ok(T+'hovering a pin outlines its card',await p.evaluate(n=>document.querySelector(`#cardList [data-card="${n}"]`).classList.contains('is-linked'),hl));
+      await p.evaluate(n=>markerByNum.get(n).fire('mouseout'),hl);
+      await p.evaluate(n=>toggleRoute(n),hl);await p.waitForTimeout(250);
+      const closedBadges=await p.evaluate(()=>document.querySelectorAll('.leaflet-marker-pane .pin__stop').length);
+      await p.click('#routeToggle');await p.waitForTimeout(300);
+      const openBadge=await p.evaluate(()=>[...document.querySelectorAll('.leaflet-marker-pane .pin__stop')].map(b=>b.textContent));
+      await p.click('#routeToggle');await p.waitForTimeout(200);
+      const afterClose=await p.evaluate(()=>document.querySelectorAll('.leaflet-marker-pane .pin__stop').length);
+      ok(T+'route stop numbers appear on pins only while the route is open',closedBadges===0&&openBadge.join()==='1'&&afterClose===0,JSON.stringify({closedBadges,openBadge,afterClose}));
+      await p.evaluate(()=>localStorage.clear());
+    }
     // ---- Codex QA defects: hover pin growth, scroll kept across filter changes ----
     if(desktop){
       await go('?category=displays');

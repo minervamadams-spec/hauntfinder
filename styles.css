@@ -1578,3 +1578,12 @@ html[data-category="events"]{--acc:#B48CFF}
  html[data-rail="collapsed"] .filterbar .filterbar__rail-head .filterbar__rail-caret{display:none}
  html[data-rail="collapsed"] .filterbar .filterbar__rail-head .filterbar__rail-count{margin-left:0}
 }
+
+/* route stop numbers on pins (only while the route is open) and hover rings */
+.pin__stop{position:absolute;top:-7px;right:-9px;min-width:18px;height:18px;box-sizing:border-box;padding:0 4px;border:2px solid #0B0910;border-radius:9px;background:#FF7A1A;color:#120E18;font:800 11px/14px var(--f-body);text-align:center;pointer-events:none;z-index:2}
+.pin--treat .pin__stop{background:#A6E22E}.pin--event .pin__stop{background:#B48CFF}
+.pin::after{content:"";position:absolute;inset:-5px -4px 2px;border:2px solid transparent;border-radius:50%;pointer-events:none;transition:border-color .15s ease}
+.pin.is-linked::after{border-color:#F6EBD3}
+.pin--event-sq::after{inset:-5px;border-radius:12px}
+.leaflet-marker-icon.is-linked .hf-cluster{box-shadow:0 0 0 3px #0B0910,0 0 0 5px #F6EBD3}
+.card.is-linked{outline:2px solid #F6EBD3;outline-offset:-2px}
