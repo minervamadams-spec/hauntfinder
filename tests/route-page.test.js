@@ -138,8 +138,7 @@ test('route.js: replaceState keeps the URL in step without filling history; Esca
 test('homepage: route entry points are same-tab links to /route.html; the route sheet is gone',()=>{
   assert.equal(index.includes('id="routeSheet"'),false);assert.equal(index.includes('route-sheet'),false);
   assert.match(index,/<a class="route-panel__plan" id="routeLink" href="route\.html">Plan your route →<\/a>/);
-  assert.match(index,/<a class="btn btn--map-route" id="mobileMapRouteBtn" href="route\.html">/);
-  for(const s of [index.match(/id="routeLink"[^>]*>/)[0],index.match(/id="mobileMapRouteBtn"[^>]*>/)[0]])assert.equal(s.includes('target='),false,'same tab');
+  for(const s of [index.match(/id="routeLink"[^>]*>/)[0]])assert.equal(s.includes('target='),false,'same tab');
   assert.equal(app.includes('openRouteSheet'),false);assert.equal(community.includes('openRouteSheet'),false);
   assert.equal(/\.route-sheet[{ .]/.test(css),false,'sheet styles removed');
   assert.equal(index.includes('id="routePlanner"'),false,'the planner lives on /route.html only');

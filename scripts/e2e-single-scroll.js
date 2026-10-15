@@ -28,14 +28,90 @@ const countOf=t=>+(String(t).match(/^(\d+)/)||[0,0])[1];
 const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
 (async()=>{
   const browser=await chromium.launch(process.env.HF_CHROMIUM?{executablePath:process.env.HF_CHROMIUM}:{});
-  for(const vp of [{name:'1280',width:1280,height:800},{name:'390',width:390,height:844}]){
+  for(const vp of [{name:'1280',width:1280,height:800},{name:'390',width:390,height:844},{name:'820',width:820,height:1000}]){
     const desktop=vp.width>=1024,T=vp.name+'px: ';
-    const ctx=await browser.newContext({viewport:{width:vp.width,height:vp.height}});
+    const ctx=await browser.newContext({viewport:{width:vp.width,height:vp.height},...(vp.width<1024?{hasTouch:true,isMobile:vp.width<768}:{})});
     await ctx.route('**/api/visits**',r=>r.abort());
     await ctx.route('**/api/**',r=>r.request().method()==='GET'?r.continue():r.abort());
     const p=await ctx.newPage();const errors=[];p.on('pageerror',e=>errors.push(process.env.HF_DEBUG?'after "'+lastStep+'": '+String(e.stack).split('\n').slice(0,9).join(' | '):e.message));
     const go=async q=>{await p.goto(BASE+'/'+q,{waitUntil:'networkidle'});await p.waitForTimeout(700)};
     const inView=n=>p.evaluate(({n,desktop})=>{const c=document.querySelector(`#cardList [data-card="${n}"]`);if(!c)return false;const b=c.getBoundingClientRect(),area=desktop?document.querySelector('.list-column').getBoundingClientRect():{top:0,bottom:innerHeight};return b.top>=area.top-1&&b.bottom<=area.bottom+1},{n,desktop});
+
+    if(!desktop){
+      // ================= Mobile and tablet (below 1024px): design/Hauntfinder Mobile Spec =================
+      const tablet=vp.width>=768;
+      const mp=()=>p.evaluate(()=>{const r=e=>{if(!e)return null;const b=e.getBoundingClientRect();return {top:b.top,bottom:b.bottom,left:b.left,right:b.right,w:b.width,h:b.height}};const cards=[...document.querySelectorAll('#cardList [data-card]')];return {header:r(document.querySelector('.hf-header')),filterbar:r(document.querySelector('.filterbar')),tabs:r(document.querySelector('.filterbar .tabs')),bar:r(document.getElementById('mobileBar')),sticky:getComputedStyle(document.querySelector('.filterbar')).position,mview:document.documentElement.dataset.mview,overflowX:document.documentElement.scrollWidth>innerWidth,pageScrolls:document.documentElement.scrollHeight>innerHeight+1,scrollers:[...document.querySelectorAll('body *')].filter(e=>{const cs=getComputedStyle(e);return /(auto|scroll)/.test(cs.overflowY)&&e.scrollHeight>e.clientHeight+1&&e.clientHeight>0&&!e.closest('.leaflet-container,.route-panel,.filter-rail')}).map(e=>(e.id?'#'+e.id:'')+'.'+String(e.className).split(' ')[0]),cards:cards.map(c=>+c.dataset.card),cols:new Set(cards.map(c=>Math.round(c.getBoundingClientRect().left))).size,count:document.getElementById('countLine').textContent,pins:[...markerByNum].filter(([n,m])=>listingCluster.hasLayer(m)).map(([n])=>n),tabCount:+document.getElementById('displayTabCount').textContent.replace(/\D/g,''),intro:getComputedStyle(document.querySelector('.intro-strip__copy')).display,menuBtn:r(document.getElementById('menuBtn'))}});
+      await go('?category=displays');
+      let m=await mp();const total=countOf(m.count);
+      ok(T+'header is 56px; the search row and tabs stick; the bottom bar is fixed',Math.round(m.header.h)===56&&m.sticky==='sticky'&&m.bar&&Math.abs(m.bar.bottom-vp.height)<=1&&m.intro==='none',JSON.stringify({h:m.header.h,sticky:m.sticky}));
+      ok(T+'page is the only scroll surface and there is no horizontal overflow',m.scrollers.length===0&&!m.overflowX&&m.pageScrolls,m.scrollers.join(', ')||'none');
+      ok(T+(tablet?'cards sit in 2 columns':'cards sit in 1 column'),m.cols===(tablet?2:1),String(m.cols));
+      ok(T+'every matching card renders; every pin is on the map; counts agree',total>0&&m.cards.length===total&&m.pins.length===total&&m.tabCount===total,`${m.cards.length} cards, ${m.pins.length} pins, ${total}`);
+      const targets=await p.evaluate(()=>[...document.querySelectorAll('.mobile-bar button,.filterbar .tabs button,#filtersBtn,#menuBtn,#cardList .card__route-btn,#cardList .card__mapbtn,#cardList .card__morebtn,#cardList .card__fav-btn')].filter(e=>e.getClientRects().length).map(e=>Math.round(e.getBoundingClientRect().height)).filter(h=>h<44));
+      ok(T+'every button is at least 44px tall',targets.length===0,targets.join(','));
+      // map view: one view at a time, pin preview, FULL DETAILS back to the list
+      await p.click('#viewToggle');await p.waitForTimeout(900);
+      const mv=await p.evaluate(()=>{const mc=document.querySelector('.map-column').getBoundingClientRect(),bar=document.getElementById('mobileBar').getBoundingClientRect();return {mview:document.documentElement.dataset.mview,listHidden:getComputedStyle(document.querySelector('.list-column')).display==='none',headerHidden:getComputedStyle(document.querySelector('.hf-header')).display==='none',mapBottom:Math.round(mc.bottom),barTop:Math.round(bar.top),mapH:Math.round(mc.height),label:document.getElementById('viewToggleText').textContent}});
+      ok(T+'map view fills the screen between the tabs and the bottom bar; the list and header are hidden',mv.mview==='map'&&mv.listHidden&&mv.headerHidden&&Math.abs(mv.mapBottom-mv.barTop)<=2&&mv.mapH>300&&mv.label==='List view',JSON.stringify(mv));
+      const pinN=m.cards[2];
+      await p.evaluate(n=>markerByNum.get(n).fire('click'),pinN);await p.waitForTimeout(700);
+      const pk=await p.evaluate(n=>{const e=document.getElementById('mapPeek'),b=e.getBoundingClientRect(),bar=document.getElementById('mobileBar').getBoundingClientRect();return {shown:!e.classList.contains('is-hidden'),aboveBar:b.bottom<=bar.top+1,name:!!e.querySelector('.map-popup__name'),add:!!e.querySelector('[data-peek-route]'),full:!!e.querySelector('[data-peek-full]'),sel:state.selected===n}},pinN);
+      ok(T+'tapping a pin opens a preview card above the bottom bar with Add to route and Full details',pk.shown&&pk.aboveBar&&pk.name&&pk.add&&pk.full&&pk.sel,JSON.stringify(pk));
+      await p.click('[data-peek-full]');await p.waitForTimeout(700);
+      const fd=await p.evaluate(n=>{const c=document.querySelector(`#cardList [data-card="${n}"]`),b=c.getBoundingClientRect();return {mview:document.documentElement.dataset.mview,inView:b.top>=0&&b.bottom<=innerHeight,sel:c.classList.contains('is-selected')}},pinN);
+      ok(T+'Full details switches to the list scrolled to that card, highlighted',fd.mview==='list'&&fd.inView&&fd.sel,JSON.stringify(fd));
+      // card ◉ MAP opens the map with that pin selected; ⋯ reveals Host notes, Rate, Report, Share
+      await p.evaluate(()=>window.scrollTo(0,0));await p.waitForTimeout(200);
+      const first=m.cards[0];
+      await p.click(`#cardList [data-card="${first}"] .card__morebtn`);
+      const more=await p.evaluate(n=>{const c=document.querySelector(`#cardList [data-card="${n}"]`);return {open:c.classList.contains('is-more-open'),links:[...c.querySelectorAll('.card__metalink,.card-rating,.card__notes summary')].filter(e=>e.getClientRects().length).length}},first);
+      ok(T+'the ⋯ button reveals Host notes, Rate, Report and Share',more.open&&more.links>=4,JSON.stringify(more));
+      await p.click(`#cardList [data-card="${first}"] .card__mapbtn`);await p.waitForTimeout(900);
+      const cm=await p.evaluate(n=>({mview:document.documentElement.dataset.mview,sel:state.selected===n,pin:!!document.querySelector(`.leaflet-marker-pane [data-pin="${n}"].is-selected`)||!!markerByNum.get(n).getElement()}),first);
+      ok(T+'◉ Map opens the map view with that pin selected',cm.mview==='map'&&cm.sel,JSON.stringify(cm));
+      await p.click('#viewToggle');await p.waitForTimeout(400);
+      // filter sheet
+      await p.click('#filtersBtn');await p.waitForTimeout(300);
+      const fs0=await p.evaluate(()=>{const r=document.getElementById('filterRail').getBoundingClientRect();return {full:Math.round(r.width)===innerWidth&&Math.round(r.height)===innerHeight,groups:[...document.querySelectorAll('#filterRail .filter-rail__section h3')].map(h=>h.textContent),title:document.getElementById('sheetTitle').textContent,show:document.getElementById('sheetShow').textContent,btn:Math.round(document.getElementById('sheetShow').getBoundingClientRect().height)}});
+      ok(T+'Filters opens a full-screen sheet with the desktop groups and a Show N footer',fs0.full&&fs0.groups.join('|')==='When|How to visit|Scare level|Features'&&/^Show \d+ displays$/.test(fs0.show)&&fs0.btn>=44,JSON.stringify(fs0));
+      await p.click('#filterRail [data-rail-filter="show"][data-value="Drive-by"]');await p.waitForTimeout(300);
+      const fs1=await p.evaluate(()=>({show:document.getElementById('sheetShow').textContent,btn:document.getElementById('filtersBtn').classList.contains('is-active'),count:document.getElementById('filtersBtnCount').textContent}));
+      await p.click('#sheetShow');await p.waitForTimeout(300);
+      const after=await mp();const nf=countOf(after.count);
+      ok(T+'filters apply live: the sheet button, count line, cards, pins and tab count agree; the Filters button shows the active count',nf<total&&after.cards.length===nf&&after.pins.length===nf&&after.tabCount===nf&&fs1.show==='Show '+nf+' displays'&&fs1.btn&&fs1.count==='1',JSON.stringify({fs1,nf,total}));
+      // route sheet
+      await p.click('#cardList [data-route]');await p.waitForTimeout(200);
+      await p.click('#routeBarBtn');await p.waitForTimeout(300);
+      const rs=await p.evaluate(()=>{const pnl=document.getElementById('routePanel').getBoundingClientRect();return {open:document.documentElement.dataset.sheet==='route',stops:document.querySelectorAll('#routeStopsMini .route-stop').length,count:document.getElementById('routePanelCount').textContent,go:/^https:\/\/www\.google\.com\/maps\/dir\//.test(document.getElementById('routeDirections').href),bottom:Math.round(pnl.bottom)===innerHeight,badge:document.getElementById('routeBarCount').textContent}});
+      ok(T+'Your route opens a bottom sheet with the stops, "N of 10 stops" and Get directions',rs.open&&rs.stops===1&&rs.count==='1 of 10 stops'&&rs.go&&rs.bottom&&rs.badge==='1',JSON.stringify(rs));
+      await p.click('[data-route-mini-remove="0"]');await p.waitForTimeout(200);await p.click('#routeClose');await p.waitForTimeout(200);
+      ok(T+'the route sheet closes and the bar badge returns to 0',(await p.evaluate(()=>!document.documentElement.dataset.sheet&&document.getElementById('routeBarCount').textContent==='0'&&document.getElementById('routeBarCount').classList.contains('is-zero'))));
+      await p.evaluate(()=>localStorage.clear());
+      // menu drawer
+      await p.click('#menuBtn');await p.waitForTimeout(250);
+      const md=await p.evaluate(()=>({open:!document.getElementById('menuDrawer').hidden,links:[...document.querySelectorAll('#menuDrawer .menu-drawer__panel a,#menuDrawer .menu-drawer__panel>button:not(.sheet-close)')].map(a=>a.textContent.trim()),tag:document.querySelector('.menu-drawer__tag').textContent.length>40}));
+      ok(T+'the menu drawer holds the site links and the tagline',md.open&&md.links.join('|')==='+ Submit a listing|Share this site|About|Get alerts|Contact us'&&md.tag,md.links.join('|'));
+      await p.click('#menuDrawer .sheet-close');
+      // Treat Stops and Events
+      await p.click('#treatStopsTab');await p.waitForTimeout(400);
+      const tr=await mp();const tn=countOf(tr.count);
+      ok(T+'Treat Stops: cards, pins and counts agree',tr.cards.length===tn&&tr.pins.length===tn,`${tn}`);
+      await go('?category=events');
+      const ev=await p.evaluate(()=>({days:document.querySelectorAll('#cardList .ev-day').length,open:!!document.querySelector('#cardList .ev-open'),overflow:document.documentElement.scrollWidth>innerWidth,cal:getComputedStyle(document.getElementById('eventCalendar')).display}));
+      ok(T+'Events: the day-by-day list (merged empty days, Open all week) with no overflow',ev.days>=3&&ev.open&&!ev.overflow&&ev.cal==='none',JSON.stringify(ev));
+      await p.click('#viewToggle');await p.waitForTimeout(900);
+      const evm=await p.evaluate(()=>({pins:document.querySelectorAll('.leaflet-marker-pane [data-event-pin]').length,withCoords:matchingEvents().filter(x=>Number.isFinite(x.lat)&&Number.isFinite(x.lng)).length}));
+      ok(T+'Events map view shows the type-coloured square pins',evm.pins===evm.withCoords&&evm.pins>0,JSON.stringify(evm));
+      // deep links
+      await go('?house=8&entity=drakestown-road-2026');
+      ok(T+'?house=8&entity= selects its card',await p.evaluate(()=>state.selected===8&&!!document.querySelector('#cardList [data-card="8"].is-selected')));
+      await go('?house=12&view=map');await p.waitForTimeout(600);
+      const dm=await p.evaluate(()=>({mview:document.documentElement.dataset.mview,sel:state.selected===12,zoom:map.getZoom(),peek:!document.getElementById('mapPeek').classList.contains('is-hidden')}));
+      ok(T+'?house=12&view=map opens the map view with pin 12 selected at zoom 15',dm.mview==='map'&&dm.sel&&dm.zoom===15&&dm.peek,JSON.stringify(dm));
+      ok(T+'no horizontal overflow after deep links',!(await mp()).overflowX);
+      ok(T+'no page errors',errors.length===0,errors.join(' | '));
+      await ctx.close();continue;
+    }
 
     // ---- Layout and scroll surfaces ----
     await go('?category=displays');
@@ -207,9 +283,9 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       const hp=await p.evaluate(()=>{const n=+document.querySelector('#cardList [data-card]').dataset.card,m=markerByNum.get(n),el=m.getElement(),par=el?null:listingCluster.getVisibleParent(m),t=el||(par&&par.getElement());const inner=el?el.querySelector('.pin'):t&&t.querySelector('.hf-cluster');const w0=inner.offsetWidth,w1=inner.getBoundingClientRect().width;return {clustered:!el,grew:w1>=w0+2,w0,w1:Math.round(w1)}});
       ok(T+'hovering a card enlarges its pin (or its cluster when grouped)',hp.grew,JSON.stringify(hp));
     }
-    // ---- Header breakpoint: the intro line is hidden only below 760px ----
+    // ---- Header: the intro line shows at >=1024px only; below it moves into the menu (mobile spec) ----
     if(desktop){
-      for(const [w,show] of [[759,false],[760,true],[900,true],[1023,true]]){
+      for(const [w,show] of [[759,false],[760,false],[900,false],[1023,false],[1024,true]]){
         await p.setViewportSize({width:w,height:800});await go('');
         const hd=await p.evaluate(()=>{const i=document.querySelector('.intro-strip__copy'),r=i.getBoundingClientRect(),l=document.querySelector('.banner__img').getBoundingClientRect();return {shown:getComputedStyle(i).display!=='none'&&r.height>0,overlap:r.height>0&&r.left<l.right-1,overflow:document.documentElement.scrollWidth>innerWidth}});
         ok(`${w}px: intro line ${show?'shown':'hidden'}, no logo overlap, no overflow`,hd.shown===show&&!hd.overlap&&!hd.overflow,JSON.stringify(hd));

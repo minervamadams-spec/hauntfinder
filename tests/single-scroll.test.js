@@ -97,7 +97,7 @@ test('desktop uses the designed filters, results and map workspace rails',()=>{
   assert.equal(css.includes('html[data-view='),false,'no Map/List view states left in the stylesheet');
 });
 test('desktop rail exposes direct filter chips and the Leaflet canvas resizes after its grid cell changes',()=>{
-  assert.match(chromeFilters,/const desktopRail=.*min-width:1024px/,'direct chip rail applies to every tab at >=1024 (v7: Events gets Type and Features chips)');
+  assert.match(chromeFilters,/const desktopRail=\(\)=>true/,'the chip rail renders on every tab and width (mobile shows it in the Filters sheet)');
   assert.match(chromeFilters,/railChip\('event-type'/);
   assert.match(chromeFilters,/railChip\('event-feature'/);
   assert.match(chromeFilters,/function railFiltersHTML\(\)/,'rail renders working controls rather than decorative labels');
@@ -117,7 +117,7 @@ test('cards stay a compact single column in the results rail and mobile flow',()
   assert.match(v7,/\.card--compact \.card__address\{min-height:26px/,'desktop cards do not waste a 44px address target row');
 });
 test('events (v7): map with event pins fills the right rail; day blocks replace the desktop week grid; route planner keeps its place',()=>{
-  assert.match(layout,/if\(mf\)mf\.hidden=event/,'events still hide the map');
+  assert.match(layout,/if\(mf\)mf\.hidden=false/,'events show the map');
   assert.match(block,/html\[data-category="events"\] \.route-wrap\{order:1;width:100%;margin-top:0\}/);
   assert.match(block,/html\[data-category="events"\] \.list-column\{order:2\}/);
   assert.match(block.split('@media(min-width:1200px){')[1]||'',/^[^@]*html\[data-category="events"\] \.route-wrap\{grid-column:1;grid-row:2/,'>=1200: route planner under the week, left column');
@@ -153,11 +153,11 @@ test('events v7: count line carries Add all events to your calendar and proxies 
   assert.match(html,/id="railAddAll"[^>]*>[\s\S]*?Add all events to your calendar/);
   assert.match(layout,/\$\('railAddAll'\)\.addEventListener\('click',\(\)=>\$\('addAllToCalendar'\)\.click\(\)\)/);
 });
-test('events v7: >=1024 hides the week grid and shows the map; event pins select their card in the rail',()=>{
+test('events v7: the map and event pins show at every width, and the week grid is gone on desktop; event pins select their card in the rail',()=>{
   assert.match(css,/#eventCalendar\{display:none!important\}/);
   assert.match(css,/html\[data-category="events"\] \.map-column\{align-self:stretch;height:100%\}/);
-  assert.match(layout,/mf\.hidden=event&&innerWidth<1024/);
-  assert.match(app,/function syncEventPins\(\)\{[^\n]*state\.category==='events'\)\{if\(innerWidth<1024\)return;matchingEvents\(\)[^\n]*eventSquareIcon\(i\+1\)[^\n]*selectEventCard\(ev\.id\)/);
+  assert.match(layout,/mf\.hidden=false/);
+  assert.match(app,/function syncEventPins\(\)\{[^\n]*state\.category==='events'\)\{matchingEvents\(\)[^\n]*eventSquareIcon\(i\+1\)[^\n]*selectEventCard\(ev\.id\)/);
   assert.match(app,/function selectEventCard\(id\)\{/);
-  assert.match(app,/if\(!state\.search\|\|innerWidth>=1024\)return;searchCircle=/,'v7: no radius circle on desktop');
+  assert.equal(/L\.circle\(/.test(app),false,'v7: no radius circle at any width');
 });

@@ -76,7 +76,7 @@ const view=()=>{
     ok(T+'reload keeps the edited route',JSON.stringify((await v()).keys)===JSON.stringify(s.keys));
     await go('/');
     const homeCount=await p.evaluate(()=>document.getElementById('routeBadge').textContent);
-    if(await p.isHidden('#routeLink'))await p.click('#routeToggle');
+    if(await p.isHidden('#routeLink'))await p.click((await p.isVisible('#routeBarBtn'))?'#routeBarBtn':'#routeToggle');
     await p.click('#routeLink');await p.waitForLoadState('networkidle');
     ok(T+'homepage "Your route" CTA is a same-tab link to /route.html',(await p.evaluate(()=>location.pathname))==='/route.html'&&p.context().pages().length===1,homeCount);
     await p.click('[data-remove-stop]');await p.waitForTimeout(100);
@@ -120,6 +120,7 @@ const view=()=>{
     await p.evaluate(()=>localStorage.clear());await go('/?category=displays');
     const links=await p.evaluate(()=>{const c=document.querySelector('#cardList [data-card]'),n=c.dataset.card;return {n,rate:c.querySelector('.card-rating').getAttribute('href'),report:[...c.querySelectorAll('.card__metalink')].map(a=>a.getAttribute('href')),targets:[...c.querySelectorAll('.card-rating,.card__metalink')].map(a=>a.target||'')}});
     ok(T+'card Rate/Report/Share link to the listing sections, same tab',links.rate===`listing.html?id=${links.n}#feedback`&&links.report.join()===`listing.html?id=${links.n}#report-update,listing.html?id=${links.n}#share`&&links.targets.every(t=>!t),JSON.stringify(links));
+    if(await p.isHidden('#cardList [data-card] .card__metalink'))await p.click('#cardList [data-card] .card__morebtn');
     await p.click('#cardList [data-card] .card__metalink');await p.waitForLoadState('networkidle');await p.waitForTimeout(300);
     const landed=await p.evaluate(()=>{const s=document.getElementById('report-update'),b=s.getBoundingClientRect();return {path:location.pathname,hash:location.hash,title:document.getElementById('listingTitle').textContent,inView:b.top<innerHeight&&b.bottom>0}});
     ok(T+'Report lands on the listing report section',landed.path==='/listing.html'&&landed.hash==='#report-update'&&landed.inView&&landed.title!=='Listing not found',JSON.stringify(landed));

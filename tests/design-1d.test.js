@@ -61,13 +61,11 @@ test('footer (/route.html): divider, 52px primary, Get directions, Suggest order
 });
 
 /* ---- Mobile bar + sheet (spec 8.6 M6) ---- */
-test('mobile bar: 74px pinned, 2px orange top, "Your route · N stops" and a link to /route.html',()=>{
-  assert.ok(html.includes('<strong>Your route</strong><span id="mobileRouteCount" aria-live="polite">0 stops</span>'),'bar copy');
-  assert.ok(html.includes('<a class="btn btn--map-route" id="mobileMapRouteBtn" href="route.html">Plan route</a>'),'bar CTA is a link to the planner page');
-  const bar=css.split('\n').map(l=>l.trim()).find(l=>l.startsWith('.mobile-route-bar:not(.is-hidden){min-height:74px'));
-  assert.ok(bar,'bar restyled to 74px');
-  assert.ok(bar.includes('border-top:2px solid var(--orange)'),'2px orange top border');
-  assert.ok(bar.includes('position:fixed')||css.includes('.mobile-route-bar:not(.is-hidden){position:fixed'),'bar stays pinned');
+test('mobile bar (v7 mobile spec): fixed bottom bar with the view switch and Your route, which opens the route sheet',()=>{
+  assert.ok(html.includes('id="mobileBar"'),'bottom bar');
+  assert.ok(html.includes('id="viewToggle"')&&html.includes('id="routeBarBtn"')&&html.includes('id="routeBarCount"'));
+  assert.ok(html.includes('id="routeLink" href="route.html">Plan your route →</a>'),'the sheet keeps the link to the planner page');
+  assert.ok(css.includes('.mobile-bar{display:flex;gap:8px;position:fixed;left:0;right:0;bottom:0'),'bar stays pinned');
 });
 
 test('route sheet retired: no sheet markup, styles or opener (page-first step 4)',()=>{

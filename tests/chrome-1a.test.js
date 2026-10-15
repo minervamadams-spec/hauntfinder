@@ -17,7 +17,7 @@ const INTRO_COPY='Find decorated homes, spooky displays, treat stops, and Hallow
 test('v7 header: scene strip contains the verbatim intro without controls',()=>{
   const header=html.split('<header class="hf-header banner">')[1].split('</header>')[0];
   assert.ok(header.includes(INTRO_COPY),'verbatim v7 intro copy');
-  assert.equal(/<button|<a /.test(header),false,'the header intro has no actions');
+  assert.equal(/<a /.test(header),false,'the header intro has no links');assert.equal((header.match(/<button/g)||[]).length,1,'the only header control is the mobile menu button');assert.ok(header.includes('id="menuBtn"'));
   assert.ok(css.includes("scene-strip-v3.png"),'supplied scene strip is the header background');
   assert.ok(css.includes('.intro-strip__copy'),'intro has an explicit compact style');
 });

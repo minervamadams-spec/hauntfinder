@@ -77,7 +77,8 @@ if(!filtersEl)return;
 const mobileSheets=()=>typeof matchMedia==='function'&&matchMedia('(max-width:767px)').matches;
 // The compact rail is for listings and treat stops. Events intentionally keep
 // their calendar presentation and existing compact filter controls.
-const desktopRail=()=>typeof matchMedia==='function'&&matchMedia('(min-width:1024px)').matches;
+// v7 mobile: the chip groups render at every width (mobile shows them in the Filters sheet).
+const desktopRail=()=>true;
 const noun=()=>state.category==='treats'?'treat stops':state.category==='events'?'events':'displays';
 const featureOptions=()=>state.category==='treats'?CHROME_TREAT_FEATURE_OPTIONS:CHROME_FEATURE_OPTIONS;
 
@@ -131,7 +132,7 @@ function railFiltersHTML(){
 // Filter panel collapse (v7): 260px <-> 44px. Starts collapsed below 1100px.
 const railRoot=document.documentElement;
 function railSetCollapsed(on){railRoot.dataset.rail=on?'collapsed':'open';const t=document.getElementById('railToggle');if(t)t.setAttribute('aria-expanded',String(!on));const b=document.getElementById('railExpand');if(b)b.setAttribute('aria-expanded',String(!on));railBadge();setTimeout(()=>{if(typeof map!=='undefined'&&map&&map.invalidateSize)map.invalidateSize()},60)}
-function railBadge(){const n=railActiveCount(),el=document.getElementById('railBadge');if(el){el.textContent=String(n);el.hidden=!n}}
+function railBadge(){const n=railActiveCount(),el=document.getElementById('railBadge');if(el){el.textContent=String(n);el.hidden=!n}const fb=document.getElementById('filtersBtn'),fc=document.getElementById('filtersBtnCount');if(fc){fc.textContent=String(n);fc.hidden=!n}if(fb)fb.classList.toggle('is-active',n>0);if(typeof window!=='undefined'&&window.hfSheetSync)window.hfSheetSync()}
 if(typeof matchMedia==='function'&&document.getElementById('railToggle')){railSetCollapsed(innerWidth<1100);
  document.getElementById('railToggle').addEventListener('click',()=>railSetCollapsed(railRoot.dataset.rail!=='collapsed'));
  document.getElementById('railExpand').addEventListener('click',()=>railSetCollapsed(false))}
