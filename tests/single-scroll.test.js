@@ -17,46 +17,36 @@ test('v7 continuous rail renders every matching card and retires visible pager c
   assert.equal(html.includes('id="pageNext"'),false);
 });
 
-// ---- Pagination (8 per page) ----
-test.skip('retired pagination: eight cards per page with page position',()=>{
-  assert.equal(F.RESULTS_PAGE_SIZE,8);
-  assert.deepEqual(F.resolveResultsPage({prevKey:'a',key:'a',page:0,total:13}),{page:0,pages:2,start:0,end:8});
-  assert.deepEqual(F.resolveResultsPage({prevKey:'a',key:'a',page:1,total:13}),{page:1,pages:2,start:8,end:13});
-  assert.deepEqual(F.resolveResultsPage({prevKey:'a',key:'a',page:0,total:8}),{page:0,pages:1,start:0,end:8});
-  assert.deepEqual(F.resolveResultsPage({prevKey:'a',key:'a',page:0,total:1}),{page:0,pages:1,start:0,end:1});
-  assert.deepEqual(F.resolveResultsPage({prevKey:'a',key:'a',page:0,total:0}),{page:0,pages:1,start:0,end:0});
-});
-test.skip('retired pagination: filter, category or search changes reset to page 1; same results keep the page; out-of-range pages clamp',()=>{
-  assert.equal(F.resolveResultsPage({prevKey:'displays|All',key:'displays|Spooky',page:1,total:13}).page,0,'filter change');
-  assert.equal(F.resolveResultsPage({prevKey:'displays|All',key:'treats|All',page:1,total:13}).page,0,'category change');
-  assert.equal(F.resolveResultsPage({prevKey:'k',key:'k',page:1,total:13}).page,1,'route toggle / re-render keeps the page');
-  assert.equal(F.resolveResultsPage({prevKey:'k',key:'k',page:5,total:13}).page,1,'clamped to the last page');
-  assert.equal(F.resolveResultsPage({prevKey:'k',key:'k',page:-3,total:13}).page,0,'clamped to the first page');
-});
-test.skip('retired pagination: selecting a listing opens the page that holds its card, even after a filter reset',()=>{
-  assert.equal(F.resolveResultsPage({prevKey:'k',key:'k',page:0,total:13,focusIndex:11}).page,1);
-  assert.equal(F.resolveResultsPage({prevKey:'k',key:'changed',page:0,total:13,focusIndex:9}).page,1,'focus wins over the reset');
-  assert.equal(F.resolveResultsPage({prevKey:'k',key:'k',page:1,total:13,focusIndex:-1}).page,1,'not in results: page unchanged');
-});
-test.skip('retired pagination: cards render one page; pins and the count line use the full result set',()=>{
+// ---- Continuous results rail (replaces pagination) ----
+test('results rail: every matching card renders, with no page slicing or page helpers in the render path',()=>{
   const fn=app.split('function renderCards(){')[1].split('\nfunction ')[0];
-  assert.match(fn,/resolveResultsPage\(/);
-  assert.match(fn,/visible\.slice\(pg\.start,pg\.end\)\.map\(cardHTML\)/,'only the current page renders as cards');
-  assert.match(fn,/syncListingMarkers\(visible\)/,'every matching pin stays on the map');
-  assert.match(fn,/nonPlaceholder\.length/,'count line counts all results, not the page');
-  assert.match(layout,/state\.pageFor=n;/,'pin/card selection jumps to the card page');
-  assert.match(fn,/state\.dateFilter&&state\.dateFilter\.kind\?\[state\.dateFilter\.kind,state\.dateFilter\.date\|\|null\]:null/,'page key compares the date filter by meaning: an empty filter normalized from null to {kind:null} is not a filter change (it reset ?house= deep links to page 1)');
+  assert.match(fn,/cardList'\)\.innerHTML=visible\.map\(cardHTML\)\.join\(''\)/);
+  assert.equal(/\.slice\(pg\./.test(fn),false,'no page slice');
+  assert.equal(/state\.page\b/.test(fn),false,'no page state');
 });
-test.skip('retired pagination controls: Previous/Next buttons and a live page position under the cards',()=>{
-  const nav=html.match(/<nav id="resultsPager"[^>]*>[\s\S]*?<\/nav>/);
-  assert.ok(nav,'pager present');
-  assert.match(nav[0],/aria-label="Result pages"/);
-  assert.match(nav[0],/<button type="button" class="btn btn--outline" id="pagePrev">Previous<\/button>/);
-  assert.match(nav[0],/<span id="pageStatus" aria-live="polite"><\/span>/);
-  assert.match(nav[0],/<button type="button" class="btn btn--outline" id="pageNext">Next<\/button>/);
-  assert.ok(html.indexOf('id="cardList"')<html.indexOf('id="resultsPager"'),'pager follows the cards');
-  assert.match(html,/id="countLine" class="count-line" tabindex="-1"/,'count line takes focus after a page change');
-  assert.match(app,/function goToPage\(p\)\{/);
+test('results rail: pins and the count line cover the full result set',()=>{
+  const fn=app.split('function renderCards(){')[1].split('\nfunction ')[0];
+  assert.match(fn,/syncListingMarkers\(visible\)/,'every matching pin stays on the map');
+  assert.match(fn,/nonPlaceholder\.length/,'count line counts all results');
+});
+test('results rail: pin click scrolls its card into view inside the scrolling rail on desktop, and the page on narrow screens',()=>{
+  const fn=app.split('function selectListing(n,scroll=false){')[1].split('\n')[0];
+  assert.match(fn,/if\(scroll\)\{/,'selection scroll is not limited to narrow screens');
+  assert.equal(fn.includes('innerWidth<1024){const card'),false);
+  assert.match(fn,/closest\('\.list-column'\)/);
+  assert.match(fn,/panel\.scrollTo\(/,'desktop scrolls the rail');
+  assert.match(fn,/else if\(innerWidth<1024\)window\.scrollTo\(/,'narrow screens scroll the page');
+  assert.match(fn,/cb\.top>=pb\.top&&cb\.bottom<=pb\.bottom\)return/,'a card already in view is not re-scrolled');
+});
+test('results rail: no pagination controls or page-jump state remain in markup or selection',()=>{
+  for(const id of ['pagePrev','pageNext','pageStatus'])assert.equal(html.includes(`id="${id}"`),false,id);
+  assert.equal(app.includes('function goToPage('),false);
+  assert.equal(/state\.page\b/.test(app+layout),false);
+});
+test('results rail: ?house= deep links select their card without any page jump',()=>{
+  assert.match(layout,/selectListing\(linked\);if\(params\.get\('view'\)==='map'\)\{state\.linkedHouse=house\.num/);
+  assert.match(layout,/selectListing=function\(n,scroll=false\)\{[^\n]*renderCards\(\)\}originalSelect\(n,scroll\)/);
+  assert.equal(layout.includes('pageFor'),false,'no page-jump state');
 });
 
 // ---- Page order ----
@@ -141,5 +131,5 @@ test('deep link: ?house=N&view=map centers the pin and brings the map under the 
 test('live QA gate: verify-live checks the compact directory homepage and hashes url-state.js',()=>{
   const verify=read('scripts/verify-live.js');
   assert.ok(verify.includes("'url-state.js'"));
-  assert.match(verify,/homepage has the compact directory map, card pager and no Map\/List switch/);
+  assert.match(verify,/homepage has the compact directory map, continuous result rail and no Map\/List switch/);
 });

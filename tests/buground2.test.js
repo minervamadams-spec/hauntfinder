@@ -19,7 +19,7 @@ test('Bug A: renderCards feeds the count line, card list, and marker sync from t
  const body=app.split('function renderCards(){')[1].split('\nfunction ')[0];
  const visibleAt=body.indexOf('const visible=activeListings()');
  const countAt=body.indexOf('countLine').textContent===undefined?body.indexOf("getElementById('countLine')"):body.indexOf('countLine');
- const cardsAt=body.indexOf("cardList').innerHTML=visible.slice(pg.start,pg.end).map(cardHTML)");
+ const cardsAt=body.indexOf("cardList').innerHTML=visible.map(cardHTML)");
  const markersAt=body.indexOf('syncListingMarkers(visible)');
  assert.ok(visibleAt===0,'visible is the first thing computed');
  assert.ok(visibleAt<countAt&&countAt<cardsAt,'count line derives from visible');
