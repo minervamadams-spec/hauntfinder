@@ -30,14 +30,14 @@ test('current-season rule excludes wrong season, year or participation and inclu
  assert.ok(!inCurrentSeason({season:'halloween',year:2026,participation:'pending_renewal'}));
  assert.ok(!inCurrentSeason({season:'halloween',year:2026,participation:'unconfirmed'}));
  const activeListings=listings.filter(inCurrentSeason),activeEvents=events.filter(inCurrentSeason);
- assert.equal(activeListings.length,12);
+ assert.equal(activeListings.length,13);
  assert.equal(activeEvents.length,2);
  assert.ok(activeListings.every(x=>x.season==='halloween'&&x.year===2026&&x.participation==='confirmed'));
  assert.ok(activeEvents.every(x=>x.season==='halloween'&&x.year===2026&&x.participation==='confirmed'));
 });
 test('public-data pipeline sees only active-season confirmed records with coordinates',()=>{
  const data=JSON.parse(require('node:child_process').execFileSync('node',[path.join(__dirname,'../scripts/public-data.cjs')],{encoding:'utf8'}));
- assert.equal(data.listings.length,12);
+ assert.equal(data.listings.length,13);
  assert.equal(data.events.length,2);
  assert.deepEqual(Object.keys(data).sort(),['date','events','listings']);
  for(const x of [...data.listings,...data.events]){

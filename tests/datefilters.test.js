@@ -82,7 +82,7 @@ test('real backfill: Halloween filter selects exactly the listings with hours th
  const active=listings.filter(inCurrentSeason);
  const filter={kind:'date',date:'2026-10-31'};
  const openNums=[...active.filter(x=>sch.schedulesDateMatch(x,filter)).map(x=>x.num)];
- assert.deepEqual(openNums,[1,4,5,6,8,10,11,12]);
+ assert.deepEqual(openNums,[1,4,5,6,8,10,11,12,13]);
  const tonightNums=[...active.filter(x=>sch.schedulesDateMatch(x,{kind:'tonight'},NOW)).map(x=>x.num)];
- assert.deepEqual(tonightNums,[4,6,8,10],'#4 lights-on-at-6 counts as open; #1 and #11 are Halloween-only exceptions');
+ assert.deepEqual(tonightNums,[4,6,8,10,13],'#4 lights-on-at-6 counts as open; #1 and #11 are Halloween-only exceptions; #13 is open Friday–Sunday');
 });

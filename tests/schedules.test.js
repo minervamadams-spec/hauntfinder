@@ -76,7 +76,7 @@ test('openTonightEligible is true for a fully scheduled synthetic set only',()=>
 test('real backfilled listings: Open tonight stays OFF on Halloween 2026',()=>{
  const {listings,inCurrentSeason}=appData();
  const active=listings.filter(inCurrentSeason);
- assert.equal(active.length,12);
+ assert.equal(active.length,13);
  assert.equal(sch.openTonightEligible(active,SAT),false);
 });
 test('backfill sanity: every active listing is scheduled or honestly unknown; #6 Friday resolves',()=>{
