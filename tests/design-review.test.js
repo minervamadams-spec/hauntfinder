@@ -9,13 +9,13 @@ test('P1 (reversed by owner): pins and card badges keep the stable listing numbe
   assert.match(app,/<span class="pin__num">\$\{pinLabel\(n\)\}<\/span>/);
   assert.match(app,/relabelPins\(\)/);
 });
-test('P1: overlapping pins cluster in a 34px accent circle, stop clustering at zoom 15 and spiderfy',()=>{
+test('P1: overlapping pins cluster as a stacked-ring group marker, stop clustering at zoom 15 and spiderfy',()=>{
   assert.match(html,/leaflet\.markercluster@1\.5\.3/);
   assert.match(app,/CLUSTER_STOP_ZOOM=15/);
   assert.match(app,/L\.markerClusterGroup\(/);
-  assert.match(app,/iconSize:\[34,34\]/);
+  assert.match(app,/iconSize:\[36,36\]/);assert.match(app,/click to zoom/);
   assert.match(app,/spiderfy\(\)/);
-  assert.match(css,/\.hf-cluster\{width:34px;height:34px/);
+  assert.match(css,/\.hf-cluster\{width:36px;height:36px;background:#1C1626!important/);
 });
 test('P1: the map caption is gone and the filter panel stretches the full row',()=>{
   assert.match(css,/#mapCategoryHint,\.map-info\{display:none!important\}/);
@@ -78,4 +78,22 @@ test('P3: empty results say "Nothing matches these filters." with Clear all filt
   assert.match(layout,/function keepListScroll\(\)/);
   assert.match(css,/\.leaflet-control-zoom a\{width:30px;height:30px/);
   assert.match(css,/text-shadow:0 1px 3px #000/);
+});
+
+// ---- Round 2 ----
+test('round 2: map fits leave room for the route bar; one pin centres at zoom 14',()=>{
+  assert.match(app,/function mapFitOptions\(extra\)\{return Object\.assign\(\{paddingTopLeft:\[60,60\],paddingBottomRight:\[60,routePad\(\)\]\}/);
+  assert.match(app,/map\.setView\(pts\[0\],14,\{animate:false\}\)/);
+  assert.match(layout,/if\(category!=='events'\)fitVisiblePins\(\)/);
+});
+test('round 2: scare dots only when a level is set; all-week events show hours; empty days merge; Sat 31 always shows',()=>{
+  assert.match(app,/x\.levels\.length\?`<p class="card__scare-row">/);
+  assert.match(layout,/x\.ongoing\?\(x\.hours\?compactTime\(x\.hours\):'Open all week'\)/);
+  assert.match(layout,/if\(!list\.length&&!halloween\)\{run\.push\(date\);return\}/);
+});
+test('round 2: tab row is 48px with the underline on the row line; Search this area is a top-centre pill; empty route bar is compact',()=>{
+  assert.match(css,/\.filterbar \.nav-row\{height:48px!important/);
+  assert.match(css,/map-float-btn--search\{top:12px;bottom:auto!important;min-height:32px/);
+  assert.match(css,/\.route-wrap\.is-empty \.route-toggle\{height:40px/);
+  assert.match(html,/route-toggle__empty">Add stops from the list/);
 });

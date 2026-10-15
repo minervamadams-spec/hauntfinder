@@ -91,7 +91,7 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
     ok(T+'Events: tab count matches events',e.tabCount===(await p.evaluate(()=>matchingEvents().length)));
     if(desktop){
       const ev=await p.evaluate(()=>{const days=[...document.querySelectorAll('#cardList .ev-day')];return {weekGrid:!!document.getElementById('eventCalendar')&&document.getElementById('eventCalendar').getClientRects().length>0,days:days.length,open:!!document.querySelector('#cardList .ev-open'),key:!!document.querySelector('#cardList .ev-key'),pins:[...document.querySelectorAll('.leaflet-marker-pane [data-event-pin]')].length,withCoords:matchingEvents().filter(x=>Number.isFinite(x.lat)&&Number.isFinite(x.lng)).length,circle:document.querySelectorAll('.leaflet-overlay-pane path').length,count:document.getElementById('eventsDayHeading').textContent}});
-      ok(T+'Events: day blocks, Open all week box and key replace the week grid',!ev.weekGrid&&ev.days>=7&&ev.open&&ev.key,JSON.stringify(ev));
+      ok(T+'Events: merged empty days, Open all week box and key replace the week grid',!ev.weekGrid&&ev.days>=3&&ev.open&&ev.key,JSON.stringify(ev));
       ok(T+'Events: map shows one pin per mappable event, no radius circle',!!e.mapFrame&&ev.pins===ev.withCoords&&ev.pins>0&&ev.circle===0,JSON.stringify({pins:ev.pins,coords:ev.withCoords,circle:ev.circle}));
       ok(T+'Events: count line matches',countOf(ev.count)===e.tabCount,ev.count);
       ok(T+'Events: nested scroll only in filter rail and results rail',e.scrollers.every(x=>x.includes('filter-rail')||x.includes('list-column')),e.scrollers.join(', ')||'none');
@@ -153,6 +153,44 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       await p.evaluate(()=>{state.features=['Costumes Available','Actors','Animatronics','Fog','Lights','Music/Sound'];state.filter='Walk-through';renderFilters();renderCards()});await p.waitForTimeout(300);
       const em=await p.evaluate(()=>({text:document.querySelector('#noResults strong').textContent,btn:document.getElementById('showAllBtn').textContent,vis:document.getElementById('showAllBtn').getClientRects().length>0}));
       ok(T+'empty result: "Nothing matches these filters." with Clear all filters',em.text==='Nothing matches these filters.'&&em.btn==='Clear all filters'&&em.vis,JSON.stringify(em));
+    }
+    // ---- Design review round 2 ----
+    if(desktop){
+      await p.setViewportSize({width:1290,height:650});
+      const seen=[];
+      for(const tab of ['displays','treats','events']){
+        await go('?category='+tab);
+        await p.mouse.click(5,300);
+        const t=await p.evaluate(tab=>{const sel={displays:'#displaysTab',treats:'#treatStopsTab',events:'#eventsTab'}[tab],b=document.querySelector(sel).getBoundingClientRect(),row=document.querySelector('.filterbar').getBoundingClientRect(),n=document.querySelector('.filterbar .nav-row').getBoundingClientRect(),e=tab==='events'?document.getElementById('eventsDayHeading'):document.getElementById('countLine'),rg=document.createRange();rg.selectNodeContents(e);const r=rg.getBoundingClientRect();const sub=document.querySelector('.filter-rail__links a').getBoundingClientRect();return {tabBottom:Math.round(b.bottom),rowBottom:Math.round(row.bottom),navH:Math.round(n.height),tabH:Math.round(b.height),count:Math.round(r.top+r.height/2),submitBottom:Math.round(sub.bottom),inner:innerHeight}},tab);
+        seen.push(t.count);
+        ok(T+tab+': tab underline sits on the tab row line (48px row)',t.tabBottom===t.rowBottom&&t.navH===48&&t.tabH===48,JSON.stringify(t));
+        ok(T+tab+': + Submit a listing is visible without scrolling at 1290x650',t.submitBottom<=t.inner,String(t.submitBottom));
+      }
+      ok(T+'count line sits at the same height on every tab',Math.max(...seen)-Math.min(...seen)<=1,seen.join(','));
+      await go('?category=treats');await p.click('#treatStopsTab');
+      ok(T+'mouse-clicking a tab shows no focus box',(await p.evaluate(()=>{const cs=getComputedStyle(document.getElementById('treatStopsTab'));return cs.outlineStyle==='none'||cs.outlineWidth==='0px'})));
+      await p.keyboard.press('Tab');
+      await go('?category=displays');
+      const g=await p.evaluate(()=>{const c=document.querySelector('.hf-cluster');const cs=c&&getComputedStyle(c);const z=document.querySelector('.leaflet-control-zoom a').getBoundingClientRect();return {cluster:!!c,size:c&&Math.round(c.getBoundingClientRect().width),bg:cs&&cs.backgroundColor,border:cs&&cs.borderTopColor,title:c&&c.getAttribute('title'),zoom:Math.round(z.width),scare:document.querySelectorAll('#cardList .card__scare').length,notSpec:[...document.querySelectorAll('#cardList .card__scare')].some(e=>/Not specified/.test(e.textContent))}});
+      ok(T+'group marker: 36px, dark fill, accent border, tooltip; no pumpkin shape',g.cluster&&g.size===36&&g.bg==='rgb(28, 22, 38)'&&g.border==='rgb(255, 122, 26)'&&/click to zoom/.test(g.title),JSON.stringify(g));
+      ok(T+'zoom buttons are 30px',g.zoom===30,String(g.zoom));
+      ok(T+'scare dots are hidden when the level is not specified',!g.notSpec);
+      // Search this area: hidden until the map moves, top centre of the map, cleared after click
+      const sa0=await p.evaluate(()=>getComputedStyle(document.getElementById('searchAreaBtn')).visibility);
+      await p.evaluate(()=>{map.panBy([300,200],{animate:false});map.fire('moveend')});await p.waitForTimeout(900);
+      const sa=await p.evaluate(()=>{const b=document.getElementById('searchAreaBtn'),m=document.querySelector('.map-frame').getBoundingClientRect(),r=b.getBoundingClientRect();return {vis:getComputedStyle(b).visibility,h:Math.round(r.height),top:Math.round(r.top-m.top),mid:Math.abs((r.left+r.width/2)-(m.left+m.width/2))<4}});
+      ok(T+'Search this area: hidden at rest, then a 32px pill at the top centre of the map after panning',sa0==='hidden'&&sa.vis==='visible'&&sa.h===32&&sa.top<=16&&sa.mid,JSON.stringify(sa));
+      // One pin: centred at zoom 14
+      await go('?category=treats');
+      const one=await p.evaluate(()=>{const m=[...markerByNum.values()][0],c=map.getCenter(),x=listings.find(v=>v.num===[...markerByNum.keys()].find(n=>isTreatStop(listings.find(l=>l.num===n))));return {zoom:map.getZoom(),d:Math.hypot(c.lat-x.lat,c.lng-x.lng)}});
+      ok(T+'one-pin tab centres on the pin at zoom 14',one.zoom===14&&one.d<0.002,JSON.stringify(one));
+      // Route bar: compact when empty
+      const rbe=await p.evaluate(()=>{const r=document.querySelector('.route-wrap').getBoundingClientRect(),m=document.querySelector('.map-frame').getBoundingClientRect();return {h:Math.round(r.height),hint:getComputedStyle(document.getElementById('routeHint')).display,text:getComputedStyle(document.querySelector('.route-toggle__empty')).display,left:Math.round(r.left-m.left),bottom:Math.round(m.bottom-r.bottom)}});
+      ok(T+'empty route bar is a 40px "Add stops from the list" bar with no Expand',rbe.h<=44&&rbe.hint==='none'&&rbe.text!=='none'&&rbe.left===12&&rbe.bottom===12,JSON.stringify(rbe));
+      // Panel scrollbars + footer layout
+      const pf=await p.evaluate(()=>{const f=document.querySelector('#filterRail .filters'),l=document.querySelector('.filter-rail__links');return {sb:getComputedStyle(f).scrollbarWidth,foot:getComputedStyle(l).display,cols:getComputedStyle(l).gridTemplateColumns.split(' ').length}});
+      ok(T+'filter footer is a fixed 2-column link block; scrollbars are thin',pf.sb==='thin'&&pf.foot==='grid'&&pf.cols===2,JSON.stringify(pf));
+      await p.setViewportSize({width:1280,height:800});
     }
     // ---- Deep links ----
     await go('?house=8&entity=drakestown-road-2026');
