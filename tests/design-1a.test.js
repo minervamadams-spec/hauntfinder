@@ -15,19 +15,17 @@ test('Phase A fonts: exact spec families and weights, display=swap, Creepster go
   assert.ok(html.includes('<link rel="preconnect" href="https://fonts.googleapis.com">'),'googleapis preconnect kept');
   assert.ok(html.includes('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'),'gstatic preconnect kept');
 });
-test('Phase A banner: picture/srcset, dimensions, alt, high priority, not lazy',()=>{
+test('v7 banner: supplied transparent sign over the supplied scene strip, dimensions, alt, high priority, not lazy',()=>{
   assert.ok(html.includes('<picture class="banner__frame">'),'picture wrapper');
-  assert.ok(html.includes('type="image/webp" srcset="assets/banner-800.webp 800w, assets/banner-1440.webp 1440w, assets/banner-2205.webp 2205w"'),'webp srcset 800/1440/2205');
-  assert.ok(html.includes('srcset="assets/banner-800.png 800w, assets/banner-1440.png 1440w, assets/banner-2205.png 2205w"'),'png fallback srcset');
-  assert.ok(html.includes('width="2205" height="713"'),'explicit dimensions');
+  assert.ok(html.includes('src="assets/sign-cutout.png"'),'supplied transparent sign asset');
+  assert.ok(html.includes('width="960" height="345"'),'sign dimensions');
   assert.ok(html.includes('alt="Hauntfinder Halloween Guide"'),'spec alt text');
   assert.ok(html.includes('fetchpriority="high"'),'high fetch priority');
   const bannerBlock=html.split('<picture class="banner__frame">')[1].split('</picture>')[0];
   assert.equal(/loading="lazy"/.test(bannerBlock),false,'banner never lazy-loaded');
-  const cssBlock=css.split('/* v6 Phase A: 1A banner')[1];
-  assert.ok(cssBlock.includes('aspect-ratio:5.5/1')&&cssBlock.includes('object-position:center 60%'),'desktop 5.5:1 crop at center 60%');
-  assert.ok(cssBlock.includes('aspect-ratio:4.2/1')&&cssBlock.includes('object-position:center 52%'),'mobile 4.2:1 crop at center 52%');
-  assert.ok(cssBlock.includes('object-fit:cover'),'object-fit cover');
+  const cssBlock=css.split('/* ---- v7 compact workspace')[1];
+  assert.ok(cssBlock.includes('scene-strip-v2.png')&&cssBlock.includes('height:112px'),'desktop scene strip header');
+  assert.ok(cssBlock.includes('object-fit:contain'),'the sign is contained rather than cropped');
 });
 test('Phase A icons: all 12 SVGs present in assets/icons',()=>{
   for(const name of ['pin-display.svg','pin-treat-stop.svg','pin-event.svg','icon-display.svg','icon-treat-stop.svg','icon-event.svg','badge-on-route.svg','icon-list.svg','icon-map.svg','icon-calendar.svg','social-facebook.svg','social-instagram.svg'])

@@ -14,12 +14,12 @@ const m=require('../chrome-filters.js');
 
 const INTRO_COPY='Find decorated homes, spooky displays, treat stops, and Halloween events near you. Check visiting details, plan your route, or submit a listing for free.';
 
-test('intro strip: band background, verbatim copy, no buttons',()=>{
-  const block=html.split('<section class="intro-strip">')[1].split('</section>')[0];
-  assert.ok(block.includes(INTRO_COPY),'verbatim spec 6.2 copy');
-  assert.equal(/<button|<a /.test(block),false,'no buttons in the strip');
-  assert.ok(css.includes('.intro-strip{background:var(--band)'),'band background token');
-  assert.ok(css.includes('.intro-strip__copy'),'Barlow 17px text-2 copy style');
+test('v7 header: scene strip contains the verbatim intro without controls',()=>{
+  const header=html.split('<header class="hf-header banner">')[1].split('</header>')[0];
+  assert.ok(header.includes(INTRO_COPY),'verbatim v7 intro copy');
+  assert.equal(/<button|<a /.test(header),false,'the header intro has no actions');
+  assert.ok(css.includes("scene-strip-v2.png"),'supplied scene strip is the header background');
+  assert.ok(css.includes('.intro-strip__copy'),'intro has an explicit compact style');
 });
 
 test('header keeps only the banner art; alerts CTA lives in the footer',()=>{

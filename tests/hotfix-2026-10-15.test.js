@@ -43,17 +43,13 @@ test('events 768–1199: single column, cards stacked below the week, 7 columns 
   assert.match(css,/\@media\(min-width:960px\)\{[^}]*\.event-week\{display:grid\}[^}]*\.events-mobile-list\{display:none\}/,'week grid ↔ mobile day list switch at 960 intact');
 });
 
-test('banner: no fixed height can clip the art; frame/img stay viewport-relative at every width',()=>{
-  const art=css.split('/* v6 Phase A: 1A banner')[1].split('/* v6 Phase B')[0];
-  assert.match(art,/\.banner__frame\{display:block;width:100%;aspect-ratio:5\.5\/1;overflow:hidden\}/,'desktop crop is aspect-ratio driven');
-  assert.match(art,/\.banner__img\{width:100%;height:100%;object-fit:cover;object-position:center 60%/,'img fills the frame, wordmark anchor at center 60%');
-  assert.match(art,/\@media\(max-width:767px\)\{[^}]*aspect-ratio:4\.2\/1/,'mobile crop ratio');
-  const hotfix=css.split('/* Issue 5 — banner')[1];
-  assert.match(hotfix,/\.hf-header\.banner\{height:auto;min-height:0;flex:0 0 auto;overflow:hidden\}/,'retired 145px/200px header heights can no longer clip the banner');
-  const fixedPxHeights=[...css.matchAll(/\.banner[^{]*\{[^}]*(?<![-\w])height:\s*\d+px/g)];
-  assert.deepEqual(fixedPxHeights,[],'no fixed px height on any .banner wrapper (max-height caps crop via object-fit instead)');
-  const bannerWidths=[...css.matchAll(/\.banner[^{]*\{[^}]*\bwidth:\s*(\d+(?:\.\d+)?)%/g)].map(m=>parseFloat(m[1]));
-  assert.ok(bannerWidths.every(w=>w<=100),'no .banner wrapper wider than 100% ('+bannerWidths.join(',')+')');
+test('banner: v7 uses the supplied scene strip and separate sign, with a deliberately compact fixed workspace header',()=>{
+  const v7=css.split('/* ---- v7 compact workspace')[1];
+  assert.match(v7,/\.hf-header\.banner\{height:112px;[^}]*scene-strip-v2\.png/,'desktop is the supplied 112px scene strip');
+  assert.match(v7,/\.banner__frame\{width:auto;height:clamp\(64px,8vw,100px\)/,'transparent sign is contained rather than crop-filled');
+  assert.match(v7,/\.banner__img\{width:auto;height:100%;object-fit:contain/,'sign uses contain, so its artwork cannot be cut off');
+  assert.match(v7,/@media\(max-width:1023px\)\{[^}]*\.hf-header\.banner\{height:96px/,'mobile/tablet uses a shorter scene strip');
+  assert.match(html,/src="assets\/sign-cutout\.png"/,'homepage uses the supplied transparent sign asset');
   assert.equal(css.includes('.hf-footer>.community-links'),false,'dead footer community-links rule removed');
 });
 

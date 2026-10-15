@@ -51,9 +51,9 @@ test('pagination controls: Previous/Next buttons and a live page position under 
 });
 
 // ---- Page order ----
-test('markup order keeps the map before results for the compact mobile flow',()=>{
+test('markup order keeps the header, controls, filters, map and results in the compact workspace flow',()=>{
   const at=s=>{const i=html.indexOf(s);assert.ok(i>-1,s);return i};
-  const seq=['class="hf-header banner"','class="intro-strip"','class="filterbar"','class="map-frame"','id="countLine"','id="cardList"','id="resultsPager"','id="routeSection"'];
+  const seq=['class="hf-header banner"','class="intro-strip__copy"','class="filterbar"','id="filterRail"','class="map-frame"','id="countLine"','id="cardList"','id="resultsPager"','id="routeSection"'];
   for(let i=1;i<seq.length;i++)assert.ok(at(seq[i-1])<at(seq[i]),seq[i-1]+' before '+seq[i]);
   const mapColumn=html.split('<section class="map-column"')[1].split('<aside class="list-column">')[0];
   assert.equal(mapColumn.includes('id="routeSection"'),false,'route planner is no longer wedged between the map and the cards');
@@ -68,23 +68,28 @@ test('map/list switch removed: no split-layout toggle and no stored view prefere
 });
 
 // ---- CSS contract ----
-test('banner caps: 180px desktop, 140px mobile; intro stays and is compact',()=>{
-  assert.match(block,/\.banner__frame\{max-height:180px\}/);
-  assert.match(block,/@media\(max-width:767px\)\{[^}]*\.banner__frame\{max-height:140px\}/);
+test('v7 header uses the supplied scene strip, contained sign, and hides the intro on narrow screens',()=>{
+  const v7=css.split('/* ---- v7 compact workspace')[1]||'';
+  assert.match(v7,/\.hf-header\.banner\{height:112px;[^}]*scene-strip-v2\.png/);
+  assert.match(v7,/\.banner__frame\{width:auto;height:clamp\(64px,8vw,100px\)/);
+  assert.match(v7,/\.banner__img\{width:auto;height:100%;object-fit:contain/);
+  assert.match(v7,/@media\(max-width:1023px\)\{[\s\S]*?\.intro-strip__copy\{display:none\}/);
   assert.match(html,/<p class="intro-strip__copy">Find decorated homes/);
 });
-test('map is a compact 240px mobile surface and a sticky desktop side panel; full map overlay keeps working',()=>{
+test('map is a compact 240px mobile surface and fills the desktop workspace rail; full map overlay keeps working',()=>{
+  const v7=css.split('/* ---- v7 compact workspace')[1]||'';
   assert.match(block,/html:not\(\[data-category="events"\]\):not\(\[data-fullmap\]\) \.map-frame\{height:240px/);
-  assert.match(block,/\.map-frame\{height:clamp\(360px,calc\(100dvh - var\(--filterbar-h,0px\) - 32px\),620px\);position:sticky/);
+  assert.match(v7,/html:not\(\[data-category="events"\]\):not\(\[data-fullmap\]\) \.map-frame\{height:100%;min-height:0;position:static/);
   assert.match(css,/html\[data-fullmap\] \.map-frame\{position:fixed;inset:0;height:100dvh/,'full map overlay rule intact');
 });
 test('desktop uses the designed filters, results and map workspace rails',()=>{
   assert.match(html,/<aside class="filter-rail" id="filterRail"/,'filter rail is real page structure');
-  assert.match(block,/html:not\(\[data-category="events"\]\) \.page-grid\{width:100%;max-width:none;padding:0;gap:0;display:grid;grid-template-columns:minmax\(250px,\.58fr\) minmax\(420px,1fr\) minmax\(520px,1\.8fr\)/);
-  assert.match(block,/html:not\(\[data-category="events"\]\) \.filter-rail\{display:block;grid-column:1;grid-row:1\/span 2;min-width:0;overflow-y:auto/);
-  assert.match(block,/html:not\(\[data-category="events"\]\) \.list-column\{display:block;grid-column:2;grid-row:1\/span 2;min-width:0;min-height:0;height:auto!important;max-height:none!important;overflow-y:auto!important/);
-  assert.match(block,/html:not\(\[data-category="events"\]\) \.map-column\{display:block;grid-column:3;grid-row:1;min-width:0;min-height:0;width:auto\}/);
-  assert.match(block,/html:not\(\[data-category="events"\]\) \.route-wrap\{grid-column:3;grid-row:2/);
+  const v7=css.split('/* ---- v7 compact workspace')[1]||'';
+  assert.match(v7,/height:100%!important;min-height:0;padding:0;gap:0;display:grid;grid-template-columns:260px minmax\(300px,440px\) minmax\(320px,1fr\)/);
+  assert.match(v7,/\.filter-rail\{grid-column:1;grid-row:1;display:flex;flex-direction:column;min-height:0;padding:14px;overflow-y:auto/);
+  assert.match(v7,/\.list-column\{grid-column:2;grid-row:1;display:block;min-height:0;height:auto!important;max-height:none!important;padding:0;overflow-y:auto!important/);
+  assert.match(v7,/\.map-column\{grid-column:3;grid-row:1;display:block;min-width:0;min-height:0;width:auto;position:relative/);
+  assert.match(v7,/\.route-wrap\{grid-column:3;grid-row:1;z-index:700;align-self:end/);
   assert.equal(css.includes('html[data-view='),false,'no Map/List view states left in the stylesheet');
 });
 test('desktop rail exposes direct filter chips and the Leaflet canvas resizes after its grid cell changes',()=>{
