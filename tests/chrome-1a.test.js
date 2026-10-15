@@ -27,7 +27,7 @@ test('header keeps only the banner art; alerts CTA lives in the footer',()=>{
   assert.ok(header.includes('banner__frame'),'banner art kept');
   assert.equal(header.includes('alerts-cta'),false,'alerts CTA removed from header');
   assert.equal(header.includes('shareBtn'),false,'share button moved to the filter row');
-  assert.ok(html.includes('<a class="alerts-footer-link" href="alerts.html" data-alerts-link hidden>'),'footer alerts link preserved');
+  assert.ok(html.includes('<a class="alerts-footer-link" href="alerts.html">Get alerts</a>'),'footer alerts link is a plain same-tab link to the standalone page');
 });
 
 test('nav row: tablist with ids and accent badges sits beside the search cluster',()=>{
@@ -53,9 +53,10 @@ test('search wiring ids survive the restructure',()=>{
   assert.equal(/id="locStatus"[^>]*>Within/.test(html.split('<section class="filterbar"')[1].split('</section>')[0]),false,'locStatus starts empty');
 });
 
-test('chrome-filters.js loads after layout.js and before alerts-link.js',()=>{
+test('chrome-filters.js loads after layout.js and before url-state.js (alerts-link.js retired)',()=>{
   assert.ok(html.indexOf('chrome-filters.js')>html.indexOf('layout.js'),'after layout.js');
-  assert.ok(html.indexOf('chrome-filters.js')<html.indexOf('alerts-link.js'),'before alerts-link.js');
+  assert.ok(html.indexOf('chrome-filters.js')<html.indexOf('url-state.js'),'before url-state.js');
+  assert.ok(html.indexOf('alerts-link.js')===-1,'alerts-link.js stays deleted (page-first alerts)');
 });
 
 test('Show options: spec labels, single select, Walk-up maps to Walk-by data',()=>{

@@ -1,6 +1,7 @@
 // Category panels render one continuous card list; route controls remain below the map.
 (() => {
  const $=id=>document.getElementById(id),tabs=[['displaysTab','displays'],['treatStopsTab','treats'],['eventsTab','events']];
+ const root=document.documentElement; // declared before ANY render path can run: sync() reads root on the events branch, and URL-driven init (selectTab('events') below) executes before a later declaration would initialize it (TDZ killed every Events tab click on ?category=events / ?event= loads).
  const EVENT_FORM_URL='https://forms.gle/bKfYM7u135mcWKfT8';
  const originalFilters=renderFilters,originalCards=renderCards,originalRoute=renderRoute,originalSelect=selectListing;
  state.categoryFeature='';state.eventDay='';state.eventsView='week';
@@ -55,7 +56,6 @@
  const dayParam=params.get('day');
  if(dayParam){const week=typeof eventWeekDays==='function'?eventWeekDays(events):[],m=String(dayParam).match(/^(\d{1,2})$/);if(m){const date=(week[0]||'').slice(0,8)+String(m[1]).padStart(2,'0');if(week.includes(date))state.eventDay=date;if(state.category==='events')renderCards()}}
  // ---- Phase 5: mobile map/list views, full-screen map, search this area. ----
- const root=document.documentElement;
  function measureFilterbar(){const fb=document.querySelector('.filterbar');if(fb)root.style.setProperty('--filterbar-h',fb.offsetHeight+'px')}
  measureFilterbar();window.addEventListener('resize',measureFilterbar);
  let mapViewSeen=false;

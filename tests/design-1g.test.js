@@ -2,10 +2,10 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const ROOT=path.join(__dirname,'..');
 const html=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
 const community=fs.readFileSync(path.join(ROOT,'community.js'),'utf8');
-const alertsLink=fs.readFileSync(path.join(ROOT,'alerts-link.js'),'utf8');
 const css=fs.readFileSync(path.join(ROOT,'styles.css'),'utf8');
 const alertsCss=fs.readFileSync(path.join(ROOT,'alerts.css'),'utf8');
 const app=fs.readFileSync(path.join(ROOT,'app.js'),'utf8');
+const alertsPage=fs.readFileSync(path.join(ROOT,'alerts.html'),'utf8');
 const footer=html.split('<footer class="hf-footer">')[1].split('</footer>')[0];
 const FORMS={
   // Verified 2026-10-14 by opening each link (handoff README had them swapped):
@@ -23,14 +23,14 @@ test('footer row 1: heading, a single picker button, no raw form links',()=>{
 });
 
 test('footer row 2: About · Get alerts · Share this site · counter · Contact us in order',()=>{
-  const order=[footer.indexOf('id="aboutBtn"'),footer.indexOf('data-alerts-link'),footer.indexOf('id="shareSiteBtn"'),footer.indexOf('id="siteVisits"'),footer.indexOf('mailto:mtocommunityfinder@gmail.com')];
+  const order=[footer.indexOf('id="aboutBtn"'),footer.indexOf('alerts-footer-link'),footer.indexOf('id="shareSiteBtn"'),footer.indexOf('id="siteVisits"'),footer.indexOf('mailto:mtocommunityfinder@gmail.com')];
   assert.deepEqual(order,[...order].sort((a,b)=>a-b),'nav items in spec order');
   assert.match(footer,/<span class="footer-link" id="siteVisits" hidden[^>]*>Site visits: <strong id="siteVisitTotal"><\/strong><\/span>/,'counter starts empty, not hardcoded');
   assert.match(html,/fetch\('\/api\/visits', \{method: 'POST', credentials: 'same-origin'\}\)/,'live visit counter POST kept');
   assert.match(html,/document\.getElementById\('siteVisitTotal'\)\.textContent = data\.visits\.toLocaleString\(\)/);
   assert.match(footer,/href="mailto:mtocommunityfinder@gmail\.com">Contact us/);
   assert.equal(/MTOCommunityFinder@gmail\.com/.test(footer),false,'legacy email spelling gone from footer');
-  assert.match(footer,/data-alerts-link hidden>Get alerts</,'alerts link stays hidden until subscriptions are available');
+  assert.match(footer,/class="alerts-footer-link" href="alerts\.html">Get alerts</,'alerts is a plain same-tab link to the standalone page');
   assert.match(css,/\.hf-footer \.footer-links>\*\+\*::before\{[^}]*width:4px[^}]*border-radius:50%/,'4px dot separators');
 });
 
@@ -58,35 +58,13 @@ test('type picker dialog: verbatim subtitle, three options, canonical form URLs'
   assert.equal(html.includes('Display Form'),false,'old footer form buttons gone from the page');
 });
 
-test('alerts popup: P0 copy, subscribe/not-now actions, compact lime-accented dialog',()=>{
-  const dlg=html.split('id="alertsDialog"')[1].split('</dialog>')[0];
-  assert.match(html,/<dialog class="site-dialog alerts-dialog" id="alertsDialog" aria-labelledby="alertsTitle">/);
-  assert.match(dlg,/<h2 id="alertsTitle">Get new listing alerts<\/h2>/);
-  assert.match(dlg,/Want to know when new displays, treat stops, and events are added near you\?/);
-  assert.match(dlg,/<button type="button" class="btn btn--route" id="alertsSubscribeBtn">Subscribe<\/button>/);
-  assert.match(dlg,/<button type="button" class="btn btn--outline" id="alertsNotNowBtn">Not now<\/button>/);
-  assert.match(dlg,/Shown once on a first visit\. Unsubscribe any time\./);
-  assert.match(dlg,/<iframe title="Community listing alerts signup"><\/iframe>/,'alerts iframe stays eager (lazy loading inside a dialog renders blank)');
-  assert.match(alertsCss,/\.alerts-dialog\{[^}]*width:min\(540px/,'alerts dialog width 540');
-  assert.match(alertsCss,/border-top:4px solid #a6e22e/,'lime top accent');
-  assert.equal(alertsCss.includes('alerts-dialog-close'),false,'old absolute close button class retired');
-});
-
-test('alerts first-visit logic: once-only flag, src=alert suppression, delay, never stacks',()=>{
-  assert.match(alertsLink,/hf_alerts_seen/,'seen flag key');
-  assert.match(alertsLink,/localStorage\.setItem\(SEEN_KEY,'1'\)/);
-  assert.match(alertsLink,/localStorage\.getItem\(SEEN_KEY\)==='1'/);
-  assert.match(alertsLink,/get\('src'\)==='alert'/,'?src=alert suppresses the popup');
-  assert.match(alertsLink,/,2000\)/,'2 second delay');
-  assert.match(alertsLink,/if\(document\.querySelector\('dialog\[open\]'\)\)return/,'never opens on top of another dialog');
-  assert.match(alertsLink,/frame\.contentWindow\.focus\(\)/,'Subscribe focuses the embedded form');
-  assert.match(alertsLink,/window\.open\('\/alerts\.html','_blank','noopener'\)/,'Subscribe fallback opens the full page');
-  assert.match(alertsLink,/getElementById\('alertsNotNowBtn'\)\.addEventListener\('click'/);
-  assert.match(alertsLink,/dialog\.addEventListener\('close',[\s\S]*markSeen/,'×, Esc, scrim, and Not now all set the seen flag');
-  assert.match(alertsLink,/markSeen\(\);dialog\.showModal\(\)/,'opening the dialog manually also marks seen');
-  assert.match(alertsLink,/'\/alerts\.html\?embed=1'/,'lazy embed flow kept');
-  assert.match(alertsLink,/event\.ctrlKey\|\|event\.metaKey\|\|event\.shiftKey\|\|event\.altKey/,'modified clicks still pass through');
-  assert.match(alertsLink,/d\.available/,'footer link and popup both gate on subscription availability');
+test('alerts is page-first: standalone page, no popup, no iframe, no auto-open',()=>{
+  assert.equal(html.includes('id="alertsDialog"'),false,'alerts dialog markup retired (Codex a17a8b5: nested pages can fail to paint inside a modal)');
+  assert.equal(html.includes('alerts-link.js'),false,'popup controller script stays deleted');
+  assert.ok(!/<iframe[^>]*alerts/i.test(html),'no alerts iframe anywhere in the shell');
+  assert.match(alertsPage,/id="alertsForm"/,'standalone alerts page carries the signup form');
+  assert.match(alertsPage,/id="alertsAreaToggle"/,'area (zip/radius) choices live on the standalone page');
+  assert.match(alertsPage,/alerts\.js/,'standalone page loads its controller');
 });
 
 test('shared modal behavior: scrim guard, focus return, scroll lock, bottom sheets',()=>{

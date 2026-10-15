@@ -54,29 +54,25 @@ test('Bug A: late-arriving centroid data changes the visible set through the sha
  assert.equal(after[0].num,3,'nearest-first ordering from the shared computation');
 });
 
-// ---- Bug B: alerts dialog is a centered modal, iframe loads eagerly ----
+// ---- Bug B: alerts went page-first (Codex a17a8b5): standalone alerts.html
+//      instead of an iframe inside a modal — the blank-iframe class of bug is
+//      structurally impossible now. ----
 test('Bug B: dialogs carry explicit centered-modal positioning that no UA quirk can drop',()=>{
  assert.match(css,/\.site-dialog\{position:fixed;inset:0;margin:auto;width:min\(680px,calc\(100% - 28px\)\)/,'base .site-dialog is explicitly fixed+centered');
  assert.match(css,/@media\(max-width:1023px\)\{\.site-dialog\{position:fixed;inset:auto 0 0 0;margin:0;width:100%;max-width:none;border-radius:16px 16px 0 0;max-height:88dvh\}\}/,'mobile bottom sheet paired with explicit margin reset');
- assert.match(alertsCss,/\.alerts-dialog\{width:min\(540px,calc\(100vw - 24px\)\)/,'alerts dialog keeps the 540px modal width');
+ assert.ok(!html.includes('alerts-dialog'),'alerts dialog markup retired with the iframe approach');
 });
-
-test('Bug B: alerts iframe is not lazy-loaded (blank-iframe fix)',()=>{
- const dlg=html.split('id="alertsDialog"')[1].split('</dialog>')[0];
- assert.ok(dlg.includes('<iframe'),'iframe present');
- assert.ok(!dlg.includes('loading="lazy"'),'lazy loading removed — src is set on first open and must load immediately');
-});
-test('Bug B: alerts frame src is assigned eagerly at init, not at dialog-open time',()=>{
- const link=fs.readFileSync(path.join(__dirname,'../alerts-link.js'),'utf8');
- const openBody=link.split('function open(from){')[1].split('\nfunction ')[0];
- assert.ok(!openBody.includes('frame.src'),'open() no longer touches frame.src (the open-time assignment raced first paint in Chrome and left the dialog blank)');
- assert.match(link,/frame\.src='\/alerts\.html\?embed=1';/,'src assigned once at script init so the frame is fully loaded before the dialog can open');
+test('Bug B: alerts CTA is a plain same-tab link to the standalone page (no iframe, no modal)',()=>{
+ assert.ok(!html.includes('alertsDialog'),'no alerts dialog remains in the markup');
+ const m=html.match(/<a class="alerts-footer-link" href="alerts.html"[^>]*>/);
+ assert.ok(m,'footer alerts link points at the standalone alerts page');
+ assert.ok(!m[0].includes('data-alerts-link'),'no JS interception — plain navigation, page-first');
+ assert.ok(!fs.existsSync(path.join(__dirname,'../alerts-link.js')),'alerts-link.js controller stays deleted');
 });
 
 // ---- Bug C: spec scrim for every .site-dialog instance ----
 test('Bug C: all dialogs share the rgba(5,4,8,.6) backdrop; nothing overrides it transparent',()=>{
  assert.match(css,/\.site-dialog::backdrop\{background:rgba\(5,4,8,\.6\)\}/,'shared scrim rule');
- assert.match(alertsCss,/\.alerts-dialog::backdrop\{background:rgba\(5,4,8,\.6\)\}/,'alerts uses the same scrim value');
  assert.ok(!/::backdrop\{[^}]*transparent/.test(css+alertsCss),'no transparent backdrop override anywhere');
  const dialogs=[...html.matchAll(/<dialog class="([^"]*)"/g)].map(m=>m[1]);
  assert.ok(dialogs.length>=5,'dialogs found');
