@@ -46,7 +46,7 @@ test('results rail: no pagination controls or page-jump state remain in markup o
   assert.equal(/state\.page\b/.test(app+layout),false);
 });
 test('results rail: ?house= deep links select their card without any page jump',()=>{
-  assert.match(layout,/selectListing\(linked\);if\(params\.get\('view'\)==='map'\)\{state\.linkedHouse=house\.num/);
+  assert.match(layout,/selectListing\(linked,innerWidth>=1024\);if\(params\.get\('view'\)==='map'\)\{state\.linkedHouse=house\.num/);
   assert.match(layout,/selectListing=function\(n,scroll=false\)\{[^\n]*renderCards\(\)\}originalSelect\(n,scroll\)/);
   assert.equal(layout.includes('pageFor'),false,'no page-jump state');
 });
@@ -85,7 +85,7 @@ test('map is a compact 240px mobile surface and fills the desktop workspace rail
 });
 test('desktop uses the designed filters, results and map workspace rails',()=>{
   assert.match(html,/<aside class="filter-rail" id="filterRail"/,'filter rail is real page structure');
-  assert.match(html,/class="filterbar__rail-head" aria-hidden="true"/,'desktop rail heading shares the control row');
+  assert.match(html,/class="filterbar__rail-head" id="railToggle"/,'desktop rail heading shares the control row');
   const v7=css.split('/* ---- v7 compact workspace')[1]||'';
   assert.match(v7,/height:100%!important;min-height:0;padding:0;gap:0;display:grid;grid-template-columns:260px minmax\(300px,440px\) minmax\(320px,1fr\)/);
   assert.match(v7,/\.filter-rail\{grid-column:1;grid-row:1;display:flex;flex-direction:column;min-height:0;padding:14px;overflow-y:auto/);

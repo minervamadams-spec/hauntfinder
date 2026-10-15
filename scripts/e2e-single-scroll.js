@@ -8,14 +8,14 @@
 // aborted, and nothing is posted, so production runs create no QA data.
 const BASE=(process.argv[2]||'http://localhost:8765').replace(/\/$/,'');
 let chromium;try{({chromium}=require('playwright'))}catch{console.error('Install playwright to run these checks: npm i -D playwright');process.exit(2)}
-let fails=0;const ok=(name,pass,detail='')=>{console.log(`${pass?'PASS':'FAIL'}  ${name}${detail?'  — '+detail:''}`);if(!pass)fails++};
+let fails=0,lastStep='';const ok=(name,pass,detail='')=>{lastStep=name;console.log(`${pass?'PASS':'FAIL'}  ${name}${detail?'  — '+detail:''}`);if(!pass)fails++};
 
 const probe=()=>{
   const r=el=>{if(!el)return null;const b=el.getBoundingClientRect();return {top:b.top,bottom:b.bottom,left:b.left,width:b.width,height:b.height}};
   const visible=el=>!!el&&el.getClientRects().length>0&&getComputedStyle(el).visibility!=='hidden';
   const scrollers=[...document.querySelectorAll('body *')].filter(e=>{const cs=getComputedStyle(e);return /(auto|scroll)/.test(cs.overflowY)&&e.scrollHeight>e.clientHeight+1&&e.clientHeight>0}).map(e=>(e.id?'#'+e.id:'')+'.'+String(e.className).split(' ')[0]);
   const cards=[...document.querySelectorAll('#cardList [data-card]')];
-  const pins=[...document.querySelectorAll('.leaflet-marker-pane [data-pin]')].map(p=>+p.dataset.pin);
+  const pins=[...markerByNum].filter(([n,m])=>listingCluster.hasLayer(m)).map(([n])=>n);
   const mf=document.querySelector('.map-frame'),cl=document.getElementById('countLine');
   const sel=({displays:'#displayTabCount',treats:'#treatStopCount',events:'#eventCount'})[state.category];
   return {filterRail:r(document.getElementById('filterRail')),listRail:r(document.querySelector('.list-column')),mapFrame:visible(mf)?r(mf):null,countLine:r(cl),countText:cl.textContent,
@@ -33,7 +33,7 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
     const ctx=await browser.newContext({viewport:{width:vp.width,height:vp.height}});
     await ctx.route('**/api/visits**',r=>r.abort());
     await ctx.route('**/api/**',r=>r.request().method()==='GET'?r.continue():r.abort());
-    const p=await ctx.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));
+    const p=await ctx.newPage();const errors=[];p.on('pageerror',e=>errors.push(process.env.HF_DEBUG?'after "'+lastStep+'": '+String(e.stack).split('\n').slice(0,9).join(' | '):e.message));
     const go=async q=>{await p.goto(BASE+'/'+q,{waitUntil:'networkidle'});await p.waitForTimeout(700)};
     const inView=n=>p.evaluate(({n,desktop})=>{const c=document.querySelector(`#cardList [data-card="${n}"]`);if(!c)return false;const b=c.getBoundingClientRect(),area=desktop?document.querySelector('.list-column').getBoundingClientRect():{top:0,bottom:innerHeight};return b.top>=area.top-1&&b.bottom<=area.bottom+1},{n,desktop});
 
@@ -106,6 +106,54 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       ok(T+'Events (mobile): calendar day list shown, no map, no nested scroll',!!e.calendar&&!e.mapFrame&&e.scrollers.length===0,e.scrollers.join(', ')||'none');
     }
 
+    // ---- Design review (2026-10-15) ----
+    if(desktop){
+      for(const [tab,accent,sel] of [['displays','rgb(255, 122, 26)','#displaysTab'],['treats','rgb(166, 226, 46)','#treatStopsTab'],['events','rgb(180, 140, 255)','#eventsTab']]){
+        await go('?category='+tab);
+        const r=await p.evaluate(sel=>{const t=document.querySelector(sel),cs=getComputedStyle(t),rail=document.getElementById('filterRail').getBoundingClientRect(),badge=t.querySelector('.tabs__badge');return {bg:cs.backgroundColor,bb:cs.borderBottomColor,bw:cs.borderBottomWidth,color:cs.color,railBottom:Math.round(rail.bottom),inner:innerHeight,badge:badge.textContent,doc:document.documentElement.scrollHeight}},sel);
+        ok(T+tab+': filter panel reaches the bottom of the window',r.railBottom>=r.inner-1&&r.doc<=r.inner,JSON.stringify({railBottom:r.railBottom,inner:r.inner}));
+        ok(T+tab+': active tab has no fill and a 3px accent underline',r.bg==='rgba(0, 0, 0, 0)'&&r.bb===accent&&r.bw==='3px'&&r.color==='rgb(246, 235, 211)',JSON.stringify({bg:r.bg,bb:r.bb,color:r.color}));
+        ok(T+tab+': tab badge is a bare number',/^\d+$/.test(r.badge),r.badge);
+      }
+      await go('?category=displays');
+      const dv=await p.evaluate(()=>{const cards=[...document.querySelectorAll('#cardList [data-card]')],labels=cards.map(c=>+c.querySelector('.pin__num').textContent),markers=cards.map(c=>{const n=+c.dataset.card,m=markerByNum.get(n);return m&&m.options.icon.options.html.includes(`pin__num">${labels[cards.indexOf(c)]}<`)});return {labels,sequential:labels.every((v,i)=>v===i+1),match:markers.every(Boolean),clusters:document.querySelectorAll('.hf-cluster').length,h:Math.round(cards[0].getBoundingClientRect().height)}});
+      ok(T+'pin numbers are 1..N in list order and match card badges',dv.sequential&&dv.match,dv.labels.join(','));
+      ok(T+'overlapping pins cluster',dv.clusters>=1,`${dv.clusters} cluster(s)`);
+      ok(T+'display card with tags is <=190px tall',dv.h<=190,`${dv.h}px`);
+      const sb=await p.evaluate(()=>{const x=id=>document.getElementById(id).getBoundingClientRect().left;return {zip:x('zipInput'),within:document.querySelector('.within-dd').getBoundingClientRect().left,go:x('zipSearchBtn'),locate:x('locateBtn'),goText:document.getElementById('zipSearchBtn').textContent,within_text:document.getElementById('locbarWithin').textContent.trim(),bar:Math.round(document.querySelector('.nav-search').getBoundingClientRect().height)}});
+      ok(T+'search bar order: ZIP, radius, GO, My location',sb.zip<sb.within&&sb.within<sb.go&&sb.go<sb.locate&&sb.goText==='GO'&&!/within/i.test(sb.within_text)&&sb.bar===48,JSON.stringify(sb));
+      const chips=await p.evaluate(()=>[...document.querySelectorAll('#filterRail .filter-rail__section')].map(s=>s.querySelector('h3').textContent+': '+[...s.querySelectorAll('button')].map(b=>b.textContent).join('|')));
+      ok(T+'How to visit shows all four options; Any night is on by default',chips.some(c=>c==='How to visit: Drive-by|Walk-up|Walk-through|Drive or walk by (both)')&&(await p.evaluate(()=>document.querySelector('#filterRail [data-rail-filter="when"][aria-pressed="true"]').textContent==='Any night')),chips.join(' / '));
+      await go('?category=treats');
+      const tw=await p.evaluate(()=>[...document.querySelectorAll('#filterRail [data-rail-filter="when"],#filterRail [data-rail-filter="when-date"]')].map(b=>b.textContent).join('|'));
+      ok(T+'Treat Stops When: Any night, Tonight, Halloween',tw==='Any night|Tonight|Halloween',tw);
+      const tc=await p.evaluate(()=>({top:getComputedStyle(document.querySelector('#cardList .treat-stop-card')).borderTopColor,prompt:!!document.querySelector('#cardList .treat-prompt__link[target="_blank"]'),notes:!!document.querySelector('#cardList .treat-stop-card .card__notes'),date:document.querySelector('#cardList .treat-stop-card .card__hours').textContent}));
+      ok(T+'treat card: lime top border, no host notes, dated like events; add-your-home prompt below',tc.top==='rgb(166, 226, 46)'&&!tc.notes&&tc.prompt&&/^[A-Z][a-z]{2}, [A-Z][a-z]{2} \d+/.test(tc.date),JSON.stringify(tc));
+      await go('?category=events');
+      const ec=await p.evaluate(()=>{const c=document.querySelector('#cardList .event-card');const types=[...document.querySelectorAll('#filterRail [data-rail-filter="event-type"]')].map(b=>b.textContent);return {name:getComputedStyle(c.querySelector('.event-card__name')).textTransform,venueRepeats:/Costume Closet ·/.test(c.querySelector('.card__address').textContent),clamp:getComputedStyle(c.querySelector('.event-card__clamp')).webkitLineClamp,tags:[...c.querySelectorAll('.chips .chip')].map(x=>x.textContent),noAll:!types.includes('All types'),stray:/\}\s*$/.test(c.querySelector('.event-card__details').textContent.trim()),h:[...document.querySelectorAll('#cardList .event-card')].map(e=>Math.round(e.getBoundingClientRect().height))}});
+      ok(T+'event card: title case, address only, 3-line clamp, event-form tags only',ec.name==='none'&&!ec.venueRepeats&&ec.clamp==='3'&&!ec.tags.includes('Costumes Available')&&ec.noAll&&!ec.stray,JSON.stringify(ec));
+      ok(T+'event cards stay compact (<=260px with a 3-line description)',ec.h.every(h=>h<=260||h===ec.h[0]&&h<=310),ec.h.join(','));
+      // collapse toggle
+      await go('?category=displays');
+      await p.click('#railToggle');await p.waitForTimeout(300);
+      const col=await p.evaluate(()=>({w:Math.round(document.getElementById('filterRail').getBoundingClientRect().width),mapW:Math.round(document.getElementById('map').getBoundingClientRect().width),leaflet:map.getSize().x,label:document.querySelector('.filter-rail__expand-label').getBoundingClientRect().height>document.querySelector('.filter-rail__expand-label').getBoundingClientRect().width}));
+      ok(T+'filter panel collapses to 44px, shows a vertical label, and the map resizes',col.w===44&&col.label&&Math.abs(col.mapW-col.leaflet)<=1,JSON.stringify(col));
+      await p.click('#railToggle');await p.waitForTimeout(300);
+      ok(T+'filter panel expands again to 260px',(await p.evaluate(()=>Math.round(document.getElementById('filterRail').getBoundingClientRect().width)))===260);
+      // route bar
+      await p.click('#cardList [data-route]');await p.waitForTimeout(200);
+      await p.click('#routeToggle');await p.waitForTimeout(200);
+      const rb=await p.evaluate(()=>({open:!document.getElementById('routePanel').hidden,stops:document.querySelectorAll('#routeStopsMini .route-stop').length,href:document.getElementById('routeDirections').href,plan:document.getElementById('routeLink').getAttribute('href'),hint:document.getElementById('routeHint').textContent}));
+      ok(T+'route bar expands to numbered stops, Get directions and the planner link',rb.open&&rb.stops===1&&/^https:\/\/www\.google\.com\/maps\/dir\//.test(rb.href)&&rb.plan==='route.html',JSON.stringify(rb));
+      await p.click('[data-route-mini-remove="0"]');await p.waitForTimeout(200);
+      ok(T+'route bar Remove drops the stop',(await p.evaluate(()=>document.querySelectorAll('#routeStopsMini .route-stop').length))===0);
+      await p.evaluate(()=>localStorage.clear());
+      // empty result
+      await go('?category=displays');
+      await p.evaluate(()=>{state.features=['Costumes Available','Actors','Animatronics','Fog','Lights','Music/Sound'];state.filter='Walk-through';renderFilters();renderCards()});await p.waitForTimeout(300);
+      const em=await p.evaluate(()=>({text:document.querySelector('#noResults strong').textContent,btn:document.getElementById('showAllBtn').textContent,vis:document.getElementById('showAllBtn').getClientRects().length>0}));
+      ok(T+'empty result: "Nothing matches these filters." with Clear all filters',em.text==='Nothing matches these filters.'&&em.btn==='Clear all filters'&&em.vis,JSON.stringify(em));
+    }
     // ---- Deep links ----
     await go('?house=8&entity=drakestown-road-2026');
     const d8=await p.evaluate(()=>{const pin=document.querySelector('.leaflet-marker-pane [data-pin="8"]');return {sel:state.selected,card:!!document.querySelector('#cardList [data-card="8"].is-selected'),pin:!!pin&&pin.classList.contains('is-selected')}});

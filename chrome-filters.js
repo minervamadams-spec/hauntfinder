@@ -112,18 +112,33 @@ function ddHTML(kind,label,valueText,active,session){return `<details class="dd$
 
 function railChip(action,value,label,pressed){return `<button type="button" class="filter filter--rail" data-rail-filter="${action}" data-value="${String(value).replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" aria-pressed="${pressed}">${label}</button>`}
 function railSection(label,body){return `<section class="filter-rail__section"><h3>${label}</h3><div class="filter-rail__chips">${body}</div></section>`}
+function railActiveCount(){return (state.dateFilter&&state.dateFilter.kind?1:0)+(state.filter&&state.filter!=='All'?1:0)+((state.features||[]).length)}
+function railClearHTML(){return railActiveCount()?'<button type="button" class="filter-rail__clear" data-rail-clear>Clear all filters</button>':''}
 function railFiltersHTML(){
- const when=CHROME_WHEN_OPTIONS.slice(0,3).map(o=>railChip('when',o.kind,o.label,Boolean(state.dateFilter&&state.dateFilter.kind===o.kind))).concat(railChip('when-date','halloween','Halloween',Boolean(state.dateFilter&&state.dateFilter.kind==='date'&&/\-10-31$/.test(state.dateFilter.date||'')))).join('');
- if(state.category==='treats')return railSection('When',when)+railSection('Features',featureOptions().map(o=>railChip('feature',o.value,o.label,state.features.includes(o.value))).join(''));
- if(state.category==='events')return railSection('Type',CHROME_EVENT_TYPE_OPTIONS.map(o=>railChip('event-type',o.value,o.label,state.filter===o.value)).join(''))+railSection('Features',CHROME_EVENT_FEATURE_OPTIONS.map(o=>railChip('event-feature',o.value,o.label,state.features.includes(o.value))).join(''));
- const visit=CHROME_SHOW_OPTIONS.filter(o=>['Drive-by','Walk-up','Walk-through'].includes(o.value)).map(o=>railChip('show',o.value,o.label,state.filter===o.value)).join('');
- const scares=CHROME_SHOW_OPTIONS.filter(o=>['Family Friendly','Spooky','Scary'].includes(o.value)).map(o=>railChip('show',o.value,o.label,state.filter===o.value)).join('');
- return railSection('When',when)+railSection('How to visit',visit)+railSection('Scare level',scares)+railSection('Features',featureOptions().map(o=>railChip('feature',o.value,o.label,state.features.includes(o.value))).join(''));
+ const kind=(state.dateFilter&&state.dateFilter.kind)||'',isHalloween=Boolean(state.dateFilter&&state.dateFilter.kind==='date'&&/\-10-31$/.test(state.dateFilter.date||''));
+ const whenOpts=state.category==='treats'?CHROME_WHEN_OPTIONS.slice(0,2):CHROME_WHEN_OPTIONS.slice(0,3);
+ const when=whenOpts.map(o=>railChip('when',o.kind,o.label,o.kind===''?(!kind):kind===o.kind)).concat(railChip('when-date','halloween','Halloween',isHalloween)).join('');
+ let body;
+ if(state.category==='treats')body=railSection('When',when)+railSection('Features',featureOptions().map(o=>railChip('feature',o.value,o.label,state.features.includes(o.value))).join(''));
+ else if(state.category==='events')body=railSection('Type',CHROME_EVENT_TYPE_OPTIONS.filter(o=>o.value!=='All').map(o=>railChip('event-type',o.value,o.label,state.filter===o.value)).join(''))+railSection('Features',CHROME_EVENT_FEATURE_OPTIONS.map(o=>railChip('event-feature',o.value,o.label,state.features.includes(o.value))).join(''));
+ else{
+  const visit=[['Drive-by','Drive-by'],['Walk-by','Walk-up'],['Walk-through','Walk-through'],['Drive or walk by (both)','Drive or walk by (both)']].map(([v,l])=>railChip('show',v,l,state.filter===v)).join('');
+  const scares=CHROME_SHOW_OPTIONS.filter(o=>['Family Friendly','Spooky','Scary'].includes(o.value)).map(o=>railChip('show',o.value,o.label,state.filter===o.value)).join('');
+  body=railSection('When',when)+railSection('How to visit',visit)+railSection('Scare level',scares)+railSection('Features',featureOptions().map(o=>railChip('feature',o.value,o.label,state.features.includes(o.value))).join(''));
+ }
+ return body+railClearHTML();
 }
+// Filter panel collapse (v7): 260px <-> 44px. Starts collapsed below 1100px.
+const railRoot=document.documentElement;
+function railSetCollapsed(on){railRoot.dataset.rail=on?'collapsed':'open';const t=document.getElementById('railToggle');if(t)t.setAttribute('aria-expanded',String(!on));const b=document.getElementById('railExpand');if(b)b.setAttribute('aria-expanded',String(!on));railBadge();setTimeout(()=>{if(typeof map!=='undefined'&&map&&map.invalidateSize)map.invalidateSize()},60)}
+function railBadge(){const n=railActiveCount(),el=document.getElementById('railBadge');if(el){el.textContent=String(n);el.hidden=!n}}
+if(typeof matchMedia==='function'&&document.getElementById('railToggle')){railSetCollapsed(innerWidth<1100);
+ document.getElementById('railToggle').addEventListener('click',()=>railSetCollapsed(railRoot.dataset.rail!=='collapsed'));
+ document.getElementById('railExpand').addEventListener('click',()=>railSetCollapsed(false))}
 
 const prevRenderFilters=renderFilters;
 renderFilters=function(){
- if(desktopRail()){filtersEl.innerHTML=railFiltersHTML();return}
+ if(desktopRail()){filtersEl.innerHTML=railFiltersHTML();railBadge();return}
  if(state.category==='events'){const session=snapshot(),fN=session.features.length;filtersEl.innerHTML=ddHTML('type','Type',chromeEventTypeLabelForValue(session.filter),session.filter!=='All',session)+ddHTML('efeatures','Features',fN?`${fN} selected`:'Any',fN>0,session);return}
  const session=snapshot(),features=session.features;
  const featuresText=features.length?`${features.length} selected`:'Any';
@@ -147,6 +162,7 @@ filtersEl.addEventListener('toggle',e=>{
 },true);
 
 filtersEl.addEventListener('click',e=>{
+ if(e.target.closest('[data-rail-clear]')){state.filter='All';state.features=[];state.categoryFeature='';state.dateFilter={kind:null,date:null};if(typeof saveDateFilter==='function')try{state.dateFilter=saveDateFilter(state.dateFilter,localStorage)}catch{}renderFilters();renderCards();return}
  const rail=e.target.closest('[data-rail-filter]');
  if(rail){
   const action=rail.dataset.railFilter,value=rail.dataset.value;

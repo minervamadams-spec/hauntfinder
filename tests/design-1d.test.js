@@ -22,7 +22,7 @@ test('route header row: "Your route" 26 condensed uppercase, "N of 10 stops" tex
   assert.ok(html.includes('id="routeHeading"'),'heading id preserved for aria-labelledby');
   assert.ok(html.includes('<span class="route-toggle__title" id="routeHeading">Your route</span>'),'title is the in-link header');
   assert.ok(html.includes('class="route-toggle__count" id="routeBadge">0 of 10 stops<'),'count placeholder reads "of 10 stops"');
-  assert.ok(html.includes('<span class="route-toggle__hint">Plan your route →</span>'),'hint is the planner link');
+  assert.ok(html.includes('<span class="route-toggle__hint" id="routeHint">Expand ▴</span>')&&html.includes('id="routeLink" href="route.html">Plan your route →</a>'),'v7 route bar: Expand hint in the bar, planner link inside the panel');
   assert.ok(layout.includes("$('routeBadge').textContent=state.route.length+' of 10 stops'"),'badge syncs as "N of 10 stops"');
   const title=css.split('\n').find(l=>l.startsWith('.route-toggle__title{')&&l.includes('font:600 26px'));
   assert.ok(title&&title.includes('26px')&&title.includes('var(--f-cond)')&&title.includes('uppercase'),'26px condensed uppercase title');

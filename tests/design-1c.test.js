@@ -65,7 +65,7 @@ test('meta row: 13px with divider, Host notes + rating left, Report/Share right'
 test('ratings render in the spec format with orange stars',()=>{
   assert.ok(community.includes('★★★★★'),'star row for rated listings');
   assert.ok(community.includes('${summary.average} · ${summary.count} ratings'),'"4.8 · 12 ratings" format');
-  assert.ok(community.includes('No ratings yet · Rate'),'empty-state format');
+  assert.ok(community.includes('No ratings yet · <span class="card-rating__rate">Rate</span>'),'empty-state format');
   assert.ok(css.includes('.card-rating__stars{color:var(--orange)'),'orange stars');
   assert.ok(community.includes("fetch('/api/feedback?house='+house.num)"),'public ratings fetch unchanged');
 });

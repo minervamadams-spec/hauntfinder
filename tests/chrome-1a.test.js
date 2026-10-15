@@ -38,7 +38,7 @@ test('nav row: tablist with ids and accent badges sits beside the search cluster
   assert.match(bar,/id="eventCount" class="tabs__badge tabs__badge--events"/);
   assert.ok(bar.indexOf('class="tabs"')<bar.indexOf('id="zipInput"'),'tabs left of search');
   assert.ok(bar.includes('placeholder="Budd Lake, NJ 07828"'),'spec search placeholder');
-  assert.ok(bar.includes('◎ Use my location'),'purple location affordance');
+  assert.ok(bar.includes('◎')&&bar.includes('My location'),'purple location affordance');
   assert.ok(html.indexOf('id="countLine"')>html.indexOf('id="displaysPanel"'),'count line stays in the listings column');
 });
 

@@ -26,14 +26,14 @@ test('Bug A: renderCards feeds the count line, card list, and marker sync from t
  assert.ok(cardsAt<markersAt,'marker sync runs on the same visible, in the same call');
  assert.ok(app.includes('function syncListingMarkers(visible)'),'marker sync function exists');
  assert.ok(app.includes('const keep=new Set(visible.filter(x=>!x.placeholder&&Number.isFinite(x.lat)&&Number.isFinite(x.lng))'),'pins mirror the visible non-placeholder set');
- assert.ok(app.includes('if(keep.has(n)){if(!on)m.addTo(map)}else if(on)map.removeLayer(m)'),'pins are both added AND removed (two-way sync)');
+ assert.ok(app.includes('if(keep.has(n)){if(!on)addListing(m)}else if(on)removeListing(m)'),'pins are both added AND removed (two-way sync)');
  assert.ok(app.includes("document.addEventListener('hf:search-changed',e=>{state.search=e.detail;renderCards()"),'late-arriving search data re-runs the shared render');
 });
 
 test('Bug A: the one-way marker MutationObserver is gone; layout never deletes pins behind renderCards back',()=>{
  assert.ok(!layout.includes('new MutationObserver(()=>markerByNum'),'one-way pin removal observer removed');
  assert.ok(!/markerByNum\.forEach\(\(m,n\)=>\{[^}]*removeLayer/.test(layout),'layout.js has no direct removeLayer-by-filter loop');
- assert.ok(layout.includes('markerByNum.forEach(m=>map.removeLayer(m))'),'events branch still clears listing pins while viewing events');
+ assert.ok(layout.includes('markerByNum.forEach(m=>{if(hasListing(m))removeListing(m)})'),'events branch still clears listing pins while viewing events');
 });
 
 test('Bug A: late-arriving centroid data changes the visible set through the shared pipeline (pure simulation)',()=>{

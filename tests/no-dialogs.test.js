@@ -15,7 +15,7 @@ test('card Rate, Report and Share are same-tab links to the listing page section
   assert.match(app,/function listingPageHref\(x\)\{return 'listing\.html\?id='\+x\.num\+\(isReusedSlot\(x\)\?'&entity='\+encodeURIComponent\(x\.entityId\):''\)\}/,'reused slots keep their entity');
   for(const tpl of ['function treatCardHTML','function cardHTML']){
     const body=app.split(tpl)[1].split('\nfunction ')[0];
-    assert.match(body,/<a class="card-rating" href="\$\{listingPageHref\(x\)\}#feedback" data-rating-summary="\$\{x\.num\}"/,tpl+' rating link');
+    if(tpl==='function cardHTML')assert.match(body,/<a class="card-rating" href="\$\{listingPageHref\(x\)\}#feedback" data-rating-summary="\$\{x\.num\}"/,tpl+' rating link');
     assert.match(body,/<a class="card__metalink" href="\$\{listingPageHref\(x\)\}#report-update">Report<\/a>/,tpl+' report link');
     assert.match(body,/<a class="card__metalink" href="\$\{listingPageHref\(x\)\}#share">Share<\/a>/,tpl+' share link');
     assert.equal(/data-(feedback|report-listing|share-house)=/.test(body),false,tpl+' no dialog openers');

@@ -25,7 +25,7 @@ test('hours: formatter reproduces the previous card text for every real listing,
   assert.equal(F.listingHoursText({dates:'',times:''}),'Hours unknown');
 });
 test('hours: cards and the listing page both call the shared formatter; no private copies remain',()=>{
-  assert.equal((app.match(/safeListingText\(listingHoursText\(x\)\)/g)||[]).length,2,'display + treat cards');
+  assert.equal((app.match(/safeListingText\(listingHoursText\(x\)\)/g)||[]).length,1,'display card');assert.ok(app.includes('safeListingText(treatHoursText(x))')&&app.includes('||listingHoursText(x)'),'treat card formats the date itself and falls back to the shared formatter');
   assert.equal(app.includes('function compactTime'),false,'compactTime lives only in listing-format.js');
   assert.equal(app.includes("x.dates,compactTime(x.times)"),false);
   assert.match(listingJs,/listingHoursText\(house\)/);
