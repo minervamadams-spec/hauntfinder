@@ -61,17 +61,6 @@ function migrateRoute(saved,listings,legacyEntityMap,events){
  try{const parsed=typeof saved==='string'?JSON.parse(saved):saved;if(Array.isArray(parsed))parsed.forEach(consider)}catch{}
  return out;
 }
-function moveRouteStop(id,direction){if(state.optimizing)return;const key=String(id),i=state.route.findIndex(r=>routeEntryKey(r)===key),j=i+direction;if(i<0||j<0||j>=state.route.length)return;[state.route[i],state.route[j]]=[state.route[j],state.route[i]];state.routeMessage='Stop order updated.';try{localStorage.setItem('hfroute:2026',JSON.stringify(state.route))}catch{}renderRoute()}
-async function optimizeRoute(){
- if(state.optimizing||state.route.length<2)return;const route=[...state.route];state.optimizing=true;state.routeMessage='Suggesting an order…';renderRoute();
- try{
- if(route.length>10)throw new Error('Suggest an order for up to 10 stops at a time.');
- const points=[];for(const stop of route){if(stop.eventId!=null){const ev=events.find(x=>x.id===stop.eventId);points.push({lat:ev.lat,lng:ev.lng});continue}const house=listings.find(x=>x.num===stop.num);points.push(state.coords[stop.num]||{lat:house.lat,lng:house.lng})}
- const rad=x=>x*Math.PI/180;
- const matrix=points.map(a=>points.map(b=>{const v=Math.sin(rad(b.lat-a.lat)/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(rad(b.lng-a.lng)/2)**2;return 6371*2*Math.asin(Math.sqrt(Math.min(1,v)))}));
- const order=bestStopOrder(matrix);if(JSON.stringify(route)!==JSON.stringify(state.route))throw new Error('Your stops changed. Suggest an order again.');state.route=[route[0],...order.map(i=>route[i+1])];try{localStorage.setItem('hfroute:2026',JSON.stringify(state.route))}catch{}state.routeMessage='Suggested by distance, keeping your first stop. Check roads and hours in Google Maps.';
- }catch(e){state.routeMessage=e.message||'Could not suggest an order. Use the arrows.'}finally{state.optimizing=false;renderRoute()}
-}
 // Favorites are stored entity-aware at hffavs:v1, following the route pattern
 // exactly: same verified {num, entityId} entries, same legacy-number migration,
 // same drop rules (unknown numbers, placeholders, entity mismatches). They are
@@ -159,9 +148,12 @@ function suggestRouteOrder(route,listings,events,origin){
 // byte-for-byte intact above. parseRouteParam verifies slots against the
 // current listings (placeholders and duplicates dropped) and events against
 // the events array, returning the same {num,entityId}/{eventId} entries.
+// Reused slots (isReusedSlot) carry their entity: d8~drakestown-road-2026, so
+// an old link to a slot's former listing can never resolve to the new one.
+// Every other listing keeps the plain d<num> form, unchanged.
 function routeLink(stops,base){
  const root=typeof base==='string'&&base?base:'https://hauntfinder.vercel.app/';
- const ids=(stops||[]).map(s=>s.eventId!=null?'e'+encodeURIComponent(s.eventId):s.num!=null?'d'+encodeURIComponent(s.num):'').filter(Boolean);
+ const ids=(stops||[]).map(s=>s.eventId!=null?'e'+encodeURIComponent(s.eventId):s.num!=null?'d'+encodeURIComponent(s.num)+(s.entityId&&isReusedSlot(s)?'~'+encodeURIComponent(s.entityId):''):'').filter(Boolean);
  return root+'?route='+ids.join(',');
 }
 function parseRouteParam(str,listings,events){
@@ -176,10 +168,12 @@ function parseRouteParam(str,listings,events){
    return;
   }
   if(id.charAt(0)!=='d')return;
-  const num=+id.slice(1);
+  const cut=id.indexOf('~'),num=+(cut<0?id.slice(1):id.slice(1,cut)),entity=cut<0?null:id.slice(cut+1);
   if(!Number.isInteger(num))return;
   const listing=byNum.get(num);
   if(!listing||listing.placeholder||seen.has(num))return;
+  // Entity guard: a reused slot needs its entity; any entity given must match.
+  if(entity!==null?entity!==listing.entityId:isReusedSlot(listing))return;
   seen.add(num);out.push({num,entityId:listing.entityId});
  });
  return out;
@@ -201,4 +195,23 @@ function toggleListingStop(route,listing){
  if(!on&&list.length>=ROUTE_MAX)return {route:list,added:false,error:'Routes can have up to 10 stops.'};
  return on?{route:list.filter(r=>r.num!==listing.num),added:false}:{route:[...list,{num:listing.num,entityId:listing.entityId}],added:true};
 }
-if(typeof module!=='undefined')module.exports={bestStopOrder,ROUTE_KEY,ROUTE_MAX,loadSavedRoute,saveRoute,toggleListingStop,migrateRoute,routeEntryKey,toggleRouteEntry,isReusedSlot,legacyEntityId,REUSED_SLOTS_2026,FAVORITES_KEY,loadFavorites,toggleFavoriteEntry,parseOutingParam,outingLink,suggestRouteOrder,routeLink,parseRouteParam};
+// Pure route edits for /route.html (keys are routeEntryKey values). Inputs are
+// never mutated; entry shapes are kept as-is.
+function removeRouteEntry(route,key){return (route||[]).filter(r=>routeEntryKey(r)!==key)}
+function moveRouteEntry(route,key,direction){const out=(route||[]).slice(),i=out.findIndex(r=>routeEntryKey(r)===key),j=i+direction;if(i<0||j<0||j>=out.length)return out;[out[i],out[j]]=[out[j],out[i]];return out}
+function dropRouteEntry(route,fromKey,toKey){const out=(route||[]).slice();if(!fromKey||fromKey===toKey)return out;const from=out.findIndex(r=>routeEntryKey(r)===fromKey),to=out.findIndex(r=>routeEntryKey(r)===toKey);if(from<0||to<0)return out;const [moved]=out.splice(from,1);out.splice(to,0,moved);return out}
+// Google Maps handoff (the homepage buildRoute behavior): stops in order, the
+// last is the destination, the rest are waypoints; an entered start address is
+// the origin, otherwise Google Maps uses the device location.
+function directionsURL(stops,start){
+ const list=(stops||[]).filter(Boolean);
+ if(!list.length)return {error:'Add a stop to get directions.'};
+ if(list.length>ROUTE_MAX)return {error:'Routes can have up to 10 stops.'};
+ const st=start||{},last=list[list.length-1],wps=list.slice(0,-1).map(x=>x.address).join('|');
+ const p=new URLSearchParams({api:'1',travelmode:'driving',destination:last.address});
+ if(wps)p.set('waypoints',wps);
+ if(st.startMode==='address'&&String(st.startAddr||'').trim())p.set('origin',String(st.startAddr).trim());
+ else if(st.startCoords)p.set('origin',st.startCoords.lat+','+st.startCoords.lng);
+ return {url:'https://www.google.com/maps/dir/?'+p.toString()};
+}
+if(typeof module!=='undefined')module.exports={bestStopOrder,removeRouteEntry,moveRouteEntry,dropRouteEntry,directionsURL,ROUTE_KEY,ROUTE_MAX,loadSavedRoute,saveRoute,toggleListingStop,migrateRoute,routeEntryKey,toggleRouteEntry,isReusedSlot,legacyEntityId,REUSED_SLOTS_2026,FAVORITES_KEY,loadFavorites,toggleFavoriteEntry,parseOutingParam,outingLink,suggestRouteOrder,routeLink,parseRouteParam};

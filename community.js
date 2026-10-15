@@ -25,7 +25,6 @@ document.querySelectorAll('.site-dialog').forEach(d=>d.addEventListener('click',
 document.querySelectorAll('dialog').forEach(d=>d.addEventListener('close',()=>{const o=dialogOpener.get(d);dialogOpener.delete(d);if(o&&document.contains(o))o.focus()}));
 feedbackDialog.addEventListener('close',()=>feedbackRequest?.abort());
 document.getElementById('cardList').addEventListener('click',e=>{const b=e.target.closest('[data-feedback]');if(b)openFeedback(+b.dataset.feedback)});
-document.getElementById('mobileMapRouteBtn').onclick=openRouteSheet;
 function displayFeedback(data){
   rememberRating(feedbackHouseId,data);
   const reviews=data.reviews||[];

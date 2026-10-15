@@ -8,7 +8,7 @@ const path = require('node:path');
 
 const BASE = process.env.HF_BASE || 'https://hauntfinder.vercel.app';
 // Static assets that must match the just-pushed commit byte-for-byte.
-const ASSETS = ['index.html', 'styles.css', 'app.js', 'layout.js', 'alerts.css', 'community.js', 'photos-ui.js', 'listing.html', 'listing.js', 'page.js', 'listing-format.js', 'routing.js', 'schedules.js', 'url-state.js'];
+const ASSETS = ['index.html', 'styles.css', 'app.js', 'layout.js', 'alerts.css', 'community.js', 'photos-ui.js', 'listing.html', 'listing.js', 'page.js', 'listing-format.js', 'routing.js', 'schedules.js', 'url-state.js', 'route.html', 'route.js'];
 // Public Google Form links wired in community.js (live HEAD must be 200).
 const FORM_LINK_RE = /(https:\/\/docs\.google\.com\/forms\/d\/e\/[\w-]+\/viewform)/g;
 
@@ -36,6 +36,13 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
   // 2b. Single-scroll, map-first homepage: map before the cards, one 8-card
   // pager, no Map/List switch.
   ok('homepage is map-first with the card pager and no Map/List switch', homeHtml.indexOf('class="map-frame"')>-1 && homeHtml.indexOf('class="map-frame"')<homeHtml.indexOf('id="cardList"') && homeHtml.includes('id="resultsPager"') && !homeHtml.includes('class="view-toggle"'));
+
+  // 2c. Route planner is a page (/route.html); the homepage links to it and
+  // carries no route sheet.
+  const routeRes=await fetch(BASE + '/route.html');
+  const routeHtml=await routeRes.text();
+  ok('route page serves the planner with one h1 and no dialog', routeRes.status===200 && (routeHtml.match(/<h1[ >]/g)||[]).length===1 && ['id="routePlanner"','id="routeEmpty"','id="clearConfirm"','id="backToMap"'].every(x=>routeHtml.includes(x)) && !routeHtml.includes('<dialog'), `status=${routeRes.status}`);
+  ok('homepage route CTA links to /route.html and the route sheet is gone', homeHtml.includes('id="routeLink" href="route.html"') && !homeHtml.includes('id="routeSheet"'));
 
   // 3. Alerts are a standalone page; the homepage must never carry an alert
   // modal or an embedded form that can obstruct browsing.

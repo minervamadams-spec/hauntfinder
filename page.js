@@ -5,7 +5,7 @@
 (function () {
   'use strict';
   // Route parser/validator: the canonical set of addressable subpages.
-  const ROUTES = ['submit', 'about', 'listing'];
+  const ROUTES = ['submit', 'about', 'listing', 'route'];
   const page = document.body && document.body.dataset ? document.body.dataset.page : null;
   if (!ROUTES.includes(page)) {
     console.error('Hauntfinder: unknown subpage route "' + page + '". Expected one of: ' + ROUTES.join(', '));

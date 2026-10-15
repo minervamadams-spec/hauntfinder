@@ -63,7 +63,7 @@ test('listing.html: ordinary page on the shared shell, no dialogs, one h1, three
   assert.match(html,/class="honeypot"/,'feedback honeypot kept');
 });
 test('page shell: listing is a registered route; feedback API contract unchanged',()=>{
-  assert.match(pageJs,/const ROUTES = \['submit', 'about', 'listing'\]/);
+  assert.match(pageJs,/const ROUTES = \['submit', 'about', 'listing', 'route'\]/);
   assert.match(css,/\.listing-page/);
   assert.match(read('listing.js'),/\/api\/feedback/);
   assert.ok(vercel.functions['api/feedback.js']);

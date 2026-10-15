@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Your route</title>
+  <meta name="description" content="Plan your Hauntfinder route: order your stops, share the route, and open directions in Google Maps.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700;800&family=Rubik+Dirt:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="route" class="subpage">
+<a class="skip-link" href="#routeMain">Skip to content</a>
+<header class="subpage-head">
+  <nav class="subpage-nav" aria-label="Site">
+    <a class="subpage-nav__home" href="/">← Hauntfinder map</a>
+    <span class="subpage-nav__links">
+      <a href="/" data-subnav="map">Map</a>
+      <a href="submit.html" data-subnav="submit">Submit</a>
+      <a href="about.html" data-subnav="about">About</a>
+      <a href="alerts.html" data-subnav="alerts">Get alerts</a>
+    </span>
+  </nav>
+</header>
+<main id="routeMain" class="subpage-main route-page">
+  <h1>Your route</h1>
+  <p class="subpage-dek" id="routeSummary" tabindex="-1" aria-live="polite">Loading your route…</p>
+  <noscript><p class="subpage-dek">This page needs JavaScript to show your route. <a href="/">Return to the Hauntfinder map</a> to browse listings.</p></noscript>
+  <div id="routeEmpty" class="route-page__empty" hidden>
+    <p><strong>No stops on your route yet.</strong> Add displays, treat stops or events from the map, then come back here to order them and open directions.</p>
+    <p id="routeEmptyStatus" role="status"></p>
+    <a class="btn btn--route" href="/">Back to the map</a>
+  </div>
+  <section id="routeBody" class="route-page__body" aria-label="Route planner" hidden>
+    <div class="route" id="routePlanner"></div>
+    <div class="route-page__clear">
+      <button type="button" class="route__linkbtn" id="clearRouteBtn" aria-expanded="false" aria-controls="clearConfirm">Clear route</button>
+      <div id="clearConfirm" class="route-page__confirm" role="group" aria-labelledby="clearConfirmText" hidden>
+        <p id="clearConfirmText">Remove all stops from your route?</p>
+        <div class="route-page__confirm-actions"><button type="button" class="btn btn--outline" id="clearYes">Yes, clear route</button><button type="button" class="btn btn--route" id="clearNo">Keep my stops</button></div>
+      </div>
+    </div>
+  </section>
+  <p class="route-page__back"><a class="btn btn--outline" id="backToMap" href="/">← Back to map</a></p>
+</main>
+<footer class="subpage-foot">
+  <a href="/">Hauntfinder map</a> · <a href="alerts.html">Get alerts</a> · <a href="mailto:mtocommunityfinder@gmail.com">Contact us</a>
+</footer>
+<script src="routing.js"></script>
+<script src="listing-format.js"></script>
+<script src="location.js"></script>
+<script src="route.js"></script>
+<script src="page.js"></script>
+</body>
+</html>
