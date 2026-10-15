@@ -18,17 +18,4 @@ function listingHoursText(x){
  if(scheduled&&scheduled(x))return listingCategory(x)==='Treat stop'?'Candy hours not specified':'Dates and hours not specified';
  return 'Hours unknown';
 }
-// Homepage result pages: 8 cards per page. The key describes the result set
-// (category, filters, search, matching numbers); when it changes the page goes
-// back to 1. A focus index (a selected pin's card) opens the page holding it.
-// Out-of-range pages clamp. Returns the page and the [start,end) card slice.
-const RESULTS_PAGE_SIZE=8;
-function resolveResultsPage({prevKey,key,page,total,size=RESULTS_PAGE_SIZE,focusIndex=-1}){
- const pages=Math.max(1,Math.ceil(total/size));
- let p=prevKey===key&&Number.isInteger(page)?page:0;
- if(Number.isInteger(focusIndex)&&focusIndex>=0)p=Math.floor(focusIndex/size);
- p=Math.min(Math.max(0,p),pages-1);
- const start=Math.min(total,p*size);
- return {page:p,pages,start,end:Math.min(total,start+size)};
-}
-if(typeof module!=='undefined')module.exports={compactTime,listingCategory,listingHoursText,LISTING_TREAT_KIND,RESULTS_PAGE_SIZE,resolveResultsPage};
+if(typeof module!=='undefined')module.exports={compactTime,listingCategory,listingHoursText,LISTING_TREAT_KIND};

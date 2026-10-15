@@ -21,7 +21,7 @@ const probe=()=>{
   return {filterRail:r(document.getElementById('filterRail')),listRail:r(document.querySelector('.list-column')),mapFrame:visible(mf)?r(mf):null,countLine:r(cl),countText:cl.textContent,
     firstCard:r(cards[0]),lastCard:r(cards[cards.length-1]),cardNums:cards.map(c=>+c.dataset.card),cardCols:new Set(cards.map(c=>Math.round(c.getBoundingClientRect().left))).size,
     pins,scrollers,overflowX:document.documentElement.scrollWidth>innerWidth,category:state.category,filter:state.filter,selected:state.selected,
-    tabCount:+(document.querySelector(sel).textContent.replace(/\D/g,'')||0),hasPager:!!document.getElementById('pagePrev')||!!document.getElementById('pageNext')||visible(document.getElementById('resultsPager')),hasDialog:!!document.querySelector('dialog'),
+    tabCount:+(document.querySelector(sel).textContent.replace(/\D/g,'')||0),hasPager:!!document.getElementById('pagePrev')||!!document.getElementById('pageNext')||!!document.getElementById('resultsPager'),hasDialog:!!document.querySelector('dialog'),
     calendar:visible(document.getElementById('eventCalendar'))};
 };
 const countOf=t=>+(String(t).match(/^(\d+)/)||[0,0])[1];

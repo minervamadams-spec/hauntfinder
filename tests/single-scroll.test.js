@@ -5,7 +5,6 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const ROOT=path.join(__dirname,'..');
 const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
 const html=read('index.html'),css=read('styles.css'),app=read('app.js'),layout=read('layout.js'),urlState=read('url-state.js'),chromeFilters=read('chrome-filters.js');
-const F=require('../listing-format.js');
 const block=css.split('/* ---- Compact directory layout homepage')[1]||'';
 
 test('v7 continuous rail renders every matching card and retires visible pager controls',()=>{
@@ -39,6 +38,9 @@ test('results rail: pin click scrolls its card into view inside the scrolling ra
   assert.match(fn,/cb\.top>=pb\.top&&cb\.bottom<=pb\.bottom\)return/,'a card already in view is not re-scrolled');
 });
 test('results rail: no pagination controls or page-jump state remain in markup or selection',()=>{
+  assert.equal(html.includes('resultsPager'),false,'hidden pager element removed');
+  assert.equal(require('../listing-format.js').resolveResultsPage,undefined);
+  assert.equal(require('../listing-format.js').RESULTS_PAGE_SIZE,undefined);
   for(const id of ['pagePrev','pageNext','pageStatus'])assert.equal(html.includes(`id="${id}"`),false,id);
   assert.equal(app.includes('function goToPage('),false);
   assert.equal(/state\.page\b/.test(app+layout),false);
@@ -52,7 +54,7 @@ test('results rail: ?house= deep links select their card without any page jump',
 // ---- Page order ----
 test('markup order keeps the header, controls, filters, map and results in the compact workspace flow',()=>{
   const at=s=>{const i=html.indexOf(s);assert.ok(i>-1,s);return i};
-  const seq=['class="hf-header banner"','class="intro-strip__copy"','class="filterbar"','id="filterRail"','class="map-frame"','id="countLine"','id="cardList"','id="resultsPager"','id="routeSection"'];
+  const seq=['class="hf-header banner"','class="intro-strip__copy"','class="filterbar"','id="filterRail"','class="map-frame"','id="countLine"','id="cardList"','id="routeSection"'];
   for(let i=1;i<seq.length;i++)assert.ok(at(seq[i-1])<at(seq[i]),seq[i-1]+' before '+seq[i]);
   const mapColumn=html.split('<section class="map-column"')[1].split('<aside class="list-column">')[0];
   assert.equal(mapColumn.includes('id="routeSection"'),false,'route planner is no longer wedged between the map and the cards');
@@ -117,7 +119,7 @@ test('events: calendar presentation kept, no map fabricated, route planner keeps
   assert.match(block,/html\[data-category="events"\] \.route-wrap\{order:1;width:100%;margin-top:0\}/);
   assert.match(block,/html\[data-category="events"\] \.list-column\{order:2\}/);
   assert.match(block.split('@media(min-width:1200px){')[1]||'',/^[^@]*html\[data-category="events"\] \.route-wrap\{grid-column:1;grid-row:2/,'>=1200: route planner under the week, left column');
-  assert.match(layout,/\$\('resultsPager'\)\.hidden=true/,'events never show the listing pager');
+  assert.equal(layout.includes('resultsPager'),false,'no pager element is referenced');
 });
 
 // ---- Deep link ----
