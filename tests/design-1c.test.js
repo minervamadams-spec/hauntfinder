@@ -89,7 +89,7 @@ test('photo flip mechanics: pill, Y rotation, perspective, backface, reduced-mot
   assert.ok(css.includes('.card--flip.is-flipped .card-flip__inner{transform:rotateY(180deg)}'),'rotateY flip');
   assert.ok(css.includes('backface-visibility:hidden'),'backface hidden');
   assert.ok(css.includes('grid-area:1/1'),'faces share one grid cell (equal height)');
-  assert.ok(css.includes('.card__photo{flex:1;width:100%;min-height:240px;object-fit:cover'),'photo fills the card');
+  assert.ok(css.includes('.card__photo{flex:1;width:100%;min-height:240px;object-fit:contain'),'photo fills the card');
   assert.ok(css.includes('@media(prefers-reduced-motion:reduce)'),'reduced-motion block');
   assert.ok(css.includes('transition:opacity 150ms ease'),'150ms crossfade');
 });

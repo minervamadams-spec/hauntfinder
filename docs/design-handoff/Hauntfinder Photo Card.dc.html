@@ -73,7 +73,7 @@
       </article>
       <ul style="margin:0;padding-left:18px;font:400 14px/1.5 Barlow;color:#CFC4B0;display:flex;flex-direction:column;gap:4px;">
         <li><b style="color:#F6EBD3;">The 189px here is only for this illustration, to match P1.</b> Don't hard-code a height. In the build, the back takes the front's height from the grid (see P3 and P4).</li>
-        <li>The photo fills the whole face with <code>object-fit: cover</code> and <code>object-position: center</code>. The height comes from the front face. Never use the image's own height.</li>
+        <li>The photo uses <code>object-fit: contain</code> on a <code>#0E0B13</code> background, so it is never cropped (see P5). The height comes from the front face. Never use the image's own height.</li>
         <li>The bottom bar has the name, town · distance and "↻ Details". There's no route button on the back.</li>
         <li>Alt text: "Photo of Adams Family Haunt". Lazy-load the photo on the first flip.</li>
       </ul>
@@ -115,6 +115,36 @@
         <li>Click "↻ Photo" to flip. Also try a narrow window: the back always matches the front's height.</li>
       </ul>
     </div>
+  </div>
+
+  <div id="P5" style="max-width:1280px;display:flex;flex-direction:column;gap:14px;padding:20px 24px;background:#1A1322;border-radius:10px;border-top:3px solid #FF7A1A;">
+    <div style="display:flex;gap:8px;align-items:center;"><span style="font:700 12px Barlow;background:#FF7A1A;color:#120E18;padding:2px 7px;border-radius:4px;">P5</span><span style="font:700 18px 'Barlow Condensed';color:#F6EBD3;">Portrait photos: show the whole photo, with dark sides</span></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:20px 32px;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="font:600 13px Barlow;color:#A89DB4;">Card back with a portrait photo</div>
+        <article style="position:relative;height:189px;border:1px solid #FF7A1A;border-radius:10px;overflow:hidden;background:#0E0B13;">
+          <div style="position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:106px;background:repeating-linear-gradient(135deg,#2A2233 0 10px,#221B2B 10px 20px);display:flex;align-items:center;justify-content:center;font:600 11px ui-monospace,monospace;color:#7E7389;text-align:center;">portrait<br>photo</div>
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:rgba(11,9,16,.88);display:flex;align-items:center;gap:10px;">
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;"><span style="font:700 17px 'Barlow Condensed';color:#F6EBD3;">Glens Terror Drive</span><span style="font:500 13px Barlow;color:#A89DB4;">Mine Hill · 8.5 mi</span></div>
+            <span style="flex:none;height:30px;padding:0 10px;border-radius:7px;border:1px solid #F6EBD3;font:800 12px 'Barlow Condensed';letter-spacing:.08em;color:#F6EBD3;display:flex;align-items:center;">↻ DETAILS</span>
+          </div>
+        </article>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="font:600 13px Barlow;color:#A89DB4;">Map popup with a portrait photo</div>
+        <div style="height:189px;border-radius:10px 10px 0 0;overflow:hidden;background:#0E0B13;position:relative;">
+          <div style="position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:106px;background:repeating-linear-gradient(135deg,#2A2233 0 10px,#221B2B 10px 20px);display:flex;align-items:center;justify-content:center;font:600 11px ui-monospace,monospace;color:#7E7389;text-align:center;">portrait<br>photo</div>
+        </div>
+      </div>
+    </div>
+    <ul style="margin:0;padding-left:18px;font:400 15px/1.55 Barlow;color:#CFC4B0;display:flex;flex-direction:column;gap:4px;">
+      <li><b style="color:#F6EBD3;">Rule:</b> photo frames (the card back and the map popup) use <code>object-fit: contain</code> with <code>object-position: center</code> on a <code>#0E0B13</code> background. The whole photo always shows, nothing gets cropped, and the frame stays the same size.</li>
+      <li>Portrait photos get dark bars on the left and right. Wide panoramas get bars on the top and bottom. Photos close to the frame's shape fill it.</li>
+      <li>Card back: the bottom bar sits on top of the photo's lower edge as before. Make sure "↻ Details" stays readable over the dark bars.</li>
+      <li>Map popup: the image area is a fixed 16:9 (<code>aspect-ratio:16/9</code>) with the same contain treatment. Don't stretch it to the photo's height.</li>
+      <li>Don't use a blurred copy of the photo to fill the sides. Plain dark bars only.</li>
+      <li>EXIF orientation: phone portraits often arrive sideways. Rotate them on upload (or use <code>image-orientation: from-image</code>) so a portrait is actually stored as a portrait.</li>
+    </ul>
   </div>
 
   <div id="P4" style="max-width:1280px;display:flex;flex-direction:column;gap:12px;padding:20px 24px;background:#1A1322;border-radius:10px;border-top:3px solid #FF7A1A;">

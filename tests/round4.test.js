@@ -85,7 +85,7 @@ test('round 4 items 23-25: quotes use a top border; community links not underlin
 
 test('photo card (Photo Card design): one-cell grid, front sets the height, photo absolute, pill on the title row, inert faces',()=>{
   assert.ok(css.includes('.card--compact.card--flip .card-flip__inner{display:grid}')&&css.includes('.card-flip__inner{grid-template-columns:minmax(0,1fr)}'));
-  assert.ok(css.includes('.card--compact.card--flip .card__photo{position:absolute;inset:0;width:100%;height:100%;min-height:0;object-fit:cover'),'the image never sets the height');
+  assert.ok(css.includes('.card--compact.card--flip .card__photo{position:absolute;inset:0;width:100%;height:100%;min-height:0;object-fit:contain'),'the image never sets the height');
   assert.ok(css.includes('.card--compact.card--flip .card__heading{display:flex;align-items:center;gap:8px;min-width:0}')&&css.includes('white-space:nowrap;vertical-align:baseline}'),'pill on the title row, never wraps');
   assert.ok(css.includes('html body #cardList .card--compact.card--flip>.card-flip{margin-left:0}'),'the 36px indent rule must not shift the flipper');
   const flip=read('card-flip.js');
@@ -93,4 +93,16 @@ test('photo card (Photo Card design): one-cell grid, front sets the height, phot
   assert.ok(flip.includes("img.dataset.src=hfPhotoURL(num)")&&flip.includes('photo.src=photo.dataset.src'),'photo loads on first flip');
   assert.ok(flip.includes("img.alt='Photo of '+nameText"),'alt text per spec');
   assert.ok(flip.includes("next.focus({preventScroll:true})"),'focus handoff');
+});
+
+test('photo-never-cropped fix (PHOTO-PORTRAIT-FIX.md): contain on #0E0B13 in the card back and the 16:9 popup, EXIF-upright uploads',()=>{
+  assert.ok(css.includes('.map-popup__photo{height:auto;aspect-ratio:16/9;background:#0E0B13;overflow:hidden}'));
+  assert.ok(css.includes('.map-popup__photo img{width:100%;height:100%;object-fit:contain;object-position:center;image-orientation:from-image;display:block}'));
+  assert.ok(css.includes('object-fit:contain;object-position:center;image-orientation:from-image;display:block;flex:none}'),'card back photo');
+  assert.ok(css.includes('border-radius:inherit;background:#0E0B13}'),'card back face background');
+  assert.ok(!/\.(card__photo|map-popup__photo img)\{[^}]*object-fit:cover/.test(css),'no cropping photo rule remains');
+  assert.ok(!css.includes('filter:blur')||!/photo[^{]*\{[^}]*blur/.test(css),'bars are not filled with a blurred copy');
+  const h=read('host-update-ui.js');
+  assert.ok(h.includes("createImageBitmap(file,{imageOrientation:'from-image'})")&&h.includes('const upFile=await hfNormalizePhoto(file)'),'JPEGs are re-drawn upright before upload');
+  assert.ok(h.includes("contentType:upFile.type")&&h.includes("contentType:upFile.type,toke")||h.includes('contentType:upFile.type'),'the normalized type is what is uploaded');
 });

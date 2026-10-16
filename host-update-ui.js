@@ -4,6 +4,23 @@
 // and a structured update request that lands in the organizer's existing
 // review queue. Requires assets/blob-client.js (vendored @vercel/blob
 // browser build; regenerate with esbuild if the npm version changes).
+
+// Round 5 (photo never cropped): phone photos carry an EXIF orientation. Re-draw JPEGs
+// through a canvas so the stored bytes are upright, and the EXIF block (including GPS) is dropped.
+// Long side capped at 2400px to stay well under the 5 MB limit. Other types pass through.
+window.hfNormalizePhoto=async function(file){
+  try{
+    if(!file||file.type!=='image/jpeg'||typeof createImageBitmap!=='function')return file;
+    const bmp=await createImageBitmap(file,{imageOrientation:'from-image'});
+    const scale=Math.min(1,2400/Math.max(bmp.width,bmp.height)),w=Math.max(1,Math.round(bmp.width*scale)),h=Math.max(1,Math.round(bmp.height*scale));
+    const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
+    const ctx=canvas.getContext('2d');if(!ctx)return file;ctx.drawImage(bmp,0,0,w,h);if(bmp.close)bmp.close();
+    const blob=await new Promise(res=>canvas.toBlob(res,'image/jpeg',0.9));
+    if(!blob||!blob.size||blob.size>5*1024*1024)return file;
+    return new File([blob],file.name.replace(/\.\w+$/,'')+'.jpg',{type:'image/jpeg'});
+  }catch{return file}
+};
+
 (function(){
   const token=new URLSearchParams(location.search).get('update');
   if(!token)return;
@@ -48,7 +65,8 @@
       if(typeof HFBlob==='undefined'||!HFBlob.upload){photoStatus.textContent='Photo upload is unavailable right now.';return}
       photoStatus.textContent='Uploading…';
       try{
-        await HFBlob.upload('host-photos/'+listing.num+'/'+Date.now()+'-'+file.name.replace(/[^\w.-]+/g,'-'),file,{access:'public',contentType:file.type,handleUploadUrl:'/api/upload',clientPayload:JSON.stringify({listingNum:listing.num,contentType:file.type,token})});
+        const upFile=await hfNormalizePhoto(file);
+        await HFBlob.upload('host-photos/'+listing.num+'/'+Date.now()+'-'+upFile.name.replace(/[^\w.-]+/g,'-'),upFile,{access:'public',contentType:upFile.type,handleUploadUrl:'/api/upload',clientPayload:JSON.stringify({listingNum:listing.num,contentType:upFile.type,token})});
         photoStatus.textContent='Thanks! Your photo will appear once the organizer reviews it.';
         document.getElementById('hostPhotoInput').value='';
       }catch(e){photoStatus.textContent='Upload failed — please try again.'}

@@ -36,6 +36,28 @@ const PNG=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAAEklEQVR4n
     await card.locator('.card__details-btn').click();await p.waitForTimeout(900);
     const back=await p.evaluate(()=>{const c=document.querySelector('#cardList [data-card="1"]');return {flipped:c.classList.contains('is-flipped'),backInert:c.querySelector('.card-face--back').inert,focus:document.activeElement.className}});
     ok(T+'flipping back restores focus to the Photo pill',!back.flipped&&back.backInert&&/card__photo-pill/.test(back.focus),JSON.stringify(back));
+    if(vp===1280){
+      // PHOTO-PORTRAIT-FIX: never cropped. Back face and 16:9 popup use contain on #0E0B13.
+      const back2=await p.evaluate(()=>{const c=document.querySelector('#cardList [data-card="1"]'),i=c.querySelector('.card__photo'),f=c.querySelector('.card-face--back');return {fit:getComputedStyle(i).objectFit,orient:getComputedStyle(i).imageOrientation,bg:getComputedStyle(f).backgroundColor}});
+      ok(T+'card back never crops: object-fit contain on #0E0B13',back2.fit==='contain'&&back2.bg==='rgb(14, 11, 19)'&&back2.orient==='from-image',JSON.stringify(back2));
+      await p.locator('#cardList [data-card="13"] .card__hours').scrollIntoViewIfNeeded();await p.locator('#cardList [data-card="13"] .card__hours').click();await p.waitForTimeout(2000);
+      const pop=await p.evaluate(()=>{const f=document.querySelector('.map-popup__photo'),i=f&&f.querySelector('img');if(!i)return null;const r=f.getBoundingClientRect();return {ratio:+(r.width/r.height).toFixed(2),fit:getComputedStyle(i).objectFit,bg:getComputedStyle(f).backgroundColor,orient:getComputedStyle(i).imageOrientation}});
+      ok(T+'map popup photo is a 16:9 frame, contain on #0E0B13',!!pop&&Math.abs(pop.ratio-1.78)<0.03&&pop.fit==='contain'&&pop.bg==='rgb(14, 11, 19)'&&pop.orient==='from-image',JSON.stringify(pop));
+      // EXIF: a landscape JPEG tagged Orientation=6 must be stored upright (portrait) and without EXIF.
+      const ex=await p.evaluate(async()=>{
+        const c=document.createElement('canvas');c.width=40;c.height=20;const g=c.getContext('2d');g.fillStyle='#c33';g.fillRect(0,0,40,20);
+        const base=new Uint8Array(await (await new Promise(r=>c.toBlob(r,'image/jpeg',0.9))).arrayBuffer());
+        const tiff=[0x4D,0x4D,0,0x2A,0,0,0,8, 0,1, 0x01,0x12, 0,3, 0,0,0,1, 0,6,0,0, 0,0,0,0];
+        const body=[0x45,0x78,0x69,0x66,0,0,...tiff],len=body.length+2;
+        const out=new Uint8Array(base.length+4+body.length);out.set(base.slice(0,2),0);out.set([0xFF,0xE1,len>>8,len&255,...body],2);out.set(base.slice(2),2+4+body.length);
+        const file=new File([out],'phone.jpg',{type:'image/jpeg'});
+        const rawDims=await createImageBitmap(file,{imageOrientation:'from-image'}).then(b=>[b.width,b.height]);
+        const norm=await hfNormalizePhoto(file);const dims=await createImageBitmap(norm,{imageOrientation:'from-image'}).then(b=>[b.width,b.height]);
+        const bytes=new Uint8Array(await norm.arrayBuffer());let hasExif=false;for(let i=0;i<bytes.length-4;i++)if(bytes[i]===0x45&&bytes[i+1]===0x78&&bytes[i+2]===0x69&&bytes[i+3]===0x66){hasExif=true;break}
+        return {rawDims,dims,type:norm.type,hasExif,name:norm.name};
+      });
+      ok(T+'uploads are re-drawn upright and carry no EXIF',ex.rawDims[0]===20&&ex.rawDims[1]===40&&ex.dims[0]===20&&ex.dims[1]===40&&ex.type==='image/jpeg'&&!ex.hasExif,JSON.stringify(ex));
+    }
     await ctx.close();
   }
   await browser.close();

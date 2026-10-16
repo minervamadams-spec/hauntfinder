@@ -77,11 +77,11 @@ test('distances note: once, bottom-right, no per-card straight-line text',()=>{
 });
 
 /* ---- K4 popup ---- */
-test('popup anatomy: 280px shell, 130px conditional photo, name, meta, add, × close',()=>{
+test('popup anatomy: 280px shell, 16:9 conditional photo (never cropped), name, meta, add, × close',()=>{
   assert.match(css,/\.map-popup\{[^}]*width:280px/,'280px wide');
   assert.ok(css.indexOf('.map-popup{width:100%}')>css.indexOf('width:280px'),'mobile full-width override cascades after the 280px base');
   const photo=css.match(/\.map-popup__photo\{[^}]*\}/)[0];
-  assert.ok(photo.includes('height:130px'),'photo area 130px tall');
+  assert.ok(photo.includes('aspect-ratio:16/9')&&photo.includes('background:#0E0B13'),'photo area 16:9 on #0E0B13');
   assert.ok(css.includes('.map-popup__photo:empty{display:none}'),'photo section omitted when there is no photo');
   assert.match(css,/\.map-popup__name\{[^}]*var\(--f-cond\)/,'condensed name');
   assert.ok(css.includes('.map-popup__add{width:100%}'),'add-to-route full width');
