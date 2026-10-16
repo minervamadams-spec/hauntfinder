@@ -117,6 +117,37 @@
     </div>
   </div>
 
+  <div id="P6" style="max-width:1280px;display:flex;flex-direction:column;gap:14px;padding:20px 24px;background:#1A1322;border-radius:10px;border-top:3px solid #FF7A1A;">
+    <div style="display:flex;gap:8px;align-items:center;"><span style="font:700 12px Barlow;background:#FF7A1A;color:#120E18;padding:2px 7px;border-radius:4px;">P6</span><span style="font:700 18px 'Barlow Condensed';color:#F6EBD3;">Tap a photo to see it larger (lightbox)</span></div>
+    <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start;">
+      <div style="display:flex;flex-direction:column;gap:8px;flex:1 1 520px;min-width:0;">
+        <div style="font:600 13px Barlow;color:#A89DB4;">Desktop: over the whole page</div>
+        <div style="position:relative;aspect-ratio:16/10;border-radius:10px;overflow:hidden;background:rgba(8,6,12,.94);border:1px solid #2E2638;">
+          <div style="position:absolute;top:12px;left:16px;right:72px;display:flex;flex-direction:column;"><span style="font:700 20px 'Barlow Condensed';color:#F6EBD3;">Glens Terror Drive</span><span style="font:500 13px Barlow;color:#A89DB4;">Mine Hill · 8.5 mi</span></div>
+          <div style="position:absolute;top:10px;right:10px;width:44px;height:44px;border-radius:22px;background:#1C1626;border:1px solid #3A3046;color:#F6EBD3;font:400 20px Barlow;display:flex;align-items:center;justify-content:center;">×</div>
+          <div style="position:absolute;top:64px;bottom:16px;left:50%;transform:translateX(-50%);aspect-ratio:3/4;background:repeating-linear-gradient(135deg,#2A2233 0 10px,#221B2B 10px 20px);display:flex;align-items:center;justify-content:center;font:600 12px ui-monospace,monospace;color:#7E7389;text-align:center;">portrait photo<br>fit to screen</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;flex:0 0 220px;">
+        <div style="font:600 13px Barlow;color:#A89DB4;">Mobile: full screen</div>
+        <div style="position:relative;width:220px;height:440px;border-radius:22px;overflow:hidden;background:#08060C;border:1px solid #2E2638;">
+          <div style="position:absolute;top:12px;left:14px;right:60px;display:flex;flex-direction:column;"><span style="font:700 17px 'Barlow Condensed';color:#F6EBD3;">Glens Terror Drive</span><span style="font:500 12px Barlow;color:#A89DB4;">Mine Hill · 8.5 mi</span></div>
+          <div style="position:absolute;top:8px;right:8px;width:44px;height:44px;border-radius:22px;background:#1C1626;border:1px solid #3A3046;color:#F6EBD3;font:400 20px Barlow;display:flex;align-items:center;justify-content:center;">×</div>
+          <div style="position:absolute;top:70px;left:0;right:0;bottom:70px;background:repeating-linear-gradient(135deg,#2A2233 0 10px,#221B2B 10px 20px);display:flex;align-items:center;justify-content:center;font:600 12px ui-monospace,monospace;color:#7E7389;text-align:center;">portrait photo<br>full width</div>
+          <div style="position:absolute;bottom:22px;left:0;right:0;text-align:center;font:500 12px Barlow;color:#7E7389;">Swipe down to close</div>
+        </div>
+      </div>
+    </div>
+    <ul style="margin:0;padding-left:18px;font:400 15px/1.55 Barlow;color:#CFC4B0;display:flex;flex-direction:column;gap:4px;">
+      <li><b style="color:#F6EBD3;">Opens from:</b> tapping the photo in the map popup or on the card back. Only the photo itself opens it. "↻ Details", × and the route button keep their current actions. Show a small ⤢ icon (28px, top-left of the photo, <code>rgba(11,9,16,.7)</code> circle) so visitors know they can tap it.</li>
+      <li><b style="color:#F6EBD3;">Layout:</b> a full-screen overlay, <code>position:fixed; inset:0; z-index</code> above the map and the route bar, background <code>rgba(8,6,12,.94)</code>. The top bar has the name (Barlow Condensed 700 20px) and town · distance, with × on the right. The photo is <code>object-fit:contain</code> at <code>max-width:100%; max-height:calc(100dvh - 140px)</code>, centered. Load the full-size image, not the thumbnail.</li>
+      <li><b style="color:#F6EBD3;">Mobile:</b> the same overlay, edge to edge. Use <code>100dvh</code> so the browser bar doesn't cut it off. × is 44px, and you can close by swiping down (over 80px). Pinch zoom works on the photo (<code>touch-action:pinch-zoom</code>). Lock page scroll while it's open.</li>
+      <li><b style="color:#F6EBD3;">Close:</b> ×, Esc, a tap on the dark background outside the photo, or the browser Back button (push a history state on open). Close returns to the same card or popup, with nothing reset.</li>
+      <li><b style="color:#F6EBD3;">Access:</b> the photo trigger is a <code>&lt;button aria-label="View larger photo of Glens Terror Drive"&gt;</code>. The overlay is <code>role="dialog" aria-modal="true"</code>. Keep focus inside it, send focus to × on open, and return it to the trigger on close. With <code>prefers-reduced-motion</code>, no zoom animation; otherwise a 150ms fade.</li>
+      <li>One photo per listing for now, so there's no gallery arrows or counter.</li>
+    </ul>
+  </div>
+
   <div id="P5" style="max-width:1280px;display:flex;flex-direction:column;gap:14px;padding:20px 24px;background:#1A1322;border-radius:10px;border-top:3px solid #FF7A1A;">
     <div style="display:flex;gap:8px;align-items:center;"><span style="font:700 12px Barlow;background:#FF7A1A;color:#120E18;padding:2px 7px;border-radius:4px;">P5</span><span style="font:700 18px 'Barlow Condensed';color:#F6EBD3;">Portrait photos: show the whole photo, with dark sides</span></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:20px 32px;">

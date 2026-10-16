@@ -56,8 +56,15 @@
         img.loading='lazy';
         img.decoding='async';
         img.src=data.photos[0].url;
-        img.alt='Owner photo for listing '+num;
-        slot.appendChild(img);
+        img.alt='Photo of '+((peek.querySelector('.map-popup__name')||{}).textContent||(listing&&listing.name)||'this listing');
+        const btn=document.createElement('button');
+        btn.type='button';btn.className='photo-trigger map-popup__photo-btn';
+        const nm=(peek.querySelector('.map-popup__name')||{}).textContent||(listing&&listing.name)||'this listing';
+        btn.dataset.name=nm;btn.dataset.sub=((peek.querySelector('.map-popup__meta')||{}).textContent||'').trim();
+        btn.setAttribute('aria-label','View larger photo of '+nm);
+        const zoom=document.createElement('span');zoom.className='photo-trigger__icon';zoom.setAttribute('aria-hidden','true');zoom.innerHTML=window.hfLightboxIcon||'⤢';
+        btn.append(img,zoom);
+        slot.appendChild(btn);
       })
       .catch(()=>{});
   };

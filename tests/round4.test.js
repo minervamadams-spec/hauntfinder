@@ -106,3 +106,19 @@ test('photo-never-cropped fix (PHOTO-PORTRAIT-FIX.md): contain on #0E0B13 in the
   assert.ok(h.includes("createImageBitmap(file,{imageOrientation:'from-image'})")&&h.includes('const upFile=await hfNormalizePhoto(file)'),'JPEGs are re-drawn upright before upload');
   assert.ok(h.includes("contentType:upFile.type")&&h.includes("contentType:upFile.type,toke")||h.includes('contentType:upFile.type'),'the normalized type is what is uploaded');
 });
+
+test('photo lightbox (PHOTO-PORTRAIT-FIX.md section 2): trigger buttons, overlay spec, every close path, mobile swipe + pinch',()=>{
+  const lb=read('photo-lightbox.js'),flip=read('card-flip.js'),pu=read('photos-ui.js'),idx=read('index.html');
+  assert.ok(idx.includes('<script src="photo-lightbox.js"></script>')&&idx.indexOf('photo-lightbox.js')<idx.indexOf('photos-ui.js'),'module loads before photos-ui');
+  assert.equal(idx.includes('<dialog'),false,'the homepage keeps no <dialog>; the overlay is a div role=dialog built on demand');
+  assert.ok(flip.includes("'View larger photo of '+nameText")&&flip.includes("photoBtn.className='photo-trigger card__photo-btn'"),'card back trigger');
+  assert.ok(pu.includes("'View larger photo of '+nm")&&pu.includes("btn.className='photo-trigger map-popup__photo-btn'"),'popup trigger');
+  assert.ok(lb.includes("setAttribute('role','dialog')")&&lb.includes("setAttribute('aria-modal','true')"),'dialog semantics');
+  assert.ok(lb.includes("e.key==='Escape'")&&lb.includes("history.pushState({hfLightbox:1}")&&lb.includes("addEventListener('popstate'")&&lb.includes('.lightbox__close'),'x, Esc, Back');
+  assert.ok(lb.includes('d>80')&&lb.includes('visualViewport.scale>1.02'),'swipe down over 80px, not while pinch-zoomed');
+  assert.ok(lb.includes('t.focus({preventScroll:true})')&&lb.includes("closeBtn.focus"),'focus to x on open, back to the trigger on close');
+  assert.ok(css.includes('.lightbox{position:fixed;inset:0;z-index:3000;')&&css.includes('background:rgba(8,6,12,.94)'),'full-screen overlay above the map');
+  assert.ok(css.includes('max-height:calc(100dvh - 140px)')&&css.includes('touch-action:pinch-zoom')&&css.includes('html.lightbox-open,html.lightbox-open body{overflow:hidden}'),'fit, pinch zoom, scroll lock');
+  assert.ok(css.includes('@media(prefers-reduced-motion:reduce){.lightbox{transition:none}}')&&css.includes('transition:opacity .15s ease'),'150ms fade, none for reduced motion');
+  assert.ok(css.includes('.photo-trigger__icon{position:absolute;top:8px;left:8px;width:28px;height:28px;border-radius:50%;background:rgba(11,9,16,.7)'),'28px corner icon');
+});

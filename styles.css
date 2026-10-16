@@ -1743,3 +1743,25 @@ html body #cardList .card--compact.card--flip{padding:0;gap:0;display:block}
 .card--compact.card--flip .card-flip__inner{grid-template-columns:minmax(0,1fr)}
 .card--compact.card--flip{overflow:hidden}
 html body #cardList .card--compact.card--flip>.card-flip{margin-left:0}
+
+/* ---- photo lightbox (PHOTO-PORTRAIT-FIX.md section 2, mock P6) ---- */
+.photo-trigger{position:relative;display:block;padding:0;border:0;background:none;color:inherit;font:inherit;cursor:zoom-in;-webkit-tap-highlight-color:transparent}
+.photo-trigger__icon{position:absolute;top:8px;left:8px;width:28px;height:28px;border-radius:50%;background:rgba(11,9,16,.7);color:#F6EBD3;display:grid;place-items:center;pointer-events:none}
+.map-popup__photo{position:relative}
+.map-popup__photo-btn{width:100%;height:100%}
+.card--compact.card--flip .card__photo-btn{position:absolute;inset:0;width:100%;height:100%}
+.photo-trigger:focus-visible{outline:2px solid #B48CFF;outline-offset:-2px}
+.lightbox{position:fixed;inset:0;z-index:3000;display:flex;flex-direction:column;background:rgba(8,6,12,.94);opacity:0;transition:opacity .15s ease;overscroll-behavior:contain}
+.lightbox.is-in{opacity:1}
+@media(prefers-reduced-motion:reduce){.lightbox{transition:none}}
+.lightbox__bar{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 20px;min-height:60px;box-sizing:border-box}
+.lightbox__meta{display:flex;flex-direction:column;gap:2px;min-width:0}
+.lightbox__meta strong{font:700 20px/1.2 var(--f-cond,'Barlow Condensed',sans-serif);color:#F6EBD3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lightbox__meta span{font:500 14px/1.3 var(--f-body,'Barlow',sans-serif);color:#A89DB4}
+.lightbox__close{flex:none;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:#F6EBD3;font-size:30px;line-height:1;cursor:pointer}
+.lightbox__close:hover{background:rgba(246,235,211,.12)}
+.lightbox__close:focus-visible{outline:2px solid #B48CFF;outline-offset:2px}
+.lightbox__stage{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;padding:0 16px 16px;touch-action:pinch-zoom}
+.lightbox__img{display:block;width:100%;max-width:100%;height:calc(100dvh - 140px);max-height:calc(100dvh - 140px);object-fit:contain;object-position:center;image-orientation:from-image;touch-action:pinch-zoom}
+@media(max-width:767px){.lightbox{height:100dvh}.lightbox__stage{padding:0 0 8px}.lightbox__img{width:100%;height:calc(100dvh - 68px);max-height:calc(100dvh - 68px)}}
+html.lightbox-open,html.lightbox-open body{overflow:hidden}

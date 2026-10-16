@@ -104,7 +104,13 @@ window.hfPaintCardFlip=function(num){
   details.dataset.flipClose=String(num);
   details.textContent='↻ Details';
   bar.append(meta,details);
-  back.append(img,bar);
+  const photoBtn=document.createElement('button');
+  photoBtn.type='button';photoBtn.className='photo-trigger card__photo-btn';
+  photoBtn.dataset.name=nameText;photoBtn.dataset.sub=subline;
+  photoBtn.setAttribute('aria-label','View larger photo of '+nameText);
+  const zoom=document.createElement('span');zoom.className='photo-trigger__icon';zoom.setAttribute('aria-hidden','true');zoom.innerHTML=window.hfLightboxIcon||'⤢';
+  photoBtn.append(img,zoom);
+  back.append(photoBtn,bar);
   const front=document.createElement('div');
   front.className='card-face card-face--front';
   const inner=document.createElement('div');
