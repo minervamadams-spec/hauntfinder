@@ -16,13 +16,33 @@
  window.hfSetMobileView=v=>{if(isMobile())setView(v,{keepSelection:true})};
  $('viewToggle').addEventListener('click',()=>setView(root.dataset.mview==='map'?'list':'map'));
  // ---- sheets ----
+ const routePanel=$('routePanel'),routeHead=routePanel.querySelector('.route-panel__head'),routeWrap=$('routeSection'),reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+ let routeDrag=null,routeSnapTimer=0;
+ function resetRouteDrag(spring){
+  routeDrag=null;clearTimeout(routeSnapTimer);routePanel.style.transition=spring&&!reducedMotion.matches?'transform 200ms ease-out':'none';routePanel.style.transform='';routeWrap.style.background='';
+  if(spring&&!reducedMotion.matches)routeSnapTimer=setTimeout(()=>{routePanel.style.transition=''},210);else routePanel.style.transition='';
+ }
  function openSheet(name){root.dataset.sheet=name;const b=name==='route'?$('routeBarBtn'):$('filtersBtn');if(b)b.setAttribute('aria-expanded','true');if(name==='route'){$('routePanel').hidden=false;$('routeBarBtn').setAttribute('aria-expanded','true');root.setAttribute('data-route-open','');syncRouteBadges()}}
- function closeSheet(){const was=root.dataset.sheet;delete root.dataset.sheet;if(was==='route'){$('routePanel').hidden=true;$('routeBarBtn').setAttribute('aria-expanded','false');root.removeAttribute('data-route-open');syncRouteBadges()}if(was==='filters')$('filtersBtn').setAttribute('aria-expanded','false')}
+ function closeSheet(){const was=root.dataset.sheet;if(was==='route')resetRouteDrag(false);delete root.dataset.sheet;if(was==='route'){$('routePanel').hidden=true;$('routeBarBtn').setAttribute('aria-expanded','false');root.removeAttribute('data-route-open');syncRouteBadges()}if(was==='filters')$('filtersBtn').setAttribute('aria-expanded','false')}
  $('filtersBtn').addEventListener('click',()=>{openSheet('filters');sheetSync()});
  $('sheetClose').addEventListener('click',closeSheet);$('sheetShow').addEventListener('click',closeSheet);
  $('sheetClear').addEventListener('click',()=>{const b=document.querySelector('#filters [data-rail-clear]');if(b)b.click();else{state.filter='All';state.features=[];renderFilters();renderCards()}sheetSync()});
  $('routeBarBtn').addEventListener('click',()=>{root.dataset.sheet==='route'?closeSheet():openSheet('route')});
  $('routeClose').addEventListener('click',closeSheet);
+ // The header is the gesture target; keeping the scrolling stop list out of this
+ // handler makes it possible to review a long route without accidental dismissal.
+ routeHead.addEventListener('pointerdown',e=>{
+  if(!isMobile()||root.dataset.sheet!=='route'||e.button!==0||e.target.closest('button,a,input,select,textarea'))return;
+  routeDrag={id:e.pointerId,startY:e.clientY,lastY:e.clientY,lastTime:performance.now()};routeHead.setPointerCapture?.(e.pointerId);routePanel.style.transition='none';e.preventDefault();
+ });
+ routeHead.addEventListener('pointermove',e=>{
+  if(!routeDrag||e.pointerId!==routeDrag.id)return;const dy=Math.max(0,e.clientY-routeDrag.startY);const now=performance.now();routeDrag.lastY=e.clientY;routeDrag.lastTime=now;routePanel.style.transform=`translateY(${dy}px)`;routeWrap.style.background=`rgba(0,0,0,${.6*(1-Math.min(1,dy/routePanel.getBoundingClientRect().height))})`;
+ });
+ const finishRouteDrag=e=>{
+  if(!routeDrag||e.pointerId!==routeDrag.id)return;const drag=routeDrag,dy=Math.max(0,e.clientY-drag.startY),velocity=Math.max(0,e.clientY-drag.lastY)/Math.max(1,performance.now()-drag.lastTime),panel=routePanel;
+  routeHead.releasePointerCapture?.(e.pointerId);if(dy>panel.getBoundingClientRect().height*.25||velocity>.5)closeSheet();else resetRouteDrag(true);
+ };
+ routeHead.addEventListener('pointerup',finishRouteDrag);routeHead.addEventListener('pointercancel',()=>{if(routeDrag)resetRouteDrag(true)});
  document.addEventListener('click',e=>{if(root.dataset.sheet==='route'&&isMobile()&&!e.target.closest('#routePanel,#routeBarBtn,[data-route-mini-remove]'))closeSheet()},true);
  document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('menuDrawer').hidden)closeMenu();else if(root.dataset.sheet)closeSheet()}});
  function sheetSync(){const [one,many]=noun(),n=resultCount();$('sheetShow').textContent=`Show ${n} ${n===1?one:many}`;$('sheetTitle').textContent='Filters · '+(state.category==='treats'?'Treat Stops':state.category==='events'?'Events':'Displays')}

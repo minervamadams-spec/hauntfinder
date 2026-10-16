@@ -28,7 +28,8 @@ const countOf=t=>+(String(t).match(/^(\d+)/)||[0,0])[1];
 const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
 (async()=>{
   const browser=await chromium.launch(process.env.HF_CHROMIUM?{executablePath:process.env.HF_CHROMIUM}:{});
-  for(const vp of [{name:'1280',width:1280,height:800},{name:'390',width:390,height:844},{name:'820',width:820,height:1000}]){
+  const viewports=[{name:'1280',width:1280,height:800},{name:'390',width:390,height:844},{name:'820',width:820,height:1000}];
+  for(const vp of viewports.filter(v=>!process.env.HF_VIEWPORT||v.name===process.env.HF_VIEWPORT)){
     const desktop=vp.width>=1024,T=vp.name+'px: ';
     const ctx=await browser.newContext({viewport:{width:vp.width,height:vp.height},...(vp.width<1024?{hasTouch:true,isMobile:vp.width<768}:{})});
     await ctx.route('**/api/visits**',r=>r.abort());
@@ -84,6 +85,20 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       await p.click('#routeBarBtn');await p.waitForTimeout(300);
       const rs=await p.evaluate(()=>{const pnl=document.getElementById('routePanel').getBoundingClientRect();return {open:document.documentElement.dataset.sheet==='route',stops:document.querySelectorAll('#routeStopsMini .route-stop').length,count:document.getElementById('routePanelCount').textContent,go:/^https:\/\/www\.google\.com\/maps\/dir\//.test(document.getElementById('routeDirections').href),bottom:Math.round(pnl.bottom)===innerHeight,badge:document.getElementById('routeBarCount').textContent}});
       ok(T+'Your route opens a bottom sheet with the stops, "N of 10 stops" and Get directions',rs.open&&rs.stops===1&&rs.count==='1 of 10 stops'&&rs.go&&rs.bottom&&rs.badge==='1',JSON.stringify(rs));
+      // Route-sheet drag close: real mouse/pointer input on the header only. The stop list is deliberately not dragged.
+      const drag=async fraction=>{const b=await p.locator('.route-panel__head').boundingBox(),panel=await p.locator('#routePanel').boundingBox();const x=b.x+b.width/2,y=b.y+b.height/2;await p.mouse.move(x,y);await p.mouse.down();await p.mouse.move(x,y+panel.height*fraction,{steps:5});await p.mouse.up();await p.waitForTimeout(260)};
+      await drag(.1);
+      const shortDrag=await p.evaluate(()=>({open:document.documentElement.dataset.sheet==='route',expanded:document.getElementById('routeBarBtn').getAttribute('aria-expanded'),offset:document.getElementById('routePanel').style.transform}));
+      ok(T+'a short header drag springs the route sheet back open',shortDrag.open&&shortDrag.expanded==='true'&&shortDrag.offset==='',JSON.stringify(shortDrag));
+      await drag(.3);
+      const longDrag=await p.evaluate(()=>({open:document.documentElement.dataset.sheet==='route',expanded:document.getElementById('routeBarBtn').getAttribute('aria-expanded'),badge:document.getElementById('routeBarCount').textContent}));
+      ok(T+'a header drag past 25% closes the route sheet and returns control to the route bar',!longDrag.open&&longDrag.expanded==='false'&&longDrag.badge==='1',JSON.stringify(longDrag));
+      await p.click('#routeBarBtn');await p.waitForTimeout(150);await p.click('#routeClose');await p.waitForTimeout(150);
+      const xClose=await p.evaluate(()=>!document.documentElement.dataset.sheet&&document.getElementById('routeBarBtn').getAttribute('aria-expanded')==='false');
+      await p.click('#routeBarBtn');await p.waitForTimeout(150);await p.mouse.click(8,80);await p.waitForTimeout(150);
+      const backdropClose=await p.evaluate(()=>!document.documentElement.dataset.sheet&&document.getElementById('routeBarBtn').getAttribute('aria-expanded')==='false');
+      ok(T+'the route sheet × and backdrop tap still close it',xClose&&backdropClose,JSON.stringify({xClose,backdropClose}));
+      await p.click('#routeBarBtn');await p.waitForTimeout(150);
       await p.click('[data-route-mini-remove="0"]');await p.waitForTimeout(200);await p.click('#routeClose');await p.waitForTimeout(200);
       ok(T+'the route sheet closes and the bar badge returns to 0',(await p.evaluate(()=>!document.documentElement.dataset.sheet&&document.getElementById('routeBarCount').textContent==='0'&&document.getElementById('routeBarCount').classList.contains('is-zero'))));
       await p.evaluate(()=>localStorage.clear());

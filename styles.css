@@ -1437,7 +1437,8 @@ html[data-category="events"]{--acc:#B48CFF}
  html[data-sheet="route"] body .route-wrap,html[data-sheet="route"] .route-wrap{display:flex!important;position:fixed;inset:0;z-index:1500;align-items:flex-end;justify-content:center;width:auto!important;margin:0!important;padding:0;border:0;border-radius:0;background:rgba(0,0,0,.6);max-width:none}
  html[data-sheet="route"] .route-wrap .route-toggle,html[data-sheet="route"] .route-wrap .route-cta__status{display:none}
  html[data-sheet="route"] .route-panel{display:block;width:100%;max-width:760px;max-height:80vh;overflow:auto;box-sizing:border-box;padding:14px 16px calc(16px + env(safe-area-inset-bottom));border-radius:14px 14px 0 0;border-top:3px solid #FF7A1A;background:#1A1322}
- html[data-sheet="route"] .route-panel__head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+ html[data-sheet="route"] .route-panel__head{display:flex;position:relative;align-items:center;gap:10px;margin-bottom:8px;padding-top:12px;touch-action:none}
+ .route-panel__handle{position:absolute;top:2px;left:50%;width:36px;height:4px;border-radius:999px;background:#3A3046;transform:translateX(-50%)}
  .route-panel__head strong{font:700 20px var(--f-cond);letter-spacing:.08em;text-transform:uppercase;color:#F6EBD3}
  .route-panel__head #routePanelCount{font-size:13px;color:#A89DB4}
  .route-panel__head .sheet-close{margin-left:auto}

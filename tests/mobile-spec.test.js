@@ -38,6 +38,16 @@ test('mobile: Your route opens an in-page bottom sheet (not a dialog); empty cop
   assert.match(app,/rc\.classList\.toggle\('is-zero',!n\)/);
   assert.match(css,/\.mobile-bar__count\.is-zero\{background:#3A3046/);
 });
+test('mobile route sheet: header-only pointer drag has a grab handle, threshold, velocity and reduced-motion snap',()=>{
+  assert.match(html,/class="route-panel__handle" aria-hidden="true"/,'visible grab handle');
+  assert.match(mobileCss,/\.route-panel__handle\{[^}]*width:36px;[^}]*height:4px/,'36px grab handle');
+  assert.match(mobileCss,/\.route-panel__head\{[^}]*touch-action:none/,'only the non-scrolling header owns the gesture');
+  assert.match(mobile,/routeHead\.addEventListener\('pointerdown'/,'pointer handling is attached to the route header only');
+  assert.match(mobile,/dy>panel\.getBoundingClientRect\(\)\.height\*\.25/,'dragging beyond one quarter closes');
+  assert.match(mobile,/velocity>\.5/,'fast downward releases close');
+  assert.match(mobile,/prefers-reduced-motion: reduce/,'reduced motion snaps without a spring');
+  assert.match(mobile,/closeSheet\(\)/,'the existing close path keeps route state and aria in sync');
+});
 test('mobile cards: body is not a tap target; ◉ Map opens the map with that pin; ⋯ reveals Host notes, Rate, Report and Share',()=>{
   assert.match(app,/if\(matchMedia\('\(max-width:1023px\)'\)\.matches\)return;selectListing\(n,true\)/);
   assert.match(app,/data-card-map="\$\{x\.num\}"/);assert.match(app,/data-card-more="\$\{x\.num\}"/);
