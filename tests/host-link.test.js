@@ -103,7 +103,7 @@ test('host update wiring: scripts included, review filter present, preamble unto
   assert.ok(html.indexOf('host-update-ui.js')>html.indexOf('blob-client.js'),'host panel script loads after the blob client bundle');
   assert.ok(ui.includes('HFBlob.upload'),'photo upload uses the vendored blob client');
   assert.ok(ui.includes("fetch('/api/host-update'"),'update form posts to the host-update route');
-  assert.ok(ui.includes('will appear once the organizer reviews'),'pending-photo copy is honest');
+  assert.ok(ui.includes('Your photo is live')&&ui.includes('Your photo goes live right away.')&&!ui.includes('photo appears on the site once the organizer reviews'),'auto-publish copy is honest (update requests are still reviewed)');
   assert.ok(feedback.includes("r.kind!=='update-request'"),'public review reads filter update-requests');
   assert.equal(hash(app),hash(head),'app.js preamble hash unchanged');
 });

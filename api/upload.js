@@ -2,6 +2,8 @@ const {handleUpload}=require('@vercel/blob/client');
 const {createHmac,randomUUID,timingSafeEqual}=require('node:crypto');
 const {adminAuthorized}=require('../lib/newsletter');
 // Release 3 increment 1: host photo uploads via Vercel Blob client uploads.
+// Policy (Minerva, 2026-10-16): photos from a verified host (or the admin) publish immediately,
+// with no approval step. Only a valid per-listing host token or the admin bearer can get here.
 // The browser mints a client token here, then sends the bytes straight to
 // Blob, so function payload limits never see image data. Exactly one of two
 // credentials is accepted: the admin bearer (lib/newsletter.js pattern) or a
@@ -69,7 +71,7 @@ module.exports=async function handler(req,res){
       onUploadCompleted:async({blob,tokenPayload})=>{
         let listingNum=null;try{listingNum=JSON.parse(tokenPayload||'').listingNum}catch{}
         if(!Number.isInteger(listingNum))throw new Error('Upload is missing its listing.');
-        const photo={id:randomUUID(),url:blob.url,pathname:blob.pathname,status:'pending',uploadedAt:new Date().toISOString()};
+        const photo={id:randomUUID(),url:blob.url,pathname:blob.pathname,status:'approved',uploadedAt:new Date().toISOString()};
         await redis(['LPUSH',PHOTOS_KEY(listingNum),JSON.stringify(photo)]);
       }
     });

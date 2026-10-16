@@ -35,7 +35,8 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
     await ctx.route('**/api/visits**',r=>r.abort());
     await ctx.route('**/api/**',r=>r.request().method()==='GET'?r.continue():r.abort());
     const p=await ctx.newPage();const errors=[];p.on('pageerror',e=>errors.push(process.env.HF_DEBUG?'after "'+lastStep+'": '+String(e.stack).split('\n').slice(0,9).join(' | '):e.message));
-    const go=async q=>{await p.goto(BASE+'/'+q,{waitUntil:'networkidle'});await p.waitForTimeout(700)};
+    // The filter panel starts collapsed, so desktop flows expand it first unless they test the default.
+    const go=async(q,o)=>{await p.goto(BASE+'/'+q,{waitUntil:'networkidle'});await p.waitForTimeout(700);if(!(o&&o.keepRail)&&await p.evaluate(()=>innerWidth>=1024&&document.documentElement.dataset.rail==='collapsed')){await p.click('#railToggle');await p.waitForTimeout(300)}};
     const inView=n=>p.evaluate(({n,desktop})=>{const c=document.querySelector(`#cardList [data-card="${n}"]`);if(!c)return false;const b=c.getBoundingClientRect(),area=desktop?document.querySelector('.list-column').getBoundingClientRect():{top:0,bottom:innerHeight};return b.top>=area.top-1&&b.bottom<=area.bottom+1},{n,desktop});
 
     if(!desktop){
@@ -120,7 +121,7 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       // deep links
       await go('?house=8&entity=drakestown-road-2026');
       ok(T+'?house=8&entity= selects its card',await p.evaluate(()=>state.selected===8&&!!document.querySelector('#cardList [data-card="8"].is-selected')));
-      await go('?house=12&view=map');await p.waitForTimeout(600);
+      await go('?house=12&view=map',{keepRail:true});await p.waitForTimeout(600);
       const dm=await p.evaluate(()=>({mview:document.documentElement.dataset.mview,sel:state.selected===12,zoom:map.getZoom(),peek:!document.getElementById('mapPeek').classList.contains('is-hidden')}));
       ok(T+'?house=12&view=map opens the map view with pin 12 selected at zoom 15',dm.mview==='map'&&dm.sel&&dm.zoom===15&&dm.peek,JSON.stringify(dm));
       ok(T+'no horizontal overflow after deep links',!(await mp()).overflowX);
@@ -225,12 +226,13 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       ok(T+'event card: title case, address only, 3-line clamp, event-form tags only',ec.name==='none'&&!ec.venueRepeats&&ec.clamp==='3'&&!ec.tags.includes('Costumes Available')&&ec.noAll&&!ec.stray,JSON.stringify(ec));
       ok(T+'event cards stay compact (<=260px with a 3-line description)',ec.h.every(h=>h<=260||h===ec.h[0]&&h<=310),ec.h.join(','));
       // collapse toggle
-      await go('?category=displays');
-      await p.click('#railToggle');await p.waitForTimeout(300);
+      await go('?category=displays',{keepRail:true});
+      const def=await p.evaluate(()=>({rail:document.documentElement.dataset.rail,w:Math.round(document.getElementById('filterRail').getBoundingClientRect().width)}));
+      ok(T+'the filter panel is collapsed by default (44px)',def.rail==='collapsed'&&def.w===44,JSON.stringify(def));
       const col=await p.evaluate(()=>({w:Math.round(document.getElementById('filterRail').getBoundingClientRect().width),mapW:Math.round(document.getElementById('map').getBoundingClientRect().width),leaflet:map.getSize().x,label:document.querySelector('.filter-rail__expand-label').getBoundingClientRect().height>document.querySelector('.filter-rail__expand-label').getBoundingClientRect().width}));
       ok(T+'filter panel collapses to 44px, shows a vertical label, and the map resizes',col.w===44&&col.label&&Math.abs(col.mapW-col.leaflet)<=1,JSON.stringify(col));
       await p.click('#railToggle');await p.waitForTimeout(300);
-      ok(T+'filter panel expands again to 260px',(await p.evaluate(()=>Math.round(document.getElementById('filterRail').getBoundingClientRect().width)))===260);
+      ok(T+'filter panel expands to 260px',(await p.evaluate(()=>Math.round(document.getElementById('filterRail').getBoundingClientRect().width)))===260);
       // route bar
       await p.click('#cardList [data-route]');await p.waitForTimeout(200);
       await p.click('#routeToggle');await p.waitForTimeout(200);
@@ -278,13 +280,14 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
         await p.click('.tabs >> text=Displays');await p.waitForTimeout(800)}
       for(const tab of ['Treat Stops','Events','Displays']){await p.click('.tabs >> text='+tab);await p.waitForTimeout(2800);const v=await p.evaluate(()=>getComputedStyle(document.getElementById('searchAreaBtn')).visibility);ok(T+'Search this area stays hidden after switching to '+tab+' (the app moved the map, not the visitor)',v==='hidden',v)}
       // One pin: centred at zoom 14
-      await go('?category=treats');
+      await go('?category=treats',{keepRail:true});
       const one=await p.evaluate(()=>{const m=[...markerByNum.values()][0],c=map.getCenter(),x=listings.find(v=>v.num===[...markerByNum.keys()].find(n=>isTreatStop(listings.find(l=>l.num===n))));return {zoom:map.getZoom(),d:Math.hypot(c.lat-x.lat,c.lng-x.lng)}});
       ok(T+'one-pin tab centres on the pin at zoom 14',one.zoom===14&&one.d<0.002,JSON.stringify(one));
       // Route bar: compact when empty
       const rbe=await p.evaluate(()=>{const r=document.querySelector('.route-wrap').getBoundingClientRect(),m=document.querySelector('.map-frame').getBoundingClientRect();return {h:Math.round(r.height),hint:getComputedStyle(document.getElementById('routeHint')).display,text:getComputedStyle(document.querySelector('.route-toggle__empty')).display,left:Math.round(r.left-m.left),bottom:Math.round(m.bottom-r.bottom)}});
       ok(T+'empty route bar is a 40px "Add stops from the list" bar with no Expand',rbe.h<=44&&rbe.hint==='none'&&rbe.text!=='none'&&rbe.left===12&&rbe.bottom===12,JSON.stringify(rbe));
       // Panel scrollbars + footer layout
+      if(await p.evaluate(()=>document.documentElement.dataset.rail==='collapsed')){await p.click('#railToggle');await p.waitForTimeout(300)}
       const pf=await p.evaluate(()=>{const f=document.querySelector('#filterRail .filters'),l=document.querySelector('.filter-rail__links');return {sb:getComputedStyle(f).scrollbarWidth,foot:getComputedStyle(l).display,cols:getComputedStyle(l).gridTemplateColumns.split(' ').length}});
       ok(T+'filter footer is a fixed 2-column link block; scrollbars are thin',pf.sb==='thin'&&pf.foot==='grid'&&pf.cols===2,JSON.stringify(pf));
       await p.setViewportSize({width:1280,height:800});
@@ -357,7 +360,7 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
     const d8=await p.evaluate(()=>{const pin=document.querySelector('.leaflet-marker-pane [data-pin="8"]');return {sel:state.selected,card:!!document.querySelector('#cardList [data-card="8"].is-selected'),pin:!!pin&&pin.classList.contains('is-selected')}});
     ok(T+'?house=8&entity= selects its card and pin',d8.sel===8&&d8.card&&d8.pin,JSON.stringify(d8));
     ok(T+'?house=8 card is in view',await inView(8));
-    await go('?house=12&view=map');await p.waitForTimeout(800);
+    await go('?house=12&view=map',{keepRail:true});await p.waitForTimeout(800);
     const dl=await p.evaluate(()=>{const pin=document.querySelector('.leaflet-marker-pane [data-pin="12"]');const b=pin.getBoundingClientRect(),m=document.getElementById('map').getBoundingClientRect();
       return {zoom:map.getZoom(),selected:state.selected,card:!!document.querySelector('#cardList [data-card="12"].is-selected'),pinSelected:pin.classList.contains('is-selected'),dx:(b.left+b.width/2)-(m.left+m.width/2),tipDy:b.bottom-(m.top+m.height/2),mapTop:m.top,mapBottom:m.bottom,peek:!document.getElementById('mapPeek').classList.contains('is-hidden')}});
     // The open popup can legitimately cover the marker tip on a narrow map, so

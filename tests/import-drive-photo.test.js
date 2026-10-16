@@ -20,12 +20,12 @@ test('validateDownload rejects private pages, big files and non-images',()=>{
   assert.match(I.validateDownload({status:200,contentType:'image/jpeg',buf:Buffer.concat([jpeg,Buffer.alloc(I.MAX_BYTES)])}),/limit is 5 MB/);
   assert.match(I.validateDownload({status:200,contentType:'application/pdf',buf:Buffer.from('%PDF-1.4 something long enough')}),/not a JPEG/);
 });
-test('records default to pending; only an explicit approve publishes; dry run is the default',()=>{
-  assert.equal(I.buildRecord({url:'u',pathname:'p',driveId:'d'}).status,'pending');
-  assert.equal(I.buildRecord({url:'u',pathname:'p',status:'approved',driveId:'d'}).status,'approved');
-  assert.equal(I.buildRecord({url:'u',pathname:'p',status:'weird',driveId:'d'}).status,'pending');
+test('records publish by default (no approval step); --hold keeps one pending; dry run is the default',()=>{
+  assert.equal(I.buildRecord({url:'u',pathname:'p',driveId:'d'}).status,'approved');
+  assert.equal(I.buildRecord({url:'u',pathname:'p',status:'pending',driveId:'d'}).status,'pending');
+  assert.equal(I.buildRecord({url:'u',pathname:'p',status:'weird',driveId:'d'}).status,'approved');
   const a=I.parseArgs(['--num','1','--url','x','--num','13','--url','y']);
-  assert.deepEqual(a.pairs,[{num:1,url:'x'},{num:13,url:'y'}]);assert.equal(a.apply,false);assert.equal(a.approve,false);
+  assert.deepEqual(a.pairs,[{num:1,url:'x'},{num:13,url:'y'}]);assert.equal(a.apply,false);assert.equal(a.hold,false);
   assert.throws(()=>I.parseArgs(['--url','x']));
   assert.deepEqual(I.parseArgs(['--num','13','--file','/tmp/a.jpg']).pairs,[{num:13,file:'/tmp/a.jpg'}]);
 });

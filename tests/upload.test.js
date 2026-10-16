@@ -7,7 +7,7 @@ function response(){return {headers:{},statusCode:200,setHeader(k,v){this.header
 function request(body,headers={}){return {method:'POST',url:'/api/upload',body,headers:{'content-type':'application/json','x-forwarded-for':'192.0.2.1',...headers},query:{}}}
 function mintBody(contentType,extra={}){return {type:'blob.generate-client-token',payload:{pathname:'photos/3/front-porch.jpg',multipart:false,clientPayload:JSON.stringify({listingNum:3,contentType,...extra})}}}
 function completedBody(){return {type:'blob.upload-completed',payload:{blob:{url:'https://blob.vercel-storage.com/photos/3/front-porch.jpg',pathname:'photos/3/front-porch.jpg',contentType:'image/jpeg'},tokenPayload:JSON.stringify({listingNum:3})}}}
-test('upload API: type allowlist, size cap, dual auth, rate limit, pending photo record',async()=>{
+test('upload API: type allowlist, size cap, dual auth, rate limit, photo record published immediately',async()=>{
   const originalFetch=global.fetch;
   const envKeys=['UPSTASH_REDIS_REST_URL','UPSTASH_REDIS_REST_TOKEN','CRON_SECRET','BLOB_READ_WRITE_TOKEN'];
   const saved=Object.fromEntries(envKeys.map(k=>[k,process.env[k]]));
@@ -52,7 +52,7 @@ test('upload API: type allowlist, size cap, dual auth, rate limit, pending photo
     const body=completedBody(),signature=createHmac('sha256',process.env.BLOB_READ_WRITE_TOKEN).update(JSON.stringify(body)).digest('hex');
     res=response();await handler(request(body,{'x-vercel-signature':signature}),res);assert.equal(res.statusCode,200,'signed upload-completed accepted');
     const rows=store.get('hauntfinder:2026:photos:3');assert.equal(rows.length,1);
-    const photo=JSON.parse(rows[0]);assert.equal(photo.status,'pending');assert.equal(photo.url,body.payload.blob.url);assert.equal(photo.pathname,body.payload.blob.pathname);assert.ok(photo.id);assert.ok(photo.uploadedAt);
+    const photo=JSON.parse(rows[0]);assert.equal(photo.status,'approved');assert.equal(photo.url,body.payload.blob.url);assert.equal(photo.pathname,body.payload.blob.pathname);assert.ok(photo.id);assert.ok(photo.uploadedAt);
     assert.equal(store.has('hauntfinder:2026:reviews:3'),false,'review namespace untouched');
     res=response();await handler(request(body,{'x-vercel-signature':'deadbeef'}),res);assert.equal(res.statusCode,400,'bad signature rejected');
     res=response();await handler(request(body),res);assert.equal(res.statusCode,400,'missing signature rejected');

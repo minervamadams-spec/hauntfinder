@@ -32,7 +32,7 @@ test('P1: tabs are unfilled with a 3px accent underline; the focus ring is keybo
 });
 test('P2: filter panel collapses to 44px with a ☰ toggle, a vertical label and a count badge, starting collapsed below 1100px',()=>{
   assert.match(html,/id="railToggle"/);assert.match(html,/id="railExpand"/);assert.match(html,/id="railBadge"/);
-  assert.match(chrome,/railSetCollapsed\(innerWidth<1100\)/);
+  assert.match(chrome,/railSetCollapsed\(true\)/,'filters start collapsed at every width');
   assert.match(chrome,/map\.invalidateSize\(\)/);
   assert.match(css,/html\[data-rail="collapsed"\] \.app__main\.page-grid\{grid-template-columns:44px /);
 });

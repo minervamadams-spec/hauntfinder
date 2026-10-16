@@ -129,11 +129,11 @@ function railFiltersHTML(){
  }
  return body+railClearHTML();
 }
-// Filter panel collapse (v7): 260px <-> 44px. Starts collapsed below 1100px.
+// Filter panel collapse (v7): 260px <-> 44px. Collapsed by default at every width (Minerva, 2026-10-16); the toggle expands it.
 const railRoot=document.documentElement;
 function railSetCollapsed(on){railRoot.dataset.rail=on?'collapsed':'open';const t=document.getElementById('railToggle');if(t)t.setAttribute('aria-expanded',String(!on));const b=document.getElementById('railExpand');if(b)b.setAttribute('aria-expanded',String(!on));railBadge();setTimeout(()=>{if(typeof map!=='undefined'&&map&&map.invalidateSize)map.invalidateSize()},60)}
 function railBadge(){const n=railActiveCount(),el=document.getElementById('railBadge');if(el){el.textContent=String(n);el.hidden=!n}const hc=document.getElementById('railHeadCount');if(hc){hc.textContent=String(n);hc.hidden=!n}const fb=document.getElementById('filtersBtn'),fc=document.getElementById('filtersBtnCount');if(fc){fc.textContent=String(n);fc.hidden=!n}if(fb)fb.classList.toggle('is-active',n>0);if(typeof window!=='undefined'&&window.hfSheetSync)window.hfSheetSync()}
-if(typeof matchMedia==='function'&&document.getElementById('railToggle')){railSetCollapsed(innerWidth<1100);
+if(typeof matchMedia==='function'&&document.getElementById('railToggle')){railSetCollapsed(true);
  document.getElementById('railToggle').addEventListener('click',()=>railSetCollapsed(railRoot.dataset.rail!=='collapsed'));
  document.getElementById('railExpand').addEventListener('click',()=>railSetCollapsed(false))}
 

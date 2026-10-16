@@ -37,7 +37,7 @@ window.hfNormalizePhoto=async function(file){
       <h2>Update your listing</h2>
       <p class="host-panel__listing"><strong>${escapeHTML(listing.name)}</strong> · ${escapeHTML(listing.town)}</p>
       <section class="host-panel__section"><h3>Add a photo</h3>
-        <p class="form-note">JPEG, PNG, WebP or GIF, up to 5 MB. Your photo appears on the site once the organizer reviews it.</p>
+        <p class="form-note">JPEG, PNG, WebP or GIF, up to 5 MB. Your photo goes live right away.</p>
         <input type="file" id="hostPhotoInput" accept="image/jpeg,image/png,image/webp,image/gif">
         <button type="button" class="btn btn--outline" id="hostPhotoBtn">Upload photo</button>
         <p class="host-panel__status" id="hostPhotoStatus" role="status"></p>
@@ -67,7 +67,7 @@ window.hfNormalizePhoto=async function(file){
       try{
         const upFile=await hfNormalizePhoto(file);
         await HFBlob.upload('host-photos/'+listing.num+'/'+Date.now()+'-'+upFile.name.replace(/[^\w.-]+/g,'-'),upFile,{access:'public',contentType:upFile.type,handleUploadUrl:'/api/upload',clientPayload:JSON.stringify({listingNum:listing.num,contentType:upFile.type,token})});
-        photoStatus.textContent='Thanks! Your photo will appear once the organizer reviews it.';
+        photoStatus.textContent='Thanks! Your photo is live. It can take up to a minute to show on the site.';
         document.getElementById('hostPhotoInput').value='';
       }catch(e){photoStatus.textContent='Upload failed — please try again.'}
     };

@@ -122,3 +122,17 @@ test('photo lightbox (PHOTO-PORTRAIT-FIX.md section 2): trigger buttons, overlay
   assert.ok(css.includes('@media(prefers-reduced-motion:reduce){.lightbox{transition:none}}')&&css.includes('transition:opacity .15s ease'),'150ms fade, none for reduced motion');
   assert.ok(css.includes('.photo-trigger__icon{position:absolute;top:8px;left:8px;width:28px;height:28px;border-radius:50%;background:rgba(11,9,16,.7)'),'28px corner icon');
 });
+
+test('filters are collapsed by default at every width (set before first paint, so the map is created at its final width)',()=>{
+  const idx=read('index.html');
+  assert.ok(idx.indexOf("document.documentElement.dataset.rail='collapsed'")>0&&idx.indexOf("document.documentElement.dataset.rail='collapsed'")<idx.indexOf('<body'),'inline head script');
+  assert.ok(chrome.includes('railSetCollapsed(true)')&&!chrome.includes('innerWidth<1100'));
+});
+
+test('host photos publish immediately: no approval step (Minerva, 2026-10-16)',()=>{
+  const up=read('api/upload.js');
+  assert.ok(up.includes("status:'approved',uploadedAt")&&!up.includes("status:'pending'"),'upload API stores approved records');
+  assert.ok(read('api/photos.js').includes("p.status==='approved'"),'the public API shows approved records');
+  assert.ok(up.includes('adminAuthorized(req)')&&up.includes('listingForHostToken'),'still only a verified host or the admin can upload');
+  assert.ok(up.includes('MAX_MINTS_PER_HOUR=10')&&up.includes("ALLOWED_TYPES=['image/jpeg','image/png','image/webp','image/gif']")&&up.includes('MAX_BYTES=5*1024*1024'),'type, size and rate limits unchanged');
+});
