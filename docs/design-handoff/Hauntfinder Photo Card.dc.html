@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#0B0910;color:#F6EBD3;font-family:Barlow,sans-serif}a{color:#B48CFF;text-decoration:none}a:hover{color:#CDB0FF}</style>
+</helmet>
+<div style="padding:48px;display:flex;flex-direction:column;gap:32px;max-width:1500px;">
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div style="font:800 32px 'Barlow Condensed';letter-spacing:.02em;">PHOTO CARD: FRONT, BACK, FLIP</div>
+    <div style="font:400 16px/1.5 Barlow;color:#CFC4B0;max-width:900px;text-wrap:pretty;">This fixes the broken Adams Family Haunt and Glens Terror Drive cards (<span style="color:#F6EBD3;">reference/live-review/round4-photo-cards-broken.png</span>). The front is a normal compact card plus one "↻ Photo" pill. The back is exactly the same height as the front. List width is 400px.</div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start;">
+    <div id="P1" style="display:flex;flex-direction:column;gap:10px;width:400px;">
+      <div style="display:flex;gap:8px;align-items:center;"><span style="font:700 12px Barlow;background:#FF7A1A;color:#120E18;padding:2px 7px;border-radius:4px;">P1</span><span style="font:700 14px 'Barlow Condensed';letter-spacing:.1em;color:#A89DB4;">FRONT</span></div>
+      <article style="padding:12px 14px;border:1px solid #2E2638;background:#1A1522;border-radius:10px;display:flex;flex-direction:column;gap:7px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <img src="assets/icon-display-v2.svg" alt="" style="flex:none;width:26px;height:26px;"></img>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;">
+            <div style="display:flex;align-items:center;gap:8px;min-width:0;">
+              <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:700 19px/1.15 'Barlow Condensed';color:#F6EBD3;">Adams Family Haunt</span>
+              <button style="flex:none;height:22px;padding:0 8px;border-radius:11px;border:1px solid #FF7A1A;background:transparent;color:#FF9A5A;font:700 11px 'Barlow Condensed';letter-spacing:.08em;cursor:pointer;">↻ PHOTO</button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:0 6px;font:500 13px Barlow;color:#A89DB4;"><a href="#" style="font:600 14px Barlow;">5 N Mount Olive Rd, Budd Lake ↗</a><span style="white-space:nowrap;">· 1.4 mi</span></div>
+          </div>
+        </div>
+        <div style="padding-left:36px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;">
+          <span style="font:500 14px Barlow;color:#E4D9F2;">Halloween · 4–8 PM</span>
+          <a href="#" style="flex:none;font:600 12px Barlow;">Host notes</a>
+        </div>
+        <div style="padding-left:36px;font:500 12px Barlow;color:#A89DB4;"><span style="color:#FF7A1A;letter-spacing:1px;">●●●</span> Scary</div>
+        <div style="padding-left:36px;display:flex;flex-wrap:wrap;gap:5px;">
+          <sc-for list="{{ icons }}" as="ic" hint-placeholder-count="7">
+            <span title="{{ ic.label }}" style="width:26px;height:26px;border-radius:13px;border:1px solid #3A3046;display:flex;align-items:center;justify-content:center;"><span style="width:14px;height:14px;background:#CFC4B0;-webkit-mask:{{ ic.mask }};mask:{{ ic.mask }};"></span></span>
+          </sc-for>
+        </div>
+        <div style="padding-left:36px;padding-top:2px;display:flex;flex-wrap:nowrap;align-items:center;gap:12px;">
+          <button style="flex:none;height:30px;min-width:118px;padding:0 12px;border-radius:7px;border:1px solid #A6E22E;background:#A6E22E;color:#120E18;font:800 13px 'Barlow Condensed';letter-spacing:.08em;">+ ADD TO ROUTE</button>
+          <div style="flex:1;min-width:0;display:flex;gap:12px;justify-content:flex-end;font:500 12px Barlow;color:#7E7389;white-space:nowrap;">
+            <span>No ratings yet · <a href="#" style="font:600 12px Barlow;">Rate</a></span>
+            <a href="#" style="font:600 12px Barlow;color:#A89DB4;">Report</a>
+            <a href="#" style="font:600 12px Barlow;color:#A89DB4;">Share</a>
+          </div>
+        </div>
+      </article>
+      <ul style="margin:0;padding-left:18px;font:400 14px/1.5 Barlow;color:#CFC4B0;display:flex;flex-direction:column;gap:4px;">
+        <li>The "↻ Photo" pill sits on the <b style="color:#F6EBD3;">title row</b>, after the name. The name truncates with an ellipsis, and the pill never wraps.</li>
+        <li>The address line stays on its own line under the title. Nothing overlaps it.</li>
+        <li>Everything else is identical to a card without a photo.</li>
+      </ul>
+    </div>
+
+    <div id="P2" style="display:flex;flex-direction:column;gap:10px;width:400px;">
+      <div style="display:flex;gap:8px;align-items:center;"><span style="font:700 12px Barlow;background:#FF7A1A;color:#120E18;padding:2px 7px;border-radius:4px;">P2</span><span style="font:700 14px 'Barlow Condensed';letter-spacing:.1em;color:#A89DB4;">BACK (SAME HEIGHT)</span></div>
+      <article style="position:relative;height:189px;border:1px solid #FF7A1A;border-radius:10px;overflow:hidden;background:#120E18;">
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,#2A2233 0 10px,#221B2B 10px 20px);display:flex;align-items:center;justify-content:center;font:600 13px ui-monospace,monospace;color:#7E7389;">owner photo · object-fit: cover</div>
+        <div style="position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:rgba(11,9,16,.88);display:flex;align-items:center;gap:10px;">
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;">
+            <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:700 17px/1.15 'Barlow Condensed';">Adams Family Haunt</span>
+            <span style="font:500 12px Barlow;color:#A89DB4;">Budd Lake · 1.4 mi</span>
+          </div>
+          <button style="flex:none;height:30px;padding:0 12px;border-radius:7px;border:0;background:#F6EBD3;color:#120E18;font:800 13px 'Barlow Condensed';letter-spacing:.08em;">↻ DETAILS</button>
+        </div>
+      </article>
+      <ul style="margin:0;padding-left:18px;font:400 14px/1.5 Barlow;color:#CFC4B0;display:flex;flex-direction:column;gap:4px;">
+        <li><b style="color:#F6EBD3;">The 189px here is only for this illustration, to match P1.</b> Don't hard-code a height. In the build, the back takes the front's height from the grid (see P3 and P4).</li>
+        <li>The photo fills the whole face with <code>object-fit: cover</code> and <code>object-position: center</code>. The height comes from the front face. Never use the image's own height.</li>
+        <li>The bottom bar has the name, town · distance and "↻ Details". There's no route button on the back.</li>
+        <li>Alt text: "Photo of Adams Family Haunt". Lazy-load the photo on the first flip.</li>
+      </ul>
+    </div>
+
+    <div id="P3" style="display:flex;flex-direction:column;gap:10px;width:400px;">
+      <div style="display:flex;gap:8px;align-items:center;"><span style="font:700 12px Barlow;background:#FF7A1A;color:#120E18;padding:2px 7px;border-radius:4px;">P3</span><span style="font:700 14px 'Barlow Condensed';letter-spacing:.1em;color:#A89DB4;">WORKING FLIP (CLICK)</span></div>
+      <div style="perspective:1400px;">
+        <div style="display:grid;transform-style:preserve-3d;transition:transform 600ms cubic-bezier(.3,.7,.3,1);transform:{{ rot }};">
+          <div style="grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:12px 14px;border:1px solid #2E2638;background:#1A1522;border-radius:10px;display:flex;flex-direction:column;gap:7px;">
+            <div style="display:flex;gap:10px;align-items:center;">
+              <img src="assets/icon-display-v2.svg" alt="" style="flex:none;width:26px;height:26px;"></img>
+              <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:700 19px/1.15 'Barlow Condensed';">Glens Terror Drive</span>
+              <button onClick="{{ flip }}" style="flex:none;height:22px;padding:0 8px;border-radius:11px;border:1px solid #FF7A1A;background:transparent;color:#FF9A5A;font:700 11px 'Barlow Condensed';letter-spacing:.08em;cursor:pointer;">↻ PHOTO</button>
+            </div>
+            <div style="padding-left:36px;display:flex;flex-wrap:wrap;gap:0 6px;font:500 13px Barlow;color:#A89DB4;"><a href="#" style="font:600 14px Barlow;">34 Glen Rd, Stanhope ↗</a><span>· 3.5 mi</span></div>
+            <div style="padding-left:36px;font:500 14px Barlow;color:#E4D9F2;">Friday–Sunday · 7–10 PM</div>
+            <div style="padding-left:36px;font:500 12px Barlow;color:#A89DB4;"><span style="color:#FF7A1A;letter-spacing:1px;">○●●</span> Spooky · Scary</div>
+            <div style="padding-left:36px;display:flex;flex-wrap:wrap;gap:5px;">
+              <sc-for list="{{ icons }}" as="ic" hint-placeholder-count="7">
+                <span title="{{ ic.label }}" style="width:26px;height:26px;border-radius:13px;border:1px solid #3A3046;display:flex;align-items:center;justify-content:center;"><span style="width:14px;height:14px;background:#CFC4B0;-webkit-mask:{{ ic.mask }};mask:{{ ic.mask }};"></span></span>
+              </sc-for>
+            </div>
+            <div style="padding-left:36px;padding-top:2px;display:flex;align-items:center;gap:12px;">
+              <button style="flex:none;height:30px;min-width:118px;padding:0 12px;border-radius:7px;border:1px solid #A6E22E;background:#A6E22E;color:#120E18;font:800 13px 'Barlow Condensed';letter-spacing:.08em;">+ ADD TO ROUTE</button>
+              <div style="flex:1;display:flex;gap:12px;justify-content:flex-end;font:600 12px Barlow;color:#A89DB4;white-space:nowrap;"><a href="#" style="color:#A89DB4;">Report</a><a href="#" style="color:#A89DB4;">Share</a></div>
+            </div>
+          </div>
+          <div style="grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);position:relative;border:1px solid #FF7A1A;border-radius:10px;overflow:hidden;background:#120E18;">
+            <div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,#2A2233 0 10px,#221B2B 10px 20px);display:flex;align-items:center;justify-content:center;font:600 13px ui-monospace,monospace;color:#7E7389;">owner photo</div>
+            <div style="position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:rgba(11,9,16,.88);display:flex;align-items:center;gap:10px;">
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;"><span style="font:700 17px/1.15 'Barlow Condensed';">Glens Terror Drive</span><span style="font:500 12px Barlow;color:#A89DB4;">Stanhope · 3.5 mi</span></div>
+              <button onClick="{{ flip }}" style="flex:none;height:30px;padding:0 12px;border-radius:7px;border:0;background:#F6EBD3;color:#120E18;font:800 13px 'Barlow Condensed';letter-spacing:.08em;cursor:pointer;">↻ DETAILS</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul style="margin:0;padding-left:18px;font:400 14px/1.5 Barlow;color:#CFC4B0;display:flex;flex-direction:column;gap:4px;">
+        <li>Click "↻ Photo" to flip. Also try a narrow window: the back always matches the front's height.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="P4" style="max-width:1280px;display:flex;flex-direction:column;gap:12px;padding:20px 24px;background:#1A1322;border-radius:10px;border-top:3px solid #FF7A1A;">
+    <div style="display:flex;gap:8px;align-items:center;"><span style="font:700 12px Barlow;background:#FF7A1A;color:#120E18;padding:2px 7px;border-radius:4px;">P4</span><span style="font:700 18px 'Barlow Condensed';letter-spacing:.06em;">HOW TO BUILD IT (WHY THE LIVE CARD BREAKS)</span></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:12px 32px;font:400 15px/1.55 Barlow;color:#CFC4B0;">
+      <div><b style="color:#F6EBD3;">What's broken:</b> the front face is positioned absolutely, and the photo face is in normal flow at the image's own height. So the card grows to about 480px of empty space, and the title, address and Photo pill stack on top of each other.</div>
+      <div><b style="color:#F6EBD3;">Fix:</b> make the flipper <code>display:grid</code>, and put both faces in <code>grid-area:1/1</code>. The grid row takes the height of the front's content. The back is <code>position:relative</code>, and its <code>&lt;img&gt;</code> is <code>position:absolute; inset:0; width:100%; height:100%; object-fit:cover</code>, so the image never sets the height.</div>
+      <div><b style="color:#F6EBD3;">3D:</b> the wrapper has <code>perspective:1400px</code>. The flipper has <code>transform-style:preserve-3d</code> and a 600ms <code>cubic-bezier(.3,.7,.3,1)</code> transition. Both faces have <code>backface-visibility:hidden</code>, and the back has <code>rotateY(180deg)</code>. Toggle the flipper between <code>rotateY(0)</code> and <code>rotateY(180deg)</code>.</div>
+      <div><b style="color:#F6EBD3;">Reduced motion and access:</b> with <code>prefers-reduced-motion</code>, crossfade over 150ms instead of flipping. The face that isn't showing gets <code>inert</code> and <code>aria-hidden</code>. Move focus to "↻ Details" after a flip, and back to "↻ Photo" when flipping back.</div>
+      <div><b style="color:#F6EBD3;">Test:</b> the Adams Family Haunt and Glens Terror Drive cards are the same height as their neighbors, give or take their own rows, with no overlap, at 400px and at 320px. On mobile, use the same rules.</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const ICONS = [['Walk-through','door-open'],['Music / Sound','music'],['Photo opportunities','camera'],['Fog','cloud-fog'],['Lights','lightbulb'],['Animatronics','bot'],['Live Actors','drama']];
+class Component extends DCLogic {
+  state = { flipped: false };
+  renderVals() {
+    return {
+      icons: ICONS.map(([label, n]) => ({ label, mask: `url(https://unpkg.com/lucide-static@0.460.0/icons/${n}.svg) center / contain no-repeat` })),
+      rot: this.state.flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+      flip: () => this.setState(s => ({ flipped: !s.flipped })),
+    };
+  }
+}
+</script>
+</body>
+</html>

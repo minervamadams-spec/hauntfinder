@@ -82,3 +82,15 @@ test('round 4 items 23-25: quotes use a top border; community links not underlin
   assert.ok(css.includes("font:italic 500 19px/1.5 'Barlow'"));
   assert.equal((about.match(/assets\/icons\/v2\/icon-(display|treat-stop|event)\.svg/g)||[]).length,3);
 });
+
+test('photo card (Photo Card design): one-cell grid, front sets the height, photo absolute, pill on the title row, inert faces',()=>{
+  assert.ok(css.includes('.card--compact.card--flip .card-flip__inner{display:grid}')&&css.includes('.card-flip__inner{grid-template-columns:minmax(0,1fr)}'));
+  assert.ok(css.includes('.card--compact.card--flip .card__photo{position:absolute;inset:0;width:100%;height:100%;min-height:0;object-fit:cover'),'the image never sets the height');
+  assert.ok(css.includes('.card--compact.card--flip .card__heading{display:flex;align-items:center;gap:8px;min-width:0}')&&css.includes('white-space:nowrap;vertical-align:baseline}'),'pill on the title row, never wraps');
+  assert.ok(css.includes('html body #cardList .card--compact.card--flip>.card-flip{margin-left:0}'),'the 36px indent rule must not shift the flipper');
+  const flip=read('card-flip.js');
+  assert.ok(flip.includes('front.inert=flipped')&&flip.includes('back.inert=!flipped')&&flip.includes('back.inert=true;'),'hidden face is inert');
+  assert.ok(flip.includes("img.dataset.src=hfPhotoURL(num)")&&flip.includes('photo.src=photo.dataset.src'),'photo loads on first flip');
+  assert.ok(flip.includes("img.alt='Photo of '+nameText"),'alt text per spec');
+  assert.ok(flip.includes("next.focus({preventScroll:true})"),'focus handoff');
+});

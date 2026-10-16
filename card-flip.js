@@ -23,9 +23,15 @@ function toggleFlip(card){
   card.classList.toggle('is-flipped');
   const flipped=card.classList.contains('is-flipped');
   const front=card.querySelector('.card-face--front'),back=card.querySelector('.card-face--back');
-  if(front)front.setAttribute('aria-hidden',String(flipped));
-  if(back)back.setAttribute('aria-hidden',String(!flipped));
+  if(front){front.setAttribute('aria-hidden',String(flipped));front.inert=flipped}
+  if(back){back.setAttribute('aria-hidden',String(!flipped));back.inert=!flipped}
   card.querySelectorAll('[data-flip-open]').forEach(b=>b.setAttribute('aria-pressed',String(flipped)));
+  // Photo loads on the first flip, not at page load.
+  const photo=card.querySelector('.card__photo[data-src]');
+  if(flipped&&photo){photo.src=photo.dataset.src;photo.removeAttribute('data-src')}
+  // Hand focus to the control that is now visible.
+  const next=flipped?card.querySelector('[data-flip-close]'):card.querySelector('.card__photo-pill');
+  if(next)next.focus({preventScroll:true});
 }
 
 cardList.addEventListener('click',e=>{
@@ -77,10 +83,11 @@ window.hfPaintCardFlip=function(num){
   const back=document.createElement('div');
   back.className='card-face card-face--back';
   back.setAttribute('aria-hidden','true');
+  back.inert=true;
   const img=document.createElement('img');
   img.className='card__photo';
-  img.src=hfPhotoURL(num);
-  img.alt='Host photo for listing '+num;
+  img.dataset.src=hfPhotoURL(num);
+  img.alt='Photo of '+nameText;
   img.loading='lazy';
   img.decoding='async';
   const bar=document.createElement('div');
