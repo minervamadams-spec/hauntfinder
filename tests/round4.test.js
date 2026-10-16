@@ -138,6 +138,6 @@ test('host photos publish immediately: no approval step (Minerva, 2026-10-16)',(
 });
 
 test('collapsed filter panel: stacking/sticky rules never override display:none',()=>{
-  assert.ok(css.includes('html[data-rail="collapsed"] .filter-rail .filters,html[data-rail="collapsed"] .filter-rail .filter-rail__links,html[data-rail="collapsed"] .filter-rail .filter-rail__section{display:none!important}'));
+  assert.ok(css.includes('@media(min-width:1024px){html[data-rail="collapsed"] .filter-rail .filters,html[data-rail="collapsed"] .filter-rail .filter-rail__links,html[data-rail="collapsed"] .filter-rail .filter-rail__section{display:none!important}}'),'desktop only: the mobile filter sheet must keep its groups');
   assert.ok(css.lastIndexOf('html[data-rail="collapsed"] .filter-rail .filters,')>css.indexOf('.filter-rail .filters{display:flex;flex-direction:column;justify-content:flex-start'),'override comes after the round 4 stacking rule');
 });
