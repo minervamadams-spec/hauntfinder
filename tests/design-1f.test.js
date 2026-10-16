@@ -5,27 +5,27 @@ const app=fs.readFileSync(path.join(ROOT,'app.js'),'utf8');
 const layout=fs.readFileSync(path.join(ROOT,'layout.js'),'utf8');
 const css=fs.readFileSync(path.join(ROOT,'styles.css'),'utf8');
 const photos=fs.readFileSync(path.join(ROOT,'photos-ui.js'),'utf8');
-const pinDisplay=fs.readFileSync(path.join(ROOT,'assets/icons/pin-display.svg'),'utf8');
-const pinTreat=fs.readFileSync(path.join(ROOT,'assets/icons/pin-treat-stop.svg'),'utf8');
-const pinEvent=fs.readFileSync(path.join(ROOT,'assets/icons/pin-event.svg'),'utf8');
+const pinDisplay=fs.readFileSync(path.join(ROOT,'assets/icons/v2/pin-display.svg'),'utf8');
+const pinTreat=fs.readFileSync(path.join(ROOT,'assets/icons/v2/pin-treat-stop.svg'),'utf8');
+const pinEvent=fs.readFileSync(path.join(ROOT,'assets/icons/v2/pin-event.svg'),'utf8');
 const badge=fs.readFileSync(path.join(ROOT,'assets/icons/badge-on-route.svg'),'utf8');
 
 /* ---- Pins (spec 8.7) ---- */
 test('pin SVGs are the supplied artwork with the pointed tip',()=>{
-  [pinDisplay,pinTreat,pinEvent].forEach((svg,i)=>assert.ok(svg.includes('viewBox="0 0 48 56"'),'pin '+(i+1)+' keeps the 48x56 artboard'));
+  [pinDisplay,pinTreat,pinEvent].forEach((svg,i)=>assert.ok(svg.includes('viewBox="0 0 128 156"'),'pin '+(i+1)+' keeps the v2 128x156 artboard'));
   assert.ok(badge.includes('viewBox="0 0 24 24"'),'badge artboard');
   assert.equal(app.includes('pumpkin-pin.svg'),false,'legacy inline pumpkin artwork retired');
 });
 
 test('divIcon anatomy: SVG + number + badge compose per pin; treats use the candy art',()=>{
   assert.ok(app.includes("function pinHTML(n,kind)"),'kind-aware pin builder');
-  assert.ok(app.includes("assets/icons/pin-${kind==='treat'?'treat-stop':'display'}.svg"),'kind picks the SVG source');
+  assert.ok(app.includes("assets/icons/v2/pin-${kind==='treat'?'treat-stop':'display'}.svg"),'kind picks the SVG source');
   assert.ok(app.includes("assets/icons/badge-on-route.svg"),'badge source');
   assert.ok(app.includes('L.divIcon'),'pins compose through divIcon');
-  assert.ok(app.includes('iconSize:[w,h],iconAnchor:[w/2,h]'),'bottom-tip anchor');
-  assert.ok(app.includes('function pinHeight(w){return Math.round(w*56/48)}'),'height = width x 56/48');
-  assert.ok(app.includes("matchMedia('(max-width:767px)').matches?28:38"),'28px mobile / 38px desktop');
-  assert.ok(app.includes("pinHTML(x.num,isTreatStop(x)?'treat':'display')"),'cards pass the pin kind');
+  assert.ok(app.includes('iconSize:[w,h],iconAnchor:[w/2,h-1]'),'bottom-tip anchor (v2 README: 34x41, anchor 17,40)');
+  assert.ok(app.includes('function pinHeight(w){return Math.round(w*156/128)}'),'height = width x 156/128');
+  assert.ok(app.includes("matchMedia('(max-width:767px)').matches?30:34"),'30px mobile / 34px desktop');
+  assert.ok(app.includes("cardIconHTML(isTreatStop(x)?'treat':'display')"),'cards pass the icon kind');
   assert.ok(app.includes("iconFor(x.num,isTreatStop(x)?'treat':'display')"),'markers pass the pin kind');
 });
 
@@ -54,7 +54,7 @@ test('map key: bottom-left, spec chrome, exactly four 24px rows',()=>{
   assert.match(css,/\.map-key__title\{[^}]*uppercase/,'MAP KEY-style title');
   const rows=html.split('id="mapKeyPanel"')[1].split('</ul>')[0];
   assert.equal((rows.match(/<li>/g)||[]).length,4,'exactly four rows');
-  ['pin-display.svg','pin-treat-stop.svg','pin-event.svg','badge-on-route.svg'].forEach(src=>assert.ok(rows.includes(src),src));
+  ['v2/pin-display.svg','v2/pin-treat-stop.svg','v2/pin-event.svg','badge-on-route.svg'].forEach(src=>assert.ok(rows.includes(src),src));
   ['Display','Treat stop','Event on your route','On your route'].forEach(l=>assert.ok(rows.includes('>'+l+'<'),l));
   assert.match(css,/\.map-key__rows img\{[^}]*width:24px/,'24px icons');
 });

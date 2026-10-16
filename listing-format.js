@@ -18,6 +18,6 @@ function listingHoursText(x){
  if(text)return text;
  const scheduled=typeof hasScheduleInfo==='function'?hasScheduleInfo:(typeof require==='function'?require('./schedules').hasScheduleInfo:null);
  if(scheduled&&scheduled(x))return listingCategory(x)==='Treat stop'?'Candy hours not specified':'Dates and hours not specified';
- return 'Hours unknown';
+ return 'Hours not listed';
 }
 if(typeof module!=='undefined')module.exports={compactTime,listingCategory,listingHoursText,LISTING_TREAT_KIND};

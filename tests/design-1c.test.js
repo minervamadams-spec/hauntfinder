@@ -19,7 +19,7 @@ const treatCard=app.split('function treatCardHTML')[1].split('function cardHTML'
 const eventCard=layout.split('function eventCard')[1].split('function calendar()')[0];
 
 test('listing card anatomy order (round 3 item 3): pin, name, address+distance line, hours row (with Host notes), scare row, icon row, actions, meta',()=>{
-  const order=['${pinHTML(x.num,isTreatStop(x)?\'treat\':\'display\')}','card__name','card__addrline','card__address','card__hours-row','card__hours','card__notes','card__scare-row','card__scare','card__tags','card__actions','card__meta'];
+  const order=['${cardIconHTML(isTreatStop(x)?\'treat\':\'display\')}','card__name','card__addrline','card__address','card__hours-row','card__hours','card__notes','card__scare-row','card__scare','card__tags','card__actions','card__meta'];
   let at=0;
   for(const s of order){const i=displayCard.indexOf(s,at);assert.ok(i>=0,'display card missing or out of order: '+s);at=i+1}
 });
@@ -107,7 +107,7 @@ test('photos pipeline: API contract, session cache, peek strip preserved',()=>{
 });
 
 test('event card: spec type colors with 4px top border and filled type pill',()=>{
-  assert.ok(layout.includes("function eventColor(x){return {'Trunk-or-treat':'#FF7A1A',Parade:'#B48CFF',Festival:'#A6E22E','Donation drive/Community collection':'#7B3FE4',Other:'#3FD0C0'}"),'type color map (Donation drive = purple-deep, spec-silent)');
+  assert.ok(layout.includes("function eventColor(x){return {'Trunk-or-treat':'#FF7A1A',Parade:'#B48CFF',Festival:'#A6E22E','Donation drive/Community collection':'#FF6FA8',Other:'#3FD0C0'}"),'type color map (Donation drive = pink #FF6FA8, round 4 item 10)');
   assert.ok(css.includes('.event-card{display:flex;flex-direction:column;gap:10px;padding:16px;border-top:4px solid var(--event-color'),'4px type top border');
   assert.ok(css.includes('.event-type-pill{display:inline-flex;align-items:center;min-height:26px;padding:0 10px;border-radius:999px;background:var(--event-color'),'26px filled pill');
   assert.ok(css.includes('letter-spacing:.06em;text-transform:uppercase'),'pill uppercase');
@@ -149,7 +149,8 @@ test('app.js public-data preamble hash is untouched by the card edits',()=>{
 test('round 3 item 3: separate scare and icon rows, Host notes only when notes exist, merged address line, 3c button',()=>{
   assert.ok(displayCard.includes('<p class="card__scare-row"><span class="card__scare">'),'scare level has its own row');
   assert.ok(displayCard.includes('x.levels.length?`<p class="card__scare-row">'),'no scare row without levels (3f: no Not specified)');
-  assert.ok(displayCard.includes("String(x.notes||'').trim()?`<details class=\"card__notes\">"),'Host notes link only when the listing has notes (3a)');
+  assert.ok(displayCard.includes('hasHostNotes(x)?`<details class="card__notes">'),'Host notes link only when the listing has notes (3a)');
+  assert.ok(app.includes('function hasHostNotes')&&app.includes('more details coming soon'),'placeholder notes count as no notes (round 4 item 2)');
   assert.ok(!displayCard.includes('No additional notes yet'),'no empty-notes placeholder');
   assert.ok(!displayCard.includes('card__subline')&&!displayCard.includes('card__town'),'town line merged into the address line (3e)');
   assert.ok(displayCard.includes('(x.type.length||x.features.length)?`<div class="card__tags">'),'icon row omitted when empty');

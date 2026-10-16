@@ -1,0 +1,84 @@
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const ROOT=path.join(__dirname,'..');
+const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
+const app=read('app.js'),layout=read('layout.js'),css=read('styles.css'),chrome=read('chrome-filters.js');
+const submit=read('submit.html'),alerts=read('alerts.html'),alertsJs=read('alerts.js'),about=read('about.html');
+
+test('round 4 item 1: v2 icon set shipped, old flat icons removed, events use the skull pin',()=>{
+  for(const n of ['pin-display','pin-treat-stop','pin-event','icon-display','icon-treat-stop','icon-event'])assert.ok(fs.existsSync(path.join(ROOT,'assets/icons/v2',n+'.svg')),n+' v2 present');
+  for(const n of ['pin-display','pin-treat-stop','pin-event','icon-display','icon-treat-stop','icon-event'])assert.equal(fs.existsSync(path.join(ROOT,'assets/icons',n+'.svg')),false,'old '+n+' removed');
+  assert.match(app,/function eventSquareIcon\(n\)\{const w=pinWidth\(\),h=pinHeight\(w\);return L\.divIcon\(\{className:'',html:`<div class="pin pin--event" data-event-pin="\$\{n\}"><img class="pin__art" src="assets\/icons\/v2\/pin-event\.svg"/);
+  assert.ok(app.includes('function cardIconHTML(kind)')&&app.includes('assets/icons/v2/icon-${kind===\'treat\'?\'treat-stop\':\'display\'}.svg'),'cards use the v2 type icons');
+});
+test('round 4 item 2/4: Host notes hidden for placeholder notes; "Hours not listed"',()=>{
+  const {hasHostNotes}=new Function(app.match(/function hasHostNotes\(x\)\{[^\n]*\}/)[0]+';return {hasHostNotes}')();
+  assert.equal(hasHostNotes({notes:'More details coming soon.'}),false);
+  assert.equal(hasHostNotes({notes:'  '}),false);
+  assert.equal(hasHostNotes({notes:''}),false);
+  assert.equal(hasHostNotes({notes:'Nearest cross street: Cathy Lane.'}),true);
+  assert.equal(require('../listing-format.js').listingHoursText({dates:'',times:''}),'Hours not listed');
+});
+test('round 4 item 3: card rows share one 7px gap; scare row is exactly one text line',()=>{
+  assert.ok(css.includes('html body #cardList .card--compact{padding:12px 14px;gap:7px}'));
+  assert.ok(css.includes('.card__scare-row,html body #cardList .card--compact .card__scare-row .card__scare{height:16px;line-height:16px}'));
+});
+test('round 4 item 5: hovered and selected pins grow to 44px, ring, and rise to the front',()=>{
+  assert.ok(css.includes('html body .pin.is-linked,html body .pin.is-selected{transform:scale(1.294)'),'34px -> 44px');
+  assert.ok(css.includes('html body .pin.is-linked::after,html body .pin.is-selected::after{border-color:#F6EBD3}'),'2px cream ring');
+  assert.ok(app.includes('function raiseMarker(m,on)')&&app.includes('m.setZIndexOffset(m._hfBase+(on?1000:0))'),'zIndexOffset +1000');
+  assert.ok(app.includes('raiseMarker(markerByNum.get(n),on||state.selected===n)')&&app.includes('raiseMarker(m,num===n)'),'hover and select both raise');
+  assert.ok(layout.includes('raiseMarker(m,on)')&&app.includes('raiseMarker(mm,mm._evId===id)'),'event pins hover and select too');
+});
+test('round 4 item 7: Search this area reacts to the visitor only',()=>{
+  assert.ok(layout.includes("['wheel','touchstart','keydown','dblclick']")&&layout.includes("mapEl.addEventListener('pointerdown',userDown"),'user-intent listeners');
+  assert.ok(layout.includes('else if(!areaUser){setAreaBaseline();searchAreaBtn.classList.remove(\'is-visible\')}'),'app-made moves re-baseline silently');
+});
+test('round 4 item 8: filter groups stack from the top with a 24px gap',()=>{
+  assert.ok(css.includes('justify-content:flex-start;align-content:flex-start;gap:24px;flex:0 0 auto'));
+  assert.ok(css.includes('.filter-rail .filter-rail__links{position:sticky;bottom:-14px'),'footer stays in view');
+});
+test('round 4 item 9: route panel header on top, solid panel, 16px names, Remove never clipped; Plan your route kept (opens /route.html)',()=>{
+  assert.ok(css.includes('html .route-wrap{flex-direction:column!important;background:#1A1322!important;overflow:hidden!important}'));
+  assert.ok(css.includes('.route-stop__name{flex:1 1 0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:600 16px/1.3'));
+  assert.ok(css.includes('.route-stop__remove{flex:none;white-space:nowrap'));
+  assert.ok(css.includes('overflow-x:hidden;overflow-y:auto'),'no horizontal scrollbar strip');
+  assert.ok(read('index.html').includes('id="routeLink" href="route.html">Plan your route →</a>'));
+});
+test('round 4 items 10-13: Donation drive pink, no duplicate Open all week, day blocks show only the time, type dots',()=>{
+  assert.ok(layout.includes("'Donation drive/Community collection':'#FF6FA8'"));
+  assert.ok(layout.includes("opts.day?(x.hours?`<p class=\"event-card__datetime\">${safeListingText(compactTime(x.hours))}</p>`:'')"),'day blocks: time only');
+  assert.ok(layout.includes("x.ongoing?'':`<p class=\"event-card__datetime\">"),'band cards drop the repeated Open all week line');
+  assert.ok(layout.includes('eventCard(e,{day:true})')&&layout.includes('eventCard(e,{band:true})'));
+  assert.ok(chrome.includes("action==='event-type'&&typeof hfEventColor==='function'?`<span class=\"type-dot\""),'type chips carry a dot in the type color');
+  assert.ok(css.includes('.type-dot{flex:none;width:10px;height:10px;border-radius:50%'));
+});
+test('round 4 items 14-16: Submit cards use type colors + v2 icons, spec copy, uppercase title',()=>{
+  for(const [k,c] of [['display','#FF7A1A'],['treat','#A6E22E'],['event','#B48CFF']])assert.ok(css.includes(`.type-option[data-type-link="${k}"]{border-color:${c}}`),k+' border');
+  assert.equal((submit.match(/class="type-option__icon" src="assets\/icons\/v2\/icon-/g)||[]).length,3);
+  assert.ok(submit.includes('To update, choose the same type and use the same name. Listings are reviewed before they appear.'));
+  assert.ok(submit.includes("Listing is free. You'll get an email if we have questions."));
+  assert.ok(!submit.includes('and listing is free')&&!submit.includes('Submissions are reviewed before publication'));
+  assert.ok(submit.includes('<h1>SUBMIT OR UPDATE A LISTING</h1>')&&css.includes('.subpage-main h1{text-transform:uppercase;font-size:40px}'));
+});
+test('round 4 items 17-18: one nav on Submit, Alerts and About; no underlined links at rest',()=>{
+  for(const [n,h] of [['submit',submit],['alerts',alerts],['about',about]])assert.ok(h.includes('<header class="subpage-head">')&&h.includes('<nav class="subpage-nav" aria-label="Site">'),n+' uses the shared header');
+  assert.ok(css.includes('.subpage-head{height:56px;box-sizing:border-box;padding:0 18px;border-bottom:1px solid #2E2638'));
+  assert.ok(css.includes("font:700 18px/1.2 'Barlow Condensed'")&&css.includes("font:600 16px/1 'Barlow'")&&css.includes('color:#FF7A1A;border-bottom-color:#FF7A1A'));
+  assert.ok(css.includes('.subpage-foot a,.about-info a{color:#B48CFF;text-decoration:none}'));
+});
+test('round 4 items 19-22: Alerts checkboxes, consent alignment, copy, disabled-until-valid',()=>{
+  assert.ok(css.includes('width:20px;height:20px;margin:0;border:2px solid #3A3046;border-radius:4px;background:#16111E'));
+  assert.ok(css.includes('.alerts-page .alerts-box input[type=checkbox]:checked{background:#FF7A1A url('));
+  assert.ok(css.includes('.alerts-page .alerts-box .consent{display:flex;align-items:flex-start;gap:10px;padding:10px 0 10px 17px')&&css.includes('.alerts-page .alerts-box .consent input[type=checkbox]{margin-top:3px}'));
+  assert.ok(alerts.includes('Future holiday listings')&&!alerts.includes('Future Holiday'));
+  assert.ok(alertsJs.includes('submitBtn.disabled=!(emailEl&&emailEl.value.trim()&&emailEl.checkValidity()&&consentEl&&consentEl.checked)'));
+  assert.ok(alertsJs.includes('areaControls.hidden=!areaToggle.checked'),'area fields reveal on toggle');
+});
+test('round 4 items 23-25: quotes use a top border; community links not underlined; icon key has the v2 type icons',()=>{
+  assert.ok(css.includes('.about-article blockquote{margin:24px 0;padding:20px;border-left:0;border-top:3px solid #B48CFF;border-radius:0;background:#1A1322}'));
+  assert.ok(css.includes("font:italic 500 19px/1.5 'Barlow'"));
+  assert.equal((about.match(/assets\/icons\/v2\/icon-(display|treat-stop|event)\.svg/g)||[]).length,3);
+});

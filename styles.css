@@ -1180,8 +1180,6 @@ html[data-category="events"] .list-column{order:2}
  .ev-day .event-card,.ev-open .event-card{margin:0 0 8px}
  .ev-key{display:flex;flex-wrap:wrap;gap:6px 14px;padding:8px 2px 0;font-size:12px;color:var(--text-2)}
  .ev-key span::before{content:"";display:inline-block;width:10px;height:3px;margin-right:6px;vertical-align:middle;background:var(--event-color)}
- .pin--event-sq{width:28px;height:28px;box-sizing:border-box;border-radius:8px;border:2px solid #E6D7FF;background:#7B4BD6;color:#fff;font:700 14px/24px var(--f-cond);text-align:center;box-shadow:0 3px 8px rgba(0,0,0,.6)}
- .pin--event-sq.is-linked{transform:scale(1.2)}
  .event-card.is-selected{outline:2px solid var(--purple);outline-offset:-2px}
 }
 @media(max-width:1023px){
@@ -1501,7 +1499,6 @@ html[data-category="events"]{--acc:#B48CFF}
  html body .event-card .chips .chip,html body .card--compact .chips .chip{min-height:22px;padding:0 9px;border:1px solid #3A3046;border-radius:11px;background:transparent;color:#CFC4B0;font:500 12px/20px var(--f-body)}
  html body .event-card .card__address{min-height:28px}
  html body .event-card .card__actions{display:flex!important;flex-wrap:wrap;align-items:center;gap:6px 10px}
- .pin--event-sq{width:28px;height:28px;box-sizing:border-box;border-radius:8px;border:2px solid #E6D7FF;background:#7B4BD6;color:#fff;font:700 14px/24px var(--f-cond);text-align:center;box-shadow:0 3px 8px rgba(0,0,0,.6)}
  .hf-cluster{width:36px;height:36px;background:#1C1626!important;border:2px solid var(--cl,#FF7A1A);color:var(--cl,#FF7A1A);font:800 14px var(--f-body);box-shadow:0 0 0 3px #0B0910,0 0 0 5px var(--cl,#FF7A1A);display:flex;align-items:center;justify-content:center;border-radius:50%}
  .hf-cluster--displays{--cl:#FF7A1A}.hf-cluster--treats{--cl:#A6E22E}
  html body .card--compact{padding:12px 14px;gap:6px}
@@ -1577,7 +1574,6 @@ html[data-category="events"]{--acc:#B48CFF}
 .pin--treat .pin__stop{background:#A6E22E}.pin--event .pin__stop{background:#B48CFF}
 .pin::after{content:"";position:absolute;inset:-5px -4px 2px;border:2px solid transparent;border-radius:50%;pointer-events:none;transition:border-color .15s ease}
 .pin.is-linked::after{border-color:#F6EBD3}
-.pin--event-sq::after{inset:-5px;border-radius:12px}
 .leaflet-marker-icon.is-linked .hf-cluster{box-shadow:0 0 0 3px #0B0910,0 0 0 5px #F6EBD3}
 .card.is-linked{outline:2px solid #F6EBD3;outline-offset:-2px}
 
@@ -1642,3 +1638,78 @@ html body #cardList .card--compact .card__tags{display:flex;flex-wrap:wrap;gap:5
 .icon-key li{display:flex;align-items:center;gap:10px;font:500 15px/1.3 var(--f-body);color:#E8DEC8}
 .icon-key__icon{flex:none;width:26px;height:26px;border-radius:13px;border:1px solid #3A3046;display:inline-flex;align-items:center;justify-content:center;color:#CFC4B0}
 .icon-key__icon svg{width:14px;height:14px}
+
+/* ---- design round 4 ---- */
+.type-dot{flex:none;width:10px;height:10px;border-radius:50%;margin-right:6px;display:inline-block;vertical-align:0}
+.event-type-pill{color:#120E18}
+
+/* round 4 item 1: v2 icon set. Map pins 34px (30px mobile), selected/hover 44px with a 2px ring; card icons 28px. */
+html body .pin{width:30px;height:37px}
+@media(min-width:768px){html body .pin{width:34px;height:41px}}
+html body .pin.is-linked,html body .pin.is-selected{transform:scale(1.294);filter:drop-shadow(0 3px 5px rgba(0,0,0,.55))}
+html body .pin::after{inset:-3px -3px 6px}
+html body .pin.is-linked::after,html body .pin.is-selected::after{border-color:#F6EBD3}
+html body #cardList .card--compact .card__head .card__pin,html body #cardList .card--compact .card__head .card__pin .pin{width:28px;height:28px}
+html body #cardList .card--compact .card__head .card__pin{flex:0 0 28px;margin-top:-3px}
+html body #cardList .card--compact .card__head .card__pin .pin::after{display:none}
+
+/* round 4 item 9: expanded route panel */
+@media(min-width:1024px){
+ html .route-wrap{flex-direction:column!important;background:#1A1322!important;overflow:hidden!important}
+ html .route-wrap .route-panel{background:#1A1322;overflow-x:hidden;border-bottom:0;padding:12px 14px 14px}
+ html .route-wrap .route-toggle[aria-expanded="true"]{border-bottom:1px solid #2E2638;border-radius:0}
+ html .route-wrap .route-stops{display:grid;gap:12px;overflow-x:hidden;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#3A3046 transparent;margin:0 0 14px}
+ html .route-wrap #routeStopsMini .route-stop{gap:12px;padding:0;cursor:default;min-width:0}
+ html .route-wrap #routeStopsMini .route-stop::after{display:none}
+ html .route-wrap #routeStopsMini .route-stop__n{width:32px;height:32px;font:800 16px/1 var(--f-body)}
+ html .route-wrap #routeStopsMini .route-stop__name{flex:1 1 0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:600 16px/1.3 var(--f-body);color:#F6EBD3}
+ html .route-wrap #routeStopsMini .route-stop__remove{flex:none;white-space:nowrap;min-height:0;min-width:0;padding:0}
+}
+
+/* round 4 item 8: filter groups stack from the top, 24px apart (no stretch / space-between) */
+html:not([data-hf-rail="off"]) .filter-rail .filters{display:flex;flex-direction:column;justify-content:flex-start;align-content:flex-start;gap:24px;flex:0 0 auto}
+html:not([data-hf-rail="off"]) .filter-rail .filter-rail__section{margin:0;flex:0 0 auto}
+html body #cardList .card--compact .card__scare-row,html body #cardList .card--compact .card__scare-row .card__scare{height:16px;line-height:16px}
+html body #cardList .card--compact .card__scare-row .pips{vertical-align:baseline;margin-right:5px}
+/* fixed footer: the filter groups scroll, the links stay in view */
+@media(min-width:1024px){html:not([data-hf-rail="off"]) .filter-rail .filter-rail__links{position:sticky;bottom:-14px;z-index:2;margin-top:auto;padding-bottom:14px;background:var(--panel)}}
+
+/* ---- round 4: shared nav (Submit, Alerts, About), links, Submit cards, Alerts checkboxes, About quotes ---- */
+.subpage-head{height:56px;box-sizing:border-box;padding:0 18px;border-bottom:1px solid #2E2638;display:flex;align-items:center;background:transparent}
+.subpage-nav{width:100%;max-width:860px;height:56px;margin:0 auto;display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:12px 18px}
+.subpage-nav__home{font:700 18px/1.2 'Barlow Condensed',system-ui,sans-serif;letter-spacing:.02em;color:#F6EBD3;text-decoration:none;white-space:nowrap}
+.subpage-nav__home:hover{color:#F6EBD3;text-decoration:underline}
+.subpage-nav__links{display:flex;flex-wrap:nowrap;gap:4px 18px}
+.subpage-nav__links a{font:600 16px/1 'Barlow',system-ui,sans-serif;color:#B48CFF;text-decoration:none;padding:18px 0 16px;border-bottom:2px solid transparent;white-space:nowrap}
+.subpage-nav__links a:hover{color:#F6EBD3}
+.subpage-nav__links a[aria-current="page"]{color:#FF7A1A;border-bottom-color:#FF7A1A}
+@media(max-width:520px){.subpage-nav{gap:8px}.subpage-nav__links{gap:4px 10px}.subpage-nav__links a{font-size:14px}.subpage-nav__home{font-size:16px}}
+.alerts-page{padding:0 0 48px}
+body.alerts-page{padding:0 0 48px}
+.alerts-page .alerts-box{margin:24px auto 0;max-width:640px;width:calc(100% - 32px);box-sizing:border-box}
+.subpage a,.alerts-page a{text-decoration:none}
+.subpage a:hover,.alerts-page a:hover{text-decoration:underline}
+.subpage-nav__links a:hover,.subpage-nav__home:hover{text-decoration:none}
+.subpage-nav__home:hover{text-decoration:underline}
+.subpage-foot a,.about-info a{color:#B48CFF;text-decoration:none}
+.subpage-foot a:hover,.about-info a:hover{color:#F6EBD3;text-decoration:underline}
+/* Submit: type colors + v2 icons, uppercase display title */
+.subpage-main h1{text-transform:uppercase;font-size:40px}
+@media(max-width:600px){.subpage-main h1{font-size:28px}}
+.type-option{flex-direction:row;align-items:center;gap:14px}
+.type-option__icon{flex:none;width:32px;height:32px}
+.type-option__text{display:flex;flex-direction:column;gap:4px;min-width:0}
+.type-option[data-type-link="display"]{border-color:#FF7A1A}.type-option[data-type-link="display"] .type-option__name::after{color:#FF7A1A}
+.type-option[data-type-link="treat"]{border-color:#A6E22E}.type-option[data-type-link="treat"] .type-option__name::after{color:#A6E22E}
+.type-option[data-type-link="event"]{border-color:#B48CFF}.type-option[data-type-link="event"] .type-option__name::after{color:#B48CFF}
+/* Alerts: dark checkboxes with an orange checked state; consent aligned with the other rows */
+.alerts-page .alerts-box input[type=checkbox]{appearance:none;-webkit-appearance:none;flex:none;width:20px;height:20px;margin:0;border:2px solid #3A3046;border-radius:4px;background:#16111E;display:inline-grid;place-content:center;cursor:pointer;accent-color:#FF7A1A}
+.alerts-page .alerts-box input[type=checkbox]:checked{background:#FF7A1A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23120E18' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat;border-color:#FF7A1A}
+.alerts-page .alerts-box .consent{display:flex;align-items:flex-start;gap:10px;padding:10px 0 10px 17px;margin:0}
+.alerts-page .alerts-box .consent input[type=checkbox]{margin-top:3px}
+.alerts-box button[type=submit]:disabled{opacity:.45;cursor:not-allowed}
+/* About: pull quotes use a top border, not a left accent */
+.about-article blockquote{margin:24px 0;padding:20px;border-left:0;border-top:3px solid #B48CFF;border-radius:0;background:#1A1322}
+.about-article blockquote p{font:italic 500 19px/1.5 'Barlow',system-ui,sans-serif;margin:0;color:#F6EBD3}
+.icon-key--types{margin:12px 0 4px;padding-bottom:12px;border-bottom:1px solid #2E2638}
+.icon-key__type{flex:none;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center}

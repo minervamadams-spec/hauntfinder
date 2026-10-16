@@ -9,7 +9,7 @@ test('owner decision 2026-10-15: pins and card badges are icons only; listing nu
   assert.equal(/labelMap|pinLabel|relabelPins/.test(app),false,'no renumbering machinery');
   assert.match(app,/data-pin="\$\{n\}"/,'the stable id is still an attribute for linking');
   assert.equal(/Display \$\{x\.num\}/.test(app),false,'accessible names use the listing name, not a number');
-  assert.match(app,/data-event-pin="\$\{n\}"><\/div>/,'event pins are plain squares');
+  assert.match(app,/data-event-pin="\$\{n\}"><img class="pin__art" src="assets\/icons\/v2\/pin-event\.svg"/,'event pins are the v2 skull teardrop');
   assert.equal(read('listing.js').includes('pin__num'),false);
 });
 test('P1: overlapping pins cluster as a stacked-ring group marker, stop clustering at zoom 15 and spiderfy',()=>{
@@ -64,7 +64,7 @@ test('P2: treat card has a lime top border, no host notes or ratings, event-styl
   assert.match(css,/\.treat-stop-card\{border-top:3px solid #A6E22E!important\}/);
 });
 test('P2: event card shows the type badge after the title, address only, a 3-line description with More, and event-form tags only',()=>{
-  const ev=layout.split('function eventCard(x){')[1].split('\n function ')[0];
+  const ev=layout.split('function eventCard(x,opts){')[1].split('\n function ')[0];
   assert.ok(ev.indexOf('event-type-pill')<ev.indexOf('Flyer</button>'));
   assert.equal(ev.includes('x.venue'),false);
   assert.match(ev,/event-card__clamp/);assert.match(ev,/data-more/);

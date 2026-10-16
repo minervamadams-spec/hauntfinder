@@ -99,12 +99,12 @@ test('Google Maps directions keep the homepage behavior: waypoints, destination,
 // ---- Stop presentation ----
 test('stops show title, category, address or event date, and link back to the item',()=>{
   const ctx={listings,events,search:null};
-  assert.deepEqual(P.stopView(C,ctx),{key:'n:12',name:'Harvesters of Souls',category:'Display',detail:'11 Jackson Ave, Washington, NJ 07882',href:'listing.html?id=12',icon:'pin-display',outOfArea:false});
+  assert.deepEqual(P.stopView(C,ctx),{key:'n:12',name:'Harvesters of Souls',category:'Display',detail:'11 Jackson Ave, Washington, NJ 07882',href:'listing.html?id=12',icon:'v2/icon-display',outOfArea:false});
   assert.equal(P.stopView({num:8,entityId:'drakestown-road-2026'},ctx).href,'listing.html?id=8&entity=drakestown-road-2026','reused slot links keep the entity');
   assert.equal(P.stopView({num:11,entityId:real(11).entityId},ctx).category,'Treat stop');
-  assert.equal(P.stopView({num:11,entityId:real(11).entityId},ctx).icon,'pin-treat-stop');
+  assert.equal(P.stopView({num:11,entityId:real(11).entityId},ctx).icon,'v2/icon-treat-stop');
   const b=P.stopView(B,ctx);
-  assert.equal(b.category,'Event');assert.equal(b.href,'/?event='+BUDDIES);assert.equal(b.icon,'pin-event');
+  assert.equal(b.category,'Event');assert.equal(b.href,'/?event='+BUDDIES);assert.equal(b.icon,'v2/icon-event');
   assert.equal(b.detail,'Thu, Oct 29 · 5:30–7 PM · MOHS Track');
   assert.match(P.stopView({eventId:SKULLY},ctx).detail,/^Open all season/);
   assert.equal(P.stopView({num:99,entityId:'gone'},ctx),null,'unknown stops are skipped');

@@ -66,7 +66,7 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       const first=m.cards[0];
       await p.click(`#cardList [data-card="${first}"] .card__morebtn`);
       const more=await p.evaluate(n=>{const c=document.querySelector(`#cardList [data-card="${n}"]`);return {open:c.classList.contains('is-more-open'),links:[...c.querySelectorAll('.card__metalink,.card-rating,.card__notes summary')].filter(e=>e.getClientRects().length).length}},first);
-      ok(T+'the ⋯ button reveals Host notes, Rate, Report and Share',more.open&&more.links>=4,JSON.stringify(more));
+      ok(T+'the ⋯ button reveals Rate, Report and Share (and Host notes when the listing has notes)',more.open&&more.links>=3,JSON.stringify(more));
       await p.click(`#cardList [data-card="${first}"] .card__mapbtn`);await p.waitForTimeout(900);
       const cm=await p.evaluate(n=>({mview:document.documentElement.dataset.mview,sel:state.selected===n,pin:!!document.querySelector(`.leaflet-marker-pane [data-pin="${n}"].is-selected`)||!!markerByNum.get(n).getElement()}),first);
       ok(T+'◉ Map opens the map view with that pin selected',cm.mview==='map'&&cm.sel,JSON.stringify(cm));
@@ -268,9 +268,15 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       ok(T+'scare dots are hidden when the level is not specified',!g.notSpec);
       // Search this area: hidden until the map moves, top centre of the map, cleared after click
       const sa0=await p.evaluate(()=>getComputedStyle(document.getElementById('searchAreaBtn')).visibility);
-      await p.evaluate(()=>{map.panBy([300,200],{animate:false});map.fire('moveend')});await p.waitForTimeout(900);
+      {const mb=await p.evaluate(()=>{const r=document.getElementById('map').getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}});await p.mouse.move(mb.x,mb.y);await p.mouse.down();await p.mouse.move(mb.x+160,mb.y+90,{steps:8});await p.mouse.up()}await p.waitForTimeout(900);
       const sa=await p.evaluate(()=>{const b=document.getElementById('searchAreaBtn'),m=document.querySelector('.map-frame').getBoundingClientRect(),r=b.getBoundingClientRect();return {vis:getComputedStyle(b).visibility,h:Math.round(r.height),top:Math.round(r.top-m.top),mid:Math.abs((r.left+r.width/2)-(m.left+m.width/2))<4}});
       ok(T+'Search this area: hidden at rest, then a 32px pill at the top centre of the map after panning',sa0==='hidden'&&sa.vis==='visible'&&sa.h===32&&sa.top<=16&&sa.mid,JSON.stringify(sa));
+      {await p.click('.tabs >> text=Treat Stops');await p.waitForTimeout(1200);
+        const pm=()=>p.evaluate(()=>{const pin=document.querySelector('.leaflet-marker-icon .pin'),mk=pin.closest('.leaflet-marker-icon');return {w:Math.round(pin.getBoundingClientRect().width),z:+mk.style.zIndex,ring:getComputedStyle(pin,'::after').borderTopColor}});
+        const rest=await pm();await p.hover('#cardList .card--compact');await p.waitForTimeout(400);const hov=await pm();await p.mouse.move(5,5);await p.waitForTimeout(300);
+        ok(T+'round 4: a hovered card grows its pin from 34px to 44px, rings it in cream and raises it by 1000',rest.w===34&&hov.w===44&&hov.z-rest.z===1000&&hov.ring==='rgb(246, 235, 211)',JSON.stringify({rest,hov}));
+        await p.click('.tabs >> text=Displays');await p.waitForTimeout(800)}
+      for(const tab of ['Treat Stops','Events','Displays']){await p.click('.tabs >> text='+tab);await p.waitForTimeout(2800);const v=await p.evaluate(()=>getComputedStyle(document.getElementById('searchAreaBtn')).visibility);ok(T+'Search this area stays hidden after switching to '+tab+' (the app moved the map, not the visitor)',v==='hidden',v)}
       // One pin: centred at zoom 14
       await go('?category=treats');
       const one=await p.evaluate(()=>{const m=[...markerByNum.values()][0],c=map.getCenter(),x=listings.find(v=>v.num===[...markerByNum.keys()].find(n=>isTreatStop(listings.find(l=>l.num===n))));return {zoom:map.getZoom(),d:Math.hypot(c.lat-x.lat,c.lng-x.lng)}});

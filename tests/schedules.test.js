@@ -54,13 +54,13 @@ test('hasScheduleInfo detects any real schedule content',()=>{
  assert.equal(sch.hasScheduleInfo({schedule:{weekly:[{dow:1,open:'18:00'}]}}),true);
  assert.equal(sch.hasScheduleInfo({schedule:{exceptions:[{date:SAT}]}}),true);
 });
-test('hoursLabel compacts to shared-AM/PM ranges and falls back to Hours unknown',()=>{
+test('hoursLabel compacts to shared-AM/PM ranges and falls back to Hours not listed',()=>{
  assert.equal(sch.hoursLabel({exceptions:[{date:SAT,open:'16:00',close:'20:00'}]},SAT),'4–8 PM');
  assert.equal(sch.hoursLabel({weekly:[{dow:5,open:'18:00',close:'24:00'}]},FRI),'6 PM–12 AM');
  assert.equal(sch.hoursLabel({weekly:[{dow:6,open:'18:00'}]},SAT),'from 6 PM');
- assert.equal(sch.hoursLabel({exceptions:[{date:SAT}]},SAT),'Hours unknown');
- assert.equal(sch.hoursLabel(null,SAT),'Hours unknown');
- assert.equal(sch.hoursLabel(WEEKLY,SAT),'Hours unknown','no hours that day');
+ assert.equal(sch.hoursLabel({exceptions:[{date:SAT}]},SAT),'Hours not listed');
+ assert.equal(sch.hoursLabel(null,SAT),'Hours not listed');
+ assert.equal(sch.hoursLabel(WEEKLY,SAT),'Hours not listed','no hours that day');
  assert.equal(sch.openOnDateLabel,sch.hoursLabel);
 });
 test('openTonightEligible is true for a fully scheduled synthetic set only',()=>{
@@ -95,5 +95,5 @@ test('backfill sanity: every active listing is scheduled or honestly unknown; #6
  const one=listings.find(x=>x.num===1);
  assert.equal(sch.hoursLabel(one.schedule,SAT),'4–8 PM','#1 Halloween exception overrides');
  const nine=listings.find(x=>x.num===9);
- assert.equal(sch.hoursLabel(nine.schedule,SAT),'Hours unknown','#9 has a start date but no hours');
+ assert.equal(sch.hoursLabel(nine.schedule,SAT),'Hours not listed','#9 has a start date but no hours');
 });

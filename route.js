@@ -36,12 +36,12 @@ function eventDateLine(x){if(x.ongoing)return 'Open all season';const d=x.date||
 function stopView(entry,{listings,events,search}){
   if(entry&&entry.eventId!=null){
     const x=events.find(e=>e.id===entry.eventId);if(!x)return null;
-    return {key:lib.routeEntryKey(entry),name:x.name,category:'Event',detail:[eventDateLine(x),x.hours?fmt.compactTime(x.hours):'',x.venue||x.address||''].filter(Boolean).join(' · '),href:'/?event='+encodeURIComponent(x.id),icon:'pin-event',outOfArea:false};
+    return {key:lib.routeEntryKey(entry),name:x.name,category:'Event',detail:[eventDateLine(x),x.hours?fmt.compactTime(x.hours):'',x.venue||x.address||''].filter(Boolean).join(' · '),href:'/?event='+encodeURIComponent(x.id),icon:'v2/icon-event',outOfArea:false};
   }
   const x=listings.find(l=>l.num===entry.num&&l.entityId===entry.entityId&&!l.placeholder);if(!x)return null;
   const outOfArea=Boolean(search)&&Boolean(loc.stopsWithAreaFlags([x],search)[0].outOfArea);
   const category=fmt.listingCategory(x);
-  return {key:lib.routeEntryKey(entry),name:x.name,category,detail:x.address,href:'listing.html?id='+x.num+(lib.isReusedSlot(x)?'&entity='+encodeURIComponent(x.entityId):''),icon:category==='Treat stop'?'pin-treat-stop':'pin-display',outOfArea};
+  return {key:lib.routeEntryKey(entry),name:x.name,category,detail:x.address,href:'listing.html?id='+x.num+(lib.isReusedSlot(x)?'&entity='+encodeURIComponent(x.entityId):''),icon:category==='Treat stop'?'v2/icon-treat-stop':'v2/icon-display',outOfArea};
 }
 if(typeof module!=='undefined')module.exports={loadRouteData,resolveInitialRoute,routePageURL,stopView};
 if(typeof document==='undefined')return;

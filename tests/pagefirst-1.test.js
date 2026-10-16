@@ -22,7 +22,7 @@ test('submit page: ordinary page, not a dialog — usable shell, no modal markup
   assert.equal(submit.includes('<dialog'),false,'no dialog markup');
   assert.match(submit,/<body data-page="submit" class="subpage">/,'route validator hook');
   assert.match(submit,/href="\/">← Hauntfinder map</,'ordinary back link to the map');
-  assert.match(submit,/<h1>Submit or update a listing<\/h1>/,'visible heading');
+  assert.match(submit,/<h1>SUBMIT OR UPDATE A LISTING<\/h1>/,'visible heading (round 4 item 16)');
   assert.match(submit,/listing is free\./i,'free-listing note present');
   assert.match(submit,/type-option__desc">Handing out treats on Halloween night</,'actual control text, not a script placeholder');
 });

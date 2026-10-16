@@ -88,12 +88,12 @@ function fmtTime(hhmm){
  return min===0?`${h12} ${ap}`:`${h12}:${String(min).padStart(2,'0')} ${ap}`;
 }
 // Compact label for one date: "4–8 PM", "6 PM–12 AM", "from 6 PM", or
-// 'Hours unknown' when nothing resolves. Null-safe.
+// 'Hours not listed' when nothing resolves. Null-safe.
 function hoursLabel(schedule,dateStr){
  const h=hoursOn(schedule,dateStr);
- if(!h||!h.open)return 'Hours unknown';
+ if(!h||!h.open)return 'Hours not listed';
  const open=fmtTime(h.open);
- if(!open)return 'Hours unknown';
+ if(!open)return 'Hours not listed';
  if(!h.close)return `from ${open}`;
  const close=fmtTime(h.close);
  if(!close)return open;

@@ -105,7 +105,7 @@ function renderMap(house,kind){
   const m=L.map(el,{zoomControl:false,dragging:false,touchZoom:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,tap:false}).setView([t.lat,t.lng],15);
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,attribution:'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'}).addTo(m);
   const w=matchMedia('(max-width:767px)').matches?28:38,h=Math.round(w*56/48);
-  const pin=`<div class="pin pin--${t.kind}" data-pin="${house.num}"><img class="pin__art" src="assets/icons/pin-${t.kind==='treat'?'treat-stop':'display'}.svg" alt=""></div>`;
+  const pin=`<div class="pin pin--${t.kind}" data-pin="${house.num}"><img class="pin__art" src="assets/icons/v2/pin-${t.kind==='treat'?'treat-stop':'display'}.svg" alt=""></div>`;
   L.marker([t.lat,t.lng],{icon:L.divIcon({className:'',html:pin,iconSize:[w,h],iconAnchor:[w/2,h]}),interactive:false,keyboard:false}).addTo(m);
   m.on('click',()=>{location.href=t.href});
 }

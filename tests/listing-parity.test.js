@@ -18,13 +18,13 @@ test('hours: one shared formatter, compact like the cards (#12 reads 6–10 PM)'
   assert.equal(F.listingHoursText(real(11)),'October 31, 2026 · 2–10 PM');
 });
 test('hours: formatter reproduces the previous card text for every real listing, fallbacks included',()=>{
-  const oldCard=x=>{const t=[x.dates,F.compactTime(x.times)].filter(Boolean).join(' · ');if(t)return t;return S.hasScheduleInfo(x)?(x.kind==='Trick-or-treat stop'?'Candy hours not specified':'Dates and hours not specified'):'Hours unknown'};
+  const oldCard=x=>{const t=[x.dates,F.compactTime(x.times)].filter(Boolean).join(' · ');if(t)return t;return S.hasScheduleInfo(x)?(x.kind==='Trick-or-treat stop'?'Candy hours not specified':'Dates and hours not specified'):'Hours not listed'};
   for(const x of active){const want=oldCard(x).replace(/^(.*weekend.*) · All weekend$/i,'$1');assert.equal(F.listingHoursText(x),want,'#'+x.num)}
   assert.equal(F.listingHoursText({dates:'Halloween weekend',times:'All weekend'}),'Halloween weekend','round 3: no repeated "weekend"');
   assert.equal(F.listingHoursText({dates:'Halloween',times:'4:00 - 8:00 PM'}).startsWith('Halloween · '),true);
   assert.equal(F.listingHoursText({dates:'',times:'',schedule:{weekly:[{dow:5}]}}),'Dates and hours not specified');
   assert.equal(F.listingHoursText({kind:'Trick-or-treat stop',dates:'',times:'',schedule:{startDate:'2026-10-31'}}),'Candy hours not specified');
-  assert.equal(F.listingHoursText({dates:'',times:''}),'Hours unknown');
+  assert.equal(F.listingHoursText({dates:'',times:''}),'Hours not listed');
 });
 test('hours: cards and the listing page both call the shared formatter; no private copies remain',()=>{
   assert.equal((app.match(/safeListingText\(listingHoursText\(x\)\)/g)||[]).length,1,'display card');assert.ok(app.includes('safeListingText(treatHoursText(x))')&&app.includes('||listingHoursText(x)'),'treat card formats the date itself and falls back to the shared formatter');

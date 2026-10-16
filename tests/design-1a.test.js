@@ -27,8 +27,8 @@ test('v7 banner: supplied transparent sign over the supplied scene strip, dimens
   assert.ok(cssBlock.includes('scene-strip-v3.png')&&cssBlock.includes('height:112px'),'desktop scene strip header');
   assert.ok(cssBlock.includes('object-fit:contain'),'the sign is contained rather than cropped');
 });
-test('Phase A icons: all 12 SVGs present in assets/icons',()=>{
-  for(const name of ['pin-display.svg','pin-treat-stop.svg','pin-event.svg','icon-display.svg','icon-treat-stop.svg','icon-event.svg','badge-on-route.svg','icon-list.svg','icon-map.svg','icon-calendar.svg','social-facebook.svg','social-instagram.svg'])
+test('Phase A icons: all 12 SVGs present in assets/icons (type icons in v2/)',()=>{
+  for(const name of ['v2/pin-display.svg','v2/pin-treat-stop.svg','v2/pin-event.svg','v2/icon-display.svg','v2/icon-treat-stop.svg','v2/icon-event.svg','badge-on-route.svg','icon-list.svg','icon-map.svg','icon-calendar.svg','social-facebook.svg','social-instagram.svg'])
     assert.ok(fs.existsSync(path.join(ROOT,'assets/icons',name)),name+' missing');
 });
 test('Phase A tokens: :root defines the full section-5 set',()=>{
