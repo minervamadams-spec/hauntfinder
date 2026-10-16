@@ -14,7 +14,6 @@ Included:
 - Directions links
 - Route planner that opens Google Maps
 - Share button
-- Favorites (heart) saved on-device, separate from route stops
 - Shareable outing links (`?outing=`) that load a route on any device
 - 11 curated listings (10 displays, 1 treat stop) and 2 events
 

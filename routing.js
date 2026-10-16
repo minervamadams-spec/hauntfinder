@@ -61,19 +61,6 @@ function migrateRoute(saved,listings,legacyEntityMap,events){
  try{const parsed=typeof saved==='string'?JSON.parse(saved):saved;if(Array.isArray(parsed))parsed.forEach(consider)}catch{}
  return out;
 }
-// Favorites are stored entity-aware at hffavs:v1, following the route pattern
-// exactly: same verified {num, entityId} entries, same legacy-number migration,
-// same drop rules (unknown numbers, placeholders, entity mismatches). They are
-// a personal saved-list, entirely separate from route stops (hfroute:2026).
-const FAVORITES_KEY='hffavs:v1';
-function loadFavorites(saved,listings,legacyEntityMap){return migrateRoute(saved,listings,legacyEntityMap)}
-// Pure add/remove for favorites: matching num toggles off; anything else is
-// appended at the end. Order is otherwise preserved.
-function toggleFavoriteEntry(favs,num,entityId){
- const out=(favs||[]).filter(f=>f.num!==num);
- if(out.length===(favs||[]).length)out.push({num,entityId});
- return out;
-}
 // Outing deep links (?outing=) carry entity ids only — slot numbers are
 // ambiguous on reused slots, so plain nums are never accepted. Each id is
 // URI-decoded, mapped back to its listing, and unverified/missing/duplicate
@@ -214,4 +201,4 @@ function directionsURL(stops,start){
  else if(st.startCoords)p.set('origin',st.startCoords.lat+','+st.startCoords.lng);
  return {url:'https://www.google.com/maps/dir/?'+p.toString()};
 }
-if(typeof module!=='undefined')module.exports={bestStopOrder,removeRouteEntry,moveRouteEntry,dropRouteEntry,directionsURL,ROUTE_KEY,ROUTE_MAX,loadSavedRoute,saveRoute,toggleListingStop,migrateRoute,routeEntryKey,toggleRouteEntry,isReusedSlot,legacyEntityId,REUSED_SLOTS_2026,FAVORITES_KEY,loadFavorites,toggleFavoriteEntry,parseOutingParam,outingLink,suggestRouteOrder,routeLink,parseRouteParam};
+if(typeof module!=='undefined')module.exports={bestStopOrder,removeRouteEntry,moveRouteEntry,dropRouteEntry,directionsURL,ROUTE_KEY,ROUTE_MAX,loadSavedRoute,saveRoute,toggleListingStop,migrateRoute,routeEntryKey,toggleRouteEntry,isReusedSlot,legacyEntityId,REUSED_SLOTS_2026,parseOutingParam,outingLink,suggestRouteOrder,routeLink,parseRouteParam};

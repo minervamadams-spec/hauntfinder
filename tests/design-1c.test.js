@@ -18,8 +18,8 @@ const displayCard=app.split('function cardHTML')[1].split('function dateFilterCh
 const treatCard=app.split('function treatCardHTML')[1].split('function cardHTML')[0];
 const eventCard=layout.split('function eventCard')[1].split('function calendar()')[0];
 
-test('listing card anatomy order: pin, name, town line, address link, hours row (with Host notes), tags (with scare level), actions, meta',()=>{
-  const order=['${pinHTML(x.num,isTreatStop(x)?\'treat\':\'display\')}','card__name','card__subline','card__address','card__hours-row','card__hours','card__notes','card__tags','card__scare','card__actions','card__meta'];
+test('listing card anatomy order (round 3 item 3): pin, name, address+distance line, hours row (with Host notes), scare row, icon row, actions, meta',()=>{
+  const order=['${pinHTML(x.num,isTreatStop(x)?\'treat\':\'display\')}','card__name','card__addrline','card__address','card__hours-row','card__hours','card__notes','card__scare-row','card__scare','card__tags','card__actions','card__meta'];
   let at=0;
   for(const s of order){const i=displayCard.indexOf(s,at);assert.ok(i>=0,'display card missing or out of order: '+s);at=i+1}
 });
@@ -46,7 +46,7 @@ test('route button: + Add to route → ✓ On your route, lime then cream; pin �
 
 test('address is the purple directions link with ↗ and an accessible name',()=>{
   assert.ok(displayCard.includes('class="card__address" href="${gmapsDirections(x.address)}" target="_blank" rel="noopener" aria-label="Directions to ${safeListingText(x.name)}"'),'display address link contract');
-  assert.ok(displayCard.includes('${safeListingText(x.address)} ↗'),'address text ends with ↗');
+  assert.ok(displayCard.includes("${safeListingText(x.address.replace(/,\\s*NJ\\s*$/i,''))} ↗"),'address text drops ", NJ" and ends with ↗');
   assert.ok(css.includes('.card__address{')&&css.includes('color:var(--purple)'),'purple link styling');
 });
 
@@ -131,9 +131,10 @@ test('event report/share: mailto report and shareable event link',()=>{
   assert.ok(flip.includes('?category=events&event='),'share link uses the existing URL contract');
 });
 
-test('favorites storage unchanged; card actions link to the listing page sections',()=>{
-  assert.ok(app.includes('hffavs:v1'),'favorites storage key untouched');
-  assert.ok(app.includes('data-fav="${x.num}"'),'favorite buttons kept');
+test('favorites removed (round 3 item 17); card actions link to the listing page sections',()=>{
+  assert.ok(!app.includes('toggleFavorite')&&!app.includes('favBtn')&&!app.includes('data-fav'),'no favorites code');
+  assert.ok(app.includes("localStorage.removeItem('hffavs:v1')"),'stale favorites storage is cleared');
+  assert.ok(!/fav-btn/.test(css),'no favorites CSS');
   for(const h of ['#feedback','#report-update','#share'])assert.ok(app.includes('href="${listingPageHref(x)}'+h+'"'),h+' link');
   assert.ok(!community.includes('[data-feedback]')&&!community.includes('[data-report-listing]'),'dialog hooks removed');
 });
@@ -145,10 +146,30 @@ test('app.js public-data preamble hash is untouched by the card edits',()=>{
   assert.equal(hash(app),hash(head),'preamble hash identical to committed HEAD');
 });
 
-test('card layout spec: scare level leads the tags row; route button 30px / min 118px / 13px',()=>{
-  assert.ok(displayCard.includes('<div class="card__tags">${x.levels.length?`<span class="card__scare">'),'scare level is first in the tags row');
-  assert.ok(!displayCard.includes('card__scare-row'),'no separate scare row');
+test('round 3 item 3: separate scare and icon rows, Host notes only when notes exist, merged address line, 3c button',()=>{
+  assert.ok(displayCard.includes('<p class="card__scare-row"><span class="card__scare">'),'scare level has its own row');
+  assert.ok(displayCard.includes('x.levels.length?`<p class="card__scare-row">'),'no scare row without levels (3f: no Not specified)');
+  assert.ok(displayCard.includes("String(x.notes||'').trim()?`<details class=\"card__notes\">"),'Host notes link only when the listing has notes (3a)');
+  assert.ok(!displayCard.includes('No additional notes yet'),'no empty-notes placeholder');
+  assert.ok(!displayCard.includes('card__subline')&&!displayCard.includes('card__town'),'town line merged into the address line (3e)');
+  assert.ok(displayCard.includes('(x.type.length||x.features.length)?`<div class="card__tags">'),'icon row omitted when empty');
   const meta=displayCard.split('<div class="card__meta">')[1];
   assert.ok(!meta.includes('card__notes'),'Host notes is not in the meta row');
-  assert.ok(css.includes('height:30px;min-height:30px!important;min-width:118px;padding:0 9px;font-size:13px'),'route button sizing');
+  assert.ok(css.includes('height:30px;min-height:30px!important;min-width:128px;padding:0 12px;border:1px solid #A6E22E;border-radius:7px;font:800 13px var(--f-cond);letter-spacing:.08em'),'route button 30px tall, 7px radius, 1px lime border, 800 13px (min width 128 so both labels match)');
+});
+
+test('round 3 data + About: no Spider theme tag anywhere, Skully description, About icon key lists every table icon',()=>{
+  const vm=require('node:vm');
+  const pre=app.split('const filters=')[0];
+  const {listings,events}=vm.runInNewContext(pre+';({listings,events})');
+  const allowed=['animatronics','fog','music/sound','photo opportunities','lights','live actors','actors','costumes available','spooky decor','yard display','stroller friendly','porch light on','free','open to all','registration required','kid-friendly'];
+  const norm=v=>String(v).trim().toLowerCase().replace(/\s*\/\s*/g,'/');
+  for(const x of [...listings,...events])for(const f of (x.features||[]))assert.ok(allowed.map(norm).includes(norm(f)),'tag outside the Features lists: '+f+' on '+x.name);
+  assert.equal(listings.find(x=>/Alcrest/.test(x.name)).features.length,0,'Spider theme removed from Alcrest');
+  const sk=events.find(e=>e.id==='skullys-costume-closet');
+  assert.equal(sk.notes,'Free costumes for infants, kids, and adults.');
+  assert.ok(sk.hours&&!sk.notes.includes(sk.hours),'hours stay in their own field');
+  const about=fs.readFileSync(path.join(ROOT,'about.html'),'utf8');
+  assert.ok(about.includes('What the icons mean'),'About has an icon key');
+  for(const l of ['Drive-by','Walk-up','Walk-through','Drive or walk by (both)','Lights','Fog','Animatronics','Live Actors','Music / Sound','Photo opportunities','Spooky decor','Yard display','Stroller friendly','Porch light on','Free','Open to all','Registration required','Kid-friendly'])assert.ok(about.includes('<span>'+l+'</span>'),'icon key entry '+l);
 });

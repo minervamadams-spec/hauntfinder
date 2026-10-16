@@ -72,8 +72,8 @@ window.hfPaintCardFlip=function(num){
     pill.textContent='↻ Photo';
     nameEl.after(pill);
   }
-  const town=card.querySelector('.card__town'),dist=card.querySelector('.card__distance');
-  const subline=[town&&town.textContent,dist&&dist.textContent].filter(Boolean).join(' · ');
+  const town=card.dataset.town||'',dist=card.querySelector('.card__distance');
+  const subline=[town,dist&&dist.textContent].filter(Boolean).join(' · ');
   const back=document.createElement('div');
   back.className='card-face card-face--back';
   back.setAttribute('aria-hidden','true');

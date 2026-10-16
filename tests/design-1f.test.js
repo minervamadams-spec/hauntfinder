@@ -156,6 +156,6 @@ test('app.js preamble unchanged; storage keys and single-map rule intact',()=>{
   const head=execSync('git show HEAD:app.js',{cwd:ROOT,encoding:'utf8'});
   assert.ok(head.includes('const filters='),'HEAD has the split marker');
   assert.equal(hash(app),hash(head),'preamble before const filters= is byte-identical to HEAD');
-  assert.ok(app.includes('hfroute:2026')&&app.includes('hffavs:v1'),'storage keys untouched');
+  assert.ok(app.includes('hfroute:2026'),'route storage key untouched');
   assert.equal(html.includes('vercel.json'),false);
 });

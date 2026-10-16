@@ -369,10 +369,7 @@ html:not([data-fullmap]) .map-full-head{display:none!important}
 .map-hint{font:400 12px/1.35 var(--f-body);color:var(--mist)}
 .key-circle{flex:none;width:34px;height:34px;border:2px dashed #FF7A1A;border-radius:50%;background:rgba(255,122,26,.05)}
 .key-card{flex:none;display:inline-flex;align-items:center;justify-content:center;width:34px;height:40px;background:#24242b;border:1px dashed #777;border-radius:4px;color:#b9b9c0;font:800 15px/1 var(--f-ui)}
-/* ---- Release 5: favorites + shareable outings. ---- */
 .card--compact .card__actions{grid-template-columns:1.25fr 1fr auto}
-.card__fav-btn{min-width:44px;min-height:44px;padding:0 10px;font-size:22px;line-height:1;background:transparent;color:var(--pumpkin);border:2px solid var(--pumpkin);border-radius:999px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
-.card__fav-btn[aria-pressed="true"]{background:var(--pumpkin);color:var(--night)}
 
 /* v5 Phase G: collapsed route planner — compact toggle bar over an expandable region */
 .route-toggle{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;padding:0 16px;background:var(--filter);border:2px solid var(--line-strong);border-radius:6px;color:var(--cream);font:800 18px/1 var(--f-ui);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
@@ -625,8 +622,6 @@ body.host-panel-open{overflow:hidden}
 .card--compact .card__actions{grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0;align-items:stretch}
 .card__route-btn{min-height:48px;justify-content:center;background:var(--lime);color:#0B0910;border:2px solid var(--lime);border-radius:var(--radius-control);font:700 15px var(--f-cond);letter-spacing:.05em;text-transform:uppercase}
 .card__route-btn[aria-pressed="true"]{background:#F6EBD3;border-color:#F6EBD3;color:#0B0910}
-.card--compact .card__fav-btn{width:48px;min-width:48px;min-height:48px;padding:0;border-radius:var(--radius-control);border:2px solid var(--line-2);background:transparent;color:var(--text-2);font-size:20px}
-.card--compact .card__fav-btn[aria-pressed="true"]{background:transparent;border-color:var(--orange);color:var(--orange)}
 
 /* ---- Meta row (13px, 1px divider): Host notes + rating left, Report/Share right. */
 .card__meta{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--line);font:500 13px var(--f-body);color:var(--text-3)}
@@ -1152,7 +1147,6 @@ html[data-category="events"] .list-column{order:2}
  html:not([data-category="events"]) .card--compact .card__tags .chip,html:not([data-category="events"]) .card--compact .card__tags .chips .chip{min-height:24px;padding:0 8px;font-size:12px}
  html:not([data-category="events"]) .card--compact .card__actions{display:grid;grid-template-columns:minmax(0,1fr) 38px;gap:8px}
  html:not([data-category="events"]) .card--compact .card__route-btn{min-height:36px!important;padding:0 10px;font-size:13px}
- html:not([data-category="events"]) .card--compact .card__fav-btn{width:38px;min-width:38px;min-height:36px;padding:0;font-size:18px}
  html:not([data-category="events"]) .card--compact .card__meta{gap:6px;padding-top:6px;font-size:12px}
  html:not([data-category="events"]) .card--compact .card__metalink,html:not([data-category="events"]) .card--compact .card__notes summary{min-height:28px;font-size:12px}
  html:not([data-hf-rail="off"]) .map-column{grid-column:3;grid-row:1;display:block;min-width:0;min-height:0;width:auto;position:relative}
@@ -1206,7 +1200,6 @@ html[data-category="events"] .list-column{order:2}
 .card-rating{text-decoration:none}
 .card-rating__rate{text-decoration:underline}
 .card__distance{text-transform:none!important}
-.card--compact .card__head .card__fav-btn{margin-left:auto;flex:none;width:32px;min-width:32px;height:32px;min-height:32px;padding:0;border:1px solid #3A3046;border-radius:8px;background:transparent;font-size:16px;line-height:1}
 html body .card--compact .card__actions,html body .event-card .card__actions{display:flex!important;grid-template-columns:none!important;flex-wrap:wrap;align-items:center;gap:6px 9px;margin:0;padding:0;border:0}
 html body .card--compact .card__actions .card__route-btn,html body .event-card .card__actions .card__route-btn{width:auto;min-height:30px!important;height:30px;margin-right:auto;padding:0 12px;font:800 13px var(--f-cond)}
 html body .card--compact .card__meta,html body .event-card__meta,html body .card__meta-left,html body .card__meta-right{display:contents!important;border:0!important;padding:0!important;margin:0!important}
@@ -1409,7 +1402,6 @@ html[data-category="events"]{--acc:#B48CFF}
  .mobile-bar__count{min-width:22px;height:22px;border-radius:11px;background:#A6E22E;color:#120E18;font:800 12px/22px var(--f-body);text-align:center}
  .mobile-bar__count.is-zero{background:#3A3046;color:#A89DB4}
  /* cards */
- html body .card--compact .card__head .card__fav-btn{width:44px;height:44px;min-width:44px;min-height:44px}
  html body .card--compact .card__actions .card__route-btn,html body .event-card .card__actions .card__route-btn{height:44px;min-height:44px!important}
  .card__mapbtn,.card__morebtn{display:inline-flex;align-items:center;justify-content:center;gap:5px;height:44px;min-height:44px;border:0;background:none;color:#B48CFF;font:800 13px var(--f-cond);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
  .card__morebtn{margin-left:auto;width:44px;font-size:20px;color:#CFC4B0}
@@ -1605,3 +1597,48 @@ html[data-category="events"]{--acc:#B48CFF}
 .chip--icon svg{width:14px;height:14px;flex:none}
 .filter--rail svg{width:14px;height:14px;flex:none;margin-right:6px;vertical-align:-2px}
 .event-card__hours{margin:0;font:500 14px/1.3 var(--f-body);color:#E4D9F2}
+
+/* ---- design round 3, item 3 (3a-3g): card rows to the v7 Compact mock ---- */
+html body #cardList .card--compact .card__addrline{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 6px;margin:0;min-width:0}
+html body #cardList .card--compact .card__addrline .card__address{font:600 14px/1.3 var(--f-body);color:#B48CFF;min-height:0;margin:0}
+html body #cardList .card--compact .card__addrline .card__distance{font:500 13px/1.3 var(--f-body);color:#A89DB4;white-space:nowrap}
+html body #cardList .card--compact .card__addrline .card__distance::before{content:"· "}
+html body #cardList .card--compact .card__hours-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:0 12px;margin:0}
+html body #cardList .card--compact .card__hours-row .card__hours{flex:0 1 auto;min-width:0;margin:0;font:500 14px/1.3 var(--f-body);color:#E4D9F2}
+html body #cardList .card--compact .card__hours-row .card__notes{flex:none;margin:0}
+html body #cardList .card--compact .card__hours-row .card__notes summary{font:600 12px/1.3 var(--f-body);color:#B48CFF;white-space:nowrap;min-height:0;padding:0}
+html body #cardList .card--compact .card__hours-row .card__notes[open]{flex:1 0 100%;order:9;margin-top:6px}
+html body #cardList .card--compact .card__scare-row{display:block;margin:0}
+html body #cardList .card--compact .card__scare-row .card__scare{display:inline-flex;align-items:center;font:500 12px/1.3 var(--f-body);color:#A89DB4}
+html body #cardList .card--compact .card__scare-row .pip{border-color:#FF7A1A}
+html body #cardList .card--compact .card__scare-row .pip.is-on{background:#FF7A1A}
+html body #cardList .card--compact .card__tags{display:flex;flex-wrap:wrap;gap:5px;margin:0}
+@media(max-width:767px){html body #cardList .card--compact .card__scare-row{display:none}}
+@media(min-width:1024px){
+ html body #cardList .card--compact{padding:12px 14px;gap:7px}
+ html body #cardList .card--compact>:not(.card__head){margin-left:36px}
+ html body #cardList .card--compact .card__actions{display:flex!important;flex-wrap:nowrap!important;align-items:center;gap:12px!important;margin-top:0;min-width:0}
+ html:not([data-category="events"]) body #cardList .card--compact .card__actions .card__route-btn{height:30px;min-height:30px!important;min-width:128px;padding:0 12px;border:1px solid #A6E22E;border-radius:7px;font:800 13px var(--f-cond);letter-spacing:.08em;flex:none;white-space:nowrap}
+ html body #cardList .card--compact .card__actions .card__meta{display:flex;flex:1;min-width:0;flex-wrap:nowrap;justify-content:flex-end;align-items:center;gap:12px;margin:0;padding:0;border:0}
+ html body #cardList .card--compact .card__actions .card__meta-left,html body #cardList .card--compact .card__actions .card__meta-right{display:flex;flex-wrap:nowrap;align-items:center;gap:12px;margin:0;min-width:0}
+ html body #cardList .card--compact .card__actions .card-rating,html body #cardList .card--compact .card__actions .card__metalink{font:500 12px/1.3 var(--f-body);min-height:0;padding:0;white-space:nowrap}
+}
+@media(min-width:1024px){
+ html body #cardList .card--compact:not(.treat-stop-card)>.card__scare-row{grid-column:1/-1;justify-self:start}
+ html body #cardList .card--compact .card__head{gap:8px;align-items:center}
+ html body #cardList .card--compact .card__head .card__pin{width:28px;height:33px;flex:0 0 28px;margin-top:0}
+ html body #cardList .card--compact .card__head .card__pin .pin{width:28px;height:33px}
+}
+@media(min-width:1024px){
+ html body #cardList .card--compact .card__head{height:22px;min-height:0;align-items:flex-start;margin-bottom:-7px}
+ html body #cardList .card--compact .card__head .card__pin{margin-top:-5px}
+ html body #cardList .card--compact .card__actions .card-rating{color:#A89DB4}
+ html body #cardList .card--compact .card__actions .card-rating__rate{color:#B48CFF;font-weight:600;text-decoration:none}
+ html body #cardList .card--compact .card__actions .card__metalink{color:#A89DB4;font-weight:600}
+}
+
+/* About: icon key (design round 3 item 16) */
+.icon-key{list-style:none;margin:12px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px 16px}
+.icon-key li{display:flex;align-items:center;gap:10px;font:500 15px/1.3 var(--f-body);color:#E8DEC8}
+.icon-key__icon{flex:none;width:26px;height:26px;border-radius:13px;border:1px solid #3A3046;display:inline-flex;align-items:center;justify-content:center;color:#CFC4B0}
+.icon-key__icon svg{width:14px;height:14px}
