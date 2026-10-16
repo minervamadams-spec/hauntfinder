@@ -1599,3 +1599,9 @@ html[data-category="events"]{--acc:#B48CFF}
 @media(max-width:767px){.card__tags .card__scare{display:none}}
 /* route button: 30px tall, min 118px wide, 13px type; both states the same width */
 @media(min-width:1024px){html:not([data-category="events"]) body .card--compact .card__actions .card__route-btn{height:30px;min-height:30px!important;min-width:118px;padding:0 9px;font-size:13px;flex:none;white-space:nowrap}}
+
+/* ---- design round 3 (v7 Compact mock): icon-only tags, filter-chip icons, event hours line, no heart ---- */
+.chip--icon{width:26px;height:26px;min-height:26px!important;padding:0!important;border-radius:13px!important;display:inline-flex;align-items:center;justify-content:center;border:1px solid #3A3046;color:#CFC4B0;box-sizing:border-box}
+.chip--icon svg{width:14px;height:14px;flex:none}
+.filter--rail svg{width:14px;height:14px;flex:none;margin-right:6px;vertical-align:-2px}
+.event-card__hours{margin:0;font:500 14px/1.3 var(--f-body);color:#E4D9F2}

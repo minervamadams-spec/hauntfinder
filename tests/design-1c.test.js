@@ -50,9 +50,11 @@ test('address is the purple directions link with ↗ and an accessible name',()=
   assert.ok(css.includes('.card__address{')&&css.includes('color:var(--purple)'),'purple link styling');
 });
 
-test('feature tags are text pills (28px, line-2 border), never icon-only',()=>{
-  assert.match(app,/class="chip feature-chip">\$\{featureIcon\(key\)\}<span>\$\{safeListingText\(item\.label\)\}<\/span>/,'icon + readable label kept');
-  assert.ok(css.includes('min-height:28px;padding:0 10px;background:transparent;border:1px solid var(--line-2);border-radius:999px'),'28px fully-rounded text pills');
+test('tags: icon-only 26px circles (title + aria-label) where the mock has an icon; filter chips carry icons',()=>{
+  assert.ok(displayCard.includes("hfTagHTML(t,'chip--type')")&&displayCard.includes('x.features.map(v=>hfTagHTML(v))')||displayCard.includes('featureChip'),'display cards use the shared tag renderer');
+  assert.ok(css.includes('.chip--icon{width:26px;height:26px;min-height:26px!important;padding:0!important;border-radius:13px!important'),'26px circular icon tags');
+  const cf=fs.readFileSync(path.join(ROOT,'chrome-filters.js'),'utf8');
+  assert.ok(cf.includes('hfIconSVG(value)'),'rail filter chips render an icon when one exists');
 });
 
 test('meta row: 13px with divider, rating left, Report/Share right; Host notes lives on the hours row',()=>{

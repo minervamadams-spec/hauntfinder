@@ -111,7 +111,7 @@ function efeaturesMenuHTML(session){
 function menuBody(kind,session){return kind==='show'?showMenuHTML(session):kind==='features'?featuresMenuHTML(session):kind==='type'?typeMenuHTML(session):kind==='efeatures'?efeaturesMenuHTML(session):whenMenuHTML(session)}
 function ddHTML(kind,label,valueText,active,session){return `<details class="dd${active?' dd--active':''}" data-dd="${kind}"><summary class="dd__btn" aria-expanded="false"><span class="dd__label">${label}</span><span class="dd__value">${valueText}</span><span class="dd__caret" aria-hidden="true">▾</span></summary><div class="dd__menu">${menuBody(kind,session)}</div></details>`}
 
-function railChip(action,value,label,pressed){return `<button type="button" class="filter filter--rail" data-rail-filter="${action}" data-value="${String(value).replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" aria-pressed="${pressed}">${label}</button>`}
+function railChip(action,value,label,pressed){return `<button type="button" class="filter filter--rail" data-rail-filter="${action}" data-value="${String(value).replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" aria-pressed="${pressed}">${typeof hfIconSVG==='function'?hfIconSVG(value)||hfIconSVG(label):''}${label}</button>`}
 function railSection(label,body){return `<section class="filter-rail__section"><h3>${label}</h3><div class="filter-rail__chips">${body}</div></section>`}
 function railActiveCount(){return (state.dateFilter&&state.dateFilter.kind?1:0)+(state.filter&&state.filter!=='All'?1:0)+((state.features||[]).length)}
 function railClearHTML(){return railActiveCount()?'<button type="button" class="filter-rail__clear" data-rail-clear>Clear all filters</button>':''}

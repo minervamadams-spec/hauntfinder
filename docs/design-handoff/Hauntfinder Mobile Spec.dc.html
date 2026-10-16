@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;background:#0B0810;font-family:Barlow,sans-serif;color:#F6EBD3;}
+a{color:#B48CFF;text-decoration:none;font-weight:600;}
+a:hover{color:#F6EBD3;}
+</style>
+</helmet>
+<div style="padding:48px;display:flex;flex-direction:column;gap:40px;">
+  <div style="max-width:1100px;display:flex;flex-direction:column;gap:14px;">
+    <div style="font:700 13px 'Barlow Condensed';letter-spacing:.16em;color:#A89DB4;">HAUNTFINDER · MOBILE SPEC · BELOW 1024PX</div>
+    <div style="font:700 40px/1.05 'Barlow Condensed';">Compact mobile pass</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px 32px;font:500 14px/1.5 Barlow;color:#CFC4B0;">
+      <div><b style="color:#F6EBD3;">Breakpoints.</b> 1024px and up: v7 desktop, unchanged. 600–1023px: this layout, content max-width 760px centered, list cards in 2 columns from 768px. Below 600px: this layout, 1 column.</div>
+      <div><b style="color:#F6EBD3;">One view at a time.</b> List or map fills the screen. The bottom bar switches between them and opens Your Route. Tab, filters and selected listing carry across both views.</div>
+      <div><b style="color:#F6EBD3;">Touch targets.</b> 44px minimum for every button, chip row height excluded (chips 36px with 8px gap). Desktop styles, colors and fonts carry over as-is.</div>
+      <div><b style="color:#F6EBD3;">Scroll.</b> Header (56px) scrolls away. Search row and tabs stick to the top. Bottom bar is fixed and respects the safe-area inset.</div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start;">
+
+    <div id="M1" style="width:390px;display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;align-items:center;gap:10px;"><span style="font:800 13px Barlow;background:#FF7A1A;color:#120E18;border-radius:5px;padding:3px 8px;">M1</span><span style="font:700 18px 'Barlow Condensed';letter-spacing:.06em;">DISPLAYS · LIST</span></div>
+      <div data-screen-label="M1 Displays list" style="width:390px;height:844px;border:1px solid #3A3046;border-radius:28px;overflow:hidden;background:#120E18;position:relative;display:flex;flex-direction:column;">
+        <div style="flex:none;height:56px;background:#110b26 url('assets/scene-strip-v3.png') left center/auto 100% repeat-x;border-bottom:2px solid #7B4BD6;display:flex;align-items:center;justify-content:space-between;padding:0 6px 0 12px;">
+          <img src="assets/sign-cutout.png" alt="Hauntfinder" style="height:44px;width:auto;margin-top:6px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.7));">
+          <button style="width:44px;height:44px;border-radius:8px;border:0;background:rgba(18,14,24,.7);color:#F6EBD3;font-size:20px;">☰</button>
+        </div>
+        <div style="flex:none;height:56px;display:flex;align-items:center;gap:6px;padding:0 10px;background:#16111E;border-bottom:1px solid #2E2638;">
+          <div style="flex:1;min-width:0;height:44px;box-sizing:border-box;display:flex;align-items:center;gap:6px;padding:0 4px 0 10px;background:#120E18;border:1px solid #3A3046;border-radius:8px;">
+            <span style="font:600 11px 'Barlow Condensed';letter-spacing:.1em;color:#A89DB4;">ZIP</span>
+            <span style="flex:1;font:600 15px Barlow;">07828</span>
+            <span style="font:600 13px 'Barlow Condensed';letter-spacing:.06em;color:#CFC4B0;padding:0 6px;">25 MI ▾</span>
+            <span style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#B48CFF;font-size:16px;">◎</span>
+          </div>
+          <button style="flex:none;height:44px;padding:0 12px;display:flex;align-items:center;gap:6px;border-radius:8px;border:1px solid #FF7A1A;background:rgba(255,122,26,.12);color:#F6EBD3;font:700 14px 'Barlow Condensed';letter-spacing:.1em;">FILTERS<span style="min-width:20px;height:20px;border-radius:10px;background:#FF7A1A;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">2</span></button>
+        </div>
+        <div style="flex:none;height:44px;display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #2E2638;">
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;border-bottom:3px solid #FF7A1A;font:600 14px Barlow;">Displays<span style="min-width:20px;height:20px;border-radius:10px;background:#FF7A1A;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">8</span></div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;border-bottom:3px solid transparent;font:600 14px Barlow;color:#A89DB4;">Treat Stops<span style="min-width:20px;height:20px;border-radius:10px;background:#A6E22E;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">1</span></div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;border-bottom:3px solid transparent;font:600 14px Barlow;color:#A89DB4;">Events<span style="min-width:20px;height:20px;border-radius:10px;background:#B48CFF;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">2</span></div>
+        </div>
+        <div style="flex:none;padding:10px 14px 6px;display:flex;justify-content:space-between;"><span style="font:700 13px 'Barlow Condensed';letter-spacing:.12em;color:#A89DB4;">8 DISPLAYS WITHIN 25 MI</span><span style="font:500 12px Barlow;color:#7E7389;">Nearest first</span></div>
+        <div style="flex:1;min-height:0;overflow:hidden;padding:4px 10px 0;display:flex;flex-direction:column;gap:8px;">
+          <article style="flex:none;padding:12px;border:1px solid #2E2638;background:#1A1522;border-radius:10px;display:flex;flex-direction:column;gap:7px;">
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <span style="flex:none;width:26px;height:26px;border-radius:50%;background:#FF7A1A;color:#120E18;font:800 13px Barlow;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -3px 0 #C94F00;margin-top:2px;"></span>
+              <div style="flex:1;min-width:0;"><div style="font:700 19px/1.15 'Barlow Condensed';">Alcrest Avenue Halloween Display</div><div style="font:500 13px Barlow;color:#A89DB4;">Budd Lake · 0.2 mi</div></div>
+              
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;padding-left:36px;"><a href="#" style="font:600 14px Barlow;">24 Alcrest Avenue, Budd Lake, NJ ↗</a><div style="font:500 14px Barlow;color:#E4D9F2;">Halloween weekend · All weekend</div></div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px;padding-left:36px;"><span style="height:22px;padding:0 8px;border-radius:11px;border:1px solid #3A3046;font:500 12px Barlow;color:#CFC4B0;display:flex;align-items:center;">Spider theme</span></div>
+            <div style="display:flex;align-items:center;gap:6px;padding-left:36px;">
+              <button style="height:44px;padding:0 14px;border-radius:8px;border:1px solid #A6E22E;background:#A6E22E;color:#120E18;font:800 14px 'Barlow Condensed';letter-spacing:.08em;">+ ADD TO ROUTE</button>
+              <button style="height:44px;padding:0 10px;border:0;background:transparent;color:#B48CFF;font:700 14px 'Barlow Condensed';letter-spacing:.06em;">◉ MAP</button>
+              <span style="flex:1;"></span>
+              <button style="width:44px;height:44px;border:0;background:transparent;color:#A89DB4;font:800 18px Barlow;">⋯</button>
+            </div>
+          </article>
+          <article style="flex:none;padding:12px;border:1px solid #2E2638;background:#1A1522;border-radius:10px;display:flex;flex-direction:column;gap:7px;">
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <span style="flex:none;width:26px;height:26px;border-radius:50%;background:#FF7A1A;color:#120E18;font:800 13px Barlow;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -3px 0 #C94F00;margin-top:2px;"></span>
+              <div style="flex:1;min-width:0;"><div style="font:700 19px/1.15 'Barlow Condensed';">Fifth Street Halloween Display</div><div style="font:500 13px Barlow;color:#A89DB4;">Budd Lake · 0.9 mi</div></div>
+              <button style="flex:none;width:44px;height:44px;margin:-6px -6px 0 0;border-radius:8px;border:0;background:transparent;color:#FF7A1A;font-size:18px;">♥</button>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;padding-left:36px;"><a href="#" style="font:600 14px Barlow;">23 Fifth Street, Budd Lake, NJ ↗</a><div style="font:500 14px Barlow;color:#E4D9F2;">Hours unknown</div></div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding-left:36px;"><span style="font:500 12px Barlow;color:#A89DB4;margin-right:4px;"><span style="color:#FF7A1A;letter-spacing:1px;">●○○</span> Family Friendly</span><span style="height:22px;padding:0 8px;border-radius:11px;border:1px solid #3A3046;font:500 12px Barlow;color:#CFC4B0;display:flex;align-items:center;">Drive-by</span><span style="height:22px;padding:0 8px;border-radius:11px;border:1px solid #3A3046;font:500 12px Barlow;color:#CFC4B0;display:flex;align-items:center;">Walk-up</span></div>
+            <div style="display:flex;align-items:center;gap:6px;padding-left:36px;">
+              <button style="height:44px;padding:0 14px;border-radius:8px;border:1px solid #A6E22E;background:rgba(166,226,46,.12);color:#A6E22E;font:800 14px 'Barlow Condensed';letter-spacing:.08em;">✓ ON ROUTE</button>
+              <button style="height:44px;padding:0 10px;border:0;background:transparent;color:#B48CFF;font:700 14px 'Barlow Condensed';letter-spacing:.06em;">◉ MAP</button>
+              <span style="flex:1;"></span>
+              <button style="width:44px;height:44px;border:0;background:transparent;color:#A89DB4;font:800 18px Barlow;">⋯</button>
+            </div>
+          </article>
+          <article style="flex:none;padding:12px;border:1px solid #2E2638;background:#1A1522;border-radius:10px;display:flex;flex-direction:column;gap:7px;">
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <span style="flex:none;width:26px;height:26px;border-radius:50%;background:#FF7A1A;color:#120E18;font:800 13px Barlow;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -3px 0 #C94F00;margin-top:2px;"></span>
+              <div style="flex:1;min-width:0;"><div style="font:700 19px/1.15 'Barlow Condensed';">Capone’s</div><div style="font:500 13px Barlow;color:#A89DB4;">Budd Lake · 1.1 mi</div></div>
+              
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;padding-left:36px;"><a href="#" style="font:600 14px Barlow;">22 Cedar Manor Ct, Budd Lake, NJ ↗</a><div style="font:500 14px Barlow;color:#E4D9F2;">Opens October 1 · After dusk</div></div>
+          </article>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;height:64px;box-sizing:border-box;padding:8px 10px;display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#16111E;border-top:1px solid #3A3046;box-shadow:0 -8px 20px rgba(0,0,0,.5);">
+          <button style="height:48px;border-radius:8px;border:1px solid #3A3046;background:#120E18;color:#F6EBD3;font:800 15px 'Barlow Condensed';letter-spacing:.1em;">◉ MAP VIEW</button>
+          <button style="height:48px;border-radius:8px;border:1px solid #FF7A1A;border-top-width:3px;background:#120E18;color:#F6EBD3;font:800 15px 'Barlow Condensed';letter-spacing:.1em;display:flex;align-items:center;justify-content:center;gap:8px;">YOUR ROUTE<span style="min-width:22px;height:22px;border-radius:11px;background:#A6E22E;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">1</span></button>
+        </div>
+      </div>
+      <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font:500 13px/1.5 Barlow;color:#CFC4B0;">
+        <li>Header 56px: scene strip, sign at 44px, menu button. No tagline.</li>
+        <li>Search row: ZIP, radius and ◎ my location in one field. Filters button shows the active count; orange outline when any filter is on.</li>
+        <li>Tabs split the width evenly. Underline sits on the tab’s bottom edge.</li>
+        <li>Card body is not a tap target. ◉ MAP opens the map view with that pin selected. Host notes, Rate, Report and Share move into ⋯.</li>
+        <li>Scare dots hidden when no level is set (card 2).</li>
+        <li>Round 3 card rules apply on mobile too: no ♡ button; the address line includes the town, with no separate town line; scare level on its own row; tags shown as icons only, on the row below; Host notes only when the listing has notes. See DESIGN-REVIEW round 3, items 3, 16 and 17.</li>
+      </ol>
+    </div>
+
+    <div id="M2" style="width:390px;display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;align-items:center;gap:10px;"><span style="font:800 13px Barlow;background:#FF7A1A;color:#120E18;border-radius:5px;padding:3px 8px;">M2</span><span style="font:700 18px 'Barlow Condensed';letter-spacing:.06em;">MAP VIEW · PIN SELECTED</span></div>
+      <div data-screen-label="M2 Map view" style="width:390px;height:844px;border:1px solid #3A3046;border-radius:28px;overflow:hidden;background:#120E18;position:relative;display:flex;flex-direction:column;">
+        <div style="flex:none;height:56px;box-sizing:border-box;display:flex;align-items:center;gap:6px;padding:0 10px;background:#16111E;border-bottom:1px solid #2E2638;">
+          <div style="flex:1;min-width:0;height:44px;box-sizing:border-box;display:flex;align-items:center;gap:6px;padding:0 4px 0 10px;background:#120E18;border:1px solid #3A3046;border-radius:8px;">
+            <span style="font:600 11px 'Barlow Condensed';letter-spacing:.1em;color:#A89DB4;">ZIP</span>
+            <span style="flex:1;font:600 15px Barlow;">07828</span>
+            <span style="font:600 13px 'Barlow Condensed';letter-spacing:.06em;color:#CFC4B0;padding:0 6px;">25 MI ▾</span>
+            <span style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#B48CFF;font-size:16px;">◎</span>
+          </div>
+          <button style="flex:none;height:44px;padding:0 12px;display:flex;align-items:center;gap:6px;border-radius:8px;border:1px solid #FF7A1A;background:rgba(255,122,26,.12);color:#F6EBD3;font:700 14px 'Barlow Condensed';letter-spacing:.1em;">FILTERS<span style="min-width:20px;height:20px;border-radius:10px;background:#FF7A1A;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">2</span></button>
+        </div>
+        <div style="flex:none;height:44px;display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #2E2638;background:#120E18;">
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;border-bottom:3px solid #FF7A1A;font:600 14px Barlow;">Displays<span style="min-width:20px;height:20px;border-radius:10px;background:#FF7A1A;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">8</span></div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;font:600 14px Barlow;color:#A89DB4;">Treat Stops<span style="min-width:20px;height:20px;border-radius:10px;background:#A6E22E;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">1</span></div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;font:600 14px Barlow;color:#A89DB4;">Events<span style="min-width:20px;height:20px;border-radius:10px;background:#B48CFF;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">2</span></div>
+        </div>
+        <div style="flex:1;position:relative;overflow:hidden;background:#1a1622;">
+          <div style="position:absolute;left:-215px;top:-207px;display:grid;grid-template-columns:repeat(3,256px);">
+            <img src="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/12/1535/1196" style="display:block;width:256px;height:256px;"><img src="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/12/1535/1197" style="display:block;width:256px;height:256px;"><img src="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/12/1535/1198" style="display:block;width:256px;height:256px;">
+            <img src="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/12/1536/1196" style="display:block;width:256px;height:256px;"><img src="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/12/1536/1197" style="display:block;width:256px;height:256px;"><img src="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/12/1536/1198" style="display:block;width:256px;height:256px;">
+            <img src="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/12/1537/1196" style="display:block;width:256px;height:256px;"><img src="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/12/1537/1197" style="display:block;width:256px;height:256px;"><img src="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/12/1537/1198" style="display:block;width:256px;height:256px;">
+            <img src="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/12/1538/1196" style="display:block;width:256px;height:256px;"><img src="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/12/1538/1197" style="display:block;width:256px;height:256px;"><img src="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/12/1538/1198" style="display:block;width:256px;height:256px;">
+          </div>
+          <span style="position:absolute;left:99px;top:131px;width:28px;height:28px;border-radius:50%;background:#FF7A1A;color:#120E18;font:800 13px Barlow;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -4px 0 #C94F00,0 3px 8px rgba(0,0,0,.6);"></span>
+          <span style="position:absolute;left:166px;top:166px;width:28px;height:28px;border-radius:50%;background:#FF7A1A;color:#120E18;font:800 13px Barlow;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -4px 0 #C94F00,0 3px 8px rgba(0,0,0,.6);"></span>
+          <span style="position:absolute;left:94px;top:193px;width:28px;height:28px;border-radius:50%;background:#FF7A1A;color:#120E18;font:800 13px Barlow;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -4px 0 #C94F00,0 3px 8px rgba(0,0,0,.6);"></span>
+          <span style="position:absolute;left:129px;top:216px;width:28px;height:28px;border-radius:50%;background:#FF7A1A;color:#120E18;font:800 13px Barlow;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -4px 0 #C94F00,0 3px 8px rgba(0,0,0,.6);"></span>
+          <span style="position:absolute;left:149px;top:262px;width:28px;height:28px;border-radius:50%;background:#FF7A1A;color:#120E18;font:800 13px Barlow;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -4px 0 #C94F00,0 3px 8px rgba(0,0,0,.6);"></span>
+          <span style="position:absolute;left:105px;top:282px;width:28px;height:28px;border-radius:50%;background:#FF7A1A;color:#120E18;font:800 13px Barlow;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -4px 0 #C94F00,0 3px 8px rgba(0,0,0,.6);"></span>
+          <span style="position:absolute;left:268px;top:305px;width:28px;height:28px;border-radius:50%;background:#FF7A1A;color:#120E18;font:800 13px Barlow;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -4px 0 #C94F00,0 3px 8px rgba(0,0,0,.6);"></span>
+          <span style="position:absolute;left:200px;top:243px;width:38px;height:38px;border-radius:50%;background:#FF7A1A;color:#120E18;font:800 16px Barlow;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px #A6E22E,inset 0 -4px 0 #C94F00,0 3px 8px rgba(0,0,0,.6);"></span>
+          <div style="position:absolute;right:10px;top:10px;display:flex;flex-direction:column;border:1px solid #3A3046;border-radius:8px;overflow:hidden;">
+            <span style="width:44px;height:44px;background:#1C1626;display:flex;align-items:center;justify-content:center;font:700 20px Barlow;border-bottom:1px solid #3A3046;">+</span>
+            <span style="width:44px;height:44px;background:#1C1626;display:flex;align-items:center;justify-content:center;font:700 20px Barlow;">−</span>
+          </div>
+          <article style="position:absolute;left:10px;right:10px;bottom:74px;padding:12px;border:1px solid #FF7A1A;background:#221A2E;border-radius:12px;display:flex;flex-direction:column;gap:7px;box-shadow:0 10px 28px rgba(0,0,0,.6);">
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <span style="flex:none;width:26px;height:26px;border-radius:50%;background:#FF7A1A;color:#120E18;font:800 13px Barlow;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -3px 0 #C94F00;margin-top:2px;"></span>
+              <div style="flex:1;min-width:0;"><div style="font:700 19px/1.15 'Barlow Condensed';">Adams Family Haunt</div><div style="font:500 13px Barlow;color:#A89DB4;">Budd Lake · 1.4 mi · Halloween · 4–8 PM</div></div>
+              <button style="flex:none;width:44px;height:44px;margin:-6px -6px 0 0;border:0;background:transparent;color:#A89DB4;font:600 20px Barlow;">×</button>
+            </div>
+            <div style="padding-left:36px;font:500 12px Barlow;color:#A89DB4;"><span style="color:#FF7A1A;letter-spacing:1px;">●●●</span> Family Friendly · Spooky · Scary</div>
+            <div style="display:flex;align-items:center;gap:6px;padding-left:36px;">
+              <button style="height:44px;padding:0 14px;border-radius:8px;border:1px solid #A6E22E;background:#A6E22E;color:#120E18;font:800 14px 'Barlow Condensed';letter-spacing:.08em;">+ ADD TO ROUTE</button>
+              <button style="height:44px;padding:0 10px;border:0;background:transparent;color:#B48CFF;font:700 14px 'Barlow Condensed';letter-spacing:.06em;">FULL DETAILS ▸</button>
+            </div>
+          </article>
+          <div style="position:absolute;left:0;right:0;bottom:0;height:64px;box-sizing:border-box;padding:8px 10px;display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#16111E;border-top:1px solid #3A3046;">
+            <button style="height:48px;border-radius:8px;border:1px solid #3A3046;background:#120E18;color:#F6EBD3;font:800 15px 'Barlow Condensed';letter-spacing:.1em;">☰ LIST VIEW</button>
+            <button style="height:48px;border-radius:8px;border:1px solid #FF7A1A;border-top-width:3px;background:#120E18;color:#F6EBD3;font:800 15px 'Barlow Condensed';letter-spacing:.1em;display:flex;align-items:center;justify-content:center;gap:8px;">YOUR ROUTE<span style="min-width:22px;height:22px;border-radius:11px;background:#A6E22E;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">1</span></button>
+          </div>
+        </div>
+      </div>
+      <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font:500 13px/1.5 Barlow;color:#CFC4B0;">
+        <li>Header hidden in map view; search row and tabs stay.</li>
+        <li>Tap a pin: preview card slides up above the bottom bar. Map pans so the pin stays above the card. × or tapping empty map dismisses.</li>
+        <li>FULL DETAILS switches to list view scrolled to that card, highlighted.</li>
+        <li>Zoom buttons 44px, top right. Pin sizes and colors as desktop. Grouped pins use the desktop cluster style.</li>
+        <li>Pins and cards show no numbers (round 3, item 1). The selected pin is enlarged with a ring. Route-order badges appear on pins only while Your Route is open.</li>
+      </ol>
+    </div>
+
+    <div id="M3" style="width:390px;display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;align-items:center;gap:10px;"><span style="font:800 13px Barlow;background:#FF7A1A;color:#120E18;border-radius:5px;padding:3px 8px;">M3</span><span style="font:700 18px 'Barlow Condensed';letter-spacing:.06em;">FILTER SHEET</span></div>
+      <div data-screen-label="M3 Filter sheet" style="width:390px;height:844px;border:1px solid #3A3046;border-radius:28px;overflow:hidden;background:#16111E;display:flex;flex-direction:column;">
+        <div style="flex:none;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 6px 0 16px;border-bottom:1px solid #2E2638;">
+          <span style="font:800 20px 'Barlow Condensed';letter-spacing:.1em;">FILTERS · DISPLAYS</span>
+          <button style="width:44px;height:44px;border:0;background:transparent;color:#F6EBD3;font:500 26px Barlow;">×</button>
+        </div>
+        <div style="flex:1;padding:16px;display:flex;flex-direction:column;gap:20px;overflow:hidden;">
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font:700 12px 'Barlow Condensed';letter-spacing:.14em;color:#A89DB4;">WHEN</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Any night</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #FF7A1A;background:rgba(255,122,26,.16);font:600 14px Barlow;color:#FFB27A;display:flex;align-items:center;">Tonight</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">This weekend</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Halloween</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font:700 12px 'Barlow Condensed';letter-spacing:.14em;color:#A89DB4;">HOW TO VISIT</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #FF7A1A;background:rgba(255,122,26,.16);font:600 14px Barlow;color:#FFB27A;display:flex;align-items:center;">Drive-by</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Walk-up</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Walk-through</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Drive or walk by (both)</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font:700 12px 'Barlow Condensed';letter-spacing:.14em;color:#A89DB4;">SCARE LEVEL</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Family Friendly</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Spooky</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Scary</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font:700 12px 'Barlow Condensed';letter-spacing:.14em;color:#A89DB4;">FEATURES</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Lights</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Fog</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Animatronics</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Live Actors</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Music / Sound</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Photo opportunities</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Spooky decor</span>
+              <span style="height:36px;padding:0 14px;border-radius:18px;border:1px solid #3A3046;font:600 14px Barlow;color:#CFC4B0;display:flex;align-items:center;">Yard display</span>
+            </div>
+          </div>
+        </div>
+        <div style="flex:none;padding:10px 12px 14px;display:grid;grid-template-columns:auto 1fr;gap:10px;border-top:1px solid #3A3046;">
+          <button style="height:48px;padding:0 16px;border-radius:8px;border:1px solid #3A3046;background:transparent;color:#B48CFF;font:800 15px 'Barlow Condensed';letter-spacing:.1em;">CLEAR ALL</button>
+          <button style="height:48px;border-radius:8px;border:0;background:#FF7A1A;color:#120E18;font:800 16px 'Barlow Condensed';letter-spacing:.1em;">SHOW 3 DISPLAYS</button>
+        </div>
+      </div>
+      <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font:500 13px/1.5 Barlow;color:#CFC4B0;">
+        <li>Full-screen sheet, slides up from the Filters button. Groups per tab, same as desktop.</li>
+        <li>Filters apply live behind the sheet. The orange button shows the result count and closes the sheet.</li>
+        <li>Footer sticks; groups scroll above it.</li>
+      </ol>
+    </div>
+
+    <div id="M4" style="width:390px;display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;align-items:center;gap:10px;"><span style="font:800 13px Barlow;background:#FF7A1A;color:#120E18;border-radius:5px;padding:3px 8px;">M4</span><span style="font:700 18px 'Barlow Condensed';letter-spacing:.06em;">YOUR ROUTE SHEET</span></div>
+      <div data-screen-label="M4 Route sheet" style="width:390px;height:844px;border:1px solid #3A3046;border-radius:28px;overflow:hidden;background:#120E18;position:relative;">
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,.6);"></div>
+        <div style="position:absolute;left:0;right:0;bottom:0;background:#16111E;border-top:3px solid #FF7A1A;border-radius:16px 16px 0 0;display:flex;flex-direction:column;box-shadow:0 -10px 30px rgba(0,0,0,.6);">
+          <div style="align-self:center;width:40px;height:4px;border-radius:2px;background:#3A3046;margin-top:8px;"></div>
+          <div style="height:56px;display:flex;align-items:center;gap:12px;padding:0 6px 0 16px;">
+            <span style="font:800 20px 'Barlow Condensed';letter-spacing:.08em;">YOUR ROUTE</span>
+            <span style="flex:1;font:600 13px Barlow;color:#A89DB4;">3 of 10 stops</span>
+            <button style="width:44px;height:44px;border:0;background:transparent;color:#F6EBD3;font:500 26px Barlow;">×</button>
+          </div>
+          <div style="padding:0 16px;display:flex;flex-direction:column;">
+            <div style="height:52px;display:flex;align-items:center;gap:12px;border-top:1px solid #2E2638;"><span style="width:24px;height:24px;border-radius:50%;background:#FF7A1A;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">1</span><span style="flex:1;font:600 15px Barlow;">Fifth Street Halloween Display</span><button style="height:44px;padding:0 4px;border:0;background:transparent;color:#A89DB4;font:600 13px Barlow;">Remove</button></div>
+            <div style="height:52px;display:flex;align-items:center;gap:12px;border-top:1px solid #2E2638;"><span style="width:24px;height:24px;border-radius:50%;background:#FF7A1A;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">2</span><span style="flex:1;font:600 15px Barlow;">Adams Family Haunt</span><button style="height:44px;padding:0 4px;border:0;background:transparent;color:#A89DB4;font:600 13px Barlow;">Remove</button></div>
+            <div style="height:52px;display:flex;align-items:center;gap:12px;border-top:1px solid #2E2638;"><span style="width:24px;height:24px;border-radius:50%;background:#A6E22E;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">3</span><span style="flex:1;font:600 15px Barlow;">Example treat stop</span><button style="height:44px;padding:0 4px;border:0;background:transparent;color:#A89DB4;font:600 13px Barlow;">Remove</button></div>
+          </div>
+          <div style="padding:12px 16px 18px;">
+            <a href="#" style="height:48px;border-radius:8px;background:#A6E22E;color:#120E18;font:800 16px 'Barlow Condensed';letter-spacing:.1em;display:flex;align-items:center;justify-content:center;">GET DIRECTIONS ↗</a>
+          </div>
+        </div>
+      </div>
+      <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font:500 13px/1.5 Barlow;color:#CFC4B0;">
+        <li>Bottom sheet over a dimmed screen, height fits content up to 80%. Drag down, ×, or tap the dim area to close.</li>
+        <li>Empty state uses the desktop copy: “Add up to 10 stops from any tab. Directions open in Google Maps.” No directions button.</li>
+        <li>Route count badge in the bottom bar is muted grey at 0.</li>
+      </ol>
+    </div>
+
+    <div id="M5" style="width:390px;display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;align-items:center;gap:10px;"><span style="font:800 13px Barlow;background:#FF7A1A;color:#120E18;border-radius:5px;padding:3px 8px;">M5</span><span style="font:700 18px 'Barlow Condensed';letter-spacing:.06em;">EVENTS · LIST</span></div>
+      <div data-screen-label="M5 Events list" style="width:390px;height:844px;border:1px solid #3A3046;border-radius:28px;overflow:hidden;background:#120E18;position:relative;display:flex;flex-direction:column;">
+        <div style="flex:none;height:56px;box-sizing:border-box;display:flex;align-items:center;gap:6px;padding:0 10px;background:#16111E;border-bottom:1px solid #2E2638;">
+          <div style="flex:1;min-width:0;height:44px;box-sizing:border-box;display:flex;align-items:center;gap:6px;padding:0 4px 0 10px;background:#120E18;border:1px solid #3A3046;border-radius:8px;">
+            <span style="font:600 11px 'Barlow Condensed';letter-spacing:.1em;color:#A89DB4;">ZIP</span>
+            <span style="flex:1;font:600 15px Barlow;">07828</span>
+            <span style="font:600 13px 'Barlow Condensed';letter-spacing:.06em;color:#CFC4B0;padding:0 6px;">25 MI ▾</span>
+            <span style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#B48CFF;font-size:16px;">◎</span>
+          </div>
+          <button style="flex:none;height:44px;padding:0 12px;border-radius:8px;border:1px solid #3A3046;background:transparent;color:#F6EBD3;font:700 14px 'Barlow Condensed';letter-spacing:.1em;">FILTERS</button>
+        </div>
+        <div style="flex:none;height:44px;display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #2E2638;">
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;font:600 14px Barlow;color:#A89DB4;">Displays<span style="min-width:20px;height:20px;border-radius:10px;background:#FF7A1A;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">8</span></div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;font:600 14px Barlow;color:#A89DB4;">Treat Stops<span style="min-width:20px;height:20px;border-radius:10px;background:#A6E22E;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">1</span></div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;border-bottom:3px solid #B48CFF;font:600 14px Barlow;">Events<span style="min-width:20px;height:20px;border-radius:10px;background:#B48CFF;color:#120E18;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">2</span></div>
+        </div>
+        <div style="flex:none;padding:10px 14px 6px;display:flex;justify-content:space-between;align-items:baseline;"><span style="font:700 13px 'Barlow Condensed';letter-spacing:.12em;color:#A89DB4;">2 EVENTS WITHIN 25 MI</span><a href="#" style="font:600 12px Barlow;">▦ Add all to calendar</a></div>
+        <div style="flex:1;min-height:0;overflow:hidden;padding:4px 10px 0;display:flex;flex-direction:column;gap:8px;">
+          <div style="flex:none;display:flex;flex-direction:column;gap:8px;padding:10px;border:1px solid #1F3B39;background:#0E1C1B;border-radius:10px;">
+            <div style="font:700 12px 'Barlow Condensed';letter-spacing:.14em;color:#3FD0C0;">OPEN ALL WEEK</div>
+            <article style="padding:12px;border:1px solid #2E2638;border-top:3px solid #3FD0C0;background:#1A1522;border-radius:10px;display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;"><div style="font:700 19px/1.15 'Barlow Condensed';">Skully’s Costume Closet</div><span style="height:20px;padding:0 8px;border-radius:4px;background:#3FD0C0;color:#120E18;font:800 11px Barlow;letter-spacing:.06em;display:flex;align-items:center;">OTHER</span></div>
+              <a href="#" style="font:600 14px Barlow;">5 N Mount Olive Rd, Budd Lake ↗</a>
+              <div style="font:400 14px/1.45 Barlow;color:#CFC4B0;">Weekdays 5–8 PM · Weekends 10 AM–6 PM. Free costumes for infants, kids, and adults.</div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <button style="height:44px;padding:0 14px;border-radius:8px;border:1px solid #A6E22E;background:#A6E22E;color:#120E18;font:800 14px 'Barlow Condensed';letter-spacing:.08em;">+ ADD TO ROUTE</button>
+                <button style="height:44px;padding:0 10px;border:0;background:transparent;color:#B48CFF;font:700 14px 'Barlow Condensed';letter-spacing:.06em;">◉ MAP</button>
+                <span style="flex:1;"></span>
+                <button style="width:44px;height:44px;border:0;background:transparent;color:#A89DB4;font:800 18px Barlow;">⋯</button>
+              </div>
+            </article>
+          </div>
+          <div style="flex:none;padding:6px 4px 0;font:700 15px 'Barlow Condensed';letter-spacing:.06em;">HALLOWEEN WEEK · OCT 25–31</div>
+          <div style="flex:none;height:40px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 10px;border:1px solid #2E2638;border-radius:8px;"><span style="font:700 14px 'Barlow Condensed';letter-spacing:.08em;">SUN 25 – WED 28</span><span style="font:600 12px Barlow;color:#7E7389;">No events yet</span></div>
+          <div style="flex:none;display:flex;flex-direction:column;gap:6px;padding:8px 10px;border-radius:8px;border:1px solid #2E2638;">
+            <span style="font:700 14px 'Barlow Condensed';letter-spacing:.08em;">THU 29</span>
+            <article style="padding:12px;border:1px solid #2E2638;border-top:3px solid #FF7A1A;background:#1A1522;border-radius:10px;display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;"><div style="font:700 19px/1.15 'Barlow Condensed';">Best Buddies Safe Trick or Treat</div><span style="height:20px;padding:0 8px;border-radius:4px;background:#FF7A1A;color:#120E18;font:800 11px Barlow;letter-spacing:.06em;display:flex;align-items:center;">TRUNK-OR-TREAT</span></div>
+              <div style="font:700 15px Barlow;">Thu, Oct 29 · 5:30–7 PM</div>
+            </article>
+          </div>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;height:64px;box-sizing:border-box;padding:8px 10px;display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#16111E;border-top:1px solid #3A3046;box-shadow:0 -8px 20px rgba(0,0,0,.5);">
+          <button style="height:48px;border-radius:8px;border:1px solid #3A3046;background:#120E18;color:#F6EBD3;font:800 15px 'Barlow Condensed';letter-spacing:.1em;">◉ MAP VIEW</button>
+          <button style="height:48px;border-radius:8px;border:1px solid #FF7A1A;border-top-width:3px;background:#120E18;color:#F6EBD3;font:800 15px 'Barlow Condensed';letter-spacing:.1em;display:flex;align-items:center;justify-content:center;gap:8px;">YOUR ROUTE<span style="min-width:22px;height:22px;border-radius:11px;background:#3A3046;color:#A89DB4;font:800 12px Barlow;display:flex;align-items:center;justify-content:center;">0</span></button>
+        </div>
+      </div>
+      <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font:500 13px/1.5 Barlow;color:#CFC4B0;">
+        <li>Header scrolled away (shown here mid-scroll). Same day-by-day list as desktop.</li>
+        <li>Consecutive empty days merge into one line. Sat 31 keeps its purple “Trick-or-treat night” row even when empty.</li>
+        <li>Map view on Events uses the type-colored square pins and the legend sits at the end of the list.</li>
+      </ol>
+    </div>
+
+    <div id="M6" style="width:390px;display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;align-items:center;gap:10px;"><span style="font:800 13px Barlow;background:#FF7A1A;color:#120E18;border-radius:5px;padding:3px 8px;">M6</span><span style="font:700 18px 'Barlow Condensed';letter-spacing:.06em;">MENU</span></div>
+      <div data-screen-label="M6 Menu" style="width:390px;height:844px;border:1px solid #3A3046;border-radius:28px;overflow:hidden;background:#120E18;position:relative;">
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,.6);"></div>
+        <div style="position:absolute;top:0;right:0;bottom:0;width:300px;background:#16111E;border-left:1px solid #3A3046;display:flex;flex-direction:column;">
+          <div style="height:56px;display:flex;align-items:center;justify-content:flex-end;padding:0 6px;border-bottom:1px solid #2E2638;"><button style="width:44px;height:44px;border:0;background:transparent;color:#F6EBD3;font:500 26px Barlow;">×</button></div>
+          <div style="display:flex;flex-direction:column;padding:8px 0;font:700 17px 'Barlow Condensed';letter-spacing:.1em;">
+            <a href="#" style="height:52px;display:flex;align-items:center;padding:0 20px;color:#A6E22E;">+ SUBMIT A LISTING</a>
+            <a href="#" style="height:52px;display:flex;align-items:center;padding:0 20px;border-top:1px solid #2E2638;">SHARE THIS SITE</a>
+            <a href="#" style="height:52px;display:flex;align-items:center;padding:0 20px;border-top:1px solid #2E2638;">ABOUT</a>
+            <a href="#" style="height:52px;display:flex;align-items:center;padding:0 20px;border-top:1px solid #2E2638;">GET ALERTS</a>
+            <a href="#" style="height:52px;display:flex;align-items:center;padding:0 20px;border-top:1px solid #2E2638;">CONTACT US</a>
+          </div>
+          <div style="margin-top:auto;padding:16px 20px;border-top:1px solid #2E2638;display:flex;flex-direction:column;gap:8px;">
+            <div style="font:400 13px/1.45 Barlow;color:#CFC4B0;">Find decorated homes, spooky displays, treat stops, and Halloween events near you. Check visiting details, plan your route, or submit a listing for free.</div>
+            <span style="font:500 12px Barlow;color:#7E7389;">Site visits: 508</span>
+          </div>
+        </div>
+      </div>
+      <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font:500 13px/1.5 Barlow;color:#CFC4B0;">
+        <li>☰ in the header opens a right drawer with the desktop sidebar links, 52px rows.</li>
+        <li>The tagline moves here from the header.</li>
+      </ol>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

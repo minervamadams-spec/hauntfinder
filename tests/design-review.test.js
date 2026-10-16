@@ -48,9 +48,9 @@ test('P2: search bar is ZIP, 25 MI, GO, My location',()=>{
   assert.equal(/Within <span class="within-dd__value"/.test(html),false);
   assert.match(html,/locbar__locate-text"> My location/);
 });
-test('P2: display card is compact: heart in the header, 30px auto-width Add to route on one row with the meta links, only "Rate" underlined',()=>{
+test('P2: display card is compact: no heart, 30px auto-width Add to route on one row with the meta links, only "Rate" underlined',()=>{
   const card=app.split('function cardHTML')[1].split('\nfunction ')[0];
-  assert.ok(card.indexOf('favBtn(x)')<card.indexOf('card__actions'));
+  assert.ok(!card.includes('favBtn(x)'),'no heart on the card (design round 3)');
   assert.match(card,/card-rating__rate">Rate<\/span>/);
   assert.match(css,/min-height:30px!important;height:30px;margin-right:auto/);
   assert.match(css,/\.card-rating__rate\{text-decoration:underline\}/);
