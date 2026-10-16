@@ -4,7 +4,7 @@
 // (.list-column) are the only nested scroll areas; at 390px the page is the only
 // scroll surface. Needs the `playwright` package and a Chromium build (set
 // HF_CHROMIUM to an executable path if Playwright's bundled browser is absent).
-// Read-only against any host: /api/visits is blocked, every non-GET /api call is
+// Read-only against any host: /api/visits is answered with a stub (the real counter is never touched), every non-GET /api call is
 // aborted, and nothing is posted, so production runs create no QA data.
 const BASE=(process.argv[2]||'http://localhost:8765').replace(/\/$/,'');
 let chromium;try{({chromium}=require('playwright'))}catch{console.error('Install playwright to run these checks: npm i -D playwright');process.exit(2)}
@@ -32,8 +32,9 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
   for(const vp of viewports.filter(v=>!process.env.HF_VIEWPORT||v.name===process.env.HF_VIEWPORT)){
     const desktop=vp.width>=1024,T=vp.name+'px: ';
     const ctx=await browser.newContext({viewport:{width:vp.width,height:vp.height},...(vp.width<1024?{hasTouch:true,isMobile:vp.width<768}:{})});
-    await ctx.route('**/api/visits**',r=>r.abort());
     await ctx.route('**/api/**',r=>r.request().method()==='GET'?r.continue():r.abort());
+    // Never increment the real counter; answer with a fixed count so the footer line can be checked.
+    await ctx.route('**/api/visits**',r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({visits:508})}));
     const p=await ctx.newPage();const errors=[];p.on('pageerror',e=>errors.push(process.env.HF_DEBUG?'after "'+lastStep+'": '+String(e.stack).split('\n').slice(0,9).join(' | '):e.message));
     // The filter panel starts collapsed, so desktop flows expand it first unless they test the default.
     const go=async(q,o)=>{await p.goto(BASE+'/'+q,{waitUntil:'networkidle'});await p.waitForTimeout(700);if(!(o&&o.keepRail)&&await p.evaluate(()=>innerWidth>=1024&&document.documentElement.dataset.rail==='collapsed')){await p.click('#railToggle');await p.waitForTimeout(300)}};
@@ -290,15 +291,15 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       ok(T+'empty route bar is a 40px "Add stops from the list" bar with no Expand',rbe.h<=44&&rbe.hint==='none'&&rbe.text!=='none'&&rbe.left===12&&rbe.bottom===12,JSON.stringify(rbe));
       // Panel scrollbars + footer layout
       if(await p.evaluate(()=>document.documentElement.dataset.rail==='collapsed')){await p.click('#railToggle');await p.waitForTimeout(300)}
-      const pf=await p.evaluate(()=>{const f=document.querySelector('#filterRail .filters'),l=document.querySelector('.filter-rail__links');return {sb:getComputedStyle(f).scrollbarWidth,foot:getComputedStyle(l).display,cols:getComputedStyle(l).gridTemplateColumns.split(' ').length}});
-      ok(T+'filter footer is a fixed 2-column link block; scrollbars are thin',pf.sb==='thin'&&pf.foot==='grid'&&pf.cols===2,JSON.stringify(pf));
+      const pf=await p.evaluate(()=>{const f=document.querySelector('#filterRail .filters'),l=document.querySelector('.filter-rail__links');return {sb:getComputedStyle(f).scrollbarWidth,foot:getComputedStyle(l).display,dir:getComputedStyle(l).flexDirection,rows:[...l.children].filter(x=>x.getBoundingClientRect().height>0).length,lastIsVisits:/^Site visits: \d/.test(l.lastElementChild.textContent.trim()),xs:new Set([...l.children].map(x=>Math.round(x.getBoundingClientRect().left))).size}});
+      ok(T+'filter footer is a fixed one-column link block (submit, share, about, alerts, contact, visits); scrollbars are thin',pf.sb==='thin'&&pf.foot==='flex'&&pf.dir==='column'&&pf.rows===6&&pf.lastIsVisits,JSON.stringify(pf));
       await p.setViewportSize({width:1280,height:800});
     }
     // ---- Design review round 3 ----
     if(desktop){
       await go('?category=displays');await p.waitForTimeout(2500);
       const r3=await p.evaluate(()=>({caret:getComputedStyle(document.querySelector('.filterbar__rail-caret')).display,sa:getComputedStyle(document.getElementById('searchAreaBtn')).visibility,att:!!document.querySelector('.leaflet-control-attribution img, .leaflet-attribution-flag'),visits:/Site visits/i.test(document.body.innerText),alc:[...document.querySelectorAll('#cardList .card__hours')].map(e=>e.textContent).find(t=>/Halloween weekend/.test(t)),scare:(()=>{const e=document.querySelector('#cardList .card__scare');return e?e.textContent.trim():''})(),pipsTitle:!!document.querySelector('#cardList .pips[title]')}));
-      ok(T+'round 3: caret shown, Search this area hidden after 2.5s, no Leaflet flag, no Site visits, Alcrest hours without repetition, scare shows one level with a tooltip',r3.caret!=='none'&&r3.sa==='hidden'&&!r3.att&&!r3.visits&&r3.alc==='Halloween weekend'&&!/·/.test(r3.scare)&&r3.pipsTitle,JSON.stringify(r3));
+      ok(T+'round 3: caret shown, Search this area hidden after 2.5s, no Leaflet flag, Alcrest hours without repetition, scare shows one level with a tooltip',r3.caret!=='none'&&r3.sa==='hidden'&&!r3.att&&r3.visits&&r3.alc==='Halloween weekend'&&!/·/.test(r3.scare)&&r3.pipsTitle,JSON.stringify(r3));
       await p.click('#filterRail [data-rail-filter="show"][data-value="Drive-by"]');await p.waitForTimeout(250);
       const hc=await p.evaluate(()=>({head:document.getElementById('railHeadCount').textContent,shown:!document.getElementById('railHeadCount').hidden}));
       await p.click('#railToggle');await p.waitForTimeout(250);

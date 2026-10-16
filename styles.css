@@ -1316,9 +1316,7 @@ html[data-category="events"]{--acc:#B48CFF}
  .hf-cluster--displays{--cl:#FF7A1A}.hf-cluster--treats{--cl:#A6E22E}
  html .filter-rail{padding:0!important;overflow:hidden!important}
  html .filter-rail .filters{flex:1 1 auto;min-height:0;overflow-y:auto;padding:14px 14px 8px}
- html .filter-rail .filter-rail__links{flex:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;margin-top:0;padding:12px 14px;border-top:1px solid #2E2638}
- html .filter-rail .filter-rail__links>:first-child{grid-column:1/-1}
- html .filter-rail .filter-rail__links>#railVisits{grid-column:1/-1}
+ html .filter-rail .filter-rail__links{flex:none;display:flex;flex-direction:column;gap:8px;margin-top:0;padding:14px;border-top:1px solid #2E2638}
  html[data-rail="collapsed"] .filter-rail{overflow:hidden!important}
  .filter-rail .filters,.list-column{scrollbar-width:thin;scrollbar-color:#3A3046 transparent}
  .filter-rail .filters::-webkit-scrollbar,.list-column::-webkit-scrollbar{width:6px}
@@ -1769,3 +1767,7 @@ html.lightbox-open,html.lightbox-open body{overflow:hidden}
 /* collapsed filter panel (desktop only; the mobile filter sheet reuses these elements): only the vertical "Show filters" label and the count badge. The round 4 stacking rules
    (display:flex on .filters, sticky .filter-rail__links) must never win while the panel is collapsed. */
 @media(min-width:1024px){html[data-rail="collapsed"] .filter-rail .filters,html[data-rail="collapsed"] .filter-rail .filter-rail__links,html[data-rail="collapsed"] .filter-rail .filter-rail__section{display:none!important}}
+
+/* design v7 Compact: the footer links are ONE column (submit, share, about, alerts, contact, then the visit count) */
+html .filter-rail .filter-rail__links #railVisits{font:500 12px/1.35 var(--f-body);letter-spacing:0;text-transform:none;color:#7E7389}
+html .filter-rail .filter-rail__links #railVisits[hidden]{display:none}

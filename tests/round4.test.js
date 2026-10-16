@@ -141,3 +141,11 @@ test('collapsed filter panel: stacking/sticky rules never override display:none'
   assert.ok(css.includes('@media(min-width:1024px){html[data-rail="collapsed"] .filter-rail .filters,html[data-rail="collapsed"] .filter-rail .filter-rail__links,html[data-rail="collapsed"] .filter-rail .filter-rail__section{display:none!important}}'),'desktop only: the mobile filter sheet must keep its groups');
   assert.ok(css.lastIndexOf('html[data-rail="collapsed"] .filter-rail .filters,')>css.indexOf('.filter-rail .filters{display:flex;flex-direction:column;justify-content:flex-start'),'override comes after the round 4 stacking rule');
 });
+
+test('filter footer: one column in the design order, with the site visit count restored',()=>{
+  assert.ok(css.includes('html .filter-rail .filter-rail__links{flex:none;display:flex;flex-direction:column;gap:8px;margin-top:0;padding:14px;border-top:1px solid #2E2638}'));
+  assert.ok(!css.includes('html .filter-rail .filter-rail__links{flex:none;display:grid'),'no 2-column grid');
+  const idx=read('index.html'),links=idx.split('class="filter-rail__links"')[1].split('</nav>')[0];
+  const order=['+ Submit a listing','Share this site','About','Get alerts','Contact us','Site visits:'];let at=-1;for(const s of order){const i=links.indexOf(s);assert.ok(i>at,s+' in order');at=i}
+  assert.ok(idx.includes("out.textContent = n.toLocaleString('en-US'); box.hidden = false;"),'count shown once the API answers');
+});

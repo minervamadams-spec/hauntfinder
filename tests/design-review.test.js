@@ -145,7 +145,7 @@ test('round 3: Donation drive label (value unchanged), hours without a repeated 
   assert.match(chrome,/\{label:'Donation drive',value:'Donation drive\/Community collection'\}/);
   assert.match(app,/class=.pips. title=.\$\{safeListingText\(levels\.length\?levels\.join/);
   assert.match(app,/setPrefix\('<a href="https:\/\/leafletjs\.com"/);
-  assert.equal(html.includes('siteVisits'),false);assert.equal(html.includes('railVisits'),false);
+  assert.equal(html.includes('siteVisits'),false);assert.ok(html.includes('id="railVisits" hidden>Site visits: '),'the visit count line is back, last in the footer (design v7 Compact)');
   assert.match(html,/fetch\('\/api\/visits'/,'counting continues');
 });
 
