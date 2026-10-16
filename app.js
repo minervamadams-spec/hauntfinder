@@ -52,7 +52,7 @@ const listings=[
   "flyerNotes": "Candy at garage while supplies last. Walk around the driveway; watch wires and lights. Park at TY Ward Monument lot across the street; cross carefully."
  },
  {
-  "updatedAt": "2026-10-06",
+  "updatedAt": "2026-10-16",
   "num": 2,
   "entityId": "hauntfinder:2026:listing:2:original",
   "name": "Alcrest Avenue Halloween Display",
@@ -72,9 +72,7 @@ const listings=[
   "times": "All weekend",
   "levels": [],
   "type": [],
-  "features": [
-   "Spider theme"
-  ],
+  "features": [],
   "notes": "More details coming soon."
  },
  {
@@ -612,7 +610,7 @@ const events=[
    "Costumes Available"
   ],
   "url": "",
-  "notes": "Skully’s Costume Closet is open daily and offers free, gently used costumes. Inventory changes daily, so we can’t answer every question about what’s in stock. Please stop by to see what’s available.\n\nWe accept costume donations year-round.",
+  "notes": "Free costumes for infants, kids, and adults.",
   "flyerNotes": "Gently used costumes; inventory changes daily. Costume donations accepted year-round."
  },
  {
