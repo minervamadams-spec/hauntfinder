@@ -136,3 +136,8 @@ test('host photos publish immediately: no approval step (Minerva, 2026-10-16)',(
   assert.ok(up.includes('adminAuthorized(req)')&&up.includes('listingForHostToken'),'still only a verified host or the admin can upload');
   assert.ok(up.includes('MAX_MINTS_PER_HOUR=10')&&up.includes("ALLOWED_TYPES=['image/jpeg','image/png','image/webp','image/gif']")&&up.includes('MAX_BYTES=5*1024*1024'),'type, size and rate limits unchanged');
 });
+
+test('collapsed filter panel: stacking/sticky rules never override display:none',()=>{
+  assert.ok(css.includes('html[data-rail="collapsed"] .filter-rail .filters,html[data-rail="collapsed"] .filter-rail .filter-rail__links,html[data-rail="collapsed"] .filter-rail .filter-rail__section{display:none!important}'));
+  assert.ok(css.lastIndexOf('html[data-rail="collapsed"] .filter-rail .filters,')>css.indexOf('.filter-rail .filters{display:flex;flex-direction:column;justify-content:flex-start'),'override comes after the round 4 stacking rule');
+});

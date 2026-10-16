@@ -1765,3 +1765,7 @@ html body #cardList .card--compact.card--flip>.card-flip{margin-left:0}
 .lightbox__img{display:block;width:100%;max-width:100%;height:calc(100dvh - 140px);max-height:calc(100dvh - 140px);object-fit:contain;object-position:center;image-orientation:from-image;touch-action:pinch-zoom}
 @media(max-width:767px){.lightbox{height:100dvh}.lightbox__stage{padding:0 0 8px}.lightbox__img{width:100%;height:calc(100dvh - 68px);max-height:calc(100dvh - 68px)}}
 html.lightbox-open,html.lightbox-open body{overflow:hidden}
+
+/* collapsed filter panel: only the vertical "Show filters" label and the count badge. The round 4 stacking rules
+   (display:flex on .filters, sticky .filter-rail__links) must never win while the panel is collapsed. */
+html[data-rail="collapsed"] .filter-rail .filters,html[data-rail="collapsed"] .filter-rail .filter-rail__links,html[data-rail="collapsed"] .filter-rail .filter-rail__section{display:none!important}

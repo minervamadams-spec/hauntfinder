@@ -229,6 +229,8 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       await go('?category=displays',{keepRail:true});
       const def=await p.evaluate(()=>({rail:document.documentElement.dataset.rail,w:Math.round(document.getElementById('filterRail').getBoundingClientRect().width)}));
       ok(T+'the filter panel is collapsed by default (44px)',def.rail==='collapsed'&&def.w===44,JSON.stringify(def));
+      const cl=await p.evaluate(()=>{const r=document.getElementById('filterRail'),rb=r.getBoundingClientRect();const leaked=[...r.querySelectorAll('.filter-rail__section,.filter,.filter-rail__links,h3')].filter(x=>{const q=x.getBoundingClientRect();return q.width>0&&q.height>0&&getComputedStyle(x).display!=='none'});const lab=r.querySelector('.filter-rail__expand');return {leaked:leaked.length,label:!!lab&&lab.getBoundingClientRect().height>40,labelText:lab&&lab.textContent.trim().replace(/\s+/g,' ')}});
+      ok(T+'collapsed panel shows only the vertical "Show filters" label (no filter chips or footer links bleed into the 44px bar)',cl.leaked===0&&cl.label&&/show filters/i.test(cl.labelText),JSON.stringify(cl));
       const col=await p.evaluate(()=>({w:Math.round(document.getElementById('filterRail').getBoundingClientRect().width),mapW:Math.round(document.getElementById('map').getBoundingClientRect().width),leaflet:map.getSize().x,label:document.querySelector('.filter-rail__expand-label').getBoundingClientRect().height>document.querySelector('.filter-rail__expand-label').getBoundingClientRect().width}));
       ok(T+'filter panel collapses to 44px, shows a vertical label, and the map resizes',col.w===44&&col.label&&Math.abs(col.mapW-col.leaflet)<=1,JSON.stringify(col));
       await p.click('#railToggle');await p.waitForTimeout(300);
