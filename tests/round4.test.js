@@ -64,7 +64,7 @@ test('round 4 items 14-16: Submit cards use type colors + v2 icons, spec copy, u
   assert.ok(submit.includes('<h1>SUBMIT OR UPDATE A LISTING</h1>')&&css.includes('.subpage-main h1{text-transform:uppercase;font-size:40px}'));
 });
 test('round 4 items 17-18: one nav on Submit, Alerts and About; no underlined links at rest',()=>{
-  for(const [n,h] of [['submit',submit],['alerts',alerts],['about',about]])assert.ok(h.includes('<header class="subpage-head">')&&h.includes('<nav class="subpage-nav" aria-label="Site">'),n+' uses the shared header');
+  for(const [n,h] of [['submit',submit],['alerts',alerts],['about',about]])assert.ok(h.includes('id="siteChrome"')&&h.includes('src="site-chrome.js"'),n+' uses the shared header');
   assert.ok(css.includes('.subpage-head{height:56px;box-sizing:border-box;padding:0 18px;border-bottom:1px solid #2E2638'));
   assert.ok(css.includes("font:700 18px/1.2 'Barlow Condensed'")&&css.includes("font:600 16px/1 'Barlow'")&&css.includes('color:#FF7A1A;border-bottom-color:#FF7A1A'));
   assert.ok(css.includes('.subpage-foot a,.about-info a{color:#B48CFF;text-decoration:none}'));
