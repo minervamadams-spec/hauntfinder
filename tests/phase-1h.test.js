@@ -82,8 +82,8 @@ test('reduced motion: universal guard covers the float button and key toggle too
 
 test('week grid: seven day columns and the Halloween-night tint class',()=>{
  assert.ok(layout.includes('event-col--halloween'),'Halloween column tint class rendered');
- assert.ok(layout.includes("date===weekEnd"),'tint keyed to the week-end day');
- assert.ok(layout.includes("days.slice(i,Math.min(i+3,days.length))"),'3-day window still derived from the 7-day week');
+ assert.ok(layout.includes("date.slice(5)==='10-31'"),'tint keyed to the real October 31, not every Saturday');
+ assert.ok(layout.includes('threeDayDates'),'3-day window is today plus the next two days');
  const fn=schedules.split('function eventWeekDays(')[1].split('\nfunction ')[0];
  assert.ok(fn.includes('days')||fn.includes('push'),'eventWeekDays builds the 7-day window');
  assert.ok(schedules.includes('function eventWeekDays('),'week source exists');

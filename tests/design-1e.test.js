@@ -55,14 +55,14 @@ test('event chips: 4px type-color top border, time / name / town · type meta',(
 });
 
 /* ---- View switch + 3-day window ---- */
-test('view switch: pill segment in markup, helper copy, threeDayWindow clamps',()=>{
+test('view switch: pill segment in markup, helper copy, three days cross weeks',()=>{
   assert.ok(html.includes('data-events-view="3days"'),'3-days option in markup');
   assert.ok(html.includes('data-events-view="week"'),'week option in markup');
   assert.ok(html.includes('id="eventsViewHelper"'),'helper text element');
   assert.ok(layout.includes("$('eventsView').querySelectorAll('[data-events-view]')"),'aria-checked syncs to state');
   assert.ok(layout.includes("threeDayWindow(days)"),'3-day view uses the window helper');
-  assert.ok(layout.includes("today>days[6]?days[4]:today"),'window clamps late dates into the last 3 days');
-  assert.ok(layout.includes("today<days[0]?days[0]"),'window clamps early dates to week start');
+  assert.ok(layout.includes('threeDayDates'),'3-day window is today plus the next two days');
+  assert.equal(layout.includes("today>days[6]?days[4]:today"),false,'3-day view is no longer clamped to one week');
 });
 
 /* ---- Day selection, reset, ?day= round-trip ---- */
@@ -84,9 +84,9 @@ test('events right column: column head markup, heading + count from the same ren
   assert.ok(html.includes('id="eventsColumnHead"'),'column head container in markup');
   assert.ok(html.includes('id="eventsDayHeading"'),'day heading in markup');
   assert.ok(html.includes('id="eventsHeadCount"'),'head count in markup');
-  assert.ok(layout.includes("$('eventsDayHeading').textContent=`${items.length} event${items.length===1?'':'s'}${state.search?' within '+state.search.radius+' mi':''}`"),'v7 count line: events (within radius) from the rendered items array');
-  assert.ok(layout.includes("$('eventsHeadCount').textContent=''"),'count lives in the heading; head count slot stays empty');
-  assert.ok(layout.includes("$('cardList').innerHTML=eventsRailHTML(items)"),'events render full cards with no pagination');
+  assert.ok(layout.includes("$('eventsDayHeading').textContent=state.eventDay?"),'heading names the selected day, or All week');
+  assert.ok(layout.includes("$('eventsHeadCount').textContent=`${items.length} event${items.length===1?'':'s'}${state.search?' within '+state.search.radius+' mi':''}`"),'count is the same rendered array, including a search radius');
+  assert.ok(layout.includes("$('cardList').innerHTML=items.map(e=>e.ongoing?eventCard(e,{band:true})"),'events render full cards with no pagination');
   assert.ok(layout.includes("$('eventsColumnHead').hidden=!event"),'column head hidden off the events tab');
   assert.ok(layout.includes("$('countLine').hidden=event"),'display count line hidden on events');
 });
