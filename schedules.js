@@ -167,14 +167,82 @@ function openTonightBadgeHTML(record,{eligible=false,now=new Date()}={}){
  if(!isOpenAt(record?record.schedule:null,t.dateStr,t.timeStr))return '';
  return '<span class="card__open-tonight">Open tonight</span>';
 }
+// America/New_York offset for a civil date. US DST runs from 02:00 on the
+// second Sunday in March through 02:00 on the first Sunday in November.
+function nthSunday(year,monthIndex,n){
+ const first=new Date(Date.UTC(year,monthIndex,1));
+ return 1+(7-first.getUTCDay())%7+(n-1)*7;
+}
+function easternOffset(dateStr,hhmm){
+ if(!dateStrOk(dateStr))return '-05:00';
+ const y=+dateStr.slice(0,4);
+ const start='03-'+pad2(nthSunday(y,2,2)),end='11-'+pad2(nthSunday(y,10,1)),key=dateStr.slice(5);
+ const mins=toMinutes(hhmm==null?'12:00':hhmm);
+ if(key>start&&key<end)return '-04:00';
+ if(key===start)return mins!=null&&mins<120?'-05:00':'-04:00';
+ if(key===end)return mins!=null&&mins<120?'-04:00':'-05:00';
+ return '-05:00';
+}
+function easternToday(now=new Date()){
+ const d=now instanceof Date?now:new Date(now);
+ if(Number.isNaN(d.getTime()))return '';
+ return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(d);
+}
+function eventClock(ev){
+ const hm=v=>typeof v==='string'&&/^\d{2}:\d{2}$/.test(v)?v:null;
+ const fromIso=iso=>{const m=String(iso||'').match(/T(\d{2}):(\d{2})/);return m?m[1]+':'+m[2]:null};
+ return {open:hm(ev&&ev.startTime)||fromIso(ev&&ev.startAt),close:hm(ev&&ev.endTime)||fromIso(ev&&ev.endAt)};
+}
+// Several separate dates live on one event as `dates: ["YYYY-MM-DD", ...]`,
+// with `startTime`/`endTime` as America/New_York clock times for each date.
+// A lone `date` or `startAt` is still one day. A start/end pair is not expanded
+// into the days in between.
+function eventDateList(ev){
+ if(!ev||ev.ongoing)return [];
+ if(Array.isArray(ev.dates)){
+  const ds=[...new Set(ev.dates.filter(dateStrOk))].sort();
+  if(ds.length)return ds;
+ }
+ const one=dateStrOk(ev.date)?ev.date:(dateStrOk(String(ev.startAt||'').slice(0,10))?String(ev.startAt).slice(0,10):null);
+ return one?[one]:[];
+}
+function eventOccurrences(ev){
+ const clock=eventClock(ev);
+ return eventDateList(ev).map(date=>{
+  const startAt=clock.open?`${date}T${clock.open}:00${easternOffset(date,clock.open)}`:(ev.startAt&&String(ev.startAt).slice(0,10)===date?ev.startAt:null);
+  const endAt=clock.close?`${date}T${clock.close}:00${easternOffset(date,clock.close)}`:(ev.endAt&&String(ev.endAt).slice(0,10)===date?ev.endAt:startAt);
+  return {date,startAt,endAt,startMs:startAt?Date.parse(startAt):NaN,endMs:endAt?Date.parse(endAt):NaN};
+ });
+}
+function asEventNow(now){if(now instanceof Date)return now;const n=Number(now);return Number.isFinite(n)?new Date(n):new Date()}
+function eventUpcomingDates(ev,now=new Date()){
+ const d=asEventNow(now),n=d.getTime(),today=easternToday(d);
+ return eventOccurrences(ev).filter(o=>{
+  if(Number.isFinite(o.endMs))return o.endMs>n;
+  if(Number.isFinite(o.startMs))return o.date>today||o.startMs>n;
+  return Boolean(today)&&o.date>=today;
+ }).map(o=>o.date);
+}
+function eventHasUpcoming(ev,now=new Date()){return !!(ev&&(ev.ongoing===true||eventUpcomingDates(ev,now).length))}
+function eventNextStart(ev,now=new Date()){
+ const dates=eventUpcomingDates(ev,now);
+ if(!dates.length)return null;
+ const occ=eventOccurrences(ev).find(o=>o.date===dates[0]);
+ return occ&&Number.isFinite(occ.startMs)?occ.startMs:null;
+}
+function eventOccursOn(ev,day,now=new Date()){
+ if(!dateStrOk(day))return false;
+ const upcoming=eventUpcomingDates(ev,now);
+ return (upcoming.length?upcoming:eventDateList(ev)).includes(day);
+}
 // Calendar day derivation for the events tab: dated events become day
 // buttons (min..max range, deduped, sorted); ongoing events never become day
 // buttons — they only appear in the All-week view. label is "Oct 29" for one
-// day or "Oct 29–31" for a range, for the section heading.
+// day or "Oct 29–31" for a range, for the section heading. A `dates` list
+// contributes every date; a start/end range still contributes only its start.
 function eventDays(events){
  const list=Array.isArray(events)?events:[];
- const dayOf=e=>dateStrOk(e.date)?e.date:(dateStrOk(String(e.startAt||'').slice(0,10))?String(e.startAt).slice(0,10):null);
- const days=[...new Set(list.filter(e=>e&&!e.ongoing).map(dayOf).filter(Boolean))].sort();
+ const days=[...new Set(list.filter(e=>e&&!e.ongoing).flatMap(eventDateList))].sort();
  const ongoing=list.some(e=>e&&e.ongoing);
  const fmtD=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{timeZone:'America/New_York',month:'short',day:'numeric'});
  let label=null;
@@ -188,10 +256,10 @@ function eventDays(events){
 function eventDateMatch(event,filter,now=new Date()){
  const f=normalizeDateFilter(filter);
  if(!f||!f.kind)return true;
- const day=dateStrOk(event&&event.date)?event.date:(dateStrOk(String((event&&event.startAt)||'').slice(0,10))?String(event.startAt).slice(0,10):null);
- if(f.kind==='date')return day===f.date;
- if(f.kind==='tonight')return day===todayParts(now).dateStr;
- if(f.kind==='weekend')return day!==null&&nextWeekendDates(todayParts(now).dateStr).includes(day);
+ const days=eventDateList(event);
+ if(f.kind==='date')return days.includes(f.date);
+ if(f.kind==='tonight')return days.includes(todayParts(now).dateStr);
+ if(f.kind==='weekend'){const weekend=nextWeekendDates(todayParts(now).dateStr);return days.some(d=>weekend.includes(d))}
  return true;
 }
 // ---- 1A Phase E: Halloween-week grid + ICS export (spec 7.3/9.8). ----
@@ -217,7 +285,9 @@ function icsNextDay(day){const d=new Date(Date.UTC(+day.slice(0,4),+day.slice(5,
 //    VEVENTs (one per Halloween-week day — no RRULE, safest for Apple and
 //    Google) and never carry times, so ambiguous free-text schedules like
 //    "Weekdays 5–8 PM · Weekends 10 AM–6 PM" contribute no DTSTART/DTEND;
-//  - events with no usable date at all are omitted, never guessed.
+//  - events with no usable date at all are omitted, never guessed;
+//  - an event with a `dates` list exports one floating VEVENT per date
+//    (same local clock on each date; no RRULE).
 function buildEventsICS(list,weekDays,base){
  const days=Array.isArray(weekDays)&&weekDays.length?weekDays:eventWeekDays(list);
  const root=typeof base==='string'&&base?base:'https://hauntfinder.vercel.app/';
@@ -235,6 +305,20 @@ function buildEventsICS(list,weekDays,base){
  (Array.isArray(list)?list:[]).forEach(ev=>{
   if(!ev||!ev.id)return;
   if(ev.ongoing){days.forEach(d=>push(ev,ev.id+'-'+d,d.replace(/-/g,''),icsNextDay(d).replace(/-/g,''),true));return}
+  if(Array.isArray(ev.dates)){
+   const listed=eventDateList(ev),clock=eventClock(ev);
+   if(listed.length){
+    listed.forEach(raw=>{
+     if(clock.open){
+      const stampT=hm=>raw.replace(/-/g,'')+'T'+hm.replace(':','')+'00';
+      push(ev,ev.id+'-'+raw,stampT(clock.open),stampT(clock.close||clock.open),false);
+      return;
+     }
+     push(ev,ev.id+'-'+raw,raw.replace(/-/g,''),icsNextDay(raw).replace(/-/g,''),true);
+    });
+    return;
+   }
+  }
   const raw=ev.date&&/^\d{4}-\d{2}-\d{2}$/.test(ev.date)?ev.date:String(ev.startAt||'').slice(0,10);
   if(!/^\d{4}-\d{2}-\d{2}$/.test(raw))return;
   const stamp=iso=>{const m=String(iso||'').match(/^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/);return m?m[1].replace(/-/g,'')+'T'+m[2]+m[3]+'00':null};
@@ -245,4 +329,4 @@ function buildEventsICS(list,weekDays,base){
  lines.push('END:VCALENDAR');
  return lines.join('\r\n')+'\r\n';
 }
-if(typeof module!=='undefined')module.exports={hoursOn,datesActive,hasScheduleInfo,isOpenAt,hoursLabel,openOnDateLabel,schedulesCompleteFor,openTonightEligible,DATE_FILTER_KEY,todayParts,nextWeekendDates,normalizeDateFilter,loadDateFilter,saveDateFilter,schedulesDateMatch,openTonightBadgeHTML,eventDays,eventDateMatch,dateFilterLabel,eventWeekDays,buildEventsICS};
+if(typeof module!=='undefined')module.exports={hoursOn,datesActive,hasScheduleInfo,isOpenAt,hoursLabel,openOnDateLabel,schedulesCompleteFor,openTonightEligible,DATE_FILTER_KEY,todayParts,nextWeekendDates,normalizeDateFilter,loadDateFilter,saveDateFilter,schedulesDateMatch,openTonightBadgeHTML,eventDays,eventDateMatch,dateFilterLabel,eventWeekDays,buildEventsICS,easternOffset,easternToday,eventDateList,eventOccurrences,eventUpcomingDates,eventHasUpcoming,eventNextStart,eventOccursOn};

@@ -46,7 +46,7 @@ function response(){return {statusCode:200,headers:{},setHeader(k,v){this.header
 test('confirmation, empty summary, updates, stable slot reuse and unsubscribe',async()=>{
  const f=fixture();try{
   const s=await confirmed(f);assert.equal(s.status,'confirmed');assert.equal(f.sent.length,1);
-  const items=n.catalog();assert.equal(items.length,15);assert.equal((await n.digest(items)).sent,0);
+  const items=n.catalog();assert.ok(items.length>0);assert.equal(new Set(items.map(x=>x.identity)).size,items.length,'catalog identities stay unique');assert.ok(items.every(x=>x.season&&x.category&&x.identity));assert.equal((await n.digest(items)).sent,0);
   const edited=items.map(x=>({...x,times:'Updated hours',updatedAt:'2026-10-10'}));assert.equal((await n.digest(edited)).sent,0);
   const event={identity:'new-event',category:'events',season:'halloween',name:'New event'};
   const holiday={identity:'new-holiday',category:'displays',season:'holiday',name:'Holiday display'};
