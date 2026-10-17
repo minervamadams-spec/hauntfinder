@@ -274,6 +274,70 @@ function eventWeekDays(list){
  for(let i=0;i<7;i++){const d=new Date(start);d.setUTCDate(start.getUTCDate()+i);days.push(d.toISOString().slice(0,10))}
  return days;
 }
+// Navigable Sun–Sat weeks (America/New_York civil dates). eventWeekDays stays
+// the season week used by the calendar export; the page grid uses these.
+function isoAddDays(iso,n){
+ const [y,m,d]=String(iso||'').split('-').map(Number);
+ const dt=new Date(Date.UTC(y,m-1,d+n));
+ return dt.toISOString().slice(0,10);
+}
+function weekdayIndexNY(iso){
+ if(!dateStrOk(iso))return 0;
+ const [y,m,d]=iso.split('-').map(Number);
+ const wd=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',weekday:'short'}).format(new Date(Date.UTC(y,m-1,d,17,0,0)));
+ return {Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6}[wd]||0;
+}
+function weekSunday(iso){return dateStrOk(iso)?isoAddDays(iso,-weekdayIndexNY(iso)):'';}
+function weekDates(sunday){if(!dateStrOk(sunday))return [];const days=[];for(let i=0;i<7;i++)days.push(isoAddDays(sunday,i));return days;}
+function isOct31(iso){return dateStrOk(iso)&&iso.slice(5)==='10-31';}
+function weekRangeLabel(days){
+ if(!Array.isArray(days)||!days.length)return 'Week';
+ const fmt=(d,opt)=>new Date(d+'T12:00:00').toLocaleDateString('en-US',Object.assign({timeZone:'America/New_York'},opt));
+ const end=days[days.length-1],a=fmt(days[0],{month:'short',day:'numeric'}),bSame=fmt(end,{day:'numeric'}),bFull=fmt(end,{month:'short',day:'numeric'});
+ if(days.length===1)return a;
+ const range=days[0].slice(0,7)===end.slice(0,7)?`${a}–${bSame}`:`${a}–${bFull}`;
+ if(days.length===7&&days.some(isOct31))return `Halloween week · ${range}`;
+ if(days.length===7)return `Week of ${range}`;
+ return range;
+}
+function threeDayDates(now){
+ const today=easternToday(now instanceof Date?now:new Date());
+ return today?[0,1,2].map(i=>isoAddDays(today,i)):[];
+}
+// Single-date and `dates` lists occupy their real columns. Ongoing listings
+// never do — they belong in the Open all week band.
+function eventColumnDates(ev){if(!ev||ev.ongoing)return [];return eventDateList(ev);}
+function ongoingCoversWeek(ev,days){
+ if(!ev||ev.ongoing!==true||!Array.isArray(days)||!days.length)return false;
+ const listed=Array.isArray(ev.dates)?ev.dates.filter(dateStrOk).slice().sort():[];
+ const one=dateStrOk(ev.date)?ev.date:(dateStrOk(String(ev.startAt||'').slice(0,10))?String(ev.startAt).slice(0,10):'');
+ const end=dateStrOk(String(ev.endAt||'').slice(0,10))?String(ev.endAt).slice(0,10):'';
+ if(!listed.length&&!one&&!end)return true;
+ const start=listed.length?listed[0]:one,last=listed.length?listed[listed.length-1]:(end||one);
+ if(last&&last<days[0])return false;
+ if(start&&start>days[days.length-1])return false;
+ return true;
+}
+function lastListedDate(list){
+ const dates=(Array.isArray(list)?list:[]).filter(e=>e&&!e.ongoing).flatMap(eventDateList).filter(dateStrOk).sort();
+ return dates.length?dates[dates.length-1]:'';
+}
+function eventWeekBounds(list,now){
+ const today=easternToday(now instanceof Date?now:new Date(now==null?Date.now():now));
+ const min=weekSunday(today);
+ const last=lastListedDate(list);
+ let max=last?weekSunday(last):min;
+ if(!max||(min&&max<min))max=min;
+ return {min,max,today};
+}
+function clampWeekStart(start,bounds){
+ if(!bounds||!bounds.min)return weekSunday(start)||'';
+ let s=weekSunday(start)||bounds.min;
+ if(s<bounds.min)s=bounds.min;
+ if(bounds.max&&s>bounds.max)s=bounds.max;
+ return s;
+}
+function shiftWeek(start,delta,bounds){const base=weekSunday(start)||(bounds&&bounds.min)||'';return clampWeekStart(base?isoAddDays(base,(delta||0)*7):'',bounds);}
 function icsEscape(s){return String(s==null?'':s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\r?\n/g,'\\n')}
 function icsNextDay(day){const d=new Date(Date.UTC(+day.slice(0,4),+day.slice(5,7)-1,+day.slice(8,10)+1));return d.toISOString().slice(0,10)}
 // Pure ICS builder; the caller passes the already-filtered list (Type /
@@ -329,4 +393,4 @@ function buildEventsICS(list,weekDays,base){
  lines.push('END:VCALENDAR');
  return lines.join('\r\n')+'\r\n';
 }
-if(typeof module!=='undefined')module.exports={hoursOn,datesActive,hasScheduleInfo,isOpenAt,hoursLabel,openOnDateLabel,schedulesCompleteFor,openTonightEligible,DATE_FILTER_KEY,todayParts,nextWeekendDates,normalizeDateFilter,loadDateFilter,saveDateFilter,schedulesDateMatch,openTonightBadgeHTML,eventDays,eventDateMatch,dateFilterLabel,eventWeekDays,buildEventsICS,easternOffset,easternToday,eventDateList,eventOccurrences,eventUpcomingDates,eventHasUpcoming,eventNextStart,eventOccursOn};
+if(typeof module!=='undefined')module.exports={hoursOn,datesActive,hasScheduleInfo,isOpenAt,hoursLabel,openOnDateLabel,schedulesCompleteFor,openTonightEligible,DATE_FILTER_KEY,todayParts,nextWeekendDates,normalizeDateFilter,loadDateFilter,saveDateFilter,schedulesDateMatch,openTonightBadgeHTML,eventDays,eventDateMatch,dateFilterLabel,eventWeekDays,buildEventsICS,easternOffset,easternToday,eventDateList,eventOccurrences,eventUpcomingDates,eventHasUpcoming,eventNextStart,eventOccursOn,isoAddDays,weekSunday,weekDates,isOct31,weekRangeLabel,threeDayDates,eventColumnDates,ongoingCoversWeek,lastListedDate,eventWeekBounds,clampWeekStart,shiftWeek};

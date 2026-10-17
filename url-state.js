@@ -4,10 +4,10 @@
 // features / when / view / zip / mi params on top of those defaults — URL
 // params override defaults. Writes are silent (history.replaceState) and only
 // ever touch the keys this module owns (category, show, features, when, zip,
-// mi, view, day); deep-link keys (?house=, ?event=, ?route=, ?outing=) and any
+// mi, view, day, week); deep-link keys (?house=, ?event=, ?route=, ?outing=) and any
 // other foreign params are preserved untouched.
 
-const HF_URL_OWNED=['category','show','features','when','zip','mi','view','day'];
+const HF_URL_OWNED=['category','show','features','when','zip','mi','view','day','week'];
 const HF_URL_RADII=[5,10,25,50];
 // Whitelists mirror chrome-filters.js option values (the canonical listing keys).
 const HF_URL_SHOW={
@@ -55,6 +55,7 @@ function hfWriteURL(){
    u.searchParams.set('zip',String(state.search.zip));
    u.searchParams.set('mi',String(state.search.radius));
   }
+  if(state.category==='events'&&state.eventWeek)u.searchParams.set('week',state.eventWeek);
   if(state.category==='events'&&state.eventDay)u.searchParams.set('day',String(+state.eventDay.slice(8,10)));
   history.replaceState(null,'',u);
  }catch(err){/* never break rendering over a URL write */}

@@ -62,9 +62,11 @@ test('mobile: 44px minimum touch targets, zoom buttons 44px top right, tablet sh
   assert.match(mobileCss,/@media\(min-width:768px\) and \(max-width:1023px\)\{[\s\S]*?grid-template-columns:1fr 1fr/);
   assert.match(mobileCss,/max-width:760px;margin:0 auto/);
 });
-test('mobile: Events uses the same day-by-day list with the map available as a second view',()=>{
-  assert.match(layout,/\$\('cardList'\)\.innerHTML=eventsRailHTML\(items\)/);
-  assert.match(css,/html body #eventCalendar[^{]*\{display:none!important\}|#eventCalendar\{display:none!important\}/);
+test('mobile: Events day list follows the selected week and the map stays hidden',()=>{
+  assert.match(layout,/\$\('eventsMobileList'\)\.innerHTML=viewDays\.map/);
+  assert.match(layout,/mday--today/);
+  assert.match(css,/html\[data-category="events"\] body #eventCalendar\{display:block!important\}/);
+  assert.match(css,/html\[data-category="events"\] body \.map-frame\{display:none!important\}/);
   assert.match(app,/if\(state\.category==='events'\)\{matchingEvents\(\)/);
 });
 test('mobile: ZIP searches automatically at five digits (there is no GO button in the mobile search row)',()=>{

@@ -89,10 +89,11 @@ test('round 2: map fits leave room for the route bar; one pin centres at zoom 14
   assert.match(app,/map\.setView\(pts\[0\],14,\{animate:false\}\)/);
   assert.match(layout,/if\(category!=='events'\)fitVisiblePins\(\)/);
 });
-test('round 2: scare dots only when a level is set; all-week events show hours; empty days merge; Sat 31 always shows',()=>{
+test('round 2: scare dots only when a level is set; all-week events show hours; empty days stay; Sat 31 always shows',()=>{
   assert.match(app,/\$\{x\.levels\.length\?`<p class="card__scare-row"><span class="card__scare">/);
   assert.match(layout,/x\.ongoing\?\(x\.hours\?compactTime\(x\.hours\):'Open all week'\)/);
-  assert.match(layout,/if\(!list\.length&&!halloween\)\{run\.push\(date\);return\}/);
+  assert.match(layout,/chips\|\|'<span class="event-col__empty">No events yet<\/span>'/);
+  assert.match(layout,/halloween=date\.slice\(5\)==='10-31'/);
 });
 test('round 2: tab row is 48px with the underline on the row line; Search this area is a top-centre pill; empty route bar is compact',()=>{
   assert.match(css,/\.filterbar \.nav-row\{height:48px!important/);
