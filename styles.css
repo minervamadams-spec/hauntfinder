@@ -1752,7 +1752,6 @@ html body #cardList .card--compact.card--flip>.card-flip{margin-left:0}
 .lightbox{position:fixed;inset:0;z-index:3000;display:flex;flex-direction:column;background:rgba(8,6,12,.94);opacity:0;transition:opacity .15s ease;overscroll-behavior:contain}
 @media(min-width:1024px){
  html:not([data-fullmap]) .map-peek{bottom:calc(var(--route-popup-clearance, 10px) + env(safe-area-inset-bottom))}
- .map-popup__full{display:inline-flex;align-items:center;align-self:flex-start;min-height:44px;padding:0;border:0;background:none;color:#B48CFF;font:700 13px var(--f-cond);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
 }
 .lightbox.is-in{opacity:1}
 @media(prefers-reduced-motion:reduce){.lightbox{transition:none}}

@@ -23,11 +23,13 @@ const overlap=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left
    const add=rect('[data-peek-route]'),popup=rect('.map-popup'),bar=rect(desktop?'#routeSection':'#mobileBar'),full=rect('[data-peek-full]');
    return {intersection:Math.max(0,Math.min(popup.right,bar.right)-Math.max(popup.left,bar.left))*Math.max(0,Math.min(popup.bottom,bar.bottom)-Math.max(popup.top,bar.top)),hit:document.elementFromPoint(add.left+add.width/2,add.bottom-4)?.closest('[data-peek-route]')?.hasAttribute('data-peek-route')===true,fullVisible:full.width>0&&full.height>0,popup,bar,add,full};
   },{desktop});
-  ok(label+'map preview and route control do not overlap; Add to route owns its lower hit target; Full details is visible',geometry.intersection===0&&geometry.hit&&geometry.fullVisible,JSON.stringify(geometry));
-  await page.click('[data-peek-full]');await page.waitForTimeout(150);
-  const fullDetails=await page.evaluate(({n,desktop})=>{const card=document.querySelector(`#cardList [data-card="${n}"]`),box=card.getBoundingClientRect(),rail=desktop?document.querySelector('.list-column').getBoundingClientRect():{top:0,bottom:innerHeight};return {peekHidden:document.getElementById('mapPeek').classList.contains('is-hidden'),selected:card.classList.contains('is-selected'),inView:box.bottom>rail.top&&box.top<rail.bottom}},{n:selected,desktop});
-  ok(label+'Full details opens the selected listing card',fullDetails.peekHidden&&fullDetails.selected&&fullDetails.inView,JSON.stringify(fullDetails));
-  if(!desktop){await page.click('#viewToggle');await page.waitForTimeout(150)}
+  ok(label+'map preview and route control do not overlap; Add to route owns its lower hit target; Full details is mobile-only',geometry.intersection===0&&geometry.hit&&(desktop?!geometry.fullVisible:geometry.fullVisible),JSON.stringify(geometry));
+  if(!desktop){
+   await page.click('[data-peek-full]');await page.waitForTimeout(150);
+   const fullDetails=await page.evaluate(({n})=>{const card=document.querySelector(`#cardList [data-card="${n}"]`),box=card.getBoundingClientRect();return {peekHidden:document.getElementById('mapPeek').classList.contains('is-hidden'),selected:card.classList.contains('is-selected'),inView:box.bottom>0&&box.top<innerHeight}},{n:selected});
+   ok(label+'Full details opens the selected listing card',fullDetails.peekHidden&&fullDetails.selected&&fullDetails.inView,JSON.stringify(fullDetails));
+   await page.click('#viewToggle');await page.waitForTimeout(150);
+  }
   await page.evaluate(n=>markerByNum.get(n).fire('click'),selected);await page.waitForTimeout(150);
   // The preceding hit-target assertion is the interaction check. Force only lets
   // the suite continue on the known-broken build to record every viewport.
@@ -39,7 +41,7 @@ const overlap=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left
    await page.click('#routeToggle');await page.waitForTimeout(200);
    await page.evaluate(n=>selectListing(n),selected);await page.waitForTimeout(200);
    const expanded=await page.evaluate(()=>{const rect=s=>{const b=document.querySelector(s).getBoundingClientRect();return {left:b.left,top:b.top,right:b.right,bottom:b.bottom}};const p=rect('#mapPeek'),r=rect('#routeSection');return {intersection:Math.max(0,Math.min(p.right,r.right)-Math.max(p.left,r.left))*Math.max(0,Math.min(p.bottom,r.bottom)-Math.max(p.top,r.top)),stops:document.querySelectorAll('#routeStopsMini .route-stop').length,full:document.querySelector('[data-peek-full]').getBoundingClientRect().height}});
-   ok(label+'expanded multi-stop route also clears the preview and keeps Full details available',expanded.intersection===0&&expanded.stops>=2&&expanded.full>0,JSON.stringify(expanded));
+   ok(label+'expanded multi-stop route also clears the preview; Full details stays hidden on desktop',expanded.intersection===0&&expanded.stops>=2&&expanded.full===0,JSON.stringify(expanded));
   }
   await ctx.close();
  }
