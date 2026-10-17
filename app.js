@@ -575,6 +575,80 @@ const listings=[
    ],
    "notes": "",
    "kind": "Home haunt/walk-through"
+ },
+ {
+   "updatedAt": "2026-10-17",
+   "num": 14,
+   "entityId": "joanow-holiday-displays-2026",
+   "name": "Joanow Holiday Displays",
+   "town": "Bloomfield",
+   "address": "226 Lakewood Drive, Bloomfield, NJ 07003",
+   "lat": 40.816241529971,
+   "lng": -74.189003785738,
+   "geoVerified": "census-exact 2026-10-17: 226 LAKEWOOD DR, BLOOMFIELD, NJ, 07003",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "weekly": [
+       {
+         "dow": 0,
+         "open": "18:00",
+         "close": "22:00"
+       },
+       {
+         "dow": 1,
+         "open": "18:00",
+         "close": "22:00"
+       },
+       {
+         "dow": 2,
+         "open": "18:00",
+         "close": "22:00"
+       },
+       {
+         "dow": 3,
+         "open": "18:00",
+         "close": "22:00"
+       },
+       {
+         "dow": 4,
+         "open": "18:00",
+         "close": "22:00"
+       },
+       {
+         "dow": 5,
+         "open": "18:00",
+         "close": "22:00"
+       },
+       {
+         "dow": 6,
+         "open": "18:00",
+         "close": "22:00"
+       }
+     ]
+   },
+   "dates": "Open nightly",
+   "times": "6:00 PM–10:00 PM",
+   "levels": [
+     "Family Friendly",
+     "Spooky",
+     "Scary"
+   ],
+   "type": [
+     "Walk-through",
+     "Drive or walk by (both)"
+   ],
+   "features": [
+     "Music / Sound",
+     "Photo opportunities",
+     "Fog",
+     "Lights",
+     "Animatronics",
+     "Live Actors"
+   ],
+   "notes": "",
+   "kind": "Home haunt/walk-through"
  }
 ];
 listings.sort((a,b)=>a.num-b.num);

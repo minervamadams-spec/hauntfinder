@@ -117,6 +117,16 @@
       "publicAddress": "34 Glen Ave, Mine Hill, NJ 07803",
       "scheduleEvidence": "Owner confirmed on 2026-10-16: Halloween only, October 31, 2026, 7–10 PM. Supersedes ambiguous submitted Saturday and prior Friday–Sunday schedule.",
       "photoDecision": "submitted_photo_pending_review"
+    },
+    {
+      "row": 12,
+      "fingerprint": "7dd9021e8ef1c624e1127e57e29cd46a1e4cf9a6ff59ce440f994c47dcf5ccd5",
+      "fingerprintColumns": 14,
+      "listingId": 14,
+      "entityId": "joanow-holiday-displays-2026",
+      "decision": "imported_consented_new_entity_exact_address_verified",
+      "publicAddress": "226 Lakewood Drive, Bloomfield, NJ 07003",
+      "scheduleEvidence": "Host submitted open nightly, 6–10 PM. No end date supplied; recurring nightly hours preserved without an invented end date."
     }
   ],
   "treatStops": {
