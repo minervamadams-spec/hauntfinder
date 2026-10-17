@@ -533,10 +533,10 @@ const listings=[
   "kind": "Home haunt/walk-through"
 },
  {
-   "updatedAt": "2026-10-15",
+   "updatedAt": "2026-10-16",
    "num": 13,
    "entityId": "glens-terror-drive-2026",
-   "name": "Glens Terror Drive",
+   "name": "Glen’s Terror Drive",
    "town": "Mine Hill",
    "address": "34 Glen Ave, Mine Hill, NJ 07803",
    "lat": 40.876303313773,
@@ -546,27 +546,20 @@ const listings=[
    "year": 2026,
    "participation": "confirmed",
    "schedule": {
-     "weekly": [
+     "startDate": "2026-10-31",
+     "endDate": "2026-10-31",
+     "exceptions": [
        {
-         "dow": 5,
-         "open": "19:00",
-         "close": "22:00"
-       },
-       {
-         "dow": 6,
-         "open": "19:00",
-         "close": "22:00"
-       },
-       {
-         "dow": 0,
+         "date": "2026-10-31",
          "open": "19:00",
          "close": "22:00"
        }
      ]
    },
-   "dates": "Friday–Sunday",
+   "dates": "Halloween only · October 31, 2026",
    "times": "7:00 PM–10:00 PM",
    "levels": [
+     "Spooky",
      "Scary"
    ],
    "type": [

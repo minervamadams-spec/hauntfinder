@@ -103,7 +103,19 @@
       "decision": "imported_consented_new_entity_exact_address_verified",
       "entityId": "glens-terror-drive-2026",
       "publicAddress": "34 Glen Ave, Mine Hill, NJ 07803",
-      "scheduleEvidence": "Submitted Friday–Sunday 7–10; host public post describes nighttime hours. Latest submission controls days.",
+      "scheduleEvidence": "Original Friday–Sunday schedule superseded by owner-confirmed Halloween-only update on 2026-10-16.",
+      "photoDecision": "submitted_photo_pending_review",
+      "supersededByFingerprint": "461ab843dcc50e9ab0857a06fe069d192d3077b1b29b749971431e03b47bbffe"
+    },
+    {
+      "row": 11,
+      "fingerprint": "461ab843dcc50e9ab0857a06fe069d192d3077b1b29b749971431e03b47bbffe",
+      "fingerprintColumns": 15,
+      "listingId": 13,
+      "entityId": "glens-terror-drive-2026",
+      "decision": "updated_existing_verified_host_owner_confirmed_schedule",
+      "publicAddress": "34 Glen Ave, Mine Hill, NJ 07803",
+      "scheduleEvidence": "Owner confirmed on 2026-10-16: Halloween only, October 31, 2026, 7–10 PM. Supersedes ambiguous submitted Saturday and prior Friday–Sunday schedule.",
       "photoDecision": "submitted_photo_pending_review"
     }
   ],
