@@ -1750,6 +1750,10 @@ html body #cardList .card--compact.card--flip>.card-flip{margin-left:0}
 .card--compact.card--flip .card__photo-btn{position:absolute;inset:0;width:100%;height:100%}
 .photo-trigger:focus-visible{outline:2px solid #B48CFF;outline-offset:-2px}
 .lightbox{position:fixed;inset:0;z-index:3000;display:flex;flex-direction:column;background:rgba(8,6,12,.94);opacity:0;transition:opacity .15s ease;overscroll-behavior:contain}
+@media(min-width:1024px){
+ html:not([data-fullmap]) .map-peek{bottom:calc(var(--route-popup-clearance, 10px) + env(safe-area-inset-bottom))}
+ .map-popup__full{display:inline-flex;align-items:center;align-self:flex-start;min-height:44px;padding:0;border:0;background:none;color:#B48CFF;font:700 13px var(--f-cond);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+}
 .lightbox.is-in{opacity:1}
 @media(prefers-reduced-motion:reduce){.lightbox{transition:none}}
 .lightbox__bar{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 20px;min-height:60px;box-sizing:border-box}
