@@ -116,7 +116,7 @@ test('stops show title, category, address or event date, and link back to the it
 test('route.html: complete subpage, one h1, empty state, planner, clear confirmation without a dialog',()=>{
   assert.match(routeHtml,/<body data-page="route" class="subpage">/);
   assert.equal((routeHtml.match(/<h1[ >]/g)||[]).length,1);
-  assert.match(routeHtml,/<header class="subpage-head">/);assert.match(routeHtml,/<footer class="subpage-foot">/);
+  assert.match(routeHtml,/id="siteChrome" data-chrome-active="route"/);assert.match(routeHtml,/<script src="site-chrome\.js"><\/script>/);assert.match(routeHtml,/<footer class="subpage-foot">/);
   assert.equal(routeHtml.includes('<dialog'),false);
   assert.match(routeHtml,/id="routeEmpty"[^>]*hidden/);
   assert.match(routeHtml,/No stops on your route yet/);

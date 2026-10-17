@@ -56,7 +56,8 @@ test('listing.html: ordinary page on the shared shell, no dialogs, one h1, three
   assert.match(html,/<body data-page="listing" class="subpage">/);
   assert.equal((html.match(/<h1[ >]/g)||[]).length,1);
   for(const id of ['feedback','report-update','share'])assert.match(html,new RegExp('<section[^>]+id="'+id+'"'),id+' section');
-  assert.match(html,/href="\/">← Hauntfinder map</,'back link');
+  assert.match(html,/id="siteChrome" data-chrome-active="listing"/,'shared header');
+  assert.match(html,/href="index\.html\?category=displays">Displays</,'category links back to the map');
   assert.match(html,/<noscript>/,'JavaScript-disabled message with a way back');
   assert.match(html,/<script src="routing\.js"><\/script>/);assert.match(html,/<script src="listing\.js"><\/script>/);
   assert.match(html,/id="feedbackForm"/);assert.match(html,/id="listingReportForm"/);assert.match(html,/id="houseShareText"/);

@@ -492,7 +492,7 @@ body.host-panel-open{overflow:hidden}
 
 /* ---- Tabs in the nav row (spec 6.3): text-3 inactive, 4px accent underline. */
 .filterbar .tabs{display:flex;gap:2px;border:0;border-radius:0;overflow:visible;margin:0}
-.filterbar .tabs button{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 var(--space-3);background:transparent;border:0;color:var(--text-3);font:600 15px var(--f-body);letter-spacing:0;text-transform:none;cursor:pointer}
+.filterbar .tabs button,.filterbar .tabs a.site-tab{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 var(--space-3);background:transparent;border:0;color:var(--text-3);font:600 15px var(--f-body);letter-spacing:0;text-transform:none;text-decoration:none;cursor:pointer}
 .filterbar .tabs button+button{border-left:0}
 .filterbar .tabs .tabs__badge{font-size:13px;min-width:22px;height:22px}
 #displaysTab[aria-selected="true"]{background:transparent;color:var(--text);box-shadow:inset 0 -4px 0 0 var(--orange)}
@@ -561,7 +561,7 @@ body.host-panel-open{overflow:hidden}
   .intro-strip{padding:14px var(--space-4)}
   .filterbar .nav-row{flex-direction:column;align-items:stretch;gap:var(--space-2);padding:var(--space-2) 12px 0}
   .filterbar .tabs{width:100%;gap:0}
-  .filterbar .tabs button{flex:1 1 0;justify-content:center;min-width:0;padding:0 var(--space-1);font-size:14px;white-space:nowrap}
+  .filterbar .tabs button,.filterbar .tabs a.site-tab{flex:1 1 0;justify-content:center;min-width:0;padding:0 var(--space-1);font-size:14px;white-space:nowrap}
   .filterbar .nav-search{flex-wrap:wrap}
   .nav-search .locbar__zip{flex:1 1 100%}
   .nav-search .locbar__input{width:100%;flex:1}
@@ -997,7 +997,7 @@ html:not([data-category="events"]) .card--compact .card__meta{margin-top:0;paddi
 }
 @media(max-width:600px){
  .filterbar .tabs{overflow:hidden}
- .filterbar .tabs button{flex:1 1 0!important;min-width:0!important;gap:3px;padding:0 2px;font-size:12px;letter-spacing:0}
+ .filterbar .tabs button,.filterbar .tabs a.site-tab{flex:1 1 0!important;min-width:0!important;gap:3px;padding:0 2px;font-size:12px;letter-spacing:0}
  .filterbar .tabs .tabs__badge{min-width:19px;height:19px;padding:0 2px;font-size:11px}
  .filterbar .chrome-row{align-items:stretch}
  .filterbar .chrome-row__right{width:100%;margin-left:0}
@@ -1112,7 +1112,7 @@ html[data-category="events"] .list-column{order:2}
  .filterbar__rail-head{grid-column:1;display:flex;align-items:center;gap:12px;padding:0 20px;border-right:1px solid var(--line);background:var(--panel);font:700 19px var(--f-cond);letter-spacing:.08em;text-transform:uppercase;color:var(--cream)}
  .filterbar__rail-head span{color:var(--orange);font-size:20px}
  .filterbar .tabs{grid-column:2;align-self:stretch;padding:0 12px;border-right:1px solid var(--line)}
- .filterbar .tabs button{min-height:48px;padding:0 10px}
+ .filterbar .tabs button,.filterbar .tabs a.site-tab{min-height:48px;padding:0 10px}
  .filterbar .nav-search{grid-column:3;justify-content:flex-end;min-width:0;padding:0 12px;gap:6px}
  .nav-search .locbar__zip{gap:0}
  .nav-search .locbar__input{width:150px;min-height:32px;border-width:1px;border-radius:6px}
@@ -1237,14 +1237,15 @@ html[data-category="events"]{--acc:#B48CFF}
 .treat-prompt+*,.empty strong{font-size:inherit}
 @media(min-width:1024px){
  .filterbar__rail-head{border:0;border-right:1px solid var(--line);cursor:pointer;text-align:left}
- .filterbar .tabs button{background:transparent!important;color:#A89DB4;border:0;border-bottom:3px solid transparent;border-radius:0;box-shadow:none;font-weight:600}
+ .filterbar .tabs button,.filterbar .tabs a.site-tab{background:transparent!important;color:#A89DB4;border:0;border-bottom:3px solid transparent;border-radius:0;box-shadow:none;font-weight:600}
  .filterbar .tabs #displaysTab,.filterbar .tabs #treatStopsTab,.filterbar .tabs #eventsTab{background:transparent!important;color:#A89DB4}
- .filterbar .tabs #displaysTab[aria-selected="true"],.filterbar .tabs #treatStopsTab[aria-selected="true"],.filterbar .tabs #eventsTab[aria-selected="true"]{color:#F6EBD3}
- .filterbar .tabs #displaysTab[aria-selected="true"]{border-bottom-color:#FF7A1A}
- .filterbar .tabs #treatStopsTab[aria-selected="true"]{border-bottom-color:#A6E22E}
- .filterbar .tabs #eventsTab[aria-selected="true"]{border-bottom-color:#B48CFF}
- .filterbar .tabs button:focus{outline:0}
+ .filterbar .tabs #displaysTab[aria-selected="true"],.filterbar .tabs #treatStopsTab[aria-selected="true"],.filterbar .tabs #eventsTab[aria-selected="true"],.filterbar .tabs #displaysTab[aria-current="page"],.filterbar .tabs #treatStopsTab[aria-current="page"],.filterbar .tabs #eventsTab[aria-current="page"]{color:#F6EBD3}
+ .filterbar .tabs #displaysTab[aria-selected="true"],.filterbar .tabs #displaysTab[aria-current="page"]{border-bottom-color:#FF7A1A}
+ .filterbar .tabs #treatStopsTab[aria-selected="true"],.filterbar .tabs #treatStopsTab[aria-current="page"]{border-bottom-color:#A6E22E}
+ .filterbar .tabs #eventsTab[aria-selected="true"],.filterbar .tabs #eventsTab[aria-current="page"]{border-bottom-color:#B48CFF}
+ .filterbar .tabs button:focus,.filterbar .tabs a.site-tab:focus{outline:0}
  .filterbar .tabs button:focus-visible{outline:2px solid #B48CFF;outline-offset:2px}
+ .filterbar .tabs a.site-tab:focus-visible{outline:2px solid #B48CFF;outline-offset:2px}
  .filterbar .tabs .tabs__badge{min-width:20px;height:20px;font-size:12px}
  html .filter-rail{align-self:stretch;height:100%;min-height:0;display:flex;flex-direction:column;overflow-y:auto}
  html .filter-rail .filter-rail__links{margin-top:auto;padding-top:14px;gap:8px;border-top:1px solid #2E2638}
@@ -1307,7 +1308,7 @@ html[data-category="events"]{--acc:#B48CFF}
 @media(min-width:1024px){
  .filterbar .nav-row{height:48px!important;min-height:48px!important;max-height:48px}
  .filterbar .tabs{align-items:stretch;height:48px;box-sizing:border-box}
- .filterbar .tabs button{box-sizing:border-box;height:48px;min-height:48px}
+ .filterbar .tabs button,.filterbar .tabs a.site-tab{box-sizing:border-box;height:48px;min-height:48px}
  .hf-header.banner{background-position:left center}
  .hf-header .intro-strip__copy{text-shadow:0 1px 3px #000,0 0 12px rgba(18,14,24,.9)}
  html body .map-float-btn--search{top:12px;bottom:auto!important;min-height:32px;padding:0 14px;border:1px solid #3A3046;border-radius:16px;background:#16111E;color:#F6EBD3;font:700 13px/1 var(--f-cond);letter-spacing:.06em;transform:translate(-50%,-8px)}
@@ -1371,13 +1372,14 @@ html[data-category="events"]{--acc:#B48CFF}
  html body .mobile-filters-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:44px;min-height:44px;margin-left:8px;padding:0 14px;border:1px solid #3A3046;border-radius:8px;background:#15101C;color:#F6EBD3;font:700 13px var(--f-cond);letter-spacing:.08em;text-transform:uppercase}
  html body .mobile-filters-btn.is-active{border-color:#FF7A1A}
  .mobile-filters-btn__count{min-width:20px;height:20px;border-radius:10px;background:#FF7A1A;color:#120E18;font:800 12px/20px var(--f-body);text-align:center}
- html body .filterbar .tabs button{flex:1 1 0;justify-content:center;height:44px;min-height:44px;padding:0 4px;background:transparent!important;color:#A89DB4;border:0;border-bottom:3px solid transparent;border-radius:0;font:600 14px var(--f-body);text-transform:none;letter-spacing:0;gap:6px;white-space:nowrap}
- html body .filterbar .tabs #displaysTab[aria-selected="true"],html body .filterbar .tabs #treatStopsTab[aria-selected="true"],html body .filterbar .tabs #eventsTab[aria-selected="true"]{color:#F6EBD3}
- html body .filterbar .tabs #displaysTab[aria-selected="true"]{border-bottom-color:#FF7A1A}
- html body .filterbar .tabs #treatStopsTab[aria-selected="true"]{border-bottom-color:#A6E22E}
- html body .filterbar .tabs #eventsTab[aria-selected="true"]{border-bottom-color:#B48CFF}
- html body .filterbar .tabs button:focus{outline:0}
+ html body .filterbar .tabs button,html body .filterbar .tabs a.site-tab{flex:1 1 0;justify-content:center;height:44px;min-height:44px;padding:0 4px;background:transparent!important;color:#A89DB4;border:0;border-bottom:3px solid transparent;border-radius:0;font:600 14px var(--f-body);text-transform:none;letter-spacing:0;gap:6px;white-space:nowrap}
+ html body .filterbar .tabs #displaysTab[aria-selected="true"],html body .filterbar .tabs #treatStopsTab[aria-selected="true"],html body .filterbar .tabs #eventsTab[aria-selected="true"],html body .filterbar .tabs #displaysTab[aria-current="page"],html body .filterbar .tabs #treatStopsTab[aria-current="page"],html body .filterbar .tabs #eventsTab[aria-current="page"]{color:#F6EBD3}
+ html body .filterbar .tabs #displaysTab[aria-selected="true"],html body .filterbar .tabs #displaysTab[aria-current="page"]{border-bottom-color:#FF7A1A}
+ html body .filterbar .tabs #treatStopsTab[aria-selected="true"],html body .filterbar .tabs #treatStopsTab[aria-current="page"]{border-bottom-color:#A6E22E}
+ html body .filterbar .tabs #eventsTab[aria-selected="true"],html body .filterbar .tabs #eventsTab[aria-current="page"]{border-bottom-color:#B48CFF}
+ html body .filterbar .tabs button:focus,html body .filterbar .tabs a.site-tab:focus{outline:0}
  html body .filterbar .tabs button:focus-visible{outline:2px solid #B48CFF;outline-offset:2px}
+ html body .filterbar .tabs a.site-tab:focus-visible{outline:2px solid #B48CFF;outline-offset:2px}
  html body .chrome-status{position:static;padding:0 12px}
  /* page body */
  html body .app__main.page-grid{display:block;width:100%;max-width:none;height:auto!important;padding:0;gap:0;overflow:visible!important}
@@ -1826,4 +1828,24 @@ html[data-category="events"] .events-column-head .events-head-count{display:inli
  html[data-category="events"] #eventCalendar{display:block!important;padding:16px 16px 8px}
  html[data-category="events"] .list-column{grid-column:3;grid-row:1 / span 2;width:440px;max-width:440px}
  html[data-category="events"]:not([data-hf-rail="off"]) .route-wrap{grid-column:2;grid-row:2;align-self:stretch;justify-self:stretch;width:auto;max-width:none;margin:0;z-index:2;position:relative;border-radius:0}
+}
+
+/* Secondary pages reuse the map banner (site-chrome.js) and these tab styles.
+   The nav is only the category links plus Shops & Services: no filter column and no ZIP search. */
+html body .filterbar.site-nav{position:relative;z-index:40;background:#0B0910;border-bottom:1px solid #2E2638;padding:0;overflow:visible}
+html body .filterbar.site-nav .nav-row{display:flex;flex-direction:row;align-items:stretch;flex-wrap:nowrap;gap:0;width:100%;height:48px;min-height:48px;max-height:none;padding:0;margin:0}
+html body .filterbar.site-nav .tabs{display:flex;align-items:stretch;flex:1 1 auto;width:100%;grid-column:1 / -1;height:48px;padding:0 8px 0 12px;border:0;border-right:0;gap:0;overflow:visible}
+html body .filterbar.site-nav .shops-nav-link{margin-left:auto;align-self:stretch;box-sizing:border-box;border-bottom:3px solid transparent}
+html body .filterbar.site-nav .shops-nav-link[aria-current="page"]{color:#F6EBD3;border-bottom-color:#F6EBD3}
+html body .filterbar.site-nav a:hover,html body .filterbar.site-nav a:focus{text-decoration:none}
+.subpage .menu-drawer a:hover,.alerts-page .menu-drawer a:hover,.shops-page .menu-drawer a:hover{text-decoration:none}
+@media(max-width:1023px){
+ html body .filterbar.site-nav{position:sticky;top:0;z-index:800}
+ html body .filterbar.site-nav .nav-row{height:44px!important;min-height:44px;max-height:44px;padding:0}
+ html body .filterbar.site-nav .tabs{height:44px;padding:0}
+ html body .filterbar.site-nav .shops-nav-link{display:inline-flex;flex:1 1 0;justify-content:center;margin-left:0;border-left:0;height:44px;min-height:44px;padding:0 4px;font:600 14px var(--f-body)}
+ html body .filterbar.site-nav .tabs a.site-tab{flex:1 1 0}
+}
+@media(max-width:420px){
+ html body .filterbar.site-nav .tabs a.site-tab,html body .filterbar.site-nav .shops-nav-link{font-size:12px;padding:0 2px;gap:3px}
 }

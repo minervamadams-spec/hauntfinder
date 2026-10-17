@@ -137,7 +137,7 @@ test('round 3: action row never wraps and both route states share a width; route
 });
 test('round 3: Alerts page uses the site fonts and controls, with the slim nav; About body copy is 17px/1.6 in 680px',()=>{
   const alerts=read('alerts.html'),ac=read('alerts.css');
-  assert.match(alerts,/family=Barlow\+Condensed/);assert.match(alerts,/← Hauntfinder map/);
+  assert.match(alerts,/family=Barlow\+Condensed/);assert.match(alerts,/id="siteChrome" data-chrome-active="alerts"/);
   assert.match(ac,/accent-color:#FF7A1A/);assert.match(ac,/height:44px;padding:0 12px;border:1px solid #3A3046;border-radius:6px;background:#16111E/);
   assert.match(css,/\.about-article p\{font-size:17px;line-height:1\.6;color:#E8DEC8/);
   assert.match(css,/\.about-article\{max-width:680px/);
