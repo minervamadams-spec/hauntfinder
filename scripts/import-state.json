@@ -127,6 +127,16 @@
       "decision": "imported_consented_new_entity_exact_address_verified",
       "publicAddress": "226 Lakewood Drive, Bloomfield, NJ 07003",
       "scheduleEvidence": "Host submitted open nightly, 6–10 PM. No end date supplied; recurring nightly hours preserved without an invented end date."
+    },
+    {
+      "row": 13,
+      "rowKey": "89321976de1fb79fa9ba8f8ca746802200a116e37ebcad42175942ae89467f61",
+      "timestampSerial": 46312.55314888889,
+      "submittedAt": "2026-10-17T13:16:32-04:00",
+      "listingId": 15,
+      "entityId": "east-prospect-graveyard-2026",
+      "decision": "imported_consented_new_entity_exact_address_verified",
+      "publicAddress": "106 East Prospect Street, Hawthorne, NJ 07506"
     }
   ],
   "treatStops": {
@@ -161,6 +171,16 @@
         "fingerprintColumns": 19,
         "eventId": "best-buddies-safe-trick-or-treat-2026-10-29",
         "decision": "matched_existing_consented_event"
+      },
+      {
+        "row": 3,
+        "rowKey": "72ffa6573c5f0a498b800c073741ad27e6f79626cb7996c817d43bf3679929bb",
+        "timestampSerial": 46312.492408252314,
+        "submittedAt": "2026-10-17T11:49:04-04:00",
+        "eventId": "haunted-trails-2026",
+        "entityId": "haunted-trails-2026",
+        "decision": "imported_consented_paid_community_event_owner_approved_2026-10-17",
+        "publicAddress": "50 Camp Mohican Road, Blairstown, NJ"
       }
     ]
   },

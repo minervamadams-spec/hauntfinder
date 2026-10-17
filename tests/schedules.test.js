@@ -76,7 +76,8 @@ test('openTonightEligible is true for a fully scheduled synthetic set only',()=>
 test('real backfilled listings: Open tonight stays OFF on Halloween 2026',()=>{
  const {listings,inCurrentSeason}=appData();
  const active=listings.filter(inCurrentSeason);
- assert.equal(active.length,13);
+ assert.ok(active.length>0);
+ assert.ok(active.some(x=>!sch.hasScheduleInfo(x)||sch.hoursOn(x.schedule,SAT)===null),'Open tonight stays off while any active listing lacks Saturday hours');
  assert.equal(sch.openTonightEligible(active,SAT),false);
 });
 test('backfill sanity: every active listing is scheduled or honestly unknown; #6 Friday resolves',()=>{
@@ -96,4 +97,34 @@ test('backfill sanity: every active listing is scheduled or honestly unknown; #6
  assert.equal(sch.hoursLabel(one.schedule,SAT),'4–8 PM','#1 Halloween exception overrides');
  const nine=listings.find(x=>x.num===9);
  assert.equal(sch.hoursLabel(nine.schedule,SAT),'Hours not listed','#9 has a start date but no hours');
+});
+test('easternOffset follows America/New_York, including the 2026 DST end on Nov 1',()=>{
+ assert.equal(sch.easternOffset('2026-10-17','18:00'),'-04:00');
+ assert.equal(sch.easternOffset('2026-10-30','21:00'),'-04:00');
+ assert.equal(sch.easternOffset('2026-11-01','01:30'),'-04:00');
+ assert.equal(sch.easternOffset('2026-11-01','02:00'),'-05:00');
+ assert.equal(sch.easternOffset('2026-11-06','18:00'),'-05:00');
+ assert.equal(sch.easternOffset('2026-03-08','01:30'),'-05:00');
+ assert.equal(sch.easternOffset('2026-03-08','03:00'),'-04:00');
+});
+test('multi-date events stay one record: past dates drop after they end, later dates remain',()=>{
+ const ev={id:'haunted-trails-2026',dates:['2026-10-17','2026-10-23','2026-10-24','2026-10-30'],startTime:'18:00',endTime:'21:00'};
+ const afternoon=new Date('2026-10-17T17:00:00-04:00');
+ assert.deepEqual(sch.eventUpcomingDates(ev,afternoon),['2026-10-17','2026-10-23','2026-10-24','2026-10-30']);
+ assert.equal(sch.eventNextStart(ev,afternoon),Date.parse('2026-10-17T18:00:00-04:00'));
+ const afterTonight=new Date('2026-10-17T21:00:00-04:00');
+ assert.deepEqual(sch.eventUpcomingDates(ev,afterTonight),['2026-10-23','2026-10-24','2026-10-30']);
+ assert.equal(sch.eventOccursOn(ev,'2026-10-17',afternoon),true);
+ assert.equal(sch.eventOccursOn(ev,'2026-10-17',afterTonight),false);
+ assert.equal(sch.eventDateMatch(ev,{kind:'date',date:'2026-10-24'}),true);
+ assert.equal(sch.eventDateMatch(ev,{kind:'date',date:'2026-10-18'}),false);
+ assert.deepEqual(sch.eventDays([ev,{date:'2026-10-29'}]).days,['2026-10-17','2026-10-23','2026-10-24','2026-10-29','2026-10-30']);
+ const nov=sch.eventOccurrences({date:'2026-11-06',startTime:'18:00',endTime:'21:00'})[0];
+ assert.equal(nov.startAt,'2026-11-06T18:00:00-05:00');
+ assert.equal(nov.endAt,'2026-11-06T21:00:00-05:00');
+ const ics=sch.buildEventsICS([ev],[],'https://hauntfinder.example/');
+ assert.equal((ics.match(/BEGIN:VEVENT/g)||[]).length,4);
+ assert.ok(ics.includes('DTSTART:20261017T180000'));
+ assert.ok(ics.includes('DTEND:20261030T210000'));
+ assert.ok(ics.includes('UID:haunted-trails-2026-2026-10-23@hauntfinder'));
 });

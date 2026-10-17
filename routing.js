@@ -121,7 +121,7 @@ function suggestRouteOrder(route,listings,events,origin){
  };
  const timeOf=stop=>{
   if(stop.eventId==null)return Infinity;
-  const ev=byEvent.get(String(stop.eventId)),t=ev?Date.parse(ev.startAt||ev.date||''):NaN;
+  const ev=byEvent.get(String(stop.eventId));let t=NaN;if(ev){if(typeof eventNextStart==='function'){const next=eventNextStart(ev);t=next==null?NaN:next}else t=Date.parse(ev.startAt||ev.date||'')}
   return Number.isFinite(t)?t:Infinity;
  };
  const tagged=list.map((stop,i)=>({stop,i}));

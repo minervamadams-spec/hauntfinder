@@ -649,6 +649,38 @@ const listings=[
    ],
    "notes": "",
    "kind": "Home haunt/walk-through"
+ },
+ {
+   "updatedAt": "2026-10-17",
+   "num": 15,
+   "entityId": "east-prospect-graveyard-2026",
+   "name": "East Prospect Graveyard",
+   "town": "Hawthorne",
+   "address": "106 East Prospect Street, Hawthorne, NJ 07506",
+   "lat": 40.946392534155,
+   "lng": -74.168153817844,
+   "geoVerified": "census-exact 2026-10-17: 106 E PROSPECT ST, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "weekly": [
+       {"dow": 0, "open": "18:30", "close": "23:00"},
+       {"dow": 1, "open": "18:30", "close": "23:00"},
+       {"dow": 2, "open": "18:30", "close": "23:00"},
+       {"dow": 3, "open": "18:30", "close": "23:00"},
+       {"dow": 4, "open": "18:30", "close": "23:00"},
+       {"dow": 5, "open": "18:30", "close": "23:00"},
+       {"dow": 6, "open": "18:30", "close": "23:00"}
+     ]
+   },
+   "dates": "Nightly",
+   "times": "6:30 PM–11:00 PM",
+   "levels": ["Scary"],
+   "type": ["Drive or walk by (both)"],
+   "features": ["Music / Sound", "Photo opportunities", "Fog", "Lights", "Live Actors"],
+   "notes": "Lights are on 6:30–11 PM every night, rain or shine. Fridays and Saturdays, weather permitting, the creator dresses up for scares and photos and answers questions about the custom-made display. Best at night with the lights on. Park and walk up: many custom pieces are near the house and covered porch, and you're welcome to walk up the steps for a closer look. Please stay off the grass. The display pays homage to many '80s heavy metal bands and musicians, vampires, and original artwork.",
+   "kind": "Decorated home/yard display"
  }
 ];
 listings.sort((a,b)=>a.num-b.num);
@@ -705,6 +737,33 @@ const events=[
   ],
   "url": "",
   "notes": "$1 off with a non-perishable food donation. Registration not required."
+ },
+ {
+  "id": "haunted-trails-2026",
+  "entityId": "haunted-trails-2026",
+  "updatedAt": "2026-10-17",
+  "name": "Haunted Trails",
+  "eventType": "Haunted trail",
+  "venue": "AMC Mohican Outdoor Center",
+  "address": "50 Camp Mohican Road, Blairstown, NJ",
+  "lat": 40.999221071573,
+  "lng": -74.97732260256,
+  "geoVerified": "census-exact 2026-10-17: 50 MOHICAN RD, BLAIRSTOWN, NJ, 07825",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "dates": ["2026-10-17", "2026-10-23", "2026-10-24", "2026-10-30"],
+  "startTime": "18:00",
+  "endTime": "21:00",
+  "date": "2026-10-17",
+  "startAt": "2026-10-17T18:00:00-04:00",
+  "endAt": "2026-10-30T21:00:00-04:00",
+  "hours": "6:00 PM–9:00 PM",
+  "cost": "$12 per person",
+  "attendance": "Open to all",
+  "features": ["Open to all", "Kid-friendly"],
+  "url": "https://www.facebook.com/share/p/1Jzt9ULSWh/?mibextid=wwXIfr",
+  "notes": "6–7 PM: Family-Friendly Hour. Bring the younger kids out for a walk through the trails; fun and Halloween-themed without the big scares. 7–9 PM: The scares begin! Once it gets dark, live actors take over the trails. Young ghosts 6–7 PM suggested. Payment at camp only. Registration not required."
  }
 ];
 const CURRENT_SEASON={season:'halloween',year:2026};
@@ -747,11 +806,12 @@ function pinHeight(w){return Math.round(w*156/128)}
 function iconFor(n,kind){const w=pinWidth(),h=pinHeight(w);return L.divIcon({className:'',html:pinHTML(n,kind),iconSize:[w,h],iconAnchor:[w/2,h-1]})}
 function gmapsDirections(address){return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`}
 // Route-planner meta line for event stops: their date + hours, never a town.
-function eventStopDateLine(x){if(x.ongoing)return 'Open all season'+(x.hours?' · '+x.hours:'');const d=x.date||String(x.startAt||'').slice(0,10);return (d?new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'Date TBA')+(x.hours?' · '+x.hours:'')}
+function eventDateBits(x){const upcoming=typeof eventUpcomingDates==='function'?eventUpcomingDates(x):[];const dates=upcoming.length?upcoming:(x.date?[x.date]:[]);const fmt=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});if(!dates.length){const d=x.date||String(x.startAt||'').slice(0,10);return d&&/^\d{4}-\d{2}-\d{2}$/.test(d)?fmt(d):'Date TBA'}if(dates.length===1)return fmt(dates[0]);return 'Next '+fmt(dates[0])+' · also '+dates.slice(1).map(fmt).join(', ')}
+function eventStopDateLine(x){if(x.ongoing)return 'Open all season'+(x.hours?' · '+x.hours:'');return eventDateBits(x)+(x.hours?' · '+x.hours:'')}
 function isTreatStop(x){return x.kind==='Trick-or-treat stop'}
-function eventIsUpcoming(x){return x.ongoing===true||new Date(x.endAt).getTime()>Date.now()}
+function eventIsUpcoming(x,now){if(x&&x.ongoing===true)return true;if(typeof eventHasUpcoming==='function')return eventHasUpcoming(x,now==null?new Date():now);return new Date(x.endAt).getTime()>(now==null?Date.now():+new Date(now))}
 function matchFilter(x){if(!inCurrentSeason(x))return false;if(x.placeholder)return state.category==='displays'&&state.filter==='All'&&(typeof isDefaultArea!=='function'||!state.search||isDefaultArea(state.search));if(state.category==='events')return false;if(state.dateFilter&&state.dateFilter.kind&&typeof schedulesDateMatch==='function'&&!schedulesDateMatch(x,state.dateFilter))return false;if(state.search&&typeof inSearchArea==='function'&&!inSearchArea(x,state.search))return false;if(isTreatStop(x)!==(state.category==='treats'))return false;if(Array.isArray(state.features)&&state.features.length&&!state.features.every(f=>(x.features||[]).some(xf=>featureKey(xf)===f)))return false;if(state.category==='treats')return !state.categoryFeature||(x.features||[]).includes(state.categoryFeature);if(state.filter==='All')return true;if(['Family Friendly','Spooky','Scary'].includes(state.filter))return x.levels.includes(state.filter);if(['Walk-through','Drive-by','Walk-by','Drive or walk by (both)'].includes(state.filter))return x.type.includes(state.filter)||(x.type.includes('Drive or walk by (both)')&&['Drive-by','Walk-by'].includes(state.filter));return x.features.some(f=>featureKey(f)===state.filter)}
-function matchingEvents(ignoreDay){const dayOf=x=>x.date||String(x.startAt||'').slice(0,10);const filtered=events.filter(x=>eventIsUpcoming(x)&&inCurrentSeason(x)&&(state.filter==='All'||x.eventType===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature))&&(!(state.features&&state.features.length)||state.features.every(f=>(x.features||[]).includes(f)))&&((ignoreDay||!state.eventDay)||x.ongoing||dayOf(x)===state.eventDay)&&(!state.search||typeof inSearchArea!=='function'||inSearchArea(x,state.search))&&(x.ongoing||!state.dateFilter||!state.dateFilter.kind||typeof eventDateMatch!=='function'||eventDateMatch(x,state.dateFilter)));return typeof orderByDistance==='function'?orderByDistance(filtered,state.search,(a,b)=>new Date(a.startAt)-new Date(b.startAt)):filtered.sort((a,b)=>new Date(a.startAt)-new Date(b.startAt))}
+function matchingEvents(ignoreDay){const onDay=x=>typeof eventOccursOn==='function'?eventOccursOn(x,state.eventDay):(x.date||String(x.startAt||'').slice(0,10))===state.eventDay;const startOf=x=>{if(typeof eventNextStart==='function'){const t=eventNextStart(x);if(t!=null)return t}const t=new Date(x.startAt).getTime();return Number.isFinite(t)?t:Infinity};const filtered=events.filter(x=>eventIsUpcoming(x)&&inCurrentSeason(x)&&(state.filter==='All'||x.eventType===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature))&&(!(state.features&&state.features.length)||state.features.every(f=>(x.features||[]).includes(f)))&&((ignoreDay||!state.eventDay)||x.ongoing||onDay(x))&&(!state.search||typeof inSearchArea!=='function'||inSearchArea(x,state.search))&&(x.ongoing||!state.dateFilter||!state.dateFilter.kind||typeof eventDateMatch!=='function'||eventDateMatch(x,state.dateFilter)));return typeof orderByDistance==='function'?orderByDistance(filtered,state.search,(a,b)=>startOf(a)-startOf(b)):filtered.sort((a,b)=>startOf(a)-startOf(b))}
 // Single source of truth for the ordered visible set. Falls back to number
 // order during the very first render, before location.js has loaded.
 function activeListings(){return typeof visibleSet==='function'?visibleSet({items:listings,search:state.search,predicate:matchFilter,keepUnlocated:true}):listings.filter(matchFilter)}

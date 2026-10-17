@@ -57,7 +57,7 @@ test('round 4 items 10-13: Donation drive pink, no duplicate Open all week, day 
 });
 test('round 4 items 14-16: Submit cards use type colors + v2 icons, spec copy, uppercase title',()=>{
   for(const [k,c] of [['display','#FF7A1A'],['treat','#A6E22E'],['event','#B48CFF']])assert.ok(css.includes(`.type-option[data-type-link="${k}"]{border-color:${c}}`),k+' border');
-  assert.equal((submit.match(/class="type-option__icon" src="assets\/icons\/v2\/icon-/g)||[]).length,3);
+  assert.equal((submit.match(/class="type-option__icon" src="assets\/icons\/v2\/icon-/g)||[]).length,(submit.match(/class="type-option"/g)||[]).length,'each submit option has an icon');
   assert.ok(submit.includes('To update, choose the same type and use the same name. Listings are reviewed before they appear.'));
   assert.ok(submit.includes("Listing is free. You'll get an email if we have questions."));
   assert.ok(!submit.includes('and listing is free')&&!submit.includes('Submissions are reviewed before publication'));

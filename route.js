@@ -30,7 +30,7 @@ function resolveInitialRoute(search,storage,listings,events){
   return {route:lib.loadSavedRoute(storage,listings,events),message:'',fromLink:false};
 }
 function routePageURL(route){return route&&route.length?lib.routeLink(route,PAGE):PAGE}
-function eventDateLine(x){if(x.ongoing)return 'Open all season';const d=x.date||String(x.startAt||'').slice(0,10);return d?new Date(d+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}):'Date TBA'}
+function eventDateLine(x){if(x.ongoing)return 'Open all season';const sch=(typeof eventUpcomingDates==='function')?{eventUpcomingDates}:(typeof require==='function'?require('./schedules'):{});const upcoming=sch.eventUpcomingDates?sch.eventUpcomingDates(x):[];const dates=upcoming.length?upcoming:(x.date?[x.date]:[]);const fmtDay=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});const fmtShort=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});if(!dates.length){const d=x.date||String(x.startAt||'').slice(0,10);return d?fmtDay(d):'Date TBA'}if(dates.length===1)return fmtDay(dates[0]);return fmtDay(dates[0])+' · also '+dates.slice(1).map(fmtShort).join(', ')}
 // One stop as the page shows it: title, category, address (listings) or date
 // (events), and a link back to the item. Unknown entries return null.
 function stopView(entry,{listings,events,search}){

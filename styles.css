@@ -1700,6 +1700,8 @@ body.alerts-page{padding:0 0 48px}
 .type-option[data-type-link="display"]{border-color:#FF7A1A}.type-option[data-type-link="display"] .type-option__name::after{color:#FF7A1A}
 .type-option[data-type-link="treat"]{border-color:#A6E22E}.type-option[data-type-link="treat"] .type-option__name::after{color:#A6E22E}
 .type-option[data-type-link="event"]{border-color:#B48CFF}.type-option[data-type-link="event"] .type-option__name::after{color:#B48CFF}
+.type-option[data-type-link="shop"]{border-color:#3FD0C0}.type-option[data-type-link="shop"] .type-option__name::after{color:#3FD0C0}
+.type-option__note{color:var(--mist);font:500 13px/1.35 var(--f-body)}
 /* Alerts: dark checkboxes with an orange checked state; consent aligned with the other rows */
 .alerts-page .alerts-box input[type=checkbox]{appearance:none;-webkit-appearance:none;flex:none;width:20px;height:20px;margin:0;border:2px solid #3A3046;border-radius:4px;background:#16111E;display:inline-grid;place-content:center;cursor:pointer;accent-color:#FF7A1A}
 .alerts-page .alerts-box input[type=checkbox]:checked{background:#FF7A1A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23120E18' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat;border-color:#FF7A1A}
@@ -1774,3 +1776,13 @@ html.lightbox-open,html.lightbox-open body{overflow:hidden}
 /* design v7 Compact: the footer links are ONE column (submit, share, about, alerts, contact, then the visit count) */
 html .filter-rail .filter-rail__links #railVisits{font:500 12px/1.35 var(--f-body);letter-spacing:0;text-transform:none;color:#7E7389}
 html .filter-rail .filter-rail__links #railVisits[hidden]{display:none}
+
+/* Shops, Makers & Services entry point in the current map chrome. */
+.shops-nav-link{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;color:#A89DB4;font:600 13px var(--f-body);text-decoration:none;white-space:nowrap;border-left:1px solid #2E2638}.shops-nav-link:hover,.shops-nav-link:focus-visible{color:#F6EBD3}
+@media(min-width:1280px){
+ .filterbar .nav-row{grid-template-columns:260px minmax(300px,440px) minmax(280px,1fr) auto}
+ html[data-rail="collapsed"] .filterbar .nav-row{grid-template-columns:44px minmax(300px,440px) minmax(280px,1fr) auto}
+ .filterbar .nav-search{grid-column:3}
+ .shops-nav-link{grid-column:4;justify-self:end;min-height:48px;border-left:1px solid #2E2638;border-right:0}
+}
+@media(max-width:1023px){.filterbar .shops-nav-link{display:none}}
