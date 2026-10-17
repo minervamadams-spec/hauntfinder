@@ -181,6 +181,20 @@
         "entityId": "haunted-trails-2026",
         "decision": "imported_consented_paid_community_event_owner_approved_2026-10-17",
         "publicAddress": "50 Camp Mohican Road, Blairstown, NJ"
+      },
+      {
+        "rowKey": "474eb0b64da9a5269bb6da2532011c6383c5e845bb927e611c9bceb34413c811",
+        "decision": "imported_consented_free_community_event_minerva_approved_2026-10-17",
+        "eventId": "hanovers-best-trunk-or-treat-2026-10-24",
+        "entityId": "hanovers-best-trunk-or-treat-2026",
+        "publicAddress": "565 Route 10, Whippany, NJ 07981"
+      },
+      {
+        "rowKey": "25790ab9486efe50bbd6e88badf7eca8aaf9f1c0a27d52e8d2f9d11daf9d97f3",
+        "decision": "imported_consented_free_community_event_minerva_approved_2026-10-17",
+        "eventId": "jeffersons-best-trunk-or-treat-2026-10-30",
+        "entityId": "jeffersons-best-trunk-or-treat-2026",
+        "publicAddress": "694 Route 15, Lake Hopatcong, NJ 07849"
       }
     ]
   },

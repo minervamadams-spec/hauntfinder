@@ -764,6 +764,64 @@ const events=[
   "features": ["Open to all", "Kid-friendly"],
   "url": "https://www.facebook.com/share/p/1Jzt9ULSWh/?mibextid=wwXIfr",
   "notes": "6–7 PM: Family-Friendly Hour. Bring the younger kids out for a walk through the trails; fun and Halloween-themed without the big scares. 7–9 PM: The scares begin! Once it gets dark, live actors take over the trails. Young ghosts 6–7 PM suggested. Payment at camp only. Registration not required."
+ },
+ {
+  "id": "hanovers-best-trunk-or-treat-2026-10-24",
+  "entityId": "hanovers-best-trunk-or-treat-2026",
+  "updatedAt": "2026-10-17",
+  "name": "Hanover's Best Trunk-or-Treat",
+  "eventType": "Trunk-or-treat",
+  "venue": "Elite Martial Arts Hanover",
+  "address": "565 Route 10, Whippany, NJ 07981",
+  "lat": 40.822424259772,
+  "lng": -74.414349201659,
+  "geoVerified": "census-exact 2026-10-17: 565 STATE RTE 10, WHIPPANY, NJ, 07981",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-24",
+  "startAt": "2026-10-24T15:00:00-04:00",
+  "endAt": "2026-10-24T17:00:00-04:00",
+  "hours": "3:00 PM–5:00 PM",
+  "cost": "Free",
+  "attendance": "Open to all",
+  "features": [
+   "Free",
+   "Open to all",
+   "Registration required",
+   "Kid-friendly"
+  ],
+  "url": "https://elitekarateusa.com/hanover/",
+  "notes": "Pre-registration required for each child; contact Elite Martial Arts Hanover to sign up (973-561-2310). Every trunk is interactive, with activities, treats, a goody bag for every child and prizes. Costumes encouraged. Plan for about 30 minutes. Open to local families, including non-members. Limited to 80 children; best for children under 10."
+ },
+ {
+  "id": "jeffersons-best-trunk-or-treat-2026-10-30",
+  "entityId": "jeffersons-best-trunk-or-treat-2026",
+  "updatedAt": "2026-10-17",
+  "name": "Jefferson's Best Trunk-or-Treat",
+  "eventType": "Trunk-or-treat",
+  "venue": "Elite Martial Arts Jefferson",
+  "address": "694 Route 15, Lake Hopatcong, NJ 07849",
+  "lat": 40.956684226312,
+  "lng": -74.597019626441,
+  "geoVerified": "census-exact 2026-10-17: 694 STATE RTE 15, LAKE HOPATCONG, NJ, 07849",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-30",
+  "startAt": "2026-10-30T17:00:00-04:00",
+  "endAt": "2026-10-30T19:00:00-04:00",
+  "hours": "5:00 PM–7:00 PM",
+  "cost": "Free",
+  "attendance": "Open to all",
+  "features": [
+   "Free",
+   "Open to all",
+   "Registration required",
+   "Kid-friendly"
+  ],
+  "url": "https://elitekarateusa.com/jefferson/",
+  "notes": "Pre-registration required for each child; contact Elite Martial Arts Jefferson to sign up (973-791-4500). Every trunk is interactive, with activities, treats, a goody bag for every child and prizes. Costumes encouraged. Plan for about 30 minutes. Open to local families, including non-members. Limited to 100 children; best for ages 10 and under."
  }
 ];
 const CURRENT_SEASON={season:'halloween',year:2026};
