@@ -60,7 +60,7 @@ function areaCounts({listings=[],events=[],search,now=Date.now()}){
  return {
   displays:listings.filter(x=>!x.placeholder&&x.kind!=='Trick-or-treat stop'&&ok(x)).length,
   treats:listings.filter(x=>!x.placeholder&&x.kind==='Trick-or-treat stop'&&ok(x)).length,
-  events:events.filter(x=>(x.ongoing===true||new Date(x.endAt).getTime()>now)&&ok(x)).length
+  events:events.filter(x=>((typeof eventHasUpcoming==='function'?eventHasUpcoming(x,now):(x.ongoing===true||new Date(x.endAt).getTime()>now)))&&ok(x)).length
  };
 }
 // Route stops keep showing regardless of area; this flags the out-of-area ones.

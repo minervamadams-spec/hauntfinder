@@ -10,12 +10,13 @@ const FORMS={
   // Must match FORM_LINKS in community.js (verified 2026-10-14).
   display:'https://docs.google.com/forms/d/e/1FAIpQLSeifnGQbKmB1ofTT1Kb1EsY-aCxo-164AXIr5sIvA-xdg9a6g/viewform',
   treat:'https://docs.google.com/forms/d/e/1FAIpQLScSaoQ7UuSMwxyiDMEQYxXg6HyQhXep_CyEFjYgD7nwQ3kq-w/viewform',
-  event:'https://docs.google.com/forms/d/e/1FAIpQLSeGXPJkGkuaRNOC2QXToVD3L85mXez9xYpKJd4ij7P0lskrfQ/viewform'};
+  event:'https://docs.google.com/forms/d/e/1FAIpQLSeGXPJkGkuaRNOC2QXToVD3L85mXez9xYpKJd4ij7P0lskrfQ/viewform',
+  shop:'https://docs.google.com/forms/d/e/1FAIpQLSeRLgk9i2EJF5AEipV6KLJnHgwXcAiNAd9fxS0KQAOZ7KbZbA/viewform'};
 
-// ---- Route 1: /submit.html — visible controls are the three form links ----
-test('submit page: three visible type options link straight to the verified Google Forms',()=>{
+// ---- Route 1: /submit.html — visible controls are the form links ----
+test('submit page: type options link straight to the verified Google Forms',()=>{
   const links=[...submit.matchAll(/<a class="type-option" data-type-link="(\w+)" href="([^"]+)" target="_blank" rel="noopener">/g)].map(m=>[m[1],m[2]]);
-  assert.deepEqual(links,Object.entries(FORMS),'display/treat/event options with canonical URLs');
+  assert.deepEqual(links,Object.entries(FORMS),'display, treat, event, and shop options with canonical URLs');
   assert.equal(/docs\.google\.com\/forms/.test(community),false,'community.js no longer carries form URLs (wiring removed with the dialog)');
 });
 test('submit page: ordinary page, not a dialog — usable shell, no modal markup',()=>{
