@@ -98,6 +98,13 @@ test('review controls: All week sits with the switch, This week hides on the cur
   assert.ok(html.includes('id="addAllToCalendar"'),'title-row calendar link remains');
   assert.ok(layout.includes('eventTags(x).map(f=>`<span class="chip">${safeListingText(f)}</span>`)'),'event features are text chips');
   assert.ok(layout.includes('`${weekCount} this week · ${pool.length} total`'),'header explains the week count and the total');
+  assert.ok(layout.includes("event?matchingEvents(true).length"),'events tab badge ignores the selected day');
+  assert.ok(layout.includes("${dayN===1?'event':'events'}"),'a selected day reads “1 event” or “N events”');
+  assert.ok(layout.includes("if(state.eventDay)$('eventsHeadCount').textContent=''"),'the week total steps aside once a day is selected');
+  assert.ok(css.includes('.events-title{flex:0 0 auto;white-space:nowrap}'),'week title stays on one line');
+  assert.ok(css.includes('html[data-category="events"] .events-head{flex-wrap:wrap'),'action buttons can drop to a second row');
+  assert.ok(css.includes('html[data-category="events"] .events-weeknav{display:flex;flex-wrap:nowrap'),'mobile prev, title, and next share one row');
+  assert.ok(css.includes('html[data-category="events"] #eventCalendar{padding-bottom:calc(96px + env(safe-area-inset-bottom))}'),'mobile week list clears the pinned route bar');
 });
 
 test('week and day travel in the URL and week nav is wired',()=>{
