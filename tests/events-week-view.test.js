@@ -1,5 +1,6 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const sch=require('../schedules');
+const fmt=require('../listing-format');
 const layout=fs.readFileSync(path.join(__dirname,'../layout.js'),'utf8');
 const css=fs.readFileSync(path.join(__dirname,'../styles.css'),'utf8');
 const url=fs.readFileSync(path.join(__dirname,'../url-state.js'),'utf8');
@@ -79,13 +80,21 @@ test('legend names every type color, including Haunted trail in yellow',()=>{
   assert.ok(layout.includes('legendExtra'),'a type on the grid that is not in the list is still added');
 });
 
+test('Free chip follows the listing cost: Haunted Trails is $12 and has none',()=>{
+  assert.deepEqual(fmt.eventFeatureChips({cost:'$12 per person',features:['Open to all','Kid-friendly']}),['Open to all','Kid-friendly']);
+  assert.deepEqual(fmt.eventFeatureChips({cost:'$12 per person',features:['Free','Open to all','Kid-friendly']}),['Open to all','Kid-friendly']);
+  assert.deepEqual(fmt.eventFeatureChips({cost:'Free',features:['Free','Open to all','Kid-friendly','Costumes Available']}),['Free','Open to all','Kid-friendly']);
+  assert.deepEqual(fmt.eventFeatureChips({cost:'Free',features:['Open to all']}),['Free','Open to all']);
+  assert.deepEqual(fmt.eventFeatureChips({cost:'$5 a child',features:['Open to all','Kid-friendly']}),['Open to all','Kid-friendly']);
+});
+
 test('review controls: All week sits with the switch, This week hides on the current week, one calendar link, text chips, explained counts',()=>{
   assert.ok(css.includes('#allEventDays.btn{min-height:50px;height:50px'),'All week matches the view switch height');
   assert.ok(css.includes('.events-view{display:flex;align-items:center;justify-content:flex-start'),'All week stays next to the switch');
   assert.ok(css.includes('#allEventDays[aria-pressed="false"]{background:transparent'),'All week is an outline once a day is selected');
   assert.ok(layout.includes("$('thisWeek').hidden=hideNav||onCurrentWeek"),'This week is hidden on the current week');
   assert.ok(css.includes('#thisWeek.btn{min-height:32px'),'This week is a small outline on other weeks');
-  assert.ok(css.includes('#railAddAll{display:none!important}'),'calendar link stays in the title row only');
+  assert.equal(html.includes('id="railAddAll"'),false,'calendar link is not in the right column');
   assert.ok(html.includes('id="addAllToCalendar"'),'title-row calendar link remains');
   assert.ok(layout.includes('eventTags(x).map(f=>`<span class="chip">${safeListingText(f)}</span>`)'),'event features are text chips');
   assert.ok(layout.includes('`${weekCount} this week · ${pool.length} total`'),'header explains the week count and the total');

@@ -149,9 +149,10 @@ test('events week view: open-all-week band, week grid, and cards replace the old
   assert.equal(layout.includes('Other dates'),false,'dated events are not dumped into an Other bucket');
   assert.equal(layout.includes("''}}</p>`"),false,'no stray } after event details');
 });
-test('events v7: count line carries Add all events to your calendar and proxies the existing handler',()=>{
-  assert.match(html,/id="railAddAll"[^>]*>[\s\S]*?Add all events to your calendar/);
-  assert.match(layout,/\$\('railAddAll'\)\.addEventListener\('click',\(\)=>\$\('addAllToCalendar'\)\.click\(\)\)/);
+test('events v7: Add all events to your calendar stays in the title row only',()=>{
+  assert.match(html,/id="addAllToCalendar"[^>]*>[\s\S]*?Add all events to your calendar/);
+  assert.equal(html.includes('id="railAddAll"'),false,'right column does not repeat the calendar link');
+  assert.equal(layout.includes('railAddAll'),false);
 });
 test('events: the week grid is shown and the map is hidden; event pins still select their card',()=>{
   assert.match(css,/html\[data-category="events"\] #eventCalendar\{display:block!important/);

@@ -1803,7 +1803,6 @@ html .filter-rail .filter-rail__links #railVisits[hidden]{display:none}
 #allEventDays[aria-pressed="true"]{background:var(--cream,#F6EBD3);color:#0B0910;border-color:var(--cream,#F6EBD3)}
 #allEventDays[aria-pressed="false"]{background:transparent;color:var(--cream,#F6EBD3);border-color:var(--cream,#F6EBD3)}
 #thisWeek.btn{min-height:32px;height:32px;padding:0 10px;border-width:1px;font:600 13px/1 var(--f-body);letter-spacing:0}
-#railAddAll{display:none!important}
 .event-card .chips .chip{display:inline-flex;align-items:center;height:26px;padding:0 8px;border-radius:13px;border:1px solid #3A3046;background:transparent;color:#CFC4B0;font:500 12px/1 var(--f-body)}
 html[data-category="events"] .events-column-head .events-head-count{display:inline;color:var(--text-3,#A89DB4);font-size:14px;white-space:nowrap}
 @media(max-width:959px){
