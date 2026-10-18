@@ -20,4 +20,15 @@ function listingHoursText(x){
  if(scheduled&&scheduled(x))return listingCategory(x)==='Treat stop'?'Candy hours not specified':'Dates and hours not specified';
  return 'Hours not listed';
 }
-if(typeof module!=='undefined')module.exports={compactTime,listingCategory,listingHoursText,LISTING_TREAT_KIND};
+// Event-card feature chips. "Free" comes from the listing only when the event
+// is actually free (cost "Free", or a Free feature with no paid cost).
+// Haunted Trails is "$12 per person", so it never gets a Free chip.
+const EVENT_FEATURE_CHIPS=['Free','Open to all','Registration required','Kid-friendly'];
+function eventFeatureChips(x){
+ const listed=(x&&Array.isArray(x.features)?x.features:[]).filter(f=>EVENT_FEATURE_CHIPS.includes(f)&&f!=='Free');
+ const cost=String(x&&x.cost||'').trim();
+ const paid=Boolean(cost)&&!/^free\b/i.test(cost);
+ const free=!paid&&(/^free\b/i.test(cost)||(x&&Array.isArray(x.features)&&x.features.includes('Free')));
+ return free?['Free'].concat(listed):listed;
+}
+if(typeof module!=='undefined')module.exports={compactTime,listingCategory,listingHoursText,LISTING_TREAT_KIND,eventFeatureChips};

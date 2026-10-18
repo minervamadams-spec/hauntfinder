@@ -85,7 +85,7 @@ test('events right column: column head markup, heading + count from the same ren
   assert.ok(html.includes('id="eventsDayHeading"'),'day heading in markup');
   assert.ok(html.includes('id="eventsHeadCount"'),'head count in markup');
   assert.ok(layout.includes("$('eventsDayHeading').textContent=state.eventDay?"),'heading names the selected day, or All week');
-  assert.ok(layout.includes("$('eventsHeadCount').textContent=`${items.length} event${items.length===1?'':'s'}${state.search?' within '+state.search.radius+' mi':''}`"),'count is the same rendered array, including a search radius');
+  assert.ok(layout.includes("$('eventsHeadCount').textContent=`${weekCount} this week · ${pool.length} total`"),'header names the week count and the total, so it can differ from the tab badge');
   assert.ok(layout.includes("$('cardList').innerHTML=items.map(e=>e.ongoing?eventCard(e,{band:true})"),'events render full cards with no pagination');
   assert.ok(layout.includes("$('eventsColumnHead').hidden=!event"),'column head hidden off the events tab');
   assert.ok(layout.includes("$('countLine').hidden=event"),'display count line hidden on events');

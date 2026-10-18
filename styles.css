@@ -758,11 +758,11 @@ body.host-panel-open{overflow:hidden}
 .ongoing-item__meta{font-size:14px;color:var(--text-3)}
 .ongoing-item__route{min-height:44px;padding:0 16px;background:var(--lime);color:#0B0910;border:2px solid var(--lime);border-radius:var(--radius-control);font:700 14px/1 var(--f-cond);letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
 .ongoing-item__route[aria-pressed="true"]{background:var(--cream);border-color:var(--cream);color:#0B0910}
-.events-view{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 10px}
+.events-view{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:12px;margin:14px 0 10px}
 .events-view__seg{display:inline-grid;grid-template-columns:1fr 1fr;gap:0;padding:3px;border:2px solid var(--line-2);border-radius:999px}
 .events-view__seg button{min-height:40px;padding:0 18px;border:0;border-radius:999px;background:transparent;color:var(--text-3);font:600 15px/1 var(--f-cond);letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
 .events-view__seg button[aria-checked="true"]{background:var(--cream);color:#0B0910}
-.events-view__helper{margin:0;font-size:13px;color:var(--text-3)}
+.events-view__helper{margin:0 0 0 auto;font-size:13px;color:var(--text-3)}
 .event-week{display:none;gap:8px}
 .event-week[data-view="week"]{grid-template-columns:repeat(7,minmax(0,1fr))}
 .event-week[data-view="3days"]{grid-template-columns:repeat(3,minmax(240px,1fr))}
@@ -1790,24 +1790,27 @@ html .filter-rail .filter-rail__links #railVisits[hidden]{display:none}
 @media(max-width:1023px){.filterbar .shops-nav-link{display:none}}
 
 /* Events week view: current Sun–Sat week, no map, 440px cards on the right. */
-.events-weeknav{display:flex;align-items:center;gap:4px 8px;flex:1 1 auto;min-width:0}
+.events-weeknav{display:flex;align-items:center;gap:4px 8px;flex:0 0 auto;min-width:max-content}
 .events-weeknav__btn{min-height:44px;padding:0 10px;border:0;background:transparent;color:var(--purple,#B48CFF);font:700 15px/1 var(--f-cond);letter-spacing:.04em;cursor:pointer;white-space:nowrap}
-.events-title{flex:0 1 auto}
+.events-title{flex:0 0 auto;white-space:nowrap}
 .events-weeknav__btn:disabled{color:var(--text-3,#7E7389);cursor:default;opacity:.45}
 .events-weeknav__btn:focus-visible,.events-weeknav .btn:focus-visible{outline:2px solid var(--purple,#B48CFF);outline-offset:2px}
-.events-title{min-width:0}
 .event-col--today .event-col__dom{color:var(--purple,#B48CFF)}
 .event-col__today{flex-basis:100%;font:700 11px/1.3 var(--f-cond);letter-spacing:.08em;text-transform:uppercase;color:var(--purple,#B48CFF)}
 .mday--today .mday__head{color:var(--purple,#B48CFF)}
+#allEventDays.btn{min-height:50px;height:50px;padding:0 16px;border-radius:999px;font:600 15px/1 var(--f-cond);letter-spacing:.05em}
 #allEventDays[aria-pressed="true"]{background:var(--cream,#F6EBD3);color:#0B0910;border-color:var(--cream,#F6EBD3)}
+#allEventDays[aria-pressed="false"]{background:transparent;color:var(--cream,#F6EBD3);border-color:var(--cream,#F6EBD3)}
+#thisWeek.btn{min-height:32px;height:32px;padding:0 10px;border-width:1px;font:600 13px/1 var(--f-body);letter-spacing:0}
+.event-card .chips .chip{display:inline-flex;align-items:center;height:26px;padding:0 8px;border-radius:13px;border:1px solid #3A3046;background:transparent;color:#CFC4B0;font:500 12px/1 var(--f-body)}
 html[data-category="events"] .events-column-head .events-head-count{display:inline;color:var(--text-3,#A89DB4);font-size:14px;white-space:nowrap}
 @media(max-width:959px){
- html[data-category="events"] .events-head{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
- html[data-category="events"] .events-weeknav,html[data-category="events"] .events-head__actions{display:contents}
- html[data-category="events"] #prevWeek{grid-column:1;justify-self:start}
- html[data-category="events"] #thisWeek{grid-column:2;justify-self:center}
- html[data-category="events"] #nextWeek{grid-column:3;justify-self:end}
- html[data-category="events"] #eventCalendarHeading,html[data-category="events"] #addAllToCalendar,html[data-category="events"] #submitEvent{grid-column:1 / -1}
+ html[data-category="events"] .events-head{display:flex;flex-direction:column;align-items:stretch;gap:8px}
+ html[data-category="events"] .events-weeknav{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:4px;width:100%;min-width:0}
+ html[data-category="events"] .events-weeknav__btn{flex:0 0 auto;padding:0 2px;min-height:36px;font-size:13px}
+ html[data-category="events"] .events-weeknav .events-title{flex:1 1 auto;min-width:0;text-align:center;white-space:nowrap;font-size:14px;line-height:1.15}
+ html[data-category="events"] .events-weeknav .events-title::before,html[data-category="events"] .events-weeknav .events-title::after{content:"·";margin:0 4px;color:#7E7389;font-weight:500}
+ html[data-category="events"] .events-head__actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
  html[data-category="events"] #eventCalendar{padding:12px 12px 4px}
 }
 @media(max-width:1023px){
@@ -1818,8 +1821,9 @@ html[data-category="events"] .events-column-head .events-head-count{display:inli
  html[data-category="events"] .mobile-bar__view{display:none}
 }
 @media(min-width:1024px){
- html[data-category="events"] .events-head{flex-wrap:nowrap}
- html[data-category="events"] .events-head__actions{flex:0 0 auto;margin-left:12px}
+ html[data-category="events"] .events-head{flex-wrap:wrap;align-items:center;row-gap:8px}
+ html[data-category="events"] .events-weeknav{flex:1 0 auto;gap:4px 6px}
+ html[data-category="events"] .events-head__actions{flex:1 1 auto;margin-left:auto;justify-content:flex-end}
  html[data-category="events"] .app__main.page-grid{grid-template-columns:260px minmax(0,1fr) 440px;grid-template-rows:minmax(0,1fr) auto}
  html[data-rail="collapsed"][data-category="events"] .app__main.page-grid{grid-template-columns:44px minmax(0,1fr) 440px}
  html[data-category="events"] .filter-rail{grid-column:1;grid-row:1 / span 2}
@@ -1829,6 +1833,12 @@ html[data-category="events"] .events-column-head .events-head-count{display:inli
  html[data-category="events"] .list-column{grid-column:3;grid-row:1 / span 2;width:440px;max-width:440px}
  html[data-category="events"]:not([data-hf-rail="off"]) .route-wrap{grid-column:2;grid-row:2;align-self:stretch;justify-self:stretch;width:auto;max-width:none;margin:0;z-index:2;position:relative;border-radius:0}
 }
+@media(max-width:1023px){
+ html[data-category="events"] .mobile-bar{position:fixed;left:0;right:0;bottom:0;z-index:1000}
+ html[data-category="events"] #eventCalendar{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+}
+html[data-category="events"] .events-column-head.is-day .events-day-heading{text-transform:none;letter-spacing:0;font:600 15px/1.3 var(--f-body);color:#F6EBD3}
+html[data-category="events"] .events-column-head.is-day .events-head-count{display:none}
 
 /* Secondary pages reuse the map banner (site-chrome.js) and these tab styles.
    The nav is only the category links plus Shops & Services: no filter column and no ZIP search. */

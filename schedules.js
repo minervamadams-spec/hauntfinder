@@ -307,6 +307,22 @@ function threeDayDates(now){
 // Single-date and `dates` lists occupy their real columns. Ongoing listings
 // never do — they belong in the Open all week band.
 function eventColumnDates(ev){if(!ev||ev.ongoing)return [];return eventDateList(ev);}
+// Card date line. A showing that is still listed for today leads with today,
+// even after that day's end time, so the card never jumps to a later date
+// while today is on the grid: "Tonight · Sat, Oct 17 · also Oct 23, 24, 30".
+function eventCardWhenLine(ev,now=new Date()){
+ if(!ev||ev.ongoing)return '';
+ const when=now instanceof Date?now:new Date(now);
+ const fmt=(d,weekday)=>new Date(d+'T12:00:00').toLocaleDateString('en-US',Object.assign({timeZone:'America/New_York',month:'short',day:'numeric'},weekday?{weekday:'short'}:{}));
+ const compact=dates=>{let prev='';return dates.map(d=>{const label=fmt(d,false),m=label.match(/^(\D+?)\s+(\d+)$/);if(!m)return label;if(m[1]===prev)return m[2];prev=m[1];return label}).join(', ')};
+ const today=easternToday(when),listed=eventDateList(ev);
+ if(today&&listed.includes(today)){const rest=listed.filter(d=>d>today),head='Tonight · '+fmt(today,true);return rest.length?head+' · also '+compact(rest):head}
+ const upcoming=eventUpcomingDates(ev,when);
+ const dates=upcoming.length?upcoming:listed;
+ if(!dates.length)return '';
+ if(dates.length===1)return fmt(dates[0],true);
+ return 'Next '+fmt(dates[0],true)+' · also '+dates.slice(1).map(d=>fmt(d,false)).join(', ');
+}
 function ongoingCoversWeek(ev,days){
  if(!ev||ev.ongoing!==true||!Array.isArray(days)||!days.length)return false;
  const listed=Array.isArray(ev.dates)?ev.dates.filter(dateStrOk).slice().sort():[];
@@ -393,4 +409,4 @@ function buildEventsICS(list,weekDays,base){
  lines.push('END:VCALENDAR');
  return lines.join('\r\n')+'\r\n';
 }
-if(typeof module!=='undefined')module.exports={hoursOn,datesActive,hasScheduleInfo,isOpenAt,hoursLabel,openOnDateLabel,schedulesCompleteFor,openTonightEligible,DATE_FILTER_KEY,todayParts,nextWeekendDates,normalizeDateFilter,loadDateFilter,saveDateFilter,schedulesDateMatch,openTonightBadgeHTML,eventDays,eventDateMatch,dateFilterLabel,eventWeekDays,buildEventsICS,easternOffset,easternToday,eventDateList,eventOccurrences,eventUpcomingDates,eventHasUpcoming,eventNextStart,eventOccursOn,isoAddDays,weekSunday,weekDates,isOct31,weekRangeLabel,threeDayDates,eventColumnDates,ongoingCoversWeek,lastListedDate,eventWeekBounds,clampWeekStart,shiftWeek};
+if(typeof module!=='undefined')module.exports={hoursOn,datesActive,hasScheduleInfo,isOpenAt,hoursLabel,openOnDateLabel,schedulesCompleteFor,openTonightEligible,DATE_FILTER_KEY,todayParts,nextWeekendDates,normalizeDateFilter,loadDateFilter,saveDateFilter,schedulesDateMatch,openTonightBadgeHTML,eventDays,eventDateMatch,dateFilterLabel,eventWeekDays,buildEventsICS,easternOffset,easternToday,eventDateList,eventOccurrences,eventUpcomingDates,eventHasUpcoming,eventNextStart,eventOccursOn,isoAddDays,weekSunday,weekDates,isOct31,weekRangeLabel,threeDayDates,eventColumnDates,eventCardWhenLine,ongoingCoversWeek,lastListedDate,eventWeekBounds,clampWeekStart,shiftWeek};

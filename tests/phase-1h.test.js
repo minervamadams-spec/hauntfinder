@@ -58,7 +58,7 @@ test('card pages (v7): the pager is retired for a continuous result rail',()=>{
 });
 
 test('counts agree: the active tab badge mirrors the count line (filtered visible, non-placeholder)',()=>{
- assert.ok(layout.includes("event?matchingEvents().length:activeListings().filter(x=>!x.placeholder).length"),'active badge uses the filtered visible pipeline');
+ assert.ok(layout.includes("event?matchingEvents(true).length:activeListings().filter(x=>!x.placeholder).length"),'events badge stays the filtered total and ignores the selected day');
  assert.ok(layout.includes("event?'eventCount':treats?'treatStopCount':'displayTabCount'"),'badge overwrite targets the active tab only');
  assert.ok(layout.includes("$('displayTabCount').textContent=String(counts.displays)"),'inactive tabs keep area totals');
  assert.ok(app.includes('nonPlaceholder=visible.filter(x=>!x.placeholder)'),'count line counts non-placeholder cards');

@@ -107,7 +107,7 @@ test('photos pipeline: API contract, session cache, peek strip preserved',()=>{
 });
 
 test('event card: spec type colors with 4px top border and filled type pill',()=>{
-  assert.ok(layout.includes("function eventColor(x){return {'Trunk-or-treat':'#FF7A1A',Parade:'#B48CFF',Festival:'#A6E22E','Donation drive/Community collection':'#FF6FA8',Other:'#3FD0C0'}"),'type color map (Donation drive = pink #FF6FA8, round 4 item 10)');
+  assert.ok(layout.includes("function eventColor(x){return {'Trunk-or-treat':'#FF7A1A',Parade:'#B48CFF',Festival:'#A6E22E','Donation drive/Community collection':'#FF6FA8','Haunted trail':'#E6B325',Other:'#3FD0C0'}"),'type color map (Donation drive = pink #FF6FA8, Haunted trail = yellow #E6B325)');
   assert.ok(css.includes('.event-card{display:flex;flex-direction:column;gap:10px;padding:16px;border-top:4px solid var(--event-color'),'4px type top border');
   assert.ok(css.includes('.event-type-pill{display:inline-flex;align-items:center;min-height:26px;padding:0 10px;border-radius:999px;background:var(--event-color'),'26px filled pill');
   assert.ok(css.includes('letter-spacing:.06em;text-transform:uppercase'),'pill uppercase');
