@@ -63,6 +63,34 @@ test('Oct 31 tint, Today marker, and type color are not decided by the week',()=
   assert.equal(layout.includes('Other dates'),false);
 });
 
+test('a showing listed for today leads the card, even after that day has ended',()=>{
+  const late=new Date('2026-10-17T22:30:00-04:00');
+  assert.equal(sch.eventCardWhenLine(trails,noon),'Tonight · Sat, Oct 17 · also Oct 23, 24, 30');
+  assert.equal(sch.eventCardWhenLine(trails,late),'Tonight · Sat, Oct 17 · also Oct 23, 24, 30','today stays first after 9 PM');
+  assert.equal(sch.eventCardWhenLine(trails,new Date('2026-10-18T12:00:00-04:00')),'Next Fri, Oct 23 · also Oct 24, Oct 30');
+  assert.equal(sch.eventCardWhenLine(buddies,noon),'Thu, Oct 29');
+  assert.equal(sch.eventCardWhenLine(skully,noon),'');
+  assert.ok(layout.includes('eventCardWhenLine'),'cards use the today-first date line');
+});
+
+test('legend names every type color, including Haunted trail in yellow',()=>{
+  assert.ok(layout.includes("{label:'Haunted trail',value:'Haunted trail'}"),'legend includes Haunted trail');
+  assert.ok(layout.includes("'Haunted trail':'#E6B325'"),'Haunted trail uses the yellow already on its chip');
+  assert.ok(layout.includes('legendExtra'),'a type on the grid that is not in the list is still added');
+});
+
+test('review controls: All week sits with the switch, This week hides on the current week, one calendar link, text chips, explained counts',()=>{
+  assert.ok(css.includes('#allEventDays.btn{min-height:50px;height:50px'),'All week matches the view switch height');
+  assert.ok(css.includes('.events-view{display:flex;align-items:center;justify-content:flex-start'),'All week stays next to the switch');
+  assert.ok(css.includes('#allEventDays[aria-pressed="false"]{background:transparent'),'All week is an outline once a day is selected');
+  assert.ok(layout.includes("$('thisWeek').hidden=hideNav||onCurrentWeek"),'This week is hidden on the current week');
+  assert.ok(css.includes('#thisWeek.btn{min-height:32px'),'This week is a small outline on other weeks');
+  assert.ok(css.includes('#railAddAll{display:none!important}'),'calendar link stays in the title row only');
+  assert.ok(html.includes('id="addAllToCalendar"'),'title-row calendar link remains');
+  assert.ok(layout.includes('eventTags(x).map(f=>`<span class="chip">${safeListingText(f)}</span>`)'),'event features are text chips');
+  assert.ok(layout.includes('`${weekCount} this week · ${pool.length} total`'),'header explains the week count and the total');
+});
+
 test('week and day travel in the URL and week nav is wired',()=>{
   assert.ok(html.includes('id="prevWeek"'),'Prev week control');
   assert.ok(html.includes('id="thisWeek"'),'This week control');
