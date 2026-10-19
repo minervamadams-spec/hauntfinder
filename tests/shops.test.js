@@ -16,6 +16,22 @@ test('only HTTPS destinations are accepted for public advertising', () => {
   assert.equal(isHttps('javascript:alert(1)'), false);
 });
 
+test('Dusk Productions approved ad has public, privacy-safe shop fields', () => {
+  const fs = require('node:fs');
+  const vm = require('node:vm');
+  const source = fs.readFileSync(require('node:path').join(__dirname, '../shops-ads.js'), 'utf8');
+  const context = { window: {} };
+  vm.runInNewContext(source, context);
+  const ad = context.window.HAUNTFINDER_SHOPS_ADS.find(item => item.id === 'dusk-productions-2026');
+  assert.ok(ad);
+  assert.equal(ad.status, 'approved');
+  assert.equal(ad.businessType, 'both');
+  assert.equal(ad.url, 'https://duskproductions.com/');
+  assert.equal(ad.alt, 'Dusk Productions logo');
+  assert.match(ad.image, /^assets\/shops\/dusk-productions-logo\.png$/);
+  assert.equal(JSON.stringify(ad).includes('@'), false, 'ad must not expose private email data');
+});
+
 test('advertise button opens the submit page; the ad form is a submit option; email stays secondary', () => {
   const fs = require('node:fs');
   const path = require('node:path');

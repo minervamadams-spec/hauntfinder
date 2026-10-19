@@ -681,6 +681,30 @@ const listings=[
    "features": ["Music / Sound", "Photo opportunities", "Fog", "Lights", "Live Actors"],
    "notes": "Lights are on 6:30–11 PM every night, rain or shine. Fridays and Saturdays, weather permitting, the creator dresses up for scares and photos and answers questions about the custom-made display. Best at night with the lights on. Park and walk up: many custom pieces are near the house and covered porch, and you're welcome to walk up the steps for a closer look. Please stay off the grass. The display pays homage to many '80s heavy metal bands and musicians, vampires, and original artwork.",
    "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-19",
+   "num": 16,
+   "entityId": "halloween-on-the-hill-2026",
+   "name": "Halloween on the Hill",
+   "town": "Mine Hill",
+   "address": "12 Baker Street, Mine Hill, NJ 07803",
+   "lat": 40.8782632,
+   "lng": -74.5995132,
+   "geoVerified": "Mine Hill Township and Morris County exact address verification 2026-10-19",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "startDate": "2026-10-24"
+   },
+   "dates": "Any night after October 24th 4pm",
+   "times": "At dark",
+   "levels": ["Family Friendly"],
+   "type": ["Walk-through"],
+   "features": ["Photo opportunities", "Lights"],
+   "notes": "Memorial Park, Mine Hill Town Halloween Display.",
+   "kind": "Decorated home/yard display"
  }
 ];
 listings.sort((a,b)=>a.num-b.num);

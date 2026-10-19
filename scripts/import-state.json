@@ -137,6 +137,16 @@
       "entityId": "east-prospect-graveyard-2026",
       "decision": "imported_consented_new_entity_exact_address_verified",
       "publicAddress": "106 East Prospect Street, Hawthorne, NJ 07506"
+    },
+    {
+      "row": 14,
+      "fingerprint": "767b5d2d3c1a2f25a36ac8a12f2a2a7b9384e69c92e5ea7ca17a629f820358e8",
+      "fingerprintColumns": 15,
+      "listingId": 16,
+      "entityId": "halloween-on-the-hill-2026",
+      "decision": "imported_consented_new_entity_exact_address_verified",
+      "publicAddress": "12 Baker Street, Mine Hill, NJ 07803",
+      "scheduleEvidence": "Submitted as any night after October 24 at 4 PM, with viewing at dark; no end date supplied."
     }
   ],
   "treatStops": {
@@ -183,18 +193,38 @@
         "publicAddress": "50 Camp Mohican Road, Blairstown, NJ"
       },
       {
+        "row": 4,
         "rowKey": "474eb0b64da9a5269bb6da2532011c6383c5e845bb927e611c9bceb34413c811",
+        "fingerprint": "2bfe962506a2a48a316dab3f7081d06aeb369f2a8f8e005ecc2422d093b900b6",
+        "fingerprintColumns": 19,
         "decision": "imported_consented_free_community_event_minerva_approved_2026-10-17",
         "eventId": "hanovers-best-trunk-or-treat-2026-10-24",
         "entityId": "hanovers-best-trunk-or-treat-2026",
         "publicAddress": "565 Route 10, Whippany, NJ 07981"
       },
       {
+        "row": 5,
         "rowKey": "25790ab9486efe50bbd6e88badf7eca8aaf9f1c0a27d52e8d2f9d11daf9d97f3",
+        "fingerprint": "4dd164aedb231a691ca7961d7857ccc0200ab7d71f410f987308d07a1516bd66",
+        "fingerprintColumns": 19,
         "decision": "imported_consented_free_community_event_minerva_approved_2026-10-17",
         "eventId": "jeffersons-best-trunk-or-treat-2026-10-30",
         "entityId": "jeffersons-best-trunk-or-treat-2026",
         "publicAddress": "694 Route 15, Lake Hopatcong, NJ 07849"
+      }
+    ]
+  },
+  "shops": {
+    "spreadsheetId": "1Lej0-FXYQ4853OyWWKcpDpVEPMox2Cqu26FNQ2wnNLk",
+    "sheet": "Form Responses 1",
+    "rows": [
+      {
+        "row": 2,
+        "fingerprint": "55c5da8781876de966d44b7216413d77dda9f2210b80ca10f855f0acac63b8e4",
+        "fingerprintColumns": 21,
+        "adId": "dusk-productions-2026",
+        "decision": "approved_by_minerva_sync_request_2026-10-19",
+        "sourceImageDriveId": "1wETTkXexw9kWeMS0b2-DMuAFGr7hi27v"
       }
     ]
   },

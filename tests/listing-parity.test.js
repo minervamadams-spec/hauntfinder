@@ -10,6 +10,17 @@ const {listings,events}=L.loadListingData(app);
 const real=n=>listings.find(x=>x.num===n);
 const active=listings.filter(x=>!x.placeholder);
 
+test('Halloween on the Hill has a verified public pin and contains no source contact data',()=>{
+  const listing=real(16);
+  assert.ok(listing);
+  assert.equal(listing.entityId,'halloween-on-the-hill-2026');
+  assert.equal(listing.address,'12 Baker Street, Mine Hill, NJ 07803');
+  assert.deepEqual([listing.lat,listing.lng],[40.8782632,-74.5995132]);
+  assert.ok(listing.geoVerified);
+  assert.equal(listing.schedule.startDate,'2026-10-24');
+  assert.equal(JSON.stringify(listing).includes('@'),false,'listing must not expose source contact data');
+});
+
 // ---- 4. Shared hours formatting ----
 test('hours: one shared formatter, compact like the cards (#12 reads 6–10 PM)',()=>{
   assert.equal(F.compactTime('6:00 PM–10:00 PM'),'6–10 PM');
