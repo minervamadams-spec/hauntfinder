@@ -1788,7 +1788,6 @@ html .filter-rail .filter-rail__links #railVisits[hidden]{display:none}
  .filterbar .nav-search{grid-column:3;grid-row:1}
  .shops-nav-link{grid-column:4;grid-row:1;justify-self:end;min-height:48px;border-left:1px solid #2E2638;border-right:0}
 }
-@media(max-width:1023px){.filterbar .shops-nav-link{display:none}}
 
 /* Events week view: current Sun–Sat week, no map, 440px cards on the right. */
 .events-weeknav{display:flex;align-items:center;gap:4px 8px;flex:0 0 auto;min-width:max-content}
@@ -1862,4 +1861,29 @@ html body .filterbar.site-nav a:hover,html body .filterbar.site-nav a:focus{text
 @media(max-width:420px){
  html body .filterbar.site-nav .tabs a.site-tab,html body .filterbar.site-nav .shops-nav-link{font-size:12px;padding:0 2px;gap:3px}
  html body .filterbar.site-nav .shops-nav-link .shops-nav-badge{min-width:18px;height:18px;padding:0 3px;font-size:11px}
+}
+
+/* Round 3 mobile nav: Shops & Services is a full-width row (44px plus its 1px top border) under the three category tabs,
+   on the map page and on every secondary page. No dropdown, "More" menu or fourth tab. */
+.shops-nav-link__label--long{display:none}
+@media(min-width:1280px){
+ .shops-nav-link .shops-nav-link__label--short{display:none}
+ .shops-nav-link .shops-nav-link__label--long{display:inline}
+}
+@media(max-width:1023px){
+ html body .filterbar .shops-nav-link,html body .filterbar.site-nav .shops-nav-link{order:3;display:flex;flex:0 0 100%;align-items:center;justify-content:center;gap:0;box-sizing:border-box;width:100%;height:45px;min-height:45px;max-height:45px;margin:0;padding:0 12px;border:0;border-top:1px solid #2E2638;border-radius:0;background:transparent;color:#F6EBD3;font:600 14px/1 var(--f-body);letter-spacing:0;text-transform:none;text-decoration:none;white-space:nowrap}
+ html body .filterbar .shops-nav-link:hover,html body .filterbar .shops-nav-link:focus,html body .filterbar .shops-nav-link:active{background:transparent;color:#F6EBD3;text-decoration:none}
+ html body .filterbar .shops-nav-link:focus{outline:0}
+ html body .filterbar .shops-nav-link:focus-visible{outline:2px solid #B48CFF;outline-offset:-2px}
+ html body .filterbar .shops-nav-link[aria-current="page"],html body .filterbar.site-nav .shops-nav-link[aria-current="page"]{background:#1C1626;color:#F6EBD3;border-bottom:0}
+ html body .filterbar .shops-nav-link[aria-current="page"]::after{content:"";flex:none;width:6px;height:6px;margin-left:8px;border-radius:50%;background:#F6EBD3}
+ html body .filterbar .shops-nav-link[aria-current="page"] .shops-nav-badge{display:none}
+ html body .filterbar.site-nav .nav-row{height:auto!important;max-height:none}
+ html body .filterbar.site-nav .tabs{flex-wrap:wrap;height:auto}
+ html body .filterbar.site-nav .tabs a.site-tab{height:44px}
+ /* Map view: start the fixed map below the Shops row so all four sections stay one tap away. */
+ html[data-mview="map"]{--mapbar-top:149px}
+}
+@media(max-width:420px){
+ html body .filterbar .shops-nav-link,html body .filterbar.site-nav .shops-nav-link{padding:0 12px;font-size:14px;gap:0}
 }

@@ -2,6 +2,13 @@
   'use strict';
 
   var loading = false;
+  // The accessible name follows the visible label, which is longer at 1280px and wider.
+  var wide = window.matchMedia ? window.matchMedia('(min-width:1280px)') : null;
+  if (wide) {
+    var onWide = function () { render(); };
+    if (wide.addEventListener) wide.addEventListener('change', onWide);
+    else if (wide.addListener) wide.addListener(onWide);
+  }
 
   function links() {
     return Array.prototype.slice.call(document.querySelectorAll('.shops-nav-link, .menu-drawer__shops'));
@@ -28,7 +35,8 @@
       badge.setAttribute('aria-hidden', 'true');
       badge.textContent = count;
       link.appendChild(badge);
-      link.setAttribute('aria-label', 'Shops & Services, ' + count + (count === 1 ? ' listing' : ' listings'));
+      var name = link.classList.contains('shops-nav-link') && wide && wide.matches ? 'Shops, Makers & Services' : 'Shops & Services';
+      link.setAttribute('aria-label', name + ', ' + count + (count === 1 ? ' listing' : ' listings'));
     });
   }
 
