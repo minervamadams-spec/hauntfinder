@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { isActive, isHttps } = require('../shops.js');
+const { isActive, isHttps } = require('../shops-eligibility.js');
 
 test('advertisements must be approved, HTTPS, and within their active window', () => {
   const baseline = { status: 'approved', url: 'https://business.example/' };
@@ -8,6 +8,24 @@ test('advertisements must be approved, HTTPS, and within their active window', (
   assert.equal(isActive({ ...baseline, status: 'draft' }), false);
   assert.equal(isActive({ ...baseline, url: 'http://business.example/' }), false);
   assert.equal(isActive({ ...baseline, expirationDate: '2000-01-01' }), false);
+  assert.equal(isActive({ ...baseline, startDate: '2999-01-01' }), false);
+});
+
+test('the navigation badge uses the same eligibility predicate as the Shops card list', () => {
+  const ads = [
+    { status: 'approved', url: 'https://active.example/' },
+    { status: 'draft', url: 'https://draft.example/' },
+    { status: 'approved', url: 'https://expired.example/', expirationDate: '2000-01-01' },
+    { status: 'approved', url: 'https://future.example/', startDate: '2999-01-01' },
+    { status: 'approved', url: 'http://insecure.example/' }
+  ];
+  const badge = require('node:fs').readFileSync(require('node:path').join(__dirname, '../shops-nav-badge.js'), 'utf8');
+  const shops = require('node:fs').readFileSync(require('node:path').join(__dirname, '../shops.js'), 'utf8');
+  assert.equal(ads.filter(isActive).length, 1);
+  assert.match(badge, /ads\.filter\(eligibility\.isActive\)\.length/);
+  assert.match(shops, /\.filter\(active\)/);
+  assert.match(badge, /if \(!count\) return;/, 'zero active ads leaves no badge');
+  assert.match(badge, /Shops & Services, .+ listing/, 'the link has a descriptive accessible name');
 });
 
 test('only HTTPS destinations are accepted for public advertising', () => {

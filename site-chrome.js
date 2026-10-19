@@ -2,9 +2,8 @@
 // SITE_BANNER_HTML is the map page banner. tests/site-chrome.test.js fails if
 // it diverges from index.html. Secondary pages render the title as a div so
 // the page keeps a single h1.
-// Count badges stay on the map: layout.js fills them from the live listing set
-// and the current search area. That pipeline is not loaded here, so the badges
-// are omitted rather than duplicated.
+// Category counts stay on the map because they depend on the search area. The
+// Shops badge is global and loads its small ad list asynchronously instead.
 (function () {
   'use strict';
   var INTRO = 'Find decorated homes, spooky displays, treat stops, and Halloween events near you. Check visiting details, plan your route, or submit a listing for free.';
@@ -86,6 +85,18 @@
     var active = slot.getAttribute('data-chrome-active') || '';
     slot.outerHTML = bannerHTML() + navHTML(active) + drawerHTML(active);
     wireMenu();
+    loadShopsBadge();
+  }
+
+  function loadShopsBadge() {
+    if (window.HauntfinderShopsNavBadge) return window.HauntfinderShopsNavBadge.refresh();
+    fetch('shops-nav-badge.js', { credentials: 'same-origin' }).then(function (response) {
+      if (!response.ok) throw new Error('Unavailable');
+      return response.text();
+    }).then(function (source) {
+      Function(source)();
+      window.HauntfinderShopsNavBadge.refresh();
+    }).catch(function () {});
   }
 
   mount();

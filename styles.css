@@ -1224,7 +1224,7 @@ html[data-category="displays"]{--acc:#FF7A1A}
 html[data-category="treats"]{--acc:#A6E22E}
 html[data-category="events"]{--acc:#B48CFF}
 .tabs__badge{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-width:20px;height:20px;padding:0 6px;border-radius:10px;font:800 12px/1 var(--f-body);color:#120E18}
-.tabs__badge--displays{background:#FF7A1A}.tabs__badge--treats{background:#A6E22E}.tabs__badge--events{background:#B48CFF}
+.tabs__badge--displays{background:#FF7A1A}.tabs__badge--treats{background:#A6E22E}.tabs__badge--events{background:#B48CFF}.tabs__badge--shops{background:#54C7EC}
 .route-panel{padding:8px 14px 12px;border-bottom:1px solid #2E2638}
 .route-stops{margin:0 0 10px;padding:0;list-style:none;display:grid;gap:6px;max-height:220px;overflow:auto}
 .route-stop{display:flex;align-items:center;gap:10px;font-size:14px}
@@ -1847,6 +1847,8 @@ html body .filterbar.site-nav{position:relative;z-index:40;background:#0B0910;bo
 html body .filterbar.site-nav .nav-row{display:flex;flex-direction:row;align-items:stretch;flex-wrap:nowrap;gap:0;width:100%;height:48px;min-height:48px;max-height:none;padding:0;margin:0}
 html body .filterbar.site-nav .tabs{display:flex;align-items:stretch;flex:1 1 auto;width:100%;grid-column:1 / -1;height:48px;padding:0 8px 0 12px;border:0;border-right:0;gap:0;overflow:visible}
 html body .filterbar.site-nav .shops-nav-link{margin-left:auto;align-self:stretch;box-sizing:border-box;border-bottom:3px solid transparent}
+html body .shops-nav-link .shops-nav-badge{flex:none;margin-left:5px}
+html body .menu-drawer__shops .shops-nav-badge{margin-left:8px}
 html body .filterbar.site-nav .shops-nav-link[aria-current="page"]{color:#F6EBD3;border-bottom-color:#F6EBD3}
 html body .filterbar.site-nav a:hover,html body .filterbar.site-nav a:focus{text-decoration:none}
 .subpage .menu-drawer a:hover,.alerts-page .menu-drawer a:hover,.shops-page .menu-drawer a:hover{text-decoration:none}
@@ -1859,4 +1861,5 @@ html body .filterbar.site-nav a:hover,html body .filterbar.site-nav a:focus{text
 }
 @media(max-width:420px){
  html body .filterbar.site-nav .tabs a.site-tab,html body .filterbar.site-nav .shops-nav-link{font-size:12px;padding:0 2px;gap:3px}
+ html body .filterbar.site-nav .shops-nav-link .shops-nav-badge{min-width:18px;height:18px;padding:0 3px;font-size:11px}
 }

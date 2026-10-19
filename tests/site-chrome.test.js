@@ -42,7 +42,9 @@ test('category tabs link back to index.html and only Shops & Services is current
   for (const name of ['submit.html', 'about.html', 'alerts.html', 'route.html', 'listing.html']) {
     assert.doesNotMatch(read(name), /data-chrome-active="shops"/);
   }
-  assert.equal(chrome.includes('tabs__badge'), false, 'count badges stay on the map, where the live totals are computed');
+  assert.match(chrome, /loadShopsBadge\(\)/, 'only the global Shops count is loaded for secondary navigation');
+  assert.match(read('shops-nav-badge.js'), /tabs__badge--shops/);
+  assert.match(read('shops-nav-badge.js'), /catch\(clear\)/, 'a missing ad list leaves the link usable without a badge');
 });
 
 test('secondary tab links share the map tab rules instead of a second stylesheet', () => {
