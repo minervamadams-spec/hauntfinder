@@ -25,7 +25,8 @@ test('the navigation badge uses the same eligibility predicate as the Shops card
   assert.match(badge, /ads\.filter\(eligibility\.isActive\)\.length/);
   assert.match(shops, /\.filter\(active\)/);
   assert.match(badge, /if \(!count\) return;/, 'zero active ads leaves no badge');
-  assert.match(badge, /Shops & Services, .+ listing/, 'the link has a descriptive accessible name');
+  assert.match(badge, /'Shops, Makers & Services' : 'Shops & Services'/, 'the accessible name follows the visible label');
+  assert.match(badge, /name \+ ', ' \+ count \+ \(count === 1 \? ' listing' : ' listings'\)/, 'the link has a descriptive accessible name');
 });
 
 test('only HTTPS destinations are accepted for public advertising', () => {

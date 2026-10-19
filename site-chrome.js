@@ -14,6 +14,9 @@
   <button type="button" class="hf-menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="menuDrawer"><span aria-hidden="true">☰</span></button>
   <p class="intro-strip__copy">${INTRO}</p>
 </header>`;
+  // Round 3 nav: "Shops & Services" below 1280px, "Shops, Makers & Services" at 1280px and wider.
+  var SHOPS_LABEL_HTML = '<span class="shops-nav-link__label shops-nav-link__label--short">Shops &amp; Services</span>' +
+    '<span class="shops-nav-link__label shops-nav-link__label--long">Shops, Makers &amp; Services</span>';
   var CATEGORIES = [
     ['displays', 'Displays', 'index.html?category=displays'],
     ['treats', 'Treat Stops', 'index.html?category=treats'],
@@ -35,7 +38,7 @@
       return '<a class="site-tab" id="' + tab[0] + 'Tab" href="' + tab[2] + '"' + attr(active, tab[0]) + '>' + tab[1] + '</a>';
     }).join('');
     return '<nav class="filterbar site-nav" aria-label="Site"><div class="nav-row"><div class="tabs">' + tabs +
-      '<a class="shops-nav-link" href="shops.html"' + attr(active, 'shops') + '>Shops &amp; Services</a></div></div></nav>';
+      '<a class="shops-nav-link" href="shops.html"' + attr(active, 'shops') + '>' + SHOPS_LABEL_HTML + '</a></div></div></nav>';
   }
 
   function drawerHTML(active) {
