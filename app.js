@@ -868,6 +868,7 @@ const events=[
   "attendance": "Open to all",
   "features": ["Free", "Open to all", "Kid-friendly"],
   "url": "https://www.morrisarts.org/arts-in-community/pumpkin-illumination/",
+  "flyerPage": "https://canva.link/pumpkin-illumination-flyer-8-5-11-in",
   "notes": "Bring a carved pumpkin for the reflecting-pool display; electric tea lights are provided. Includes a family-friendly Sleepy Hollow story, art workshop, music, dancing, and a luminary mask parade. Rain date: Sunday, October 25."
  },
  {

@@ -63,13 +63,13 @@ test('P2: treat card has a lime top border, no host notes or ratings, event-styl
   assert.match(app,/treat-prompt__link" href="\$\{TREAT_FORM_URL\}" target="_blank"/);
   assert.match(css,/\.treat-stop-card\{border-top:3px solid #A6E22E!important\}/);
 });
-test('P2: event card shows the type badge after the title, address only, a 3-line description with More, and event-form tags only',()=>{
+test('P2: event card shows the type badge after the title, address, full submitted details, and event-form tags only',()=>{
   const ev=layout.split('function eventCard(x,opts){')[1].split('\n function ')[0];
   assert.ok(ev.indexOf('event-type-pill')<ev.indexOf('Flyer</button>'));
   assert.equal(ev.includes('x.venue'),false);
-  assert.match(ev,/event-card__clamp/);assert.match(ev,/data-more/);
+  assert.match(ev,/event-card__clamp/);assert.match(ev,/Official site ↗/);assert.match(ev,/View flyer ↗/);
   assert.match(layout,/EVENT_TAGS=\['Free','Open to all','Registration required','Kid-friendly'\]/);
-  assert.match(css,/-webkit-line-clamp:3/);
+  assert.match(css,/\.event-card__clamp\{display:block;overflow:visible\}/);
 });
 test('P2: route bar collapses to "Your route · N of 10 stops · Expand" and expands to stops, Remove, Get directions and the planner link',()=>{
   assert.match(html,/id="routeToggle"/);assert.match(html,/id="routeDirections"/);assert.match(html,/id="routeLink" href="route\.html">Plan your route →<\/a>/);

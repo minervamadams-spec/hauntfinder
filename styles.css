@@ -1214,7 +1214,7 @@ html body .card--compact .card__actions .card__route-btn{padding:0 10px}
 .event-card .event-card__head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
 .event-card .event-card__name{margin:0;font:700 19px/1.15 var(--f-cond);letter-spacing:0;text-transform:none}
 .event-card .event-type-pill{margin-left:0!important;height:20px;display:inline-flex;align-items:center;padding:0 8px;border-radius:4px;font:800 11px var(--f-body);letter-spacing:.04em;text-transform:uppercase}
-.event-card__clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.event-card__clamp{display:block;overflow:visible}
 .event-card__details.is-expanded .event-card__clamp{display:block;-webkit-line-clamp:unset}
 .card__more{padding:0;border:0;background:none;color:#B48CFF;font:600 12px var(--f-body);cursor:pointer}
 .event-card .chips .chip,.card--compact .chips .chip{min-height:22px;height:auto;padding:0 9px;border:1px solid #3A3046;border-radius:11px;background:transparent;color:#CFC4B0;font:500 12px/20px var(--f-body)}
@@ -1493,7 +1493,7 @@ html[data-category="events"]{--acc:#B48CFF}
  html body .event-card .event-card__head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
  html body .event-card .event-card__name{margin:0;font:700 19px/1.15 var(--f-cond);letter-spacing:0;text-transform:none}
  html body .event-card .event-type-pill{margin-left:0!important;height:20px;display:inline-flex;align-items:center;padding:0 8px;border-radius:4px;font:800 11px var(--f-body);letter-spacing:.04em;text-transform:uppercase}
- .event-card__clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+ .event-card__clamp{display:block;overflow:visible}
  .event-card__details.is-expanded .event-card__clamp{display:block;-webkit-line-clamp:unset}
  .card__more{padding:0;border:0;background:none;color:#B48CFF;font:600 12px var(--f-body);cursor:pointer;min-height:28px}
  html body .event-card p,html body .event-card .chips{margin:0}
