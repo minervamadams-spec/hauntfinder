@@ -1,5 +1,5 @@
 const {handleUpload}=require('@vercel/blob/client');
-const {createHmac,randomUUID,timingSafeEqual}=require('node:crypto');
+const {createHmac,createHash,randomUUID,timingSafeEqual}=require('node:crypto');
 const {adminAuthorized}=require('../lib/newsletter');
 // Release 3 increment 1: host photo uploads via Vercel Blob client uploads.
 // Policy (Minerva, 2026-10-16): photos from a verified host (or the admin) publish immediately,
@@ -34,11 +34,11 @@ async function listingForHostToken(token){
 }
 async function authorizedListing(req,clientData){
   if(!Number.isInteger(clientData.listingNum))throw deny(400,'Please choose a listed home for this photo.');
-  if(adminAuthorized(req))return clientData.listingNum;
+  if(adminAuthorized(req))return {num:clientData.listingNum,hostTokenHash:null};
   const num=await listingForHostToken(clientData.token);
   if(num==null)throw deny(403,'Unknown or expired update link.');
   if(clientData.listingNum!==num)throw deny(403,'This update link belongs to a different listing.');
-  return num;
+  return {num,hostTokenHash:createHash('sha256').update(clientData.token).digest('hex')};
 }
 module.exports=async function handler(req,res){
   res.setHeader('Cache-Control','no-store');
@@ -61,17 +61,18 @@ module.exports=async function handler(req,res){
         if(typeof clientPayload==='string'&&clientPayload){try{clientData=JSON.parse(clientPayload)}catch{}}
         const contentType=(clientData&&clientData.contentType)||body.payload.contentType;
         if(!ALLOWED_TYPES.includes(contentType))throw deny(400,'Only JPEG, PNG, WebP or GIF photos can be uploaded.');
-        const listingNum=await authorizedListing(req,clientData||{});
+        const authorization=await authorizedListing(req,clientData||{});
+        const listingNum=authorization.num;
         const ip=String(req.headers['x-forwarded-for']||req.socket?.remoteAddress||'unknown').split(',')[0].trim();
         const rateKey=KEY_PREFIX+'rate:upload:'+createHmac('sha256',storageToken()).update(ip).digest('hex');
         const allowed=await redis(['EVAL',RATE_LIMIT_SCRIPT,1,rateKey]);
         if(!allowed)throw deny(429,'Too many upload attempts. Please try again later.');
-        return{allowedContentTypes:ALLOWED_TYPES,maximumSizeInBytes:MAX_BYTES,addRandomSuffix:true,access:'public',tokenPayload:JSON.stringify({listingNum})};
+        return{allowedContentTypes:ALLOWED_TYPES,maximumSizeInBytes:MAX_BYTES,addRandomSuffix:true,access:'public',tokenPayload:JSON.stringify({listingNum,hostTokenHash:authorization.hostTokenHash})};
       },
       onUploadCompleted:async({blob,tokenPayload})=>{
-        let listingNum=null;try{listingNum=JSON.parse(tokenPayload||'').listingNum}catch{}
+        let listingNum=null,hostTokenHash=null;try{const parsed=JSON.parse(tokenPayload||'');listingNum=parsed.listingNum;hostTokenHash=parsed.hostTokenHash||null}catch{}
         if(!Number.isInteger(listingNum))throw new Error('Upload is missing its listing.');
-        const photo={id:randomUUID(),url:blob.url,pathname:blob.pathname,status:'approved',uploadedAt:new Date().toISOString()};
+        const photo={id:randomUUID(),url:blob.url,pathname:blob.pathname,status:'approved',uploadedAt:new Date().toISOString(),...(hostTokenHash?{hostTokenHash}:{})};
         await redis(['LPUSH',PHOTOS_KEY(listingNum),JSON.stringify(photo)]);
       }
     });

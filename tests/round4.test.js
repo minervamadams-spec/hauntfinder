@@ -103,8 +103,8 @@ test('photo-never-cropped fix (PHOTO-PORTRAIT-FIX.md): contain on #0E0B13 in the
   assert.ok(!/\.(card__photo|map-popup__photo img)\{[^}]*object-fit:cover/.test(css),'no cropping photo rule remains');
   assert.ok(!css.includes('filter:blur')||!/photo[^{]*\{[^}]*blur/.test(css),'bars are not filled with a blurred copy');
   const h=read('host-update-ui.js');
-  assert.ok(h.includes("createImageBitmap(file,{imageOrientation:'from-image'})")&&h.includes('const upFile=await hfNormalizePhoto(file)'),'JPEGs are re-drawn upright before upload');
-  assert.ok(h.includes("contentType:upFile.type")&&h.includes("contentType:upFile.type,toke")||h.includes('contentType:upFile.type'),'the normalized type is what is uploaded');
+  assert.ok(h.includes("createImageBitmap(file,{imageOrientation:'from-image'})")&&h.includes('normalized=await hfNormalizePhoto(file)'),'JPEGs are re-drawn upright before preview and upload');
+  assert.ok(h.includes('contentType:file.type')&&h.includes('file,{access'), 'the normalized selected file is what is uploaded');
 });
 
 test('photo lightbox (PHOTO-PORTRAIT-FIX.md section 2): trigger buttons, overlay spec, every close path, mobile swipe + pinch',()=>{

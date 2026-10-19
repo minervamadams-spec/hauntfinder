@@ -39,8 +39,9 @@ window.hfNormalizePhoto=async function(file){
       <section class="host-panel__section"><h3>Add a photo</h3>
         <p class="form-note">JPEG, PNG, WebP or GIF, up to 5 MB. Your photo goes live right away.</p>
         <input type="file" id="hostPhotoInput" accept="image/jpeg,image/png,image/webp,image/gif">
-        <button type="button" class="btn btn--outline" id="hostPhotoBtn">Upload photo</button>
+        <div id="hostPhotoPreview" class="host-photo-preview" hidden><img alt="Preview of your photo as visitors will see it"><button type="button" class="btn btn--outline" id="hostPhotoChange">Choose a different photo</button><button type="button" class="btn" id="hostPhotoBtn">Post photo</button></div>
         <p class="host-panel__status" id="hostPhotoStatus" role="status"></p>
+        <div id="hostCurrentPhotos" class="host-current-photos"></div>
       </section>
       <section class="host-panel__section"><h3>Request a listing update</h3>
         <p class="form-note">Dates, hours, description or closures. The organizer reviews every change before it goes live.</p>
@@ -56,8 +57,12 @@ window.hfNormalizePhoto=async function(file){
     </div>`;
     wireClose();
     const photoStatus=document.getElementById('hostPhotoStatus');
+    const input=document.getElementById('hostPhotoInput'),preview=document.getElementById('hostPhotoPreview'),previewImage=preview.querySelector('img');let normalized=null,previewUrl=null;
+    const clearPreview=()=>{if(previewUrl)URL.revokeObjectURL(previewUrl);previewUrl=null;normalized=null;preview.hidden=true;input.value=''};
+    input.onchange=async()=>{const file=input.files[0];photoStatus.textContent='';clearPreview();if(!file)return;if(!['image/jpeg','image/png','image/webp','image/gif'].includes(file.type)){photoStatus.textContent=file.type==='image/heic'?'Your browser could not prepare this HEIC photo. Please choose a JPEG or PNG.':'Please choose a JPEG, PNG, WebP or GIF photo.';return}try{normalized=await hfNormalizePhoto(file);if(normalized.size>5*1024*1024){photoStatus.textContent='This photo is over 5 MB after preparation. Please choose a smaller image.';return}previewUrl=URL.createObjectURL(normalized);previewImage.src=previewUrl;preview.hidden=false;}catch{photoStatus.textContent='This photo could not be prepared. Please choose a JPEG or PNG.'}};
+    document.getElementById('hostPhotoChange').onclick=clearPreview;
     document.getElementById('hostPhotoBtn').onclick=async()=>{
-      const file=document.getElementById('hostPhotoInput').files[0];
+      const file=normalized;
       photoStatus.textContent='';
       if(!file){photoStatus.textContent='Please choose a photo first.';return}
       if(!['image/jpeg','image/png','image/webp','image/gif'].includes(file.type)){photoStatus.textContent='Please choose a JPEG, PNG, WebP or GIF photo.';return}
@@ -65,12 +70,12 @@ window.hfNormalizePhoto=async function(file){
       if(typeof HFBlob==='undefined'||!HFBlob.upload){photoStatus.textContent='Photo upload is unavailable right now.';return}
       photoStatus.textContent='Uploading…';
       try{
-        const upFile=await hfNormalizePhoto(file);
-        await HFBlob.upload('host-photos/'+listing.num+'/'+Date.now()+'-'+upFile.name.replace(/[^\w.-]+/g,'-'),upFile,{access:'public',contentType:upFile.type,handleUploadUrl:'/api/upload',clientPayload:JSON.stringify({listingNum:listing.num,contentType:upFile.type,token})});
+        await HFBlob.upload('host-photos/'+listing.num+'/'+Date.now()+'-'+file.name.replace(/[^\w.-]+/g,'-'),file,{access:'public',contentType:file.type,handleUploadUrl:'/api/upload',clientPayload:JSON.stringify({listingNum:listing.num,contentType:file.type,token})});
         photoStatus.textContent='Thanks! Your photo is live. It can take up to a minute to show on the site.';
-        document.getElementById('hostPhotoInput').value='';
+        clearPreview();loadOwned();
       }catch(e){photoStatus.textContent='Upload failed — please try again.'}
     };
+    async function loadOwned(){const box=document.getElementById('hostCurrentPhotos');try{const data=await fetch('/api/photo-manage?listingNum='+listing.num+'&token='+encodeURIComponent(token)).then(r=>r.ok?r.json():{photos:[]});box.innerHTML=(data.photos||[]).map(p=>`<figure><img src="${escapeHTML(p.url)}" alt="Your posted listing photo"><button class="btn btn--outline" type="button" data-remove="${escapeHTML(p.id)}">Remove my photo</button></figure>`).join('');box.querySelectorAll('[data-remove]').forEach(b=>b.onclick=async()=>{await fetch('/api/photo-manage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({listingNum:listing.num,id:b.dataset.remove,token})});loadOwned()})}catch{box.textContent=''} }loadOwned();
     const updateStatus=document.getElementById('hostUpdateStatus');
     document.getElementById('hostUpdateBtn').onclick=async()=>{
       updateStatus.textContent='';

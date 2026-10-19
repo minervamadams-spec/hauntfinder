@@ -40,6 +40,7 @@ module.exports=async function handler(req,res){
         return res.status(200).json({valid:true,num:record.num,name:listing.name,town:listing.town});
       }
       if(!adminAuthorized(req))return res.status(403).json({error:'Organizer access required.'});
+      if(req.query?.catalog==='1')return res.status(200).json({listings:[...LISTINGS.entries()].map(([num,x])=>({num,...x})).sort((a,b)=>a.num-b.num)});
       const keys=await redis(['KEYS',HOSTLINK_PREFIX+'*']);
       const links=[];
       for(const key of keys||[]){const link=tokenShape(key,await redis(['GET',key]));if(link){links.push(link);if(links.length>=ALL_CAP)break}}

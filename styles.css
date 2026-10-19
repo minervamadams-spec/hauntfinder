@@ -417,6 +417,7 @@ body.host-panel-open{overflow:hidden}
 .host-panel__card input[type="file"]{margin:8px 0}
 .host-panel__card .btn{margin-top:12px;min-height:48px}
 .host-panel__status{min-height:22px;margin:10px 0 0;color:var(--lime)}
+.host-photo-preview{margin-top:12px}.host-photo-preview img,.host-current-photos img{display:block;width:100%;max-height:280px;object-fit:contain;background:#0e0b13;border:1px solid var(--violet)}.host-current-photos{display:grid;gap:12px;margin-top:16px}.host-current-photos figure{margin:0}.host-current-photos .btn{display:block}
 
 /* v6 Phase A (Direction 1A): design tokens — variable definitions only;
    component restyle lands in later phases. */

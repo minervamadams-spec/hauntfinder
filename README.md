@@ -2,6 +2,10 @@
 
 Open `index.html` in Chrome/Edge/Safari with an internet connection.
 
+## Organizer photos
+
+Hosts use their private update link to preview and post a photo in the browser. Organizers use `organizer.html` with an `ORGANIZER_KEY` configured in Vercel; the legacy `scripts/import-drive-photo.js` is a fallback only for private Drive uploads.
+
 Included:
 - Approved Halloween visual direction
 - Custom numbered pumpkin pins from the supplied design package
