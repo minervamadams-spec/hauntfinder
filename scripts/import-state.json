@@ -168,6 +168,13 @@
         "decision": "imported_address_verified_point_address",
         "entityId": "north-rose-lane-treat-stop-2026",
         "publicAddress": "5 North Rose Lane, Budd Lake, NJ"
+      },
+      {
+        "listingId": 17,
+        "entityId": "the-myers-house-2026",
+        "decision": "published_census_exact_address_verified_2026-10-20",
+        "publicAddress": "34 Rogers Drive, Landing, NJ",
+        "scheduleEvidence": "October 30, 2026, 6:30–9:30 PM and October 31, 2026, 4:30–11:00 PM. Offers celiac-safe and non-candy treats."
       }
     ]
   },

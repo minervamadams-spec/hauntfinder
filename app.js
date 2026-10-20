@@ -705,6 +705,43 @@ const listings=[
    "features": ["Photo opportunities", "Lights"],
    "notes": "Memorial Park, Mine Hill Town Halloween Display.",
    "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-20",
+   "num": 17,
+   "entityId": "the-myers-house-2026",
+   "name": "The Myers House",
+   "town": "Landing",
+   "address": "34 Rogers Drive, Landing, NJ",
+   "lat": 40.909402850819,
+   "lng": -74.652378698002,
+   "geoVerified": "census-exact 2026-10-20: 34 ROGERS DR, LANDING, NJ, 07850",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "startDate": "2026-10-30",
+     "endDate": "2026-10-31",
+     "exceptions": [
+       {
+         "date": "2026-10-30",
+         "open": "18:30",
+         "close": "21:30"
+       },
+       {
+         "date": "2026-10-31",
+         "open": "16:30",
+         "close": "23:00"
+       }
+     ]
+   },
+   "dates": "October 30 and October 31, 2026",
+   "times": "Oct 30, 6:30 PM–9:30 PM; Oct 31, 4:30 PM–11:00 PM",
+   "levels": [],
+   "type": [],
+   "features": [],
+   "notes": "Offers celiac-safe and non-candy treats.",
+   "kind": "Trick-or-treat stop"
  }
 ];
 listings.sort((a,b)=>a.num-b.num);
