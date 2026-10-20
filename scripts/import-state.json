@@ -147,6 +147,13 @@
       "decision": "imported_consented_new_entity_exact_address_verified",
       "publicAddress": "12 Baker Street, Mine Hill, NJ 07803",
       "scheduleEvidence": "Submitted as any night after October 24 at 4 PM, with viewing at dark; no end date supplied."
+    },
+    {
+      "listingId": 18,
+      "entityId": "skeleton-row-2026",
+      "decision": "published_census_exact_address_verified_2026-10-20",
+      "publicAddress": "69 Lenape Trail, Washington, NJ",
+      "scheduleEvidence": "October 20–31, 2026, nightly 7:00–10:00 PM."
     }
   ],
   "treatStops": {

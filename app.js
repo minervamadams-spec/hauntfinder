@@ -742,6 +742,40 @@ const listings=[
    "features": [],
    "notes": "Offers celiac-safe and non-candy treats.",
    "kind": "Trick-or-treat stop"
+ },
+ {
+   "updatedAt": "2026-10-20",
+   "num": 18,
+   "entityId": "skeleton-row-2026",
+   "name": "Skeleton Row",
+   "town": "Washington",
+   "address": "69 Lenape Trail, Washington, NJ",
+   "lat": 40.754456396015,
+   "lng": -74.988544992145,
+   "geoVerified": "census-exact 2026-10-20: 69 LENAPE TRL, WASHINGTON, NJ, 07882",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "startDate": "2026-10-20",
+     "endDate": "2026-10-31",
+     "weekly": [
+       {"dow": 0, "open": "19:00", "close": "22:00"},
+       {"dow": 1, "open": "19:00", "close": "22:00"},
+       {"dow": 2, "open": "19:00", "close": "22:00"},
+       {"dow": 3, "open": "19:00", "close": "22:00"},
+       {"dow": 4, "open": "19:00", "close": "22:00"},
+       {"dow": 5, "open": "19:00", "close": "22:00"},
+       {"dow": 6, "open": "19:00", "close": "22:00"}
+     ]
+   },
+   "dates": "October 20–31, 2026",
+   "times": "Nightly, 7:00 PM–10:00 PM",
+   "levels": [],
+   "type": [],
+   "features": [],
+   "notes": "",
+   "kind": "Decorated home/yard display"
  }
 ];
 listings.sort((a,b)=>a.num-b.num);
