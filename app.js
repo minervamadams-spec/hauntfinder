@@ -893,6 +893,30 @@ const events=[
   "features": ["Free", "Registration required", "Kid-friendly"],
   "url": "https://hackettstownlibrary.org/event/halloween-story-time/",
   "notes": "Spooky stories, songs, and a craft with Ms. Rebecca. Costumes encouraged. For ages 5 and under; register each child separately."
+ },
+ {
+  "id": "cms-trunk-or-treat-2026-10-27",
+  "updatedAt": "2026-10-19",
+  "name": "CMS Trunk or Treat",
+  "eventType": "Trunk-or-treat",
+  "venue": "Chester M. Stephens Elementary School",
+  "address": "99 Sunset Drive, Budd Lake, NJ 07828",
+  "lat": 40.858828031078,
+  "lng": -74.728409639687,
+  "geoVerified": "census-exact 2026-10-19: 99 SUNSET DR, BUDD LAKE, NJ, 07828",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-27",
+  "startAt": "2026-10-27T17:30:00-04:00",
+  "endAt": "2026-10-27T19:00:00-04:00",
+  "hours": "5:30 PM–7:00 PM",
+  "cost": "Free",
+  "attendance": "Open to all",
+  "features": ["Free", "Open to all", "Kid-friendly"],
+  "flyer": "assets/events/cms-trunk-or-treat-2026.jpg",
+  "url": "",
+  "notes": "DJ music all night. Candy donations are welcome at the SCA table at the front of the school. Trunk decorating is for registered CMS families only. Parking is available in the dirt lot or at Turkey Brook Park."
  }
 ];
 const CURRENT_SEASON={season:'halloween',year:2026};
