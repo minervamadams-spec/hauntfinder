@@ -776,6 +776,40 @@ const listings=[
    "features": [],
    "notes": "",
    "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-21",
+   "num": 19,
+   "entityId": "breese-halloween-display-2026",
+   "name": "Breese Halloween Display",
+   "town": "Succasunna",
+   "address": "18 Robinson Ave, Succasunna, NJ",
+   "lat": 40.865449447417,
+   "lng": -74.648763316428,
+   "geoVerified": "census-exact 2026-10-21: 18 ROBINSON AVE, SUCCASUNNA, NJ, 07876",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "startDate": "2026-10-21",
+     "endDate": "2026-11-01",
+     "weekly": [
+       {"dow": 0, "open": "16:00", "close": "22:00"},
+       {"dow": 1, "open": "16:00", "close": "22:00"},
+       {"dow": 2, "open": "16:00", "close": "22:00"},
+       {"dow": 3, "open": "16:00", "close": "22:00"},
+       {"dow": 4, "open": "16:00", "close": "22:00"},
+       {"dow": 5, "open": "16:00", "close": "22:00"},
+       {"dow": 6, "open": "16:00", "close": "22:00"}
+     ]
+   },
+   "dates": "October 21–November 1, 2026",
+   "times": "Nightly, 4:00 PM–10:00 PM",
+   "levels": ["Family Friendly"],
+   "type": ["Drive or walk by (both)"],
+   "features": ["Music / Sound", "Photo opportunities", "Lights", "Animatronics"],
+   "notes": "",
+   "kind": "Decorated home/yard display"
  }
 ];
 listings.sort((a,b)=>a.num-b.num);
@@ -988,6 +1022,54 @@ const events=[
   "flyer": "assets/events/cms-trunk-or-treat-2026.jpg",
   "url": "",
   "notes": "DJ music all night. Candy donations are welcome at the SCA table at the front of the school. Trunk decorating is for registered CMS families only. Parking is available in the dirt lot or at Turkey Brook Park."
+ },
+ {
+  "id": "coco-live-to-film-concert-2026-10-24",
+  "entityId": "coco-live-to-film-concert-2026",
+  "updatedAt": "2026-10-21",
+  "name": "Coco Live-to-Film Concert",
+  "eventType": "Other",
+  "venue": "Mayo Performing Arts Center",
+  "address": "100 South St, Morristown, NJ",
+  "lat": 40.7937798413,
+  "lng": -74.477961963049,
+  "geoVerified": "census-exact 2026-10-21: 100 SOUTH ST, MORRISTOWN, NJ, 07960",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-24",
+  "startAt": "2026-10-24T15:00:00-04:00",
+  "endAt": "2026-10-24T17:00:00-04:00",
+  "hours": "3:00 PM–5:00 PM",
+  "cost": "$35–$79",
+  "attendance": "Registration required",
+  "features": ["Registration required", "Kid-friendly"],
+  "url": "",
+  "notes": "Live-to-film concert. Tickets required."
+ },
+ {
+  "id": "rocky-horror-picture-show-2026-10-31",
+  "entityId": "rocky-horror-picture-show-2026",
+  "updatedAt": "2026-10-21",
+  "name": "The Rocky Horror Picture Show",
+  "eventType": "Other",
+  "venue": "Mayo Performing Arts Center",
+  "address": "100 South St, Morristown, NJ",
+  "lat": 40.7937798413,
+  "lng": -74.477961963049,
+  "geoVerified": "census-exact 2026-10-21: 100 SOUTH ST, MORRISTOWN, NJ, 07960",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T19:00:00-04:00",
+  "endAt": "2026-10-31T22:00:00-04:00",
+  "hours": "7:00 PM–10:00 PM",
+  "cost": "$32",
+  "attendance": "Mature audiences",
+  "features": [],
+  "url": "",
+  "notes": "Mature audiences. Not kid-friendly."
  }
 ];
 const CURRENT_SEASON={season:'halloween',year:2026};

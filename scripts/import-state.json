@@ -154,6 +154,13 @@
       "decision": "published_census_exact_address_verified_2026-10-20",
       "publicAddress": "69 Lenape Trail, Washington, NJ",
       "scheduleEvidence": "October 20–31, 2026, nightly 7:00–10:00 PM."
+    },
+    {
+      "listingId": 19,
+      "entityId": "breese-halloween-display-2026",
+      "decision": "published_census_exact_address_verified_2026-10-21",
+      "publicAddress": "18 Robinson Ave, Succasunna, NJ",
+      "scheduleEvidence": "Open nightly October 21–November 1, 2026, 4:00–10:00 PM. Family friendly, drive or walk by; music, lights, animatronics, photo spots."
     }
   ],
   "treatStops": {
@@ -225,6 +232,20 @@
         "eventId": "jeffersons-best-trunk-or-treat-2026-10-30",
         "entityId": "jeffersons-best-trunk-or-treat-2026",
         "publicAddress": "694 Route 15, Lake Hopatcong, NJ 07849"
+      },
+      {
+        "eventId": "coco-live-to-film-concert-2026-10-24",
+        "entityId": "coco-live-to-film-concert-2026",
+        "decision": "published_census_exact_address_verified_2026-10-21",
+        "publicAddress": "100 South St, Morristown, NJ",
+        "scheduleEvidence": "Saturday, October 24, 2026, 3:00–5:00 PM. Paid $35–$79. Kid-friendly. Tickets required."
+      },
+      {
+        "eventId": "rocky-horror-picture-show-2026-10-31",
+        "entityId": "rocky-horror-picture-show-2026",
+        "decision": "published_census_exact_address_verified_2026-10-21",
+        "publicAddress": "100 South St, Morristown, NJ",
+        "scheduleEvidence": "Saturday, October 31, 2026, 7:00–10:00 PM. Paid $32. Mature audiences, not kid-friendly."
       }
     ]
   },
