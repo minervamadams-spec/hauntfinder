@@ -810,6 +810,38 @@ const listings=[
    "features": ["Music / Sound", "Photo opportunities", "Lights", "Animatronics"],
    "notes": "",
    "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-22",
+   "num": 20,
+   "entityId": "brooklake-clown-house-2026",
+   "name": "Brooklake Clown House",
+   "town": "Florham Park",
+   "address": "27 Brooklake Rd, Florham Park, NJ 07932",
+   "lat": 40.753906262715,
+   "lng": -74.389974796853,
+   "geoVerified": "census-exact 2026-10-22: 27 BROOKLAKE RD, FLORHAM PARK, NJ, 07932",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "weekly": [
+       {"dow": 0, "open": "18:00", "close": "22:00"},
+       {"dow": 1, "open": "18:00", "close": "22:00"},
+       {"dow": 2, "open": "18:00", "close": "22:00"},
+       {"dow": 3, "open": "18:00", "close": "22:00"},
+       {"dow": 4, "open": "18:00", "close": "22:00"},
+       {"dow": 5, "open": "18:00", "close": "22:00"},
+       {"dow": 6, "open": "18:00", "close": "22:00"}
+     ]
+   },
+   "dates": "Daily",
+   "times": "6:00 PM–10:00 PM",
+   "levels": [],
+   "type": [],
+   "features": [],
+   "notes": "Stroller friendly. Park on the side streets, Beechwood or Milton.",
+   "kind": "Trick-or-treat stop"
  }
 ];
 listings.sort((a,b)=>a.num-b.num);

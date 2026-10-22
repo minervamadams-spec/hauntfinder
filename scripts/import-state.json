@@ -189,6 +189,13 @@
         "decision": "published_census_exact_address_verified_2026-10-20",
         "publicAddress": "34 Rogers Drive, Landing, NJ",
         "scheduleEvidence": "October 30, 2026, 6:30–9:30 PM and October 31, 2026, 4:30–11:00 PM. Offers celiac-safe and non-candy treats."
+      },
+      {
+        "listingId": 20,
+        "entityId": "brooklake-clown-house-2026",
+        "decision": "published_census_exact_address_verified_minerva_standing_approval_2026-10-22",
+        "publicAddress": "27 Brooklake Rd, Florham Park, NJ 07932",
+        "scheduleEvidence": "Daily, 6:00–10:00 PM. Stroller friendly. Parking on Beechwood or Milton."
       }
     ]
   },
