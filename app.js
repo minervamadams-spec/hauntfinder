@@ -842,6 +842,40 @@ const listings=[
    "features": [],
    "notes": "Stroller friendly. Park on the side streets, Beechwood or Milton.",
    "kind": "Trick-or-treat stop"
+ },
+ {
+   "updatedAt": "2026-10-22",
+   "num": 21,
+   "entityId": "valley-road-haunted-mansion-2026",
+   "name": "Valley Road Haunted Mansion",
+   "town": "Succasunna",
+   "address": "20 Valley Road, Succasunna, NJ 07876",
+   "lat": 40.861753207305,
+   "lng": -74.65353539959,
+   "geoVerified": "census-exact 2026-10-22: 20 VALLEY RD, SUCCASUNNA, NJ, 07876",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "startDate": "2026-10-01",
+     "endDate": "2026-10-31",
+     "weekly": [
+       {"dow": 0, "open": "16:00", "close": "22:00"},
+       {"dow": 1, "open": "16:00", "close": "22:00"},
+       {"dow": 2, "open": "16:00", "close": "22:00"},
+       {"dow": 3, "open": "16:00", "close": "22:00"},
+       {"dow": 4, "open": "16:00", "close": "22:00"},
+       {"dow": 5, "open": "16:00", "close": "22:00"},
+       {"dow": 6, "open": "16:00", "close": "22:00"}
+     ]
+   },
+   "dates": "All of October 2026",
+   "times": "Nightly, 4:00 PM–10:00 PM",
+   "levels": ["Family Friendly"],
+   "type": ["Drive-by"],
+   "features": ["Lights"],
+   "notes": "Animatronics, fog and music are added on Halloween day.",
+   "kind": "Decorated home/yard display"
  }
 ];
 listings.sort((a,b)=>a.num-b.num);
