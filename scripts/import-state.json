@@ -246,6 +246,20 @@
         "decision": "published_census_exact_address_verified_2026-10-21",
         "publicAddress": "100 South St, Morristown, NJ",
         "scheduleEvidence": "Saturday, October 31, 2026, 7:00–10:00 PM. Paid $32. Mature audiences, not kid-friendly."
+      },
+      {
+        "eventId": "stangl-witch-walk-moon-market-2026-10-30",
+        "entityId": "stangl-witch-walk-moon-market-2026",
+        "decision": "published_census_exact_address_verified_2026-10-22",
+        "publicAddress": "37 Stangl Rd, Flemington, NJ",
+        "scheduleEvidence": "Friday, October 30, 2026, 6:00–10:00 PM. Free, open to all, kid-friendly. Bar with Lone Eagle Brewing beer; open containers allowed on Stangl Road; only adult costumes are judged."
+      },
+      {
+        "eventId": "redeemer-lutheran-trunk-or-treat-2026-10-25",
+        "entityId": "redeemer-lutheran-trunk-or-treat-2026",
+        "decision": "published_census_exact_address_verified_2026-10-22",
+        "publicAddress": "37 Newton-Sparta Rd, Newton, NJ",
+        "scheduleEvidence": "Sunday, October 25, 2026, 2:00–4:00 PM at Redeemer Lutheran Church in Andover Township. Free; free-will offering welcome. Open to all, rain or shine (indoors if rain). Children must be accompanied by an adult. Kid-friendly."
       }
     ]
   },
