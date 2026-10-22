@@ -1118,6 +1118,30 @@ const events=[
   "features": ["Free", "Open to all", "Kid-friendly"],
   "url": "",
   "notes": "Andover Township. Free-will offering welcome. Rain or shine; indoors if it rains. Children must be accompanied by an adult."
+ },
+ {
+  "id": "touch-a-truck-liberty-sod-farm-2026-10-24",
+  "entityId": "touch-a-truck-liberty-sod-farm-2026",
+  "updatedAt": "2026-10-22",
+  "name": "Touch A Truck / Tractor",
+  "eventType": "Other",
+  "venue": "Liberty Sod Farm",
+  "address": "52 Shades of Death Road, Great Meadows, NJ 07838",
+  "lat": 40.89610495476,
+  "lng": -74.926591997598,
+  "geoVerified": "census-exact 2026-10-22: 52 SHADES OF DEATH RD, GREAT MEADOWS, NJ, 07838",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-24",
+  "startAt": "2026-10-24T10:00:00-04:00",
+  "endAt": "2026-10-24T14:00:00-04:00",
+  "hours": "10:00 AM–2:00 PM",
+  "cost": "Free",
+  "attendance": "Open to all",
+  "features": ["Free", "Open to all", "Kid-friendly"],
+  "url": "",
+  "notes": "Free and open to all. No registration needed."
  }
 ];
 const CURRENT_SEASON={season:'halloween',year:2026};

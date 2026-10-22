@@ -260,6 +260,13 @@
         "decision": "published_census_exact_address_verified_2026-10-22",
         "publicAddress": "37 Newton-Sparta Rd, Newton, NJ",
         "scheduleEvidence": "Sunday, October 25, 2026, 2:00–4:00 PM at Redeemer Lutheran Church in Andover Township. Free; free-will offering welcome. Open to all, rain or shine (indoors if rain). Children must be accompanied by an adult. Kid-friendly."
+      },
+      {
+        "eventId": "touch-a-truck-liberty-sod-farm-2026-10-24",
+        "entityId": "touch-a-truck-liberty-sod-farm-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-22",
+        "publicAddress": "52 Shades of Death Road, Great Meadows, NJ 07838",
+        "scheduleEvidence": "Saturday, October 24, 2026, 10:00 AM–2:00 PM at Liberty Sod Farm. Free, open to all, no registration, kid-friendly."
       }
     ]
   },
