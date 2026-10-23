@@ -354,6 +354,31 @@ function clampWeekStart(start,bounds){
  return s;
 }
 function shiftWeek(start,delta,bounds){const base=weekSunday(start)||(bounds&&bounds.min)||'';return clampWeekStart(base?isoAddDays(base,(delta||0)*7):'',bounds);}
+// Calendar and list order: startAt ascending, then the date field. All-day and
+// ongoing events lead inside a day. Pass day to compare clocks only, so a
+// multi-day event sorts by its start clock in that column rather than by the
+// date on its first startAt.
+function eventStartParts(ev){
+ const ongoing=!!(ev&&ev.ongoing);
+ const raw=String(ev&&ev.startAt||'');
+ const m=raw.match(/^(\d{4}-\d{2}-\d{2})(?:T(\d{2}):(\d{2}))?/);
+ let date=m?m[1]:'';
+ if(!date&&ev&&dateStrOk(ev.date))date=ev.date;
+ const time=m&&m[2]!=null?m[2]+':'+m[3]:null;
+ return {date,time,allDay:ongoing||time==null,ongoing};
+}
+function compareEventsByStart(a,b,day){
+ const ka=eventStartParts(a),kb=eventStartParts(b);
+ if(!day){
+  const da=ka.date||(ka.ongoing?'':'~'),db=kb.date||(kb.ongoing?'':'~');
+  if(da!==db)return da<db?-1:1;
+ }
+ if(ka.allDay!==kb.allDay)return ka.allDay?-1:1;
+ const ta=ka.time||'',tb=kb.time||'';
+ if(ta!==tb)return ta<tb?-1:1;
+ return 0;
+}
+function sortEventsByStart(list,day){return (Array.isArray(list)?list:[]).slice().sort((a,b)=>compareEventsByStart(a,b,day));}
 function icsEscape(s){return String(s==null?'':s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\r?\n/g,'\\n')}
 function icsNextDay(day){const d=new Date(Date.UTC(+day.slice(0,4),+day.slice(5,7)-1,+day.slice(8,10)+1));return d.toISOString().slice(0,10)}
 // Pure ICS builder; the caller passes the already-filtered list (Type /
@@ -409,4 +434,4 @@ function buildEventsICS(list,weekDays,base){
  lines.push('END:VCALENDAR');
  return lines.join('\r\n')+'\r\n';
 }
-if(typeof module!=='undefined')module.exports={hoursOn,datesActive,hasScheduleInfo,isOpenAt,hoursLabel,openOnDateLabel,schedulesCompleteFor,openTonightEligible,DATE_FILTER_KEY,todayParts,nextWeekendDates,normalizeDateFilter,loadDateFilter,saveDateFilter,schedulesDateMatch,openTonightBadgeHTML,eventDays,eventDateMatch,dateFilterLabel,eventWeekDays,buildEventsICS,easternOffset,easternToday,eventDateList,eventOccurrences,eventUpcomingDates,eventHasUpcoming,eventNextStart,eventOccursOn,isoAddDays,weekSunday,weekDates,isOct31,weekRangeLabel,threeDayDates,eventColumnDates,eventCardWhenLine,ongoingCoversWeek,lastListedDate,eventWeekBounds,clampWeekStart,shiftWeek};
+if(typeof module!=='undefined')module.exports={hoursOn,datesActive,hasScheduleInfo,isOpenAt,hoursLabel,openOnDateLabel,schedulesCompleteFor,openTonightEligible,DATE_FILTER_KEY,todayParts,nextWeekendDates,normalizeDateFilter,loadDateFilter,saveDateFilter,schedulesDateMatch,openTonightBadgeHTML,eventDays,eventDateMatch,dateFilterLabel,eventWeekDays,buildEventsICS,easternOffset,easternToday,eventDateList,eventOccurrences,eventUpcomingDates,eventHasUpcoming,eventNextStart,eventOccursOn,isoAddDays,weekSunday,weekDates,isOct31,weekRangeLabel,threeDayDates,eventColumnDates,eventCardWhenLine,ongoingCoversWeek,lastListedDate,eventWeekBounds,clampWeekStart,shiftWeek,eventStartParts,compareEventsByStart,sortEventsByStart};
