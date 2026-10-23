@@ -203,6 +203,13 @@
         "decision": "published_census_exact_address_verified_minerva_standing_approval_2026-10-22",
         "publicAddress": "27 Brooklake Rd, Florham Park, NJ 07932",
         "scheduleEvidence": "Daily, 6:00–10:00 PM. Stroller friendly. Parking on Beechwood or Milton."
+      },
+      {
+        "listingId": 22,
+        "entityId": "wills-house-of-horrors-treat-stop-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_close_23:00_2026-10-23",
+        "publicAddress": "20 Tinc Rd, Flanders, NJ 07836",
+        "scheduleEvidence": "October 31, 2026, 6:00 PM to late (Minerva set close at 11:00 PM). Park at the school; path to the candy bowl."
       }
     ]
   },

@@ -876,6 +876,34 @@ const listings=[
    "features": ["Lights"],
    "notes": "Animatronics, fog and music are added on Halloween day.",
    "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-23",
+   "num": 22,
+   "entityId": "wills-house-of-horrors-treat-stop-2026",
+   "name": "Will's House of Horrors",
+   "town": "Flanders",
+   "address": "20 Tinc Rd, Flanders, NJ 07836",
+   "lat": 40.848065557922,
+   "lng": -74.721123548723,
+   "geoVerified": "census-exact 2026-10-23: 20 TINC RD, FLANDERS, NJ, 07836",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "startDate": "2026-10-31",
+     "endDate": "2026-10-31",
+     "exceptions": [
+       {"date": "2026-10-31", "open": "18:00", "close": "23:00"}
+     ]
+   },
+   "dates": "October 31, 2026",
+   "times": "6:00 PM–11:00 PM",
+   "levels": [],
+   "type": [],
+   "features": [],
+   "notes": "Park on the street at the school and walk up to the front of the yard. A path guides trick-or-treaters to the candy bowl. Walk-through yard display.",
+   "kind": "Trick-or-treat stop"
  }
 ];
 listings.sort((a,b)=>a.num-b.num);
