@@ -125,7 +125,7 @@ test('route.html: complete subpage, one h1, empty state, planner, clear confirma
   assert.match(routeHtml,/id="clearYes"/);assert.match(routeHtml,/id="clearNo"/);
   assert.match(routeHtml,/<noscript>/);
   for(const dep of ['routing.js','listing-format.js','location.js'])assert.ok(routeHtml.indexOf(`<script src="${dep}"></script>`)<routeHtml.indexOf('<script src="route.js"></script>'),dep+' before route.js');
-  assert.match(pageJs,/const ROUTES = \['submit', 'about', 'listing', 'route'\]/);
+  assert.match(pageJs,/const ROUTES = \['submit', 'about', 'listing', 'route', 'nominate', 'claim'\]/);
 });
 test('route.js: replaceState keeps the URL in step without filling history; Escape closes the open inline panel',()=>{
   assert.match(routeJs,/history\.replaceState\(null,'',routePageURL\(/);

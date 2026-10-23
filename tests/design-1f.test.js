@@ -26,7 +26,7 @@ test('divIcon anatomy: SVG + number + badge compose per pin; treats use the cand
   assert.ok(app.includes('function pinHeight(w){return Math.round(w*156/128)}'),'height = width x 156/128');
   assert.ok(app.includes("matchMedia('(max-width:767px)').matches?30:34"),'30px mobile / 34px desktop');
   assert.ok(app.includes("cardIconHTML(isTreatStop(x)?'treat':'display')"),'cards pass the icon kind');
-  assert.ok(app.includes("iconFor(x.num,isTreatStop(x)?'treat':'display')"),'markers pass the pin kind');
+  assert.ok(app.includes("iconFor(x.num,isCommunity(x)?'community':isTreatStop(x)?'treat':'display')"),'markers pass the pin kind (community-spotted houses use their own pin)');
 });
 
 test('number style: Barlow Condensed 800, ~40% of pin width, #0B0910 with 1px white outline',()=>{
@@ -47,13 +47,13 @@ test('on-route badge: lime circle shown only when on route, ~42% of pin width',(
 });
 
 /* ---- Map key + distances note ---- */
-test('map key: bottom-left, spec chrome, exactly four 24px rows',()=>{
+test('map key: bottom-left, spec chrome, exactly five 24px rows',()=>{
   assert.match(css,/\.map-key\{[^}]*left:12px[^}]*bottom:12px/,'anchored bottom-left on the map');
   const panel=css.match(/\.map-key__panel\{[^}]*\}/)[0];
   assert.ok(panel.includes('rgba(11,9,16,.94)')&&panel.includes('1px solid var(--line-2)')&&panel.includes('border-radius:8px'),'spec panel chrome');
   assert.match(css,/\.map-key__title\{[^}]*uppercase/,'MAP KEY-style title');
   const rows=html.split('id="mapKeyPanel"')[1].split('</ul>')[0];
-  assert.equal((rows.match(/<li>/g)||[]).length,4,'exactly four rows');
+  assert.equal((rows.match(/<li>/g)||[]).length,5,'exactly five rows (the four existing plus Spotted by the community)');
   ['v2/pin-display.svg','v2/pin-treat-stop.svg','v2/pin-event.svg','badge-on-route.svg'].forEach(src=>assert.ok(rows.includes(src),src));
   ['Display','Treat stop','Event on your route','On your route'].forEach(l=>assert.ok(rows.includes('>'+l+'<'),l));
   assert.match(css,/\.map-key__rows img\{[^}]*width:24px/,'24px icons');
