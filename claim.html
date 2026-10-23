@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Is this your house?</title>
+  <meta name="description" content="A neighbor nominated your display. You can take over the listing or ask us to remove it.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700;800&family=Rubik+Dirt:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="nominate.css">
+</head>
+<body data-page="claim" class="subpage nominate-page">
+<a class="skip-link" href="#claimMain">Skip to content</a>
+<div id="siteChrome" data-chrome-active="submit"><noscript><nav aria-label="Site"><a href="index.html?category=displays">Displays</a> · <a href="index.html?category=treats">Treat Stops</a> · <a href="index.html?category=events">Events</a> · <a href="shops.html">Shops &amp; Services</a></nav></noscript></div>
+<script src="site-chrome.js"></script>
+<main id="claimMain" class="nom-main">
+  <a class="nom-back" id="claimBack" href="index.html">‹ Back to the listing</a>
+  <form id="claimForm" class="nom-form" novalidate>
+    <div class="nom-intro">
+      <h1 class="nom-h1--claim">Is this your house?</h1>
+      <p class="nom-lead">A neighbor nominated your display. You can take over the listing or ask us to remove it.</p>
+    </div>
+    <div class="nom-field">
+      <label class="nom-label" for="claimAddress">ADDRESS</label>
+      <input class="nom-input" id="claimAddress" type="text" readonly aria-describedby="claimAddrHint">
+      <span class="nom-hint" id="claimAddrHint">Filled in from the listing.</span>
+    </div>
+    <fieldset class="nom-radios" id="claimChoice">
+      <legend class="nom-label">WHAT WOULD YOU LIKE? <span class="nom-req" aria-hidden="true">*</span></legend>
+      <label class="nom-radio"><input type="radio" name="request" value="claim"><span class="nom-radio__dot" aria-hidden="true"></span><span class="nom-radio__text"><span class="nom-radio__name">Claim it</span><span class="nom-radio__desc">Make it your own listing. You can add your hours, scare level and notes.</span></span></label>
+      <label class="nom-radio"><input type="radio" name="request" value="remove"><span class="nom-radio__dot" aria-hidden="true"></span><span class="nom-radio__text"><span class="nom-radio__name">Remove it</span><span class="nom-radio__desc">The pin comes off the map as soon as you send this, while we confirm.</span></span></label>
+      <span class="nom-error" id="requestMsg" role="alert" hidden></span>
+    </fieldset>
+    <div class="nom-field">
+      <label class="nom-label" for="claimEmail">EMAIL <span class="nom-opt">· OPTIONAL</span></label>
+      <input class="nom-input" id="claimEmail" type="email" autocomplete="email" placeholder="So we can reply" aria-describedby="claimEmailHint">
+      <span class="nom-hint" id="claimEmailHint">Kept private. Never shown on the site. Only used to reply about this request.</span>
+      <span class="nom-error" id="claimEmailMsg" role="alert" hidden></span>
+    </div>
+    <span class="nom-error" id="claimFormMsg" role="alert" hidden></span>
+    <button type="submit" class="nom-send" id="claimSend">SEND REQUEST</button>
+  </form>
+  <section class="nom-after" id="claimSent" hidden aria-live="polite">
+    <div id="afterRemove" hidden>
+      <h2 class="nom-after__line">It’s off the map.</h2>
+      <span class="nom-after__body">We’ll confirm with our next review. Sorry for the surprise, and happy Halloween.</span>
+    </div>
+    <div id="afterClaim" hidden>
+      <h2 class="nom-after__line">Thanks, we’ll be in touch.</h2>
+      <span class="nom-after__body">The listing stays as it is until we’ve checked the request. Want to add details now? <a href="submit.html">Submit your display</a></span>
+    </div>
+  </section>
+</main>
+<footer class="subpage-foot">
+  <a href="/">Hauntfinder map</a> · <a href="alerts.html">Get alerts</a> · <a href="mailto:mtocommunityfinder@gmail.com">Contact us</a>
+</footer>
+<script src="nominations-config.js"></script>
+<script src="nominate-lib.js"></script>
+<script src="claim.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

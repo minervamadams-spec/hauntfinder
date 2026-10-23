@@ -96,7 +96,7 @@ test('no chrome element carries a fixed width above 520px (breakpoints exempt)',
 
 test('map pins expose aria-labels alongside their titles',()=>{
  assert.ok(app.includes("m.getElement()?.setAttribute('aria-label',`Event: ${ev.name}`)"),'event route pins labelled');
- assert.ok(app.includes("m.getElement()?.setAttribute('aria-label',`${isTreatStop(x)?'Treat stop':'Display'}: ${x.name}`)"),'listing pins labelled (names only; numbers are not shown)');
+ assert.ok(app.includes("m.getElement()?.setAttribute('aria-label',`${isCommunity(x)?'Community-spotted display':isTreatStop(x)?'Treat stop':'Display'}: ${x.name}`)"),'listing pins labelled (names only; numbers are not shown)');
 });
 
 test('card flips sync aria-pressed on every flip trigger',()=>{
