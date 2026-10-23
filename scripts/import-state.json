@@ -281,6 +281,13 @@
         "decision": "published_census_exact_address_verified_minerva_approved_2026-10-22",
         "publicAddress": "52 Shades of Death Road, Great Meadows, NJ 07838",
         "scheduleEvidence": "Saturday, October 24, 2026, 10:00 AM–2:00 PM at Liberty Sod Farm. Free, open to all, no registration, kid-friendly."
+      },
+      {
+        "eventId": "hidden-lake-haunted-trail-2026-10-24",
+        "entityId": "hidden-lake-haunted-trail-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-23",
+        "publicAddress": "35 Green Lane, Succasunna, NJ 07876",
+        "scheduleEvidence": "Saturday, October 24, 2026, 7:00–9:30 PM. $15 per person, cash or Venmo at the entrance. Open to all, no registration. Uneven wooded ground; outdoor movie and fire pit."
       }
     ]
   },

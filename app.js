@@ -1208,6 +1208,30 @@ const events=[
   "features": ["Free", "Open to all", "Kid-friendly"],
   "url": "",
   "notes": "Free and open to all. No registration needed."
+ },
+ {
+  "id": "hidden-lake-haunted-trail-2026-10-24",
+  "entityId": "hidden-lake-haunted-trail-2026",
+  "updatedAt": "2026-10-23",
+  "name": "Hidden Lake Haunted Trail",
+  "eventType": "Haunted trail",
+  "venue": "Hidden Lake",
+  "address": "35 Green Lane, Succasunna, NJ 07876",
+  "lat": 40.86752120821,
+  "lng": -74.626462525781,
+  "geoVerified": "census-exact 2026-10-23: 35 GREEN LN, SUCCASUNNA, NJ, 07876",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-24",
+  "startAt": "2026-10-24T19:00:00-04:00",
+  "endAt": "2026-10-24T21:30:00-04:00",
+  "hours": "7:00 PM–9:30 PM",
+  "cost": "$15 per person, cash or Venmo at the entrance",
+  "attendance": "Open to all",
+  "features": ["Open to all"],
+  "url": "",
+  "notes": "Scary walk through dark woods on uneven ground; not recommended for people with mobility issues. Outdoor Halloween movie and a fire pit for hot dogs and s'mores."
  }
 ];
 const CURRENT_SEASON={season:'halloween',year:2026};
