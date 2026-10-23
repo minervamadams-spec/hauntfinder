@@ -1,28 +1,28 @@
 /* Community-spotted houses on the map, cards, key and submit chooser.
    Values follow the approved "Nominate a Display" design (1a, 1b, 1f, 1h). */
-/* Pins: 46x54 mobile, 58x68 desktop, anchored bottom-centre (anchor set in app.js). */
-html body .pin.pin--community{width:46px;height:54px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
-@media(min-width:768px){html body .pin.pin--community{width:58px;height:68px}}
-html body .pin.pin--community.is-linked,html body .pin.pin--community.is-selected{transform:scale(1.18);filter:drop-shadow(0 0 10px rgba(180,140,255,.9))}
+/* Pins: owner-pin proportions (30x35 mobile, 34x40 desktop) so unverified community pins never outshine owner pins,
+   inside a 44x44 invisible tap area (the Leaflet icon box). Anchor is bottom centre. */
+.community-icon{width:44px;height:44px}
+html body .community-icon .pin.pin--community{position:absolute;left:50%;bottom:0;width:30px;height:35px;margin-left:-15px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
+@media(min-width:768px){html body .community-icon .pin.pin--community{width:34px;height:40px;margin-left:-17px}}
+html body .community-icon .pin.pin--community.is-linked,html body .community-icon .pin.pin--community.is-selected{transform:scale(1.18);filter:drop-shadow(0 0 10px rgba(180,140,255,.9))}
 html body .pin.pin--community::after{display:none}
 .pin--community .pin__art--route{display:none}
 .pin--community.is-on-route .pin__art{display:none}
 .pin--community.is-on-route .pin__art--route{display:block}
-.pin__cnum{position:absolute;left:0;right:0;top:35%;text-align:center;font:800 17px/20px var(--f-cond);color:#FF7A1A;pointer-events:none}
-@media(min-width:768px){.pin__cnum{font-size:19px;line-height:22px;top:34%}}
+.pin__cnum{position:absolute;left:0;right:0;top:34%;text-align:center;font:800 11px/13px var(--f-cond);color:#FF7A1A;pointer-events:none}
+@media(min-width:768px){.pin__cnum{font-size:12px;line-height:14px}}
 .pin--community.is-on-route .pin__cnum{color:#A6E22E}
 /* Card pins sit at 40x47 in the card head. */
 html body .card__pin--community,html body #cardList .card--compact .card__head .card__pin--community{flex:none;width:40px;height:47px}
 html body .card__pin--community .pin.pin--card,html body #cardList .card--compact .card__head .card__pin--community .pin{width:40px;height:47px;transform:none;filter:none}
 .card__pin--community .pin__cnum{font-size:15px;line-height:18px;top:32%}
 
-/* Filter chip: checkbox-style toggle, on by default, separate from the scare-level chips. */
-.community-chip{position:absolute;left:60px;top:12px;z-index:650;height:36px;padding:0 14px 0 10px;border-radius:18px;border:1px solid #B48CFF;background:#241638;color:#F6EBD3;font:600 14px var(--f-body);display:flex;align-items:center;gap:8px;cursor:pointer}
-.community-chip__box{width:18px;height:18px;border-radius:4px;background:#B48CFF;color:#120E18;font:800 13px var(--f-body);display:flex;align-items:center;justify-content:center;box-sizing:border-box}
-.community-chip[aria-pressed="false"]{border-color:#3A3046;background:#16111E;color:#CFC4B0}
-.community-chip[aria-pressed="false"] .community-chip__box{background:transparent;border:1.5px solid #A89DB4}
-.community-chip:focus-visible,.nominate-fab:focus-visible{outline:2px solid #F6EBD3;outline-offset:2px}
-html:not([data-category="displays"]) .community-chip,html[data-fullmap] .community-chip{display:none}
+/* Filter toggle in the filter rail (and the phone Filters sheet): checkbox-style, separate from the scare-level chips. */
+.filter-rail .filter.filter--rail[data-rail-filter="community"]{display:inline-flex;align-items:center;gap:8px;padding-left:8px}
+.filter-rail .filter--rail[data-rail-filter="community"]::before{content:"";width:16px;height:16px;border-radius:4px;border:1.5px solid #A89DB4;box-sizing:border-box;flex:none}
+.filter-rail .filter.filter--rail[data-rail-filter="community"][aria-pressed="true"]{border-color:#B48CFF;background:#241638;color:#F6EBD3}
+.filter-rail .filter--rail[data-rail-filter="community"][aria-pressed="true"]::before{content:"✓";background:#B48CFF;border-color:#B48CFF;color:#120E18;font:800 12px/13px var(--f-body);text-align:center}
 html[data-fullmap] .nominate-fab{display:none}
 
 /* Entry point on the map, beside Submit. */
@@ -60,7 +60,7 @@ html:not([data-category="displays"]) .nominate-fab{display:none}
 /* Map peek on phones: the card as a bottom sheet. */
 .map-popup--community{max-height:70vh;overflow:auto}
 @media(min-width:768px){html body .map-peek .map-popup--community{width:340px;max-width:calc(100% - 24px)}}
-.pin__cnum--wide{font-size:13px}
+.pin__cnum--wide{font-size:9px}
 .map-popup--community .map-popup__close{position:absolute;top:8px;right:8px;z-index:2}
 
 /* Submit chooser: "A house I spotted". */
