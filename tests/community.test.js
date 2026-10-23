@@ -106,11 +106,15 @@ test('forms: nothing is sent until the new Google Forms are configured; bodies c
   assert.equal(sent.u,cfg.action);assert.equal(sent.o.body,'entry.1=118+Flanders+Rd','empty and unmapped values are dropped');
   assert.equal(lib.formConfigured({action:'https://evil.example/formResponse',entries:{a:'b'}}),false,'only Google Forms endpoints');
 });
-test('photos: re-encoded to JPEG in the browser (drops EXIF/GPS); API accepts JPEG only, rate-limited, nothing published',()=>{
+test('photos: re-encoded to JPEG in the browser (drops EXIF/GPS); nomination uploads are JPEG-only, rate-limited, nothing published, no 13th function',()=>{
   assert.match(read('nominate-lib.js'),/toBlob\(.*'image\/jpeg'/s);
-  const api=read('api/nomination-photo.js');
-  assert.ok(api.includes("ALLOWED_TYPES=['image/jpeg']")&&api.includes('MAX_MINTS_PER_HOUR')&&api.includes('nominations\\/'));
-  assert.equal(/LPUSH|photos:/.test(api),false,'never writes to the published photo lists');
+  const api=read('api/upload.js'),n=api.slice(api.indexOf('async function nominationToken'),api.indexOf('module.exports=async function handler'));
+  assert.ok(n.includes("'image/jpeg'")&&n.includes('rate:nomination-photo')&&n.includes('nominations\\/'));
+  assert.equal(/LPUSH|PHOTOS_KEY/.test(n),false,'never writes to the published photo lists');
+  assert.ok(api.includes("if(String(tokenPayload||'').includes('\"nomination\":true'))return;"),'completion hook publishes nothing');
+  assert.equal(fs.existsSync(path.join(ROOT,'api/nomination-photo.js')),false);
+  assert.ok(fs.readdirSync(path.join(ROOT,'api')).filter(f=>f.endsWith('.js')).length<=12,'Hobby plan allows 12 serverless functions');
+  assert.equal(read('nominations-config.js').includes("photoApi: '/api/upload'"),true);
   assert.equal(lib.MAX_PHOTO_BYTES,8*1024*1024);
 });
 test('data: shipped listings carry no email or phone; community records keep owner-listing shape',()=>{

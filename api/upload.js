@@ -40,6 +40,17 @@ async function authorizedListing(req,clientData){
   if(clientData.listingNum!==num)throw deny(403,'This update link belongs to a different listing.');
   return {num,hostTokenHash:createHash('sha256').update(clientData.token).digest('hex')};
 }
+const NOMINATION_MAX_BYTES=5*1024*1024;
+const NOMINATION_MAX_MINTS_PER_HOUR=6;
+const NOMINATION_RATE_SCRIPT=RATE_LIMIT_SCRIPT.replace(String(MAX_MINTS_PER_HOUR),String(NOMINATION_MAX_MINTS_PER_HOUR));
+async function nominationToken(req,pathname,body){
+  if(!/^nominations\/[\w.-]{1,80}$/.test(pathname))throw deny(400,'Please use the nomination form.');
+  if(body.payload.contentType!=='image/jpeg')throw deny(400,'Only JPEG photos can be added here.');
+  const ip=String(req.headers['x-forwarded-for']||req.socket?.remoteAddress||'unknown').split(',')[0].trim();
+  const rateKey=KEY_PREFIX+'rate:nomination-photo:'+createHmac('sha256',storageToken()).update(ip).digest('hex');
+  if(!await redis(['EVAL',NOMINATION_RATE_SCRIPT,1,rateKey]))throw deny(429,'Too many photo attempts. Please try again later.');
+  return{allowedContentTypes:['image/jpeg'],maximumSizeInBytes:NOMINATION_MAX_BYTES,addRandomSuffix:true,access:'public',tokenPayload:JSON.stringify({nomination:true})};
+}
 module.exports=async function handler(req,res){
   res.setHeader('Cache-Control','no-store');
   res.setHeader('X-Content-Type-Options','nosniff');
@@ -57,6 +68,9 @@ module.exports=async function handler(req,res){
       request:req,
       body,
       onBeforeGenerateToken:async(pathname,clientPayload)=>{
+        // Community-spotted nominations (visitor, no token): JPEG only, smaller cap, own rate limit,
+        // nothing published. Kept in this route because the plan allows only 12 serverless functions.
+        if(String(pathname).startsWith('nominations/'))return nominationToken(req,pathname,body);
         let clientData=null;
         if(typeof clientPayload==='string'&&clientPayload){try{clientData=JSON.parse(clientPayload)}catch{}}
         const contentType=(clientData&&clientData.contentType)||body.payload.contentType;
@@ -70,6 +84,7 @@ module.exports=async function handler(req,res){
         return{allowedContentTypes:ALLOWED_TYPES,maximumSizeInBytes:MAX_BYTES,addRandomSuffix:true,access:'public',tokenPayload:JSON.stringify({listingNum,hostTokenHash:authorization.hostTokenHash})};
       },
       onUploadCompleted:async({blob,tokenPayload})=>{
+        if(String(tokenPayload||'').includes('"nomination":true'))return;
         let listingNum=null,hostTokenHash=null;try{const parsed=JSON.parse(tokenPayload||'');listingNum=parsed.listingNum;hostTokenHash=parsed.hostTokenHash||null}catch{}
         if(!Number.isInteger(listingNum))throw new Error('Upload is missing its listing.');
         const photo={id:randomUUID(),url:blob.url,pathname:blob.pathname,status:'approved',uploadedAt:new Date().toISOString(),...(hostTokenHash?{hostTokenHash}:{})};

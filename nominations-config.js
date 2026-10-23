@@ -11,5 +11,5 @@ window.HF_NOMINATIONS = {
     action: '',
     entries: {} // address, listing, request, email
   },
-  photoApi: '/api/nomination-photo'
+  photoApi: '/api/upload'
 };

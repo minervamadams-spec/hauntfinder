@@ -74,7 +74,7 @@ $('photoInput').addEventListener('change', async () => {
 async function uploadPhoto() {
   if (!photoBlob) return '';
   if (typeof HFBlob === 'undefined' || !HFBlob.upload) throw new Error('Photo upload is unavailable right now. You can send the nomination without a photo.');
-  const res = await HFBlob.upload('nominations/' + Date.now() + '.jpg', photoBlob, { access: 'public', contentType: 'image/jpeg', handleUploadUrl: cfg.photoApi || '/api/nomination-photo' });
+  const res = await HFBlob.upload('nominations/' + Date.now() + '.jpg', photoBlob, { access: 'public', contentType: 'image/jpeg', handleUploadUrl: cfg.photoApi || '/api/upload' });
   return res.url;
 }
 
