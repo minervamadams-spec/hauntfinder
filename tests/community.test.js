@@ -42,21 +42,32 @@ test('community pin: own art, on-route art, number is the listing number',()=>{
   const h=helpers().communityPinHTML(7);
   assert.ok(h.includes('assets/pins/pin-community.svg')&&h.includes('assets/pins/pin-community-route.svg')&&h.includes('>7<'));
   assert.match(css,/pin--community\.is-on-route \.pin__art--route\{display:block\}/);
-  assert.match(css,/\.pin__cnum\{[^}]*800 17px\/20px var\(--f-cond\);color:#FF7A1A/,'number Barlow Condensed 800 in #FF7A1A');
+  assert.match(css,/\.pin__cnum\{[^}]*800 11px\/13px var\(--f-cond\);color:#FF7A1A/,'number Barlow Condensed 800 in #FF7A1A');
   assert.match(css,/is-on-route \.pin__cnum\{color:#A6E22E\}/,'on-route number is lime');
-  assert.match(css,/pin--community\{width:46px;height:54px/);assert.match(css,/min-width:768px\)\{html body \.pin\.pin--community\{width:58px;height:68px/);
-  assert.ok(app.includes('iconAnchor:[w/2,h]'),'community anchor is bottom centre');
+  assert.match(css,/community-icon \.pin\.pin--community\{position:absolute;left:50%;bottom:0;width:30px;height:35px/,'30x35 on mobile');
+  assert.match(css,/min-width:768px\)\{html body \.community-icon \.pin\.pin--community\{width:34px;height:40px/,'34x40 on desktop');
+  assert.ok(app.includes('iconSize:[44,44],iconAnchor:[22,44]'),'44x44 tap area, bottom-centre anchor');
 });
-test('filter: community chip is its own toggle, default on, hides only community; hidden listings never show',()=>{
+test('filter: Community spotted is a rail toggle (phone Filters sheet too), default on, separate from scare level; hidden listings never show',()=>{
+  const chrome=read('chrome-filters.js');
   assert.ok(app.includes('community:true'),'on by default');
-  assert.ok(html.includes('id="communityChip" aria-pressed="true"')&&html.includes('Community spotted'));
+  assert.equal(html.includes('communityChip'),false,'no floating chip over the map');
+  assert.ok(chrome.includes("railSection('Community',railChip('community','community','Community spotted',state.community!==false))"),'chip lives in the filter rail');
+  assert.ok(chrome.includes("if(action==='community')setCommunity(state.community===false);"),'toggle handler');
+  assert.ok(chrome.includes("railSection('Scare level',scares)+railSection('Community'"),'its own group, after scare level');
+  assert.ok(/function railActiveCount\(\)\{return \(state\.community===false\?1:0\)/.test(chrome),'off counts as an active filter');
+  assert.ok(chrome.includes("if(e.target.closest('[data-rail-clear]')){state.community=true;"),'Clear all filters restores the default');
   assert.ok(app.includes("if(x.hidden||removedHere(x))return false;if(isCommunity(x)&&!state.community)return false;"),'matchFilter order');
-  assert.equal(/state\.filter=.*communityChip/.test(app),false,'chip does not touch the scare-level filter');
   const m=/function removedHere\(x\)\{[^\n]*\}/.exec(app)[0];
   const ctx={localStorage:{getItem:()=>JSON.stringify([7])}};vm.createContext(ctx);vm.runInContext(m,ctx);
   assert.equal(ctx.removedHere({num:7}),true);assert.equal(ctx.removedHere({num:8}),false);
+  const sc=/function setCommunity\(on\)\{[^\n]*\}/.exec(app)[0],c2={state:{community:true,selected:7},listings:[{num:7,source:'community'}],isCommunity:x=>x.source==='community',hid:false,hidePeek:()=>{c2.hid=true}};
+  vm.createContext(c2);vm.runInContext(sc+';setCommunity(false)',c2);
+  assert.equal(c2.state.community,false);assert.equal(c2.state.selected,null);assert.equal(c2.hid,true);
 });
-test('entry points: map button, submit.html third choice, map key row',()=>{
+test('entry points: map button, submit.html last choice after Shops, map key row',()=>{
+  assert.ok(submit.indexOf('data-type-link="shop"')<submit.indexOf('data-type-link="spotted"'),'A house I spotted comes after Shops');
+  assert.ok(submit.indexOf('data-type-link="spotted"')<submit.indexOf('Treat stops and events can only be added by the host.'),'right next to the host line');
   assert.ok(html.includes('href="nominate.html">')&&html.includes('Spotted a great house? Nominate it'));
   assert.ok(submit.includes('A house I spotted')&&submit.includes('You saw a great display that isn’t yours. Nominate it and we’ll take a look.')&&submit.includes('href="nominate.html"'));
   assert.ok(submit.includes('Treat stops and events can only be added by the host.'));
