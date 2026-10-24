@@ -865,6 +865,10 @@ html[data-fullmap] .map-key,html[data-fullmap] .map-note{display:none}
    and shared modal behavior (8.8). */
 .footer-inner h2{font-size:24px}
 .hf-footer .footer-inner .btn--route{min-height:52px}
+.footer-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:flex-end}
+.hf-footer .footer-inner>.footer-actions{flex:0 1 auto}
+.hf-footer .footer-inner .footer-advertise{min-height:52px;border-color:#A6E22E;color:#A6E22E;white-space:normal;text-align:center;line-height:1.2;max-width:320px;padding:8px 16px}
+.hf-footer .footer-inner .footer-advertise:hover{color:#120E18;background:#A6E22E;border-color:#A6E22E}
 .alerts-dialog{border-top-color:#a6e22e}
 .type-options{display:grid;gap:10px}
 .type-option{display:flex;flex-direction:column;gap:4px;padding:16px 18px;border:2px solid var(--violet);border-radius:8px;background:var(--night);color:var(--cream);text-decoration:none}
@@ -887,7 +891,7 @@ html[data-fullmap] .map-key,html[data-fullmap] .map-note{display:none}
 .about-social__links img{width:52px;height:52px;display:block}
 .about-social__links span{color:var(--mist);font-size:14px}
 .about-social__donate{color:var(--pumpkin);font-weight:700}
-@media(max-width:600px){.footer-inner h2{font-size:21px}.hf-footer .footer-inner .btn--route{width:100%}}
+@media(max-width:600px){.footer-inner h2{font-size:21px}.hf-footer .footer-inner .btn--route{width:100%}.footer-actions{flex-direction:column;align-items:stretch;justify-content:stretch}.hf-footer .footer-inner .footer-advertise{width:100%;max-width:none}}
 /* ---- Hotfix 2026-10-15: live issues on the 1A redesign (commit 2f04e79) ---- */
 
 /* Issue 3 (D1 split: cards left, map right at ≥1200px) is superseded by the
@@ -1100,7 +1104,8 @@ html[data-category="events"] .list-column{order:2}
 .intro-strip__copy{max-width:760px;margin:0 auto;padding:0 20px;text-align:center;font:500 14px/1.45 var(--f-body);color:var(--text);text-wrap:balance}
 .filter-rail__links{display:flex;flex-direction:column;gap:8px;margin-top:auto;padding-top:16px;border-top:1px solid var(--line);font:700 13px/1.35 var(--f-cond);letter-spacing:.1em;text-transform:uppercase}
 .filter-rail__links a,.filter-rail__links button{min-height:28px;padding:0;border:0;background:transparent;color:var(--purple);font:inherit;text-align:left;text-decoration:none;cursor:pointer}
-.filter-rail__links a:first-child{color:var(--lime)}
+.filter-rail__links a:first-child,.filter-rail__links a.advertise-free{color:var(--lime)}
+.filter-rail__links a.advertise-free{white-space:normal;line-height:1.3}
 .filter-rail__links a:hover,.filter-rail__links button:hover{text-decoration:underline;color:var(--cream)}
 .filter-rail__links #railVisits{font:500 12px var(--f-body);letter-spacing:0;text-transform:none;color:var(--text-3)}
 
@@ -1444,7 +1449,8 @@ html[data-category="events"]{--acc:#B48CFF}
  .menu-drawer__panel{position:absolute;top:0;right:0;bottom:0;width:min(320px,86vw);display:flex;flex-direction:column;padding:8px 0;background:#1A1322;border-left:1px solid #2E2638;overflow:auto}
  .menu-drawer__panel>.sheet-close{align-self:flex-end;margin-right:6px}
  .menu-drawer__panel a,.menu-drawer__panel>button:not(.sheet-close){display:flex;align-items:center;min-height:52px;padding:0 20px;border:0;background:none;color:#B48CFF;font:700 15px var(--f-cond);letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-align:left;cursor:pointer}
- .menu-drawer__panel a.menu-drawer__primary{color:#A6E22E}
+ .menu-drawer__panel a.menu-drawer__primary,.menu-drawer__panel a.menu-drawer__advertise{color:#A6E22E}
+ .menu-drawer__panel a.menu-drawer__advertise{display:block;white-space:normal;line-height:1.25;padding-top:14px;padding-bottom:14px}
  .menu-drawer__tag{margin:12px 20px;font-size:13px;line-height:1.45;color:#CFC4B0}
  .menu-drawer__visits{margin:auto 20px 12px;font-size:12px;color:#7E7389}
 }

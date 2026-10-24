@@ -65,4 +65,23 @@ test('advertise button opens the submit page; the ad form is a submit option; em
   assert.match(submit, new RegExp('data-type-link="shop" href="' + form.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '" target="_blank" rel="noopener"'));
   assert.match(submit, /Shops, Makers &amp; Services – free ad/);
   assert.match(submit, /Google sign-in for the photo upload/);
+  assert.match(submit, /Shops, makers &amp; services: advertise free/);
+});
+
+test('the advertising form is a direct link from shops, submit, and the site nav and footer', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const read = (name) => fs.readFileSync(path.join(__dirname, '..', name), 'utf8');
+  const form = 'https://docs.google.com/forms/d/e/1FAIpQLSeRLgk9i2EJF5AEipV6KLJnHgwXcAiNAd9fxS0KQAOZ7KbZbA/viewform';
+  const label = 'Shops, makers &amp; services: advertise free';
+  const link = new RegExp('href="' + form.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '" target="_blank" rel="noopener">' + label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  for (const name of ['shops.html', 'submit.html', 'index.html', 'site-chrome.js', 'about.html', 'listing.html', 'route.html']) {
+    assert.match(read(name), link, name);
+  }
+  const submitLinks = read('submit.html').match(/https:\/\/docs\.google\.com\/forms\/d\/e\/[\w-]+\/viewform/g) || [];
+  assert.equal(submitLinks.length, 5, 'submit page carries five Google Form links');
+  assert.equal(submitLinks.filter((url) => url === form).length, 2, 'the advertising form is the submit option and the footer link');
+  assert.match(read('scripts/verify-live.js'), /submitLinks\.length===5/);
+  assert.match(read('scripts/verify-live.js'), /formLinks\.length === 5/);
+  assert.equal(read('shops.html').includes('id="advertiseLink" href="submit.html"'), true);
 });

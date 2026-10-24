@@ -54,8 +54,8 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
   const FORMS_RE=/https:\/\/docs\.google\.com\/forms\/d\/e\/[\w-]+\/viewform/g;
   const submitRes=await fetch(BASE + '/submit.html');
   const submitHtml=await submitRes.text();
-  const submitLinks=[...new Set(submitHtml.match(FORMS_RE)||[])];
-  ok('submit page serves four form options with no dialog', submitRes.status===200 && submitLinks.length===4 && !submitHtml.includes('<dialog'), `${submitLinks.length} form links`);
+  const submitLinks=submitHtml.match(FORMS_RE)||[];
+  ok('submit page serves five Google Form links with no dialog', submitRes.status===200 && submitLinks.length===5 && !submitHtml.includes('<dialog'), `${submitLinks.length} form links`);
   const aboutRes=await fetch(BASE + '/about.html');
   const aboutHtml=await aboutRes.text();
   ok('about page serves the community story with no dialog', aboutRes.status===200 && aboutHtml.includes('The Family Behind the Skeleton House') && !aboutHtml.includes('<dialog'), `status=${aboutRes.status}`);
@@ -89,9 +89,9 @@ const localSha = (f) => sha(fs.readFileSync(path.join(__dirname, '..', f)));
 
   // 8. Form links wired in the live submit page all resolve.
   const liveSubmit = await (await fetch(BASE + '/submit.html')).text();
-  const formLinks = [...new Set(liveSubmit.match(FORM_LINK_RE) || [])];
-  ok('submit page carries the four Google Form links', formLinks.length === 4, `${formLinks.length} found`);
-  for (const url of formLinks) {
+  const formLinks = liveSubmit.match(FORM_LINK_RE) || [];
+  ok('submit page carries the five Google Form links', formLinks.length === 5, `${formLinks.length} found`);
+  for (const url of new Set(formLinks)) {
     try {
       const r = await fetch(url, { method: 'HEAD', redirect: 'follow' });
       ok(`form link resolves: ...${url.slice(-28)}`, r.status === 200, `status=${r.status}`);

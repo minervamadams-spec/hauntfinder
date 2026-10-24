@@ -47,6 +47,7 @@
       '<button type="button" class="sheet-close" data-close-menu aria-label="Close menu">×</button>' +
       '<a class="menu-drawer__primary" href="submit.html" data-subnav="submit"' + attr(active, 'submit') + '>+ Submit a listing</a>' +
       '<a class="menu-drawer__shops" href="shops.html" data-subnav="shops"' + attr(active, 'shops') + '>Shops &amp; Services</a>' +
+      '<a class="menu-drawer__advertise" href="https://docs.google.com/forms/d/e/1FAIpQLSeRLgk9i2EJF5AEipV6KLJnHgwXcAiNAd9fxS0KQAOZ7KbZbA/viewform" target="_blank" rel="noopener">Shops, makers &amp; services: advertise free</a>' +
       '<button type="button" id="menuShare">Share this site</button>' +
       '<a href="about.html" data-subnav="about"' + attr(active, 'about') + '>About</a>' +
       '<a href="alerts.html" data-subnav="alerts"' + attr(active, 'alerts') + '>Get alerts</a>' +

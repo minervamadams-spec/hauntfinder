@@ -107,7 +107,8 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       // menu drawer
       await p.click('#menuBtn');await p.waitForTimeout(250);
       const md=await p.evaluate(()=>({open:!document.getElementById('menuDrawer').hidden,links:[...document.querySelectorAll('#menuDrawer .menu-drawer__panel a,#menuDrawer .menu-drawer__panel>button:not(.sheet-close)')].map(a=>a.textContent.trim()),tag:document.querySelector('.menu-drawer__tag').textContent.length>40}));
-      ok(T+'the menu drawer holds the site links and the tagline',md.open&&md.links.join('|')==='+ Submit a listing|Share this site|About|Get alerts|Contact us'&&md.tag,md.links.join('|'));
+      const menuLabels=['+ Submit a listing','Shops & Services','Shops, makers & services: advertise free','Share this site','About','Get alerts','Contact us'];
+      ok(T+'the menu drawer holds the site links and the tagline',md.open&&md.tag&&menuLabels.length===md.links.length&&menuLabels.every((label,i)=>(md.links[i]||'').startsWith(label)),md.links.join('|'));
       await p.click('#menuDrawer .sheet-close');
       // Treat Stops and Events
       await p.click('#treatStopsTab');await p.waitForTimeout(400);
@@ -292,7 +293,7 @@ const sorted=a=>JSON.stringify([...a].sort((x,y)=>x-y));
       // Panel scrollbars + footer layout
       if(await p.evaluate(()=>document.documentElement.dataset.rail==='collapsed')){await p.click('#railToggle');await p.waitForTimeout(300)}
       const pf=await p.evaluate(()=>{const f=document.querySelector('#filterRail .filters'),l=document.querySelector('.filter-rail__links');return {sb:getComputedStyle(f).scrollbarWidth,foot:getComputedStyle(l).display,dir:getComputedStyle(l).flexDirection,rows:[...l.children].filter(x=>x.getBoundingClientRect().height>0).length,lastIsVisits:/^Site visits: \d/.test(l.lastElementChild.textContent.trim()),xs:new Set([...l.children].map(x=>Math.round(x.getBoundingClientRect().left))).size}});
-      ok(T+'filter footer is a fixed one-column link block (submit, share, about, alerts, contact, visits); scrollbars are thin',pf.sb==='thin'&&pf.foot==='flex'&&pf.dir==='column'&&pf.rows===6&&pf.lastIsVisits,JSON.stringify(pf));
+      ok(T+'filter footer is a fixed one-column link block (submit, advertise, share, about, alerts, contact, visits); scrollbars are thin',pf.sb==='thin'&&pf.foot==='flex'&&pf.dir==='column'&&pf.rows===7&&pf.lastIsVisits,JSON.stringify(pf));
       await p.setViewportSize({width:1280,height:800});
     }
     // ---- Design review round 3 ----
