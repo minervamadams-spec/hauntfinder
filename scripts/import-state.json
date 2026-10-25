@@ -295,6 +295,20 @@
         "decision": "published_census_exact_address_verified_minerva_approved_2026-10-23",
         "publicAddress": "35 Green Lane, Succasunna, NJ 07876",
         "scheduleEvidence": "Saturday, October 24, 2026, 7:00–9:30 PM. $15 per person, cash or Venmo at the entrance. Open to all, no registration. Uneven wooded ground; outdoor movie and fire pit."
+      },
+      {
+        "eventId": "taphouse-grille-2026-10-31",
+        "entityId": "taphouse-grille-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-25",
+        "publicAddress": "1930 NJ-57, Hackettstown, NJ 07844",
+        "scheduleEvidence": "Saturday, October 31, 2026, 9:00 PM–midnight. Free, open to all, registration required (no link given), marked kid-friendly. Published as submitted per Minerva."
+      },
+      {
+        "eventId": "halloween-spooktacular-brewery-pup-party-2026-10-31",
+        "entityId": "halloween-spooktacular-brewery-pup-party-2026",
+        "decision": "published_census_exact_address_verified_auto_clean_2026-10-25",
+        "publicAddress": "50 Broadway, Denville, NJ 07834",
+        "scheduleEvidence": "Saturday, October 31, 2026, 12:00–4:00 PM. Free; $10 donation to enter the pet costume contest. Open to all, no registration, kid-friendly. Free street parking."
       }
     ]
   },

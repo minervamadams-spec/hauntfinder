@@ -1260,6 +1260,63 @@ const events=[
   "features": ["Open to all"],
   "url": "",
   "notes": "Scary walk through dark woods on uneven ground; not recommended for people with mobility issues. Outdoor Halloween movie and a fire pit for hot dogs and s'mores."
+ },
+ {
+  "id": "taphouse-grille-2026-10-31",
+  "entityId": "taphouse-grille-2026",
+  "updatedAt": "2026-10-25",
+  "name": "Taphouse Grille",
+  "eventType": "Other",
+  "venue": "Taphouse Grille",
+  "address": "1930 NJ-57, Hackettstown, NJ 07844",
+  "lat": 40.820174465571,
+  "lng": -74.837128420505,
+  "geoVerified": "census-exact 2026-10-25: 1930 STATE RTE 57, HACKETTSTOWN, NJ, 07840",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T21:00:00-04:00",
+  "endAt": "2026-11-01T00:00:00-04:00",
+  "hours": "9:00 PM–12:00 AM",
+  "cost": "Free",
+  "attendance": "Open to all",
+  "features": [
+   "Free",
+   "Open to all",
+   "Registration required",
+   "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Halloween party. Registration required."
+ },
+ {
+  "id": "halloween-spooktacular-brewery-pup-party-2026-10-31",
+  "entityId": "halloween-spooktacular-brewery-pup-party-2026",
+  "updatedAt": "2026-10-25",
+  "name": "Halloween Spooktacular Brewery Pup Party",
+  "eventType": "Festival",
+  "venue": "Diamond Spring Brewing Company",
+  "address": "50 Broadway, Denville, NJ 07834",
+  "lat": 40.891976030719,
+  "lng": -74.476343727142,
+  "geoVerified": "census-exact 2026-10-25: 50 BROADWAY AVE, DENVILLE, NJ, 07834",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T12:00:00-04:00",
+  "endAt": "2026-10-31T16:00:00-04:00",
+  "hours": "12:00 PM–4:00 PM",
+  "cost": "Free ($10 donation to enter the pet costume contest)",
+  "attendance": "Open to all",
+  "features": [
+   "Free",
+   "Open to all",
+   "Kid-friendly"
+  ],
+  "url": "https://diamondspringbrewing.com/halloween-spooktacular/",
+  "notes": "Halloween party for pups and families at the brewery. Pet costume contest entry is a $10 donation. No registration needed. Free street parking available."
  }
 ];
 const CURRENT_SEASON={season:'halloween',year:2026};
