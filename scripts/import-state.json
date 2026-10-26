@@ -217,6 +217,41 @@
       "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-25",
       "publicAddress": "116 Chicasaw Drive, Oakland, NJ 07436",
       "scheduleEvidence": "Hours not stated; no weekly hours recorded. Lights. Participation nominated."
+    },
+    {
+      "listingId": 30,
+      "entityId": "mount-arlington-95-mcgregor-ave-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-26",
+      "publicAddress": "95 McGregor Avenue, Mount Arlington, NJ 07856",
+      "scheduleEvidence": "Through Oct 31, 2026. Best after dark. Family friendly, drive or walk by, lights. Mount Arlington 2026 Halloween House Decorating Contest. Participation nominated."
+    },
+    {
+      "listingId": 31,
+      "entityId": "mount-arlington-71-mountainview-ave-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-26",
+      "publicAddress": "71 Mountainview Avenue, Mount Arlington, NJ 07856",
+      "scheduleEvidence": "Through Oct 31, 2026. Best after dark. Family friendly, drive or walk by, lights. Mount Arlington 2026 Halloween House Decorating Contest. Participation nominated. Census also returned the spacing alias 71 MOUNTAIN VIEW AVE at the same point."
+    },
+    {
+      "listingId": 32,
+      "entityId": "mount-arlington-535-altenbrand-ave-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-26",
+      "publicAddress": "535 Altenbrand Avenue, Mount Arlington, NJ 07856",
+      "scheduleEvidence": "Through Oct 31, 2026. Best after dark. Family friendly, drive or walk by, lights. Mount Arlington 2026 Halloween House Decorating Contest. Participation nominated."
+    },
+    {
+      "listingId": 33,
+      "entityId": "mount-arlington-39-kadel-dr-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-26",
+      "publicAddress": "39 Kadel Drive, Mount Arlington, NJ 07856",
+      "scheduleEvidence": "Through Oct 31, 2026. Best after dark. Family friendly, drive or walk by, lights. Mount Arlington 2026 Halloween House Decorating Contest. Participation nominated."
+    },
+    {
+      "listingId": 34,
+      "entityId": "mount-arlington-109-ondish-ct-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-26",
+      "publicAddress": "109 Ondish Court, Mount Arlington, NJ 07856",
+      "scheduleEvidence": "Through Oct 31, 2026. Best after dark. Family friendly, drive or walk by, lights. Mount Arlington 2026 Halloween House Decorating Contest. Participation nominated."
     }
   ],
   "treatStops": {
