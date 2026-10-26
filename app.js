@@ -904,6 +904,200 @@ const listings=[
    "features": [],
    "notes": "Park on the street at the school and walk up to the front of the yard. A path guides trick-or-treaters to the candy bowl. Walk-through yard display.",
    "kind": "Trick-or-treat stop"
+ },
+ {
+   "updatedAt": "2026-10-25",
+   "num": 23,
+   "entityId": "sadler-rd-halloween-display-2026",
+   "name": "Sadler Rd Halloween Display",
+   "town": "Bloomfield",
+   "address": "54 Sadler Rd, Bloomfield, NJ 07003",
+   "lat": 40.823187354788,
+   "lng": -74.174355157575,
+   "geoVerified": "census-exact 2026-10-25: 54 SADLER RD, BLOOMFIELD, NJ, 07003",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "startDate": "2026-10-01",
+     "endDate": "2026-10-31"
+   },
+   "dates": "October (check before visiting)",
+   "times": "Hours not stated",
+   "levels": ["Family Friendly"],
+   "type": ["Drive or walk by (both)"],
+   "features": ["Lights"],
+   "notes": "A local boy's homemade Halloween display. Added with the family's permission.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-25",
+   "num": 24,
+   "entityId": "hawthorne-zombie-house-2026",
+   "name": "The Zombie House",
+   "town": "Hawthorne",
+   "address": "193 Lafayette Avenue, Hawthorne, NJ 07506",
+   "lat": 40.944841,
+   "lng": -74.155388,
+   "geoVerified": "census-exact 2026-10-25: 193 LAFAYETTE AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "startDate": "2026-10-01",
+     "endDate": "2026-10-31"
+   },
+   "dates": "October",
+   "times": "Hours not stated",
+   "levels": ["Scary"],
+   "type": ["Drive or walk by (both)"],
+   "features": ["Lights", "Live Actors", "Photo opportunities"],
+   "notes": "About 180 handmade zombies fill the yard, and the creator often lurks in costume. Busy block: follow posted no-parking signs.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-25",
+   "num": 25,
+   "entityId": "ridgewood-halloween-maze-2026",
+   "name": "Ridgewood Halloween Maze",
+   "town": "Ridgewood",
+   "address": "124 Sheridan Terrace, Ridgewood, NJ 07450",
+   "lat": 40.986322,
+   "lng": -74.125058,
+   "geoVerified": "census-exact 2026-10-25: 124 SHERIDAN TER, RIDGEWOOD, NJ, 07450",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31",
+     "weekly": [
+       {"dow": 0, "open": "13:00", "close": "21:00"},
+       {"dow": 1, "open": "16:00", "close": "21:00"},
+       {"dow": 2, "open": "16:00", "close": "21:00"},
+       {"dow": 3, "open": "16:00", "close": "21:00"},
+       {"dow": 4, "open": "16:00", "close": "21:00"},
+       {"dow": 5, "open": "16:00", "close": "21:00"},
+       {"dow": 6, "open": "13:00", "close": "21:00"}
+     ]
+   },
+   "dates": "Daily through Oct 31",
+   "times": "Mon–Fri 4:00 PM–9:00 PM; Sat–Sun 1:00 PM–9:00 PM",
+   "levels": [],
+   "type": [],
+   "features": ["Animatronics", "Live Actors"],
+   "notes": "Free backyard maze, about 1,000 sq ft, rebuilt every year. Creepy clowns after dark. Closed when raining. Kids who can't read yet need an adult.",
+   "kind": "Home haunt/walk-through"
+ },
+ {
+   "updatedAt": "2026-10-25",
+   "num": 26,
+   "entityId": "ridgewood-halloween-house-2026",
+   "name": "Ridgewood Halloween House",
+   "town": "Ridgewood",
+   "address": "294 West End Avenue, Ridgewood, NJ 07450",
+   "lat": 40.976016,
+   "lng": -74.136211,
+   "geoVerified": "census-exact 2026-10-25: 294 WEST END AVE, RIDGEWOOD, NJ, 07450",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "",
+   "times": "Hours not stated",
+   "levels": [],
+   "type": [],
+   "features": [],
+   "notes": "Free zombie-cemetery walk-through, no tickets. Weather permitting. May be intense for little ones.",
+   "kind": "Home haunt/walk-through"
+ },
+ {
+   "updatedAt": "2026-10-25",
+   "num": 27,
+   "entityId": "witch-house-woodcliff-lake-2026",
+   "name": "Witch House",
+   "town": "Woodcliff Lake",
+   "address": "9 Lori Court, Woodcliff Lake, NJ 07677",
+   "lat": 41.012696,
+   "lng": -74.057446,
+   "geoVerified": "census-exact 2026-10-25: 9 LORI CT, WOODCLIFF LAKE, NJ, 07677",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "startDate": "2026-10-04",
+     "endDate": "2026-10-31"
+   },
+   "dates": "Oct 4-31",
+   "times": "Hours not stated",
+   "levels": [],
+   "type": [],
+   "features": ["Music / Sound"],
+   "notes": "Zombies, witches, a giant spider, and a Halloween radio station to tune to while you look.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-25",
+   "num": 28,
+   "entityId": "guccione-walkthrough-ramsey-2026",
+   "name": "East Cedar Place Walk-Through",
+   "town": "Ramsey",
+   "address": "65 East Cedar Place, Ramsey, NJ 07446",
+   "lat": 41.044431,
+   "lng": -74.157551,
+   "geoVerified": "census-exact 2026-10-25: 65 E CEDAR PL, RAMSEY, NJ, 07446",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "weekly": [
+       {"dow": 0, "open": "17:00", "close": "22:00"},
+       {"dow": 1, "open": "17:00", "close": "22:00"},
+       {"dow": 2, "open": "17:00", "close": "22:00"},
+       {"dow": 3, "open": "17:00", "close": "22:00"},
+       {"dow": 4, "open": "17:00", "close": "22:00"},
+       {"dow": 5, "open": "17:00", "close": "22:00"},
+       {"dow": 6, "open": "15:00", "close": "22:00"}
+     ]
+   },
+   "dates": "Daily",
+   "times": "Sun–Fri 5:00 PM–10:00 PM; Sat 3:00 PM–10:00 PM",
+   "levels": [],
+   "type": [],
+   "features": ["Fog", "Lights"],
+   "notes": "Free walk-through cemetery with horror characters and jump scares. Closed when raining.",
+   "kind": "Home haunt/walk-through"
+ },
+ {
+   "updatedAt": "2026-10-25",
+   "num": 29,
+   "entityId": "chicasaw-drive-display-oakland-2026",
+   "name": "Chicasaw Drive Halloween Lawn",
+   "town": "Oakland",
+   "address": "116 Chicasaw Drive, Oakland, NJ 07436",
+   "lat": 41.037071,
+   "lng": -74.211297,
+   "geoVerified": "census-exact 2026-10-25: 116 CHICASAW DR, OAKLAND, NJ, 07436",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "",
+   "times": "Hours not stated",
+   "levels": [],
+   "type": [],
+   "features": ["Lights"],
+   "notes": "Entire front lawn lit up with Halloween lights and decorations.",
+   "kind": "Decorated home/yard display"
  }
 ];
 listings.sort((a,b)=>a.num-b.num);
@@ -1320,7 +1514,7 @@ const events=[
  }
 ];
 const CURRENT_SEASON={season:'halloween',year:2026};
-function inCurrentSeason(x){return x.season===CURRENT_SEASON.season&&x.year===CURRENT_SEASON.year&&(x.participation||'confirmed')==='confirmed'}
+function inCurrentSeason(x){const participation=x.participation||'confirmed';return x.season===CURRENT_SEASON.season&&x.year===CURRENT_SEASON.year&&(participation==='confirmed'||participation==='nominated')}
 const filters=['All','Family Friendly','Spooky','Scary','Walk-through','Drive-by','Walk-by','Animatronics','Fog','Music/Sound','Photo Opportunities','Lights','Actors','Costumes Available'];
 const state={filter:'All',features:[],community:true,selected:null,route:[],startMode:'current',startAddr:'',coords:{},category:'displays'};
 

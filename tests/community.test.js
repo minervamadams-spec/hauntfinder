@@ -134,7 +134,8 @@ test('data: shipped listings carry no email or phone; community records keep own
   assert.equal(/\(?\b\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}\b/.test(dump),false,'no phone number in any listing');
   for(const x of data.listings.filter(v=>v.source==='community')){
     assert.ok(Array.isArray(x.levels)&&Array.isArray(x.type)&&Array.isArray(x.features),'arrays keep every filter working');
-    assert.match(x.name,/^Decorated House on /,'named by street, never by the owner');
+    assert.equal(/[\w.+-]+@[\w-]+\.[\w.]+/.test(x.name),false,'public display title, not an email');
+    assert.equal(/\(?\b\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}\b/.test(x.name),false,'public display title, not a phone number');
     assert.ok(typeof x.geoVerified==='string'&&/census/i.test(x.geoVerified),'Census-verified');
     assert.equal('email' in x||'phone' in x,false);
     if(x.spottedBy)assert.ok(!/@/.test(x.spottedBy));

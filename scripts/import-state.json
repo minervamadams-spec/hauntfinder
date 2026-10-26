@@ -168,6 +168,55 @@
       "decision": "published_census_exact_address_verified_minerva_standing_approval_2026-10-22",
       "publicAddress": "20 Valley Road, Succasunna, NJ 07876",
       "scheduleEvidence": "All of October 2026, 4:00–10:00 PM. Family friendly, drive-by, lights; animatronics, fog and music added on Halloween day."
+    },
+    {
+      "listingId": 23,
+      "entityId": "sadler-rd-halloween-display-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_owner_permission_2026-10-25",
+      "publicAddress": "54 Sadler Rd, Bloomfield, NJ 07003",
+      "scheduleEvidence": "October 2026, hours not stated. Family friendly, drive or walk by, lights. Owner gave written permission."
+    },
+    {
+      "listingId": 24,
+      "entityId": "hawthorne-zombie-house-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-25",
+      "publicAddress": "193 Lafayette Avenue, Hawthorne, NJ 07506",
+      "scheduleEvidence": "October 2026. Hours not stated. Scary, drive or walk by. Lights, live actors, photo opportunities. Participation nominated."
+    },
+    {
+      "listingId": 25,
+      "entityId": "ridgewood-halloween-maze-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-25",
+      "publicAddress": "124 Sheridan Terrace, Ridgewood, NJ 07450",
+      "scheduleEvidence": "Daily through Oct 31. Mon–Fri 4:00–9:00 PM, Sat–Sun 1:00–9:00 PM. Home haunt walk-through. Animatronics and live actors. Closed when raining. Participation nominated."
+    },
+    {
+      "listingId": 26,
+      "entityId": "ridgewood-halloween-house-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-25",
+      "publicAddress": "294 West End Avenue, Ridgewood, NJ 07450",
+      "scheduleEvidence": "Hours not stated; sources conflict, so no weekly hours were recorded. Home haunt walk-through. Participation nominated."
+    },
+    {
+      "listingId": 27,
+      "entityId": "witch-house-woodcliff-lake-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-25",
+      "publicAddress": "9 Lori Court, Woodcliff Lake, NJ 07677",
+      "scheduleEvidence": "Oct 4–31, 2026. Hours not stated. Music / sound. Participation nominated."
+    },
+    {
+      "listingId": 28,
+      "entityId": "guccione-walkthrough-ramsey-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-25",
+      "publicAddress": "65 East Cedar Place, Ramsey, NJ 07446",
+      "scheduleEvidence": "Sun–Fri 5:00–10:00 PM, Sat 3:00–10:00 PM. Home haunt walk-through. Fog and lights. Closed when raining. Participation nominated."
+    },
+    {
+      "listingId": 29,
+      "entityId": "chicasaw-drive-display-oakland-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-25",
+      "publicAddress": "116 Chicasaw Drive, Oakland, NJ 07436",
+      "scheduleEvidence": "Hours not stated; no weekly hours recorded. Lights. Participation nominated."
     }
   ],
   "treatStops": {

@@ -24,6 +24,7 @@ test('current-season rule excludes wrong season, year or participation and inclu
  assert.equal(CURRENT_SEASON.season,'halloween');
  assert.equal(CURRENT_SEASON.year,2026);
  assert.ok(inCurrentSeason({season:'halloween',year:2026,participation:'confirmed'}));
+ assert.ok(inCurrentSeason({season:'halloween',year:2026,participation:'nominated'}));
  assert.ok(inCurrentSeason({season:'halloween',year:2026}));
  assert.ok(!inCurrentSeason({season:'holiday',year:2026,participation:'confirmed'}));
  assert.ok(!inCurrentSeason({season:'halloween',year:2025,participation:'confirmed'}));
@@ -33,7 +34,7 @@ test('current-season rule excludes wrong season, year or participation and inclu
  assert.ok(activeListings.length>0&&activeEvents.length>0);
  assert.equal(new Set(activeListings.map(x=>x.num)).size,activeListings.length,'listing numbers stay unique');
  assert.equal(new Set(activeEvents.map(x=>x.id)).size,activeEvents.length,'event ids stay unique');
- assert.ok(activeListings.every(x=>x.season==='halloween'&&x.year===2026&&x.participation==='confirmed'));
+ assert.ok(activeListings.every(x=>x.season==='halloween'&&x.year===2026&&(x.participation==='confirmed'||x.participation==='nominated')));
  assert.ok(activeEvents.every(x=>x.season==='halloween'&&x.year===2026&&x.participation==='confirmed'));
 });
 test('public-data pipeline sees only active-season confirmed records with coordinates',()=>{
