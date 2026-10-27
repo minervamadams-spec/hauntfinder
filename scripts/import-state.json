@@ -1087,6 +1087,16 @@
         "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
         "publicAddress": "203 Laurel Road, Voorhees, NJ 08043",
         "scheduleEvidence": "Saturday, October 31, 2026, 10:30\u201311:00 AM. No registration. Cost not stated."
+      },
+      {
+        "row": 19,
+        "timestampSerial": 46322.745651516205,
+        "submittedAt": "2026-10-27T17:53:44-04:00",
+        "eventId": "nielsen-kia-trunk-or-treat-2026-10-31",
+        "entityId": "nielsen-kia-trunk-or-treat-2026",
+        "decision": "auto-published",
+        "publicAddress": "20 Hampton House Road, Newton, NJ 07860",
+        "scheduleEvidence": "Saturday, October 31, 2026, 11:00 AM\u20133:00 PM. Free, open to all, kid-friendly. Costume contest; the winner gets a $200 Visa gift card. Register for the costume contest at Nielsen Kia before 2 PM. Minors need a parent or legal guardian's signature to enter the contest."
       }
     ]
   },

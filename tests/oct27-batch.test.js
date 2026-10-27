@@ -71,7 +71,7 @@ test('Macaroni KID West Morris credit is a new-tab link',()=>{
 test('new Garden State Circle rows are census-exact and the two non-matches are absent',()=>{
   const {listings,events}=appData();
   assert.equal(listings.length,117);
-  assert.equal(events.length,32);
+  assert.equal(events.length,33);
   const skeletons=listings.find(x=>x.num===117);
   assert.equal(skeletons.geoVerified,'census-exact 2026-10-27: 948 US HWY 202, BRIDGEWATER, NJ, 08807');
   const blob=JSON.stringify({listings,events});

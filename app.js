@@ -4366,6 +4366,34 @@ const events=[
   ],
   "url": "",
   "notes": "No registration needed. Check with the organizer about cost."
+ },
+ {
+  "id": "nielsen-kia-trunk-or-treat-2026-10-31",
+  "entityId": "nielsen-kia-trunk-or-treat-2026",
+  "updatedAt": "2026-10-27",
+  "name": "Nielsen Kia Trunk or Treat and Costume Contest",
+  "eventType": "Trunk-or-treat",
+  "venue": "Nielsen Kia",
+  "address": "20 Hampton House Road, Newton, NJ 07860",
+  "lat": 41.070221723868,
+  "lng": -74.741621141497,
+  "geoVerified": "census-exact 2026-10-27: 20 HAMPTON HOUSE RD, NEWTON, NJ, 07860",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T11:00:00-04:00",
+  "endAt": "2026-10-31T15:00:00-04:00",
+  "hours": "11:00 AM–3:00 PM",
+  "cost": "Free",
+  "attendance": "Open to all",
+  "features": [
+    "Free",
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "https://www.facebook.com/share/p/19yc9Pc8rB/?mibextid=wwXIfr",
+  "notes": "Free trunk or treat with a costume contest; the contest winner gets a $200 Visa gift card. Register for the costume contest at Nielsen Kia before 2 PM. Minors need a parent or legal guardian's signature to enter the contest."
  }
 ];
 const CURRENT_SEASON={season:'halloween',year:2026};
