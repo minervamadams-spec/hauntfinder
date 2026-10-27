@@ -7,26 +7,34 @@ const ROOT=path.join(__dirname,'..');
 const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
 const app=read('app.js'),html=read('index.html'),submit=read('submit.html'),nominate=read('nominate.html'),claim=read('claim.html');
 const css=read('community.css'),lib=require('../nominate-lib.js');
-const data=vm.runInNewContext(app.split('const filters=')[0]+';({listings})');
+const data=vm.runInNewContext(app.split('const filters=')[0]+';({listings,events})');
 
 // Same helper bodies the page uses, evaluated on their own so the tests exercise the real source.
 function helpers(){
   const pick=n=>{const m=new RegExp('function '+n+'\\(.*?\\)\\{.*\\}(?=\\n)').exec(app);assert.ok(m,n+' present');return m[0]};
-  const ctx={state:{community:true,route:[],selected:null},localStorage:{store:{},getItem(k){return this.store[k]??null}},gmapsDirections:a=>'https://maps/'+a,listingHoursText:x=>x.dates||''};
+  const ctx={state:{community:true,route:[],selected:null},localStorage:{store:{},getItem(k){return this.store[k]??null}},gmapsDirections:a=>'https://maps/'+a,listingHoursText:x=>[x.dates,x.times].filter(Boolean).join(' · '),cardIconHTML:()=>'<div class="pin pin--display pin--card"></div>',listingStatusHTML:()=>'',distanceLabelHTML:()=>'<span class="card__distance">2 mi</span>',scarePips:levels=>`<span class="pips">${levels.join(' ')}</span>`,hfTagHTML:t=>`<span class="chip">${t}</span>`,featureChip:v=>`<span class="chip">${v}</span>`,listingPageHref:x=>'listing.html?id='+x.num};
   vm.createContext(ctx);
-  vm.runInContext(['safeListingText','isCommunity','removedHere','communityNameText','communityPinHTML','communityBodyHTML','communityCardHTML'].map(pick).join('\n')+";const COMMUNITY_BADGE='Spotted by the community, not submitted by the owner';",ctx);
+  vm.runInContext('const communityOpen=new Set();\n'+['safeListingText','isCommunity','removedHere','communityNameText','communityPinHTML','communityDetailsHTML','communityBodyHTML','communityCardHTML'].map(pick).join('\n')+";const COMMUNITY_BADGE='Spotted by the community, not submitted by the owner';",ctx);
   return ctx;
 }
 const sample={num:7,name:'Decorated House on Flanders Rd',town:'Mount Olive',address:'118 Flanders Rd, Mount Olive, NJ',source:'community',notes:'Giant inflatable spider on the roof.',spottedBy:'Jess',photo:'https://example.blob.vercel-storage.com/n/1.jpg',dates:'Evenings · lit until 9 PM',levels:[],type:[],features:[]};
 
-test('community card: badge, WHERE/BEST/WHY in order, nickname, claim link',()=>{
+test('community card: compact address line; details, disclaimer and claim expand together',()=>{
   const c=helpers(),h=c.communityCardHTML(sample);
-  assert.ok(h.includes('Spotted by the community, not submitted by the owner'),'badge on every community card');
-  const where=h.indexOf('>WHERE<'),best=h.indexOf('>BEST<'),why=h.indexOf('>WHY<');
-  assert.ok(where>0&&best>where&&why>best,'rows in order WHERE, BEST, WHY');
-  assert.ok(h.includes('Spotted by Jess'),'nickname shown');
+  assert.ok(h.includes('card card--compact card--community'),'same compact card shell as a standard display');
+  assert.ok(h.includes('class="card__address"')&&h.includes('118 Flanders Rd, Mount Olive ↗'),'address is the purple directions line');
+  assert.ok(h.includes('card__distance'),'distance sits on the address line');
+  assert.equal(h.includes('>WHERE<')||h.includes('>BEST<')||h.includes('>WHY<'),false,'no WHERE/BEST/WHY table');
+  assert.ok(/<div class="community__expand" hidden>/.test(h),'notes, disclaimer and claim are collapsed');
+  const why=h.indexOf('community__why'),badge=h.indexOf('community__badge'),claim=h.indexOf('community__claim');
+  assert.ok(why>0&&badge>why&&claim>badge,'expanded order is notes, then the disclaimer, then claim');
+  assert.ok(h.includes('Spotted by the community, not submitted by the owner'),'disclaimer kept');
+  assert.ok(h.includes('Spotted by Jess'),'nickname shown in the expanded details');
   assert.ok(h.includes('Is this your house? Claim it or remove it')&&h.includes('href="claim.html?id=7"'),'claim or remove link');
   assert.ok(h.includes('community__photo'),'photo frame when a photo exists');
+  assert.ok(h.includes('data-community-toggle="7"')&&h.includes('>Details<'),'details control on the hours row');
+  assert.ok(app.includes("if(card.hasAttribute('data-community'))toggleCommunityCard(n);if(matchMedia('(max-width:1023px)').matches)return;selectListing(n,true)"),'card click expands, and the mobile select guard stays');
+  assert.match(css,/\.card--community \.community__expand\[hidden\]\{display:none!important\}/);
 });
 test('community card: no photo means no frame, no nickname means no byline',()=>{
   const c=helpers(),h=c.communityCardHTML({...sample,photo:undefined,spottedBy:undefined});
@@ -139,7 +147,18 @@ test('data: shipped listings carry no email or phone; community records keep own
     assert.ok(typeof x.geoVerified==='string'&&/census/i.test(x.geoVerified),'Census-verified');
     assert.equal('email' in x||'phone' in x,false);
     if(x.spottedBy)assert.ok(!/@/.test(x.spottedBy));
+    assert.equal(/Contest House/.test(x.name+' '+(x.notes||'')+' '+(x.address||'')),false,'Contest House is not part of the public listing text');
   }
+  assert.equal(data.listings.length,109);
+  const first=data.listings.find(x=>x.num===41),last=data.listings.find(x=>x.num===109);
+  assert.equal(first.address,'35 Morse Avenue, Bloomfield, NJ 07003');
+  assert.equal(first.lat,40.78496575);
+  assert.equal(last.address,'13 Monmouth Avenue, Freehold, NJ 07728');
+  assert.equal(last.geoVerified.includes('13 MONMOUTH AVE, FREEHOLD'),true);
+  const parade=data.events.find(e=>e.id==='hackettstown-halloween-downtown-2026-10-31');
+  const trunk=data.events.find(e=>e.id==='menlha-trunk-or-treat-2026-10-30');
+  assert.equal(parade.eventType,'Parade');
+  assert.equal(trunk.eventType,'Trunk-or-treat');
 });
 test('app.js and the config carry no contact data',()=>{
   assert.equal(/[\w.+-]+@[\w-]+\.[\w.]+/.test(read('nominations-config.js')+read('nominate.js')+read('claim.js')),false);

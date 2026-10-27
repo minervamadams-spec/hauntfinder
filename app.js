@@ -1103,7 +1103,7 @@ const listings=[
    "updatedAt": "2026-10-26",
    "num": 30,
    "entityId": "mount-arlington-95-mcgregor-ave-2026",
-   "name": "McGregor Ave Contest House",
+   "name": "McGregor Ave",
    "town": "Mount Arlington",
    "address": "95 McGregor Avenue, Mount Arlington, NJ 07856",
    "lat": 40.939600437606,
@@ -1128,7 +1128,7 @@ const listings=[
    "updatedAt": "2026-10-26",
    "num": 31,
    "entityId": "mount-arlington-71-mountainview-ave-2026",
-   "name": "Mountainview Ave Contest House",
+   "name": "Mountainview Ave",
    "town": "Mount Arlington",
    "address": "71 Mountainview Avenue, Mount Arlington, NJ 07856",
    "lat": 40.930069612273,
@@ -1153,7 +1153,7 @@ const listings=[
    "updatedAt": "2026-10-26",
    "num": 32,
    "entityId": "mount-arlington-535-altenbrand-ave-2026",
-   "name": "Altenbrand Ave Contest House",
+   "name": "Altenbrand Ave",
    "town": "Mount Arlington",
    "address": "535 Altenbrand Avenue, Mount Arlington, NJ 07856",
    "lat": 40.927989209365,
@@ -1178,7 +1178,7 @@ const listings=[
    "updatedAt": "2026-10-26",
    "num": 33,
    "entityId": "mount-arlington-39-kadel-dr-2026",
-   "name": "Kadel Dr Contest House",
+   "name": "Kadel Dr",
    "town": "Mount Arlington",
    "address": "39 Kadel Drive, Mount Arlington, NJ 07856",
    "lat": 40.920607272197,
@@ -1203,7 +1203,7 @@ const listings=[
    "updatedAt": "2026-10-26",
    "num": 34,
    "entityId": "mount-arlington-109-ondish-ct-2026",
-   "name": "Ondish Ct Contest House",
+   "name": "Ondish Ct",
    "town": "Mount Arlington",
    "address": "109 Ondish Court, Mount Arlington, NJ 07856",
    "lat": 40.905718219455,
@@ -1228,7 +1228,7 @@ const listings=[
    "updatedAt": "2026-10-26",
    "num": 35,
    "entityId": "mount-arlington-686-reba-rd-2026",
-   "name": "686 Reba Rd Contest House",
+   "name": "686 Reba Rd",
    "town": "Mount Arlington",
    "address": "686 Reba Road, Landing, NJ 07850",
    "lat": 40.915677146878,
@@ -1253,7 +1253,7 @@ const listings=[
    "updatedAt": "2026-10-26",
    "num": 36,
    "entityId": "mount-arlington-688-reba-rd-2026",
-   "name": "688 Reba Rd Contest House",
+   "name": "688 Reba Rd",
    "town": "Mount Arlington",
    "address": "688 Reba Road, Landing, NJ 07850",
    "lat": 40.915465055333,
@@ -1278,7 +1278,7 @@ const listings=[
    "updatedAt": "2026-10-26",
    "num": 37,
    "entityId": "mount-arlington-564-audrey-rd-2026",
-   "name": "Audrey Rd Contest House",
+   "name": "Audrey Rd",
    "town": "Mount Arlington",
    "address": "564 Audrey Road, Landing, NJ 07850",
    "lat": 40.912742754271,
@@ -1303,7 +1303,7 @@ const listings=[
    "updatedAt": "2026-10-26",
    "num": 38,
    "entityId": "mount-arlington-50-elizabeth-way-2026",
-   "name": "Elizabeth Way Contest House",
+   "name": "Elizabeth Way",
    "town": "Mount Arlington",
    "address": "50 Elizabeth Way, Landing, NJ 07850",
    "lat": 40.895640048758,
@@ -1328,7 +1328,7 @@ const listings=[
    "updatedAt": "2026-10-26",
    "num": 39,
    "entityId": "mount-arlington-126-orben-dr-2026",
-   "name": "126 Orben Dr Contest House",
+   "name": "126 Orben Dr",
    "town": "Mount Arlington",
    "address": "126 Orben Drive, Landing, NJ 07850",
    "lat": 40.895965508351,
@@ -1353,7 +1353,7 @@ const listings=[
    "updatedAt": "2026-10-26",
    "num": 40,
    "entityId": "mount-arlington-133-orben-dr-2026",
-   "name": "133 Orben Dr Contest House",
+   "name": "133 Orben Dr",
    "town": "Mount Arlington",
    "address": "133 Orben Drive, Landing, NJ 07850",
    "lat": 40.896461132458,
@@ -1372,6 +1372,1879 @@ const listings=[
    "type": ["Drive or walk by (both)"],
    "features": ["Lights"],
    "notes": "Part of Mount Arlington's 2026 Halloween House Decorating Contest. Winners announced on Halloween. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 41,
+   "entityId": "35-morse-avenue-bloomfield-2026",
+   "name": "Morse Avenue Halloween Display",
+   "town": "Bloomfield",
+   "address": "35 Morse Avenue, Bloomfield, NJ 07003",
+   "lat": 40.78496575,
+   "lng": -74.208887487,
+   "geoVerified": "census-exact 2026-10-26: 35 MORSE AVE, BLOOMFIELD, NJ, 07003",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "6-9 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [
+     "Spooky Decor"
+   ],
+   "notes": "Corner-property display with many handcrafted creatures, made by the homeowner all year long.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 42,
+   "entityId": "59-hillside-crescent-nutley-2026",
+   "name": "Hillside Crescent Halloween Display",
+   "town": "Nutley",
+   "address": "59 Hillside Crescent, Nutley, NJ 07110",
+   "lat": 40.819013543,
+   "lng": -74.162078792,
+   "geoVerified": "census-exact 2026-10-26: 59 HILLSIDE CRES, NUTLEY, NJ, 07110",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Community-spotted Halloween display. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 43,
+   "entityId": "17-cadmus-street-nutley-2026",
+   "name": "Cadmus Street Halloween House",
+   "town": "Nutley",
+   "address": "17 Cadmus Street, Nutley, NJ 07110",
+   "lat": 40.834717969,
+   "lng": -74.163864326,
+   "geoVerified": "census-exact 2026-10-26: 17 CADMUS ST, NUTLEY, NJ, 07110",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Community-spotted Halloween house. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 44,
+   "entityId": "204-clinton-avenue-clifton-2026",
+   "name": "Clinton Avenue Halloween Display",
+   "town": "Clifton",
+   "address": "204 Clinton Avenue, Clifton, NJ 07011",
+   "lat": 40.871592223,
+   "lng": -74.146665243,
+   "geoVerified": "census-exact 2026-10-26: 204 CLINTON AVE, CLIFTON, NJ, 07011",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Community-spotted Halloween display. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 45,
+   "entityId": "845-palmer-avenue-maywood-2026",
+   "name": "Palmer Avenue Haunt",
+   "town": "Maywood",
+   "address": "845 Palmer Avenue, Maywood, NJ 07607",
+   "lat": 40.91239566,
+   "lng": -74.059741638,
+   "geoVerified": "census-exact 2026-10-26: 845 PALMER AVE, MAYWOOD, NJ, 07607",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Community-spotted home haunt. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 46,
+   "entityId": "491-south-pleasant-avenue-ridgewood-2026",
+   "name": "South Pleasant Avenue Animatronics",
+   "town": "Ridgewood",
+   "address": "491 South Pleasant Avenue, Ridgewood, NJ 07450",
+   "lat": 40.96074807,
+   "lng": -74.103877,
+   "geoVerified": "census-exact 2026-10-26: 491 S PLEASANT AVE, RIDGEWOOD, NJ, 07450",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [
+     "Animatronics"
+   ],
+   "notes": "Animatronics display, scarier after dark.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 47,
+   "entityId": "80-8th-avenue-hawthorne-2026",
+   "name": "8th Avenue Skeleton House",
+   "town": "Hawthorne",
+   "address": "80 8th Avenue, Hawthorne, NJ 07506",
+   "lat": 40.960693926,
+   "lng": -74.149521722,
+   "geoVerified": "census-exact 2026-10-26: 80 8TH AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [
+     "Spooky Decor"
+   ],
+   "notes": "Community-spotted skeleton display. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 48,
+   "entityId": "130-berkley-place-dumont-2026",
+   "name": "Berkley Place Halloween Funhouse",
+   "town": "Dumont",
+   "address": "130 Berkley Place, Dumont, NJ 07628",
+   "lat": 40.952838101,
+   "lng": -73.998576197,
+   "geoVerified": "census-exact 2026-10-26: 130 BERKLEY PL, DUMONT, NJ, 07628",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)",
+     "Walk-through"
+   ],
+   "features": [],
+   "notes": "Walk-in Halloween funhouse, community-spotted.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 49,
+   "entityId": "33-may-street-hawthorne-2026",
+   "name": "The BOO Crew",
+   "town": "Hawthorne",
+   "address": "33 May Street, Hawthorne, NJ 07506",
+   "lat": 40.94180909,
+   "lng": -74.15748329,
+   "geoVerified": "census-exact 2026-10-26: 33 MAY ST, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 50,
+   "entityId": "80-brookside-avenue-hawthorne-2026",
+   "name": "The Haunted Graveyard",
+   "town": "Hawthorne",
+   "address": "80 Brookside Avenue, Hawthorne, NJ 07506",
+   "lat": 40.951069485,
+   "lng": -74.161767099,
+   "geoVerified": "census-exact 2026-10-26: 80 BROOKSIDE AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 51,
+   "entityId": "86-brookside-avenue-hawthorne-2026",
+   "name": "Wickedly Ever After",
+   "town": "Hawthorne",
+   "address": "86 Brookside Avenue, Hawthorne, NJ 07506",
+   "lat": 40.951132634,
+   "lng": -74.161769756,
+   "geoVerified": "census-exact 2026-10-26: 86 BROOKSIDE AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 52,
+   "entityId": "144-washington-avenue-hawthorne-2026",
+   "name": "Washington Avenue Halloween Display",
+   "town": "Hawthorne",
+   "address": "144 Washington Avenue, Hawthorne, NJ 07506",
+   "lat": 40.947435999,
+   "lng": -74.151394572,
+   "geoVerified": "census-exact 2026-10-26: 144 WASHINGTON AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 53,
+   "entityId": "66-bamford-avenue-hawthorne-2026",
+   "name": "The Rotten Pumpkin Patch",
+   "town": "Hawthorne",
+   "address": "66 Bamford Avenue, Hawthorne, NJ 07506",
+   "lat": 40.950916353,
+   "lng": -74.160488821,
+   "geoVerified": "census-exact 2026-10-26: 66 BAMFORD AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 54,
+   "entityId": "125-1st-avenue-hawthorne-2026",
+   "name": "Disney on First",
+   "town": "Hawthorne",
+   "address": "125 1st Avenue, Hawthorne, NJ 07506",
+   "lat": 40.960201229,
+   "lng": -74.159705174,
+   "geoVerified": "census-exact 2026-10-26: 125 1ST AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 55,
+   "entityId": "119-rea-avenue-hawthorne-2026",
+   "name": "Spooky Cute Skeletons",
+   "town": "Hawthorne",
+   "address": "119 Rea Avenue, Hawthorne, NJ 07506",
+   "lat": 40.958524285,
+   "lng": -74.156480356,
+   "geoVerified": "census-exact 2026-10-26: 119 REA AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 56,
+   "entityId": "44-rea-avenue-hawthorne-2026",
+   "name": "Rea Avenue Halloween Display",
+   "town": "Hawthorne",
+   "address": "44 Rea Avenue, Hawthorne, NJ 07506",
+   "lat": 40.958085028,
+   "lng": -74.159623646,
+   "geoVerified": "census-exact 2026-10-26: 44 REA AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 57,
+   "entityId": "129-2nd-avenue-hawthorne-2026",
+   "name": "The Boo-tiful Bone Yard",
+   "town": "Hawthorne",
+   "address": "129 2nd Avenue, Hawthorne, NJ 07506",
+   "lat": 40.960446101,
+   "lng": -74.15846433,
+   "geoVerified": "census-exact 2026-10-26: 129 2ND AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 58,
+   "entityId": "233-pasadena-place-hawthorne-2026",
+   "name": "The Graveyard Smash",
+   "town": "Hawthorne",
+   "address": "233 Pasadena Place, Hawthorne, NJ 07506",
+   "lat": 40.963807469,
+   "lng": -74.16050569,
+   "geoVerified": "census-exact 2026-10-26: 233 PASADENA PL, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 59,
+   "entityId": "67-beverly-road-hawthorne-2026",
+   "name": "Beverly Road Halloween Display",
+   "town": "Hawthorne",
+   "address": "67 Beverly Road, Hawthorne, NJ 07506",
+   "lat": 40.970635092,
+   "lng": -74.166151996,
+   "geoVerified": "census-exact 2026-10-26: 67 BEVERLY RD, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 60,
+   "entityId": "2-hutchinson-avenue-hawthorne-2026",
+   "name": "Eerie Acres Cemetery",
+   "town": "Hawthorne",
+   "address": "2 Hutchinson Avenue, Hawthorne, NJ 07506",
+   "lat": 40.963638902,
+   "lng": -74.154638496,
+   "geoVerified": "census-exact 2026-10-26: 2 HUTCHINSON AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 61,
+   "entityId": "180-bamford-avenue-hawthorne-2026",
+   "name": "The Web of the Dead Graveyard",
+   "town": "Hawthorne",
+   "address": "180 Bamford Avenue, Hawthorne, NJ 07506",
+   "lat": 40.95484167,
+   "lng": -74.160107106,
+   "geoVerified": "census-exact 2026-10-26: 180 BAMFORD AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 62,
+   "entityId": "55-parker-avenue-hawthorne-2026",
+   "name": "Skulls & Roses Skeleton Concert",
+   "town": "Hawthorne",
+   "address": "55 Parker Avenue, Hawthorne, NJ 07506",
+   "lat": 40.957293696,
+   "lng": -74.149167078,
+   "geoVerified": "census-exact 2026-10-26: 55 PARKER AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 63,
+   "entityId": "57-sherman-avenue-hawthorne-2026",
+   "name": "Creepy House",
+   "town": "Hawthorne",
+   "address": "57 Sherman Avenue, Hawthorne, NJ 07506",
+   "lat": 40.966242754,
+   "lng": -74.145649326,
+   "geoVerified": "census-exact 2026-10-26: 57 SHERMAN AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 64,
+   "entityId": "5-roosevelt-avenue-hawthorne-2026",
+   "name": "Gnomes, Pumpkins & Halloween Cuteness",
+   "town": "Hawthorne",
+   "address": "5 Roosevelt Avenue, Hawthorne, NJ 07506",
+   "lat": 40.96468403,
+   "lng": -74.156489386,
+   "geoVerified": "census-exact 2026-10-26: 5 ROOSEVELT AVE, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 65,
+   "entityId": "10-short-street-hawthorne-2026",
+   "name": "Short Street Graveyard",
+   "town": "Hawthorne",
+   "address": "10 Short Street, Hawthorne, NJ 07506",
+   "lat": 40.965091649,
+   "lng": -74.154023172,
+   "geoVerified": "census-exact 2026-10-26: 10 SHORT ST, HAWTHORNE, NJ, 07506",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Hawthorne Halloween Decorating Contest. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 66,
+   "entityId": "286-rockaway-street-boonton-2026",
+   "name": "286 Rockaway St Halloween Display",
+   "town": "Boonton",
+   "address": "286 Rockaway Street, Boonton, NJ 07005",
+   "lat": 40.905679332,
+   "lng": -74.417615029,
+   "geoVerified": "census-exact 2026-10-26: 286 ROCKAWAY ST, BOONTON, NJ, 07005",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Boonton Rec House Decorating Contest. Drive or walk by; please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 67,
+   "entityId": "208-rockaway-street-boonton-2026",
+   "name": "208 Rockaway St Halloween Display",
+   "town": "Boonton",
+   "address": "208 Rockaway Street, Boonton, NJ 07005",
+   "lat": 40.906486264,
+   "lng": -74.419938903,
+   "geoVerified": "census-exact 2026-10-26: 208 ROCKAWAY ST, BOONTON, NJ, 07005",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Boonton Rec House Decorating Contest. Drive or walk by; please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 68,
+   "entityId": "720-wootton-street-boonton-2026",
+   "name": "720 Wootton St Halloween Display",
+   "town": "Boonton",
+   "address": "720 Wootton Street, Boonton, NJ 07005",
+   "lat": 40.911901921,
+   "lng": -74.408078413,
+   "geoVerified": "census-exact 2026-10-26: 720 WOOTTON ST, BOONTON, NJ, 07005",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Boonton Rec House Decorating Contest. Drive or walk by; please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 69,
+   "entityId": "712-wootton-street-boonton-2026",
+   "name": "712 Wootton St Halloween Display",
+   "town": "Boonton",
+   "address": "712 Wootton Street, Boonton, NJ 07005",
+   "lat": 40.911879316,
+   "lng": -74.40802809,
+   "geoVerified": "census-exact 2026-10-26: 712 WOOTTON ST, BOONTON, NJ, 07005",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Boonton Rec House Decorating Contest. Drive or walk by; please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 70,
+   "entityId": "32-rexland-drive-boonton-2026",
+   "name": "Rexland Dr Halloween Display",
+   "town": "Boonton",
+   "address": "32 Rexland Drive, Boonton, NJ 07005",
+   "lat": 40.901850683,
+   "lng": -74.387879536,
+   "geoVerified": "census-exact 2026-10-26: 32 REXLAND DR, BOONTON, NJ, 07005",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Boonton Rec House Decorating Contest. Drive or walk by; please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 71,
+   "entityId": "18-crown-road-boonton-2026",
+   "name": "Crown Rd Halloween Display",
+   "town": "Boonton",
+   "address": "18 Crown Road, Boonton, NJ 07005",
+   "lat": 40.90120939,
+   "lng": -74.389809802,
+   "geoVerified": "census-exact 2026-10-26: 18 CROWN RD, BOONTON, NJ, 07005",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Boonton Rec House Decorating Contest. Drive or walk by; please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 72,
+   "entityId": "312-spruce-street-boonton-2026",
+   "name": "Spruce St Halloween Display",
+   "town": "Boonton",
+   "address": "312 Spruce Street, Boonton, NJ 07005",
+   "lat": 40.907364573,
+   "lng": -74.405752707,
+   "geoVerified": "census-exact 2026-10-26: 312 SPRUCE ST, BOONTON, NJ, 07005",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Boonton Rec House Decorating Contest. Drive or walk by; please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 73,
+   "entityId": "120-dixon-avenue-boonton-2026",
+   "name": "Dixon Ave Halloween Display",
+   "town": "Boonton",
+   "address": "120 Dixon Avenue, Boonton, NJ 07005",
+   "lat": 40.898232527,
+   "lng": -74.409214315,
+   "geoVerified": "census-exact 2026-10-26: 120 DIXON AVE, BOONTON, NJ, 07005",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Boonton Rec House Decorating Contest. Drive or walk by; please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 74,
+   "entityId": "201-reservoir-drive-boonton-2026",
+   "name": "Reservoir Dr Halloween Display",
+   "town": "Boonton",
+   "address": "201 Reservoir Drive, Boonton, NJ 07005",
+   "lat": 40.894825527,
+   "lng": -74.407551714,
+   "geoVerified": "census-exact 2026-10-26: 201 RESERVOIR DR, BOONTON, NJ, 07005",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "Best after dark",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Entry in the 2026 Boonton Rec House Decorating Contest. Drive or walk by; please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 75,
+   "entityId": "988-vaughn-avenue-toms-river-2026",
+   "name": "Vaughn Avenue Halloween Display",
+   "town": "Toms River",
+   "address": "988 Vaughn Avenue, Toms River, NJ 08753",
+   "lat": 39.983198966,
+   "lng": -74.151913024,
+   "geoVerified": "census-exact 2026-10-26: 988 VAUGHN AVE, TOMS RIVER, NJ, 08753",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 76,
+   "entityId": "298-jill-court-toms-river-2026",
+   "name": "Jill Court Halloween Display",
+   "town": "Toms River",
+   "address": "298 Jill Court, Toms River, NJ 08753",
+   "lat": 40.006821107,
+   "lng": -74.122114879,
+   "geoVerified": "census-exact 2026-10-26: 298 JILL CT, TOMS RIVER, NJ, 08753",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Open since Oct 17. Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 77,
+   "entityId": "910-salem-drive-toms-river-2026",
+   "name": "Salem Drive Halloween Display",
+   "town": "Toms River",
+   "address": "910 Salem Drive, Toms River, NJ 08753",
+   "lat": 39.975086374,
+   "lng": -74.134516501,
+   "geoVerified": "census-exact 2026-10-26: 910 SALEM DR, TOMS RIVER, NJ, 08753",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 78,
+   "entityId": "3450-bergen-avenue-toms-river-2026",
+   "name": "Bergen Avenue Halloween Display",
+   "town": "Toms River",
+   "address": "3450 Bergen Avenue, Toms River, NJ 08753",
+   "lat": 39.954769851,
+   "lng": -74.114400641,
+   "geoVerified": "census-exact 2026-10-26: 3450 BERGEN AVE, TOMS RIVER, NJ, 08753",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 79,
+   "entityId": "510-san-juan-drive-toms-river-2026",
+   "name": "San Juan Drive Halloween Display",
+   "town": "Toms River",
+   "address": "510 San Juan Drive, Toms River, NJ 08753",
+   "lat": 39.988311837,
+   "lng": -74.164828065,
+   "geoVerified": "census-exact 2026-10-26: 510 SAN JUAN DR, TOMS RIVER, NJ, 08753",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 80,
+   "entityId": "43-squire-court-toms-river-2026",
+   "name": "Squire Court Halloween Display",
+   "town": "Toms River",
+   "address": "43 Squire Court, Toms River, NJ 08753",
+   "lat": 39.999618456,
+   "lng": -74.168185031,
+   "geoVerified": "census-exact 2026-10-26: 43 SQUIRE CT, TOMS RIVER, NJ, 08753",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 81,
+   "entityId": "933-hardenbrook-avenue-toms-river-2026",
+   "name": "Hardenbrook Avenue Halloween Display",
+   "town": "Toms River",
+   "address": "933 Hardenbrook Avenue, Toms River, NJ 08753",
+   "lat": 39.964886008,
+   "lng": -74.188991157,
+   "geoVerified": "census-exact 2026-10-26: 933 HARDENBROOK AVE, TOMS RIVER, NJ, 08753",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 82,
+   "entityId": "9-williamsburg-court-toms-river-2026",
+   "name": "Williamsburg Court Halloween Display",
+   "town": "Toms River",
+   "address": "9 Williamsburg Court, Toms River, NJ 08755",
+   "lat": 39.959253405,
+   "lng": -74.221312823,
+   "geoVerified": "census-exact 2026-10-26: 9 WILLIAMSBURG CT, TOMS RIVER, NJ, 08755",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 83,
+   "entityId": "127-arizona-avenue-toms-river-2026",
+   "name": "Arizona Avenue Halloween Display",
+   "town": "Toms River",
+   "address": "127 Arizona Avenue, Toms River, NJ 08753",
+   "lat": 40.010032031,
+   "lng": -74.135651297,
+   "geoVerified": "census-exact 2026-10-26: 127 ARIZONA AVE, TOMS RIVER, NJ, 08753",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 84,
+   "entityId": "122-mello-lane-toms-river-2026",
+   "name": "Mello Lane Halloween Display",
+   "town": "Toms River",
+   "address": "122 Mello Lane, Toms River, NJ 08753",
+   "lat": 40.006253627,
+   "lng": -74.134604205,
+   "geoVerified": "census-exact 2026-10-26: 122 MELLO LN, TOMS RIVER, NJ, 08753",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 85,
+   "entityId": "90-maple-street-beachwood-2026",
+   "name": "Maple Street Halloween Display",
+   "town": "Beachwood",
+   "address": "90 Maple Street, Beachwood, NJ 08722",
+   "lat": 39.932558525,
+   "lng": -74.203892305,
+   "geoVerified": "census-exact 2026-10-26: 90 MAPLE ST, BEACHWOOD, NJ, 08722",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 86,
+   "entityId": "357-central-boulevard-bayville-2026",
+   "name": "Central Boulevard Halloween Display",
+   "town": "Bayville",
+   "address": "357 Central Boulevard, Bayville, NJ 08721",
+   "lat": 39.894326076,
+   "lng": -74.188452878,
+   "geoVerified": "census-exact 2026-10-26: 357 CENTRAL BLVD, BAYVILLE, NJ, 08721",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 87,
+   "entityId": "141-brooks-avenue-bayville-2026",
+   "name": "Brooks Avenue Halloween Display",
+   "town": "Bayville",
+   "address": "141 Brooks Avenue, Bayville, NJ 08721",
+   "lat": 39.918549164,
+   "lng": -74.150155987,
+   "geoVerified": "census-exact 2026-10-26: 141 BROOKS AVE, BAYVILLE, NJ, 08721",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 88,
+   "entityId": "62-brittany-drive-bayville-2026",
+   "name": "The Ghostbuster House",
+   "town": "Bayville",
+   "address": "62 Brittany Drive, Bayville, NJ 08721",
+   "lat": 39.896240065,
+   "lng": -74.169281331,
+   "geoVerified": "census-exact 2026-10-26: 62 BRITTANY DR, BAYVILLE, NJ, 08721",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 89,
+   "entityId": "55-sherman-avenue-bayville-2026",
+   "name": "Sherman Avenue Halloween Display",
+   "town": "Bayville",
+   "address": "55 Sherman Avenue, Bayville, NJ 08721",
+   "lat": 39.909729438,
+   "lng": -74.151950843,
+   "geoVerified": "census-exact 2026-10-26: 55 SHERMAN AVE, BAYVILLE, NJ, 08721",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 90,
+   "entityId": "26-donald-place-bayville-2026",
+   "name": "Donald Place Halloween Display",
+   "town": "Bayville",
+   "address": "26 Donald Place, Bayville, NJ 08721",
+   "lat": 39.878309955,
+   "lng": -74.161410725,
+   "geoVerified": "census-exact 2026-10-26: 26 DONALD PL, BAYVILLE, NJ, 08721",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 91,
+   "entityId": "1560-dee-road-forked-river-2026",
+   "name": "The Dee Rd Cemetery",
+   "town": "Forked River",
+   "address": "1560 Dee Road, Forked River, NJ 08731",
+   "lat": 39.840553835,
+   "lng": -74.211252614,
+   "geoVerified": "census-exact 2026-10-26: 1560 DEE RD, FORKED RIVER, NJ, 08731",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "7-11 PM nightly",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Halloween cemetery display. Collecting food donations for the Lacey Food Bank. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 92,
+   "entityId": "272-falkenburgh-avenue-forked-river-2026",
+   "name": "Falkenburgh Avenue Halloween Display",
+   "town": "Forked River",
+   "address": "272 Falkenburgh Avenue, Forked River, NJ 08731",
+   "lat": 39.843038825,
+   "lng": -74.198722499,
+   "geoVerified": "census-exact 2026-10-26: 272 FALKENBURGH AVE, FORKED RIVER, NJ, 08731",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 93,
+   "entityId": "1656-woodland-road-forked-river-2026",
+   "name": "Woodland Road Halloween Display",
+   "town": "Forked River",
+   "address": "1656 Woodland Road, Forked River, NJ 08731",
+   "lat": 39.844622815,
+   "lng": -74.212524275,
+   "geoVerified": "census-exact 2026-10-26: 1656 WOODLAND RD, FORKED RIVER, NJ, 08731",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 94,
+   "entityId": "150-spruce-circle-n-barnegat-2026",
+   "name": "Spruce Circle Halloween Display",
+   "town": "Barnegat",
+   "address": "150 Spruce Circle N, Barnegat, NJ 08005",
+   "lat": 39.76713586,
+   "lng": -74.246323682,
+   "geoVerified": "census-exact 2026-10-26: 150 SPRUCE CIR N, BARNEGAT, NJ, 08005",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 95,
+   "entityId": "17-fourth-street-barnegat-2026",
+   "name": "Cryptid Manor",
+   "town": "Barnegat",
+   "address": "17 Fourth Street, Barnegat, NJ 08005",
+   "lat": 39.761306685,
+   "lng": -74.257165793,
+   "geoVerified": "census-exact 2026-10-26: 17 4TH ST, BARNEGAT, NJ, 08005",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 96,
+   "entityId": "13-poplar-street-waretown-2026",
+   "name": "Poplar Street Haunted Tunnel",
+   "town": "Waretown",
+   "address": "13 Poplar Street, Waretown, NJ 08758",
+   "lat": 39.807675009,
+   "lng": -74.19046008,
+   "geoVerified": "census-exact 2026-10-26: 13 POPLAR ST, WARETOWN, NJ, 08758",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)",
+     "Walk-through"
+   ],
+   "features": [],
+   "notes": "Scary walk-through tunnel for trick-or-treaters. Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 97,
+   "entityId": "1141-broadway-boulevard-manchester-2026",
+   "name": "Broadway Boulevard Halloween Display",
+   "town": "Manchester",
+   "address": "1141 Broadway Boulevard, Manchester, NJ 08757",
+   "lat": 39.997107438,
+   "lng": -74.259902579,
+   "geoVerified": "census-exact 2026-10-26: 1141 BROADWAY BLVD, MANCHESTER, NJ, 08757",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 98,
+   "entityId": "608-poplar-street-lakehurst-2026",
+   "name": "608 Poplar St Halloween Display",
+   "town": "Lakehurst",
+   "address": "608 Poplar Street, Lakehurst, NJ 08733",
+   "lat": 40.015900203,
+   "lng": -74.324447219,
+   "geoVerified": "census-exact 2026-10-26: 608 POPLAR ST, LAKEHURST, NJ, 08733",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 99,
+   "entityId": "315-cedar-street-lakehurst-2026",
+   "name": "Cedar Street Halloween Display",
+   "town": "Lakehurst",
+   "address": "315 Cedar Street, Lakehurst, NJ 08733",
+   "lat": 40.013864796,
+   "lng": -74.317118748,
+   "geoVerified": "census-exact 2026-10-26: 315 CEDAR ST, LAKEHURST, NJ, 08733",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 100,
+   "entityId": "604-willow-street-lakehurst-2026",
+   "name": "604 Willow St Halloween Display",
+   "town": "Lakehurst",
+   "address": "604 Willow Street, Lakehurst, NJ 08733",
+   "lat": 40.016740677,
+   "lng": -74.324430023,
+   "geoVerified": "census-exact 2026-10-26: 604 WILLOW ST, LAKEHURST, NJ, 08733",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 101,
+   "entityId": "610-willow-street-lakehurst-2026",
+   "name": "610 Willow St Halloween Display",
+   "town": "Lakehurst",
+   "address": "610 Willow Street, Lakehurst, NJ 08733",
+   "lat": 40.016733138,
+   "lng": -74.324564801,
+   "geoVerified": "census-exact 2026-10-26: 610 WILLOW ST, LAKEHURST, NJ, 08733",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 102,
+   "entityId": "204-church-street-lakehurst-2026",
+   "name": "Church Street Halloween Display",
+   "town": "Lakehurst",
+   "address": "204 Church Street, Lakehurst, NJ 08733",
+   "lat": 40.012007816,
+   "lng": -74.313474375,
+   "geoVerified": "census-exact 2026-10-26: 204 CHURCH ST, LAKEHURST, NJ, 08733",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 103,
+   "entityId": "39-hampshire-boulevard-jackson-2026",
+   "name": "Haunt on Hampshire",
+   "town": "Jackson",
+   "address": "39 Hampshire Boulevard, Jackson, NJ 08527",
+   "lat": 40.137440112,
+   "lng": -74.28550307,
+   "geoVerified": "census-exact 2026-10-26: 39 HAMPSHIRE BLVD, JACKSON, NJ, 08527",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 104,
+   "entityId": "843-downey-avenue-brick-2026",
+   "name": "Downey Avenue Halloween Light Show",
+   "town": "Brick",
+   "address": "843 Downey Avenue, Brick, NJ 08723",
+   "lat": 40.048440905,
+   "lng": -74.128485717,
+   "geoVerified": "census-exact 2026-10-26: 843 DOWNEY AVE, BRICK, NJ, 08723",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [
+     "Lights"
+   ],
+   "notes": "Halloween light show. Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 105,
+   "entityId": "1507-river-avenue-point-pleasant-2026",
+   "name": "River Avenue Halloween Display",
+   "town": "Point Pleasant",
+   "address": "1507 River Avenue, Point Pleasant, NJ 08742",
+   "lat": 40.069607281,
+   "lng": -74.07975774,
+   "geoVerified": "census-exact 2026-10-26: 1507 RIVER AVE, PT PLEASANT, NJ, 08742",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 106,
+   "entityId": "116-price-drive-little-egg-harbor-2026",
+   "name": "Price Drive Halloween Display",
+   "town": "Little Egg Harbor",
+   "address": "116 Price Drive, Little Egg Harbor, NJ 08087",
+   "lat": 39.621003001,
+   "lng": -74.320166393,
+   "geoVerified": "census-exact 2026-10-26: 116 PRICE DR, LITTLE EGG HARBOR, NJ, 08087",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 107,
+   "entityId": "112-tecumseh-trail-browns-mills-2026",
+   "name": "Tecumseh Trail Halloween Display",
+   "town": "Browns Mills",
+   "address": "112 Tecumseh Trail, Browns Mills, NJ 08015",
+   "lat": 39.939089431,
+   "lng": -74.540991528,
+   "geoVerified": "census-exact 2026-10-26: 112 TECUMSEH TRL, BROWNS MILLS, NJ, 08015",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 108,
+   "entityId": "1107-ridge-avenue-asbury-park-2026",
+   "name": "The Asbury Park Halloween House",
+   "town": "Asbury Park",
+   "address": "1107 Ridge Avenue, Asbury Park, NJ 07712",
+   "lat": 40.224359499,
+   "lng": -74.025910678,
+   "geoVerified": "census-exact 2026-10-26: 1107 RIDGE AVE, ASBURY PARK, NJ, 07712",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-26",
+   "num": 109,
+   "entityId": "13-monmouth-avenue-freehold-2026",
+   "name": "Monmouth Avenue Halloween Display",
+   "town": "Freehold",
+   "address": "13 Monmouth Avenue, Freehold, NJ 07728",
+   "lat": 40.261588848,
+   "lng": -74.281221922,
+   "geoVerified": "census-exact 2026-10-26: 13 MONMOUTH AVE, FREEHOLD, NJ, 07728",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "About 6-10 PM, weather permitting",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
    "kind": "Decorated home/yard display"
  }
 ];
@@ -1786,7 +3659,63 @@ const events=[
   ],
   "url": "https://diamondspringbrewing.com/halloween-spooktacular/",
   "notes": "Halloween party for pups and families at the brewery. Pet costume contest entry is a $10 donation. No registration needed. Free street parking available."
- }
+ },
+ {
+  "id": "hackettstown-halloween-downtown-2026-10-31",
+  "entityId": "hackettstown-halloween-downtown-2026",
+  "updatedAt": "2026-10-26",
+  "name": "13th Annual Halloween Downtown",
+  "eventType": "Parade",
+  "venue": "The Gazebo (Main St & West Moore St)",
+  "address": "213 Main Street, Hackettstown, NJ 07840",
+  "lat": 40.852329359,
+  "lng": -74.827524134,
+  "geoVerified": "census-exact 2026-10-26: 213 MAIN ST, HACKETTSTOWN, NJ, 07840",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T13:00:00-04:00",
+  "endAt": "2026-10-31T15:00:00-04:00",
+  "hours": "1:00 PM–3:00 PM",
+  "cost": "Free",
+  "attendance": "Open to all",
+  "features": [
+    "Free",
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Hosted by the Town of Hackettstown and Hackettstown PD. Parade lines up at 12 PM at Centenary University (W Moore St) and steps off at 1 PM; festivities at the Gazebo (Main St & West Moore St). Costume contest in 5 categories, downtown business trick-or-treat, and trunk-or-treat at the Trinity UMC rear lot (213 Main St) and Municipal Lot #2 behind EXIT Realty (149 Main St). Free parking."
+},
+ {
+  "id": "menlha-trunk-or-treat-2026-10-30",
+  "entityId": "menlha-trunk-or-treat-2026",
+  "updatedAt": "2026-10-26",
+  "name": "Halloween Trunk or Treat @ Menlha",
+  "eventType": "Trunk-or-treat",
+  "venue": "Menlha Kadampa Meditation Center",
+  "address": "11 Music Mountain Blvd, Lambertville, NJ 08530",
+  "lat": 40.379600694,
+  "lng": -74.93508494,
+  "geoVerified": "census-exact 2026-10-26: 11 MUSIC MOUNTAIN BLVD, LAMBERTVILLE, NJ, 08530",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-30",
+  "startAt": "2026-10-30T16:30:00-04:00",
+  "endAt": "2026-10-30T18:00:00-04:00",
+  "hours": "4:30 PM–6:00 PM",
+  "cost": "Free",
+  "attendance": "Open to all",
+  "features": [
+    "Free",
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "https://www.meditationinnewjersey.org/events",
+  "notes": "Drive-through trunk or treat on Halloween Eve. Families drive through the parking lot, where children in costume get candy from friendly volunteers. Costumes encouraged; everyone welcome. Free, no registration needed."
+}
 ];
 const CURRENT_SEASON={season:'halloween',year:2026};
 function inCurrentSeason(x){const participation=x.participation||'confirmed';return x.season===CURRENT_SEASON.season&&x.year===CURRENT_SEASON.year&&(participation==='confirmed'||participation==='nominated')}
@@ -1841,8 +3770,11 @@ function removedHere(x){try{return JSON.parse(localStorage.getItem('hfhidden:202
 const COMMUNITY_BADGE='Spotted by the community, not submitted by the owner';
 function communityNameText(x){return String(x.name||'')}
 function communityPinHTML(n,cls){return `<div class="pin pin--community${cls?' '+cls:''}" data-pin="${n}"><img class="pin__art" src="assets/pins/pin-community.svg" alt=""><img class="pin__art pin__art--route" src="assets/pins/pin-community-route.svg" alt=""><span class="pin__cnum${n>99?' pin__cnum--wide':''}">${n}</span></div>`}
-function communityBodyHTML(x,peek){const addr=safeListingText(x.address.replace(/,\s*NJ\s*$/i,'')),hours=typeof listingHoursText==='function'?listingHoursText(x):'',onRoute=state.route.some(r=>r.num===x.num),why=String(x.notes||'').trim(),best=hours&&!/not specified$/i.test(hours)?hours:'';return `<div class="community__head"><div class="card__pin card__pin--community">${communityPinHTML(x.num,'pin--card')}</div><div class="card__heading"><h3 class="card__name"><span class="card__nametext" data-card-name="${x.num}">${safeListingText(communityNameText(x))}</span></h3><span class="community__town">${safeListingText(x.town)}</span></div></div><div class="community__badge"><span class="community__badge-dot" aria-hidden="true"></span>${COMMUNITY_BADGE}</div>${x.photo&&/^https:\/\//.test(x.photo)?`<div class="community__photo"><img src="${safeListingText(x.photo)}" alt="Street view of ${safeListingText(x.name)}" loading="lazy"></div>`:''}<dl class="community__rows"><dt>WHERE</dt><dd>${addr}</dd>${best?`<dt>BEST</dt><dd>${safeListingText(best)}</dd>`:''}${why?`<dt>WHY</dt><dd class="community__why">“${safeListingText(why)}”</dd>`:''}</dl>${x.spottedBy?`<span class="community__by">Spotted by ${safeListingText(x.spottedBy)}</span>`:''}<div class="community__actions"><button class="community__route" type="button" ${peek?`data-peek-route="${x.num}"`:`data-route="${x.num}"`} aria-pressed="${onRoute}">${onRoute?'✓ ON YOUR ROUTE':'+ ADD TO ROUTE'}</button><a class="community__dir" href="${gmapsDirections(x.address)}" target="_blank" rel="noopener" aria-label="Directions to ${safeListingText(x.name)}">DIRECTIONS ↗</a></div><a class="community__claim" href="claim.html?id=${x.num}">Is this your house? Claim it or remove it</a>`}
-function communityCardHTML(x){const selected=state.selected===x.num,onRoute=state.route.some(r=>r.num===x.num);return `<article class="card card--community ${selected?'is-selected':''}${onRoute?' card--on-route':''}" data-card="${x.num}" data-community="1" data-town="${safeListingText(x.town)}" tabindex="0" aria-label="Community-spotted display: ${safeListingText(x.name)}">${communityBodyHTML(x,false)}</article>`}
+const communityOpen=new Set();
+function communityDetailsHTML(x){const why=String(x.notes||'').trim(),photo=x.photo&&/^https:\/\//.test(x.photo)?`<div class="community__photo"><img src="${safeListingText(x.photo)}" alt="Street view of ${safeListingText(x.name)}" loading="lazy"></div>`:'',by=x.spottedBy?`<span class="community__by">Spotted by ${safeListingText(x.spottedBy)}</span>`:'';return `${photo}${why?`<p class="community__why">“${safeListingText(why)}”</p>`:''}${by}<div class="community__badge"><span class="community__badge-dot" aria-hidden="true"></span>${COMMUNITY_BADGE}</div><a class="community__claim" href="claim.html?id=${x.num}">Is this your house? Claim it or remove it</a>`}
+function communityBodyHTML(x,peek){const addr=safeListingText(x.address.replace(/,\s*NJ\s*$/i,'')),hours=typeof listingHoursText==='function'?listingHoursText(x):'',onRoute=state.route.some(r=>r.num===x.num);return `<div class="community__head"><div class="card__pin card__pin--community">${communityPinHTML(x.num,'pin--card')}</div><div class="card__heading"><h3 class="card__name"><span class="card__nametext" data-card-name="${x.num}">${safeListingText(communityNameText(x))}</span></h3></div></div><div class="card__addrline"><a class="card__address" href="${gmapsDirections(x.address)}" target="_blank" rel="noopener" aria-label="Directions to ${safeListingText(x.name)}">${addr} ↗</a></div>${hours?`<p class="card__hours">${safeListingText(hours)}</p>`:''}<div class="community__actions"><button class="community__route" type="button" ${peek?`data-peek-route="${x.num}"`:`data-route="${x.num}"`} aria-pressed="${onRoute}">${onRoute?'✓ On your route':'+ Add to route'}</button></div><div class="community__expand">${communityDetailsHTML(x)}</div>`}
+function communityCardHTML(x){const selected=state.selected===x.num,onRoute=state.route.some(r=>r.num===x.num),open=communityOpen.has(x.num),levels=Array.isArray(x.levels)?x.levels:[],type=Array.isArray(x.type)?x.type:[],features=Array.isArray(x.features)?x.features:[];return `<article class="card card--compact card--community ${selected?'is-selected':''}${onRoute?' card--on-route':''}${open?' is-open':''}" data-card="${x.num}" data-community="1" data-town="${safeListingText(x.town)}" tabindex="0" aria-expanded="${open}" aria-label="Community-spotted display: ${safeListingText(x.name)}"><div class="card__head"><div class="card__pin">${cardIconHTML('display')}</div><div class="card__heading"><h3 class="card__name"><span class="card__nametext" data-card-name="${x.num}">${safeListingText(communityNameText(x))}</span></h3></div></div>${listingStatusHTML(x)}<div class="card__addrline"><a class="card__address" href="${gmapsDirections(x.address)}" target="_blank" rel="noopener" aria-label="Directions to ${safeListingText(x.name)}">${safeListingText(x.address.replace(/,\s*NJ\s*$/i,''))} ↗</a>${distanceLabelHTML(x)}${typeof openTonightBadgeHTML==='function'?openTonightBadgeHTML(x,{eligible:openTonightOK}):''}</div><div class="card__hours-row"><p class="card__hours">${safeListingText(typeof listingHoursText==='function'?listingHoursText(x):'')}</p><button type="button" class="community__toggle" data-community-toggle="${x.num}" aria-expanded="${open}">Details</button></div>${levels.length?`<p class="card__scare-row"><span class="card__scare">${scarePips(levels)}</span></p>`:''}${(type.length||features.length)?`<div class="card__tags">${type.map(t=>hfTagHTML(t,'chip--type')).join('')}${features.map(featureChip).join('')}</div>`:''}<div class="card__actions"><button class="btn card__route-btn" type="button" data-route="${x.num}" aria-pressed="${onRoute}">${onRoute?'✓ On your route':'+ Add to route'}</button><button type="button" class="card__mapbtn" data-card-map="${x.num}"><span aria-hidden="true">◉</span> Map</button><button type="button" class="card__morebtn" data-card-more="${x.num}" aria-expanded="false" aria-label="More for ${safeListingText(x.name)}">⋯</button><div class="card__meta"><div class="card__meta-left"><a class="card-rating" href="${listingPageHref(x)}#feedback" data-rating-summary="${x.num}" aria-label="View ratings for ${safeListingText(x.name)}"><span class="card-rating__text">No ratings yet · <span class="card-rating__rate">Rate</span></span></a></div><div class="card__meta-right"><a class="card__metalink" href="${listingPageHref(x)}#report-update">Report</a><a class="card__metalink" href="${listingPageHref(x)}#share">Share</a></div></div></div><div class="community__expand"${open?'':' hidden'}>${communityDetailsHTML(x)}</div></article>`}
+function toggleCommunityCard(n){if(communityOpen.has(n))communityOpen.delete(n);else communityOpen.add(n);const card=document.querySelector(`[data-card="${n}"]`);if(!card)return;const open=communityOpen.has(n);card.classList.toggle('is-open',open);card.setAttribute('aria-expanded',String(open));const panel=card.querySelector('.community__expand');if(panel)panel.hidden=!open;const btn=card.querySelector('[data-community-toggle]');if(btn)btn.setAttribute('aria-expanded',String(open))}
 function eventIsUpcoming(x,now){if(x&&x.ongoing===true)return true;if(typeof eventHasUpcoming==='function')return eventHasUpcoming(x,now==null?new Date():now);return new Date(x.endAt).getTime()>(now==null?Date.now():+new Date(now))}
 function matchFilter(x){if(!inCurrentSeason(x))return false;if(x.hidden||removedHere(x))return false;if(isCommunity(x)&&!state.community)return false;if(x.placeholder)return state.category==='displays'&&state.filter==='All'&&(typeof isDefaultArea!=='function'||!state.search||isDefaultArea(state.search));if(state.category==='events')return false;if(state.dateFilter&&state.dateFilter.kind&&typeof schedulesDateMatch==='function'&&!schedulesDateMatch(x,state.dateFilter))return false;if(state.search&&typeof inSearchArea==='function'&&!inSearchArea(x,state.search))return false;if(isTreatStop(x)!==(state.category==='treats'))return false;if(Array.isArray(state.features)&&state.features.length&&!state.features.every(f=>(x.features||[]).some(xf=>featureKey(xf)===f)))return false;if(state.category==='treats')return !state.categoryFeature||(x.features||[]).includes(state.categoryFeature);if(state.filter==='All')return true;if(['Family Friendly','Spooky','Scary'].includes(state.filter))return x.levels.includes(state.filter);if(['Walk-through','Drive-by','Walk-by','Drive or walk by (both)'].includes(state.filter))return x.type.includes(state.filter)||(x.type.includes('Drive or walk by (both)')&&['Drive-by','Walk-by'].includes(state.filter));return x.features.some(f=>featureKey(f)===state.filter)}
 function matchingEvents(ignoreDay){const onDay=x=>typeof eventOccursOn==='function'?eventOccursOn(x,state.eventDay):(x.date||String(x.startAt||'').slice(0,10))===state.eventDay;const filtered=events.filter(x=>eventIsUpcoming(x)&&inCurrentSeason(x)&&(state.filter==='All'||x.eventType===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature))&&(!(state.features&&state.features.length)||state.features.every(f=>(x.features||[]).includes(f)))&&((ignoreDay||!state.eventDay)||x.ongoing||onDay(x))&&(!state.search||typeof inSearchArea!=='function'||inSearchArea(x,state.search))&&(x.ongoing||!state.dateFilter||!state.dateFilter.kind||typeof eventDateMatch!=='function'||eventDateMatch(x,state.dateFilter)));const day=ignoreDay?'':(state.eventDay||'');return typeof sortEventsByStart==='function'?sortEventsByStart(filtered,day):filtered.slice().sort((a,b)=>String(a.startAt||a.date||'').localeCompare(String(b.startAt||b.date||'')))}
@@ -1907,7 +3839,7 @@ function renderFilters(){const button=f=>`<button class="filter ${FEATURE_ICONS[
 function syncListingMarkers(visible){if(typeof L==='undefined'||!map||!markerByNum)return;const keep=new Set(visible.filter(x=>!x.placeholder&&Number.isFinite(x.lat)&&Number.isFinite(x.lng)).map(x=>x.num));markerByNum.forEach((m,n)=>{const on=hasListing(m);if(keep.has(n)){if(!on)addListing(m)}else if(on)removeListing(m)})}
 function renderCards(){const visible=activeListings();openTonightOK=typeof openTonightEligible==='function'&&typeof todayParts==='function'?openTonightEligible(visible,todayParts().dateStr):false;const geoEmpty=typeof geoEmptyState==='function'?geoEmptyState():null,noResults=document.getElementById('noResults'),nonPlaceholder=visible.filter(x=>!x.placeholder);noResults.dataset.mode=(!visible.length&&geoEmpty)?'geo':'';const noun=state.category==='treats'?'treat stop':'display',dateLabel=typeof dateFilterLabel==='function'?dateFilterLabel(state.dateFilter):null;document.getElementById('countLine').textContent=(state.search?`${nonPlaceholder.length} ${noun}${nonPlaceholder.length===1?'':'s'} within ${state.search.radius} mi`:`${nonPlaceholder.length} ${noun}${visible.length===1?'':'s'} shown`)+(state.filter!=='All'?' · '+state.filter:'')+(dateLabel?' · '+dateLabel:'');document.getElementById('cardList').innerHTML=visible.map(cardHTML).join('')+(state.category==='treats'&&visible.length?`<div class="treat-prompt"><p>Handing out candy on Halloween? Add your home so trick-or-treaters can find you.</p><a class="treat-prompt__link" href="${TREAT_FORM_URL}" target="_blank" rel="noopener">+ Add your home as a treat stop</a></div>`:'');syncListingMarkers(visible);noResults.classList.toggle('is-hidden',visible.length>0);const actionBtn=document.getElementById('emptyActionBtn');if(!visible.length&&geoEmpty){noResults.querySelector('strong').textContent=geoEmpty.headline;document.getElementById('noResultsText').textContent='';wireEmptyAction(geoEmpty,state.category==='treats'?TREAT_FORM_URL:FORM_URL)}else{document.getElementById('noResultsText').textContent=`No displays match “${state.filter}” right now.`;if(actionBtn)actionBtn.hidden=true}const te=document.getElementById('treatEmpty');if(te){const showTe=state.category==='treats'&&!visible.length&&!geoEmpty;te.classList.toggle('is-hidden',!showTe);if(showTe){te.innerHTML=`<img class="treat-empty__icon" src="assets/icons/pin-treat-stop.svg" alt="" width="40" height="47"><h3 class="treat-empty__title">No treat stops listed within ${state.search?state.search.radius:25} mi yet</h3><p class="treat-empty__body">Handing out candy on Halloween? Add your home so trick-or-treaters can find you.</p><div class="treat-empty__actions"><button type="button" class="btn btn--route" data-treat-add>Add your home as a treat stop</button><button type="button" class="btn btn--outline" data-try-radius="50">Try 50 mi</button></div>`;te.querySelector('[data-treat-add]').onclick=()=>window.open(TREAT_FORM_URL,'_blank','noopener');te.querySelector('[data-try-radius]').onclick=()=>document.dispatchEvent(new CustomEvent('hf:expand-radius',{detail:{radius:50}}))}}markerByNum.forEach((m,n)=>{const x=listings.find(v=>v.num===n);if(x&&matchFilter(x)){if(!hasListing(m))addListing(m)}else if(hasListing(m))removeListing(m)});syncEventPins();wireCards()}
 // Results rail: every matching card renders; pins and counts cover the same set.
-function wireCards(){document.querySelectorAll('[data-card]').forEach(card=>{const n=+card.dataset.card;card.addEventListener('click',e=>{if(e.target.closest('button,a,details'))return;if(matchMedia('(max-width:1023px)').matches)return;selectListing(n,true)});card.addEventListener('keydown',e=>{if(e.target!==card||!['Enter',' '].includes(e.key))return;e.preventDefault();selectListing(n,true)});card.addEventListener('mouseenter',()=>linkPair(n,true));card.addEventListener('mouseleave',()=>linkPair(n,false));card.addEventListener('focus',()=>linkPair(n,true));card.addEventListener('blur',()=>linkPair(n,false))});document.querySelectorAll('[data-route]').forEach(b=>b.onclick=e=>{e.stopPropagation();toggleRoute(+b.dataset.route)})}
+function wireCards(){document.querySelectorAll('[data-card]').forEach(card=>{const n=+card.dataset.card;card.addEventListener('click',e=>{if(e.target.closest('button,a,details'))return;if(card.hasAttribute('data-community'))toggleCommunityCard(n);if(matchMedia('(max-width:1023px)').matches)return;selectListing(n,true)});card.addEventListener('keydown',e=>{if(e.target!==card||!['Enter',' '].includes(e.key))return;e.preventDefault();if(card.hasAttribute('data-community'))toggleCommunityCard(n);selectListing(n,true)});card.addEventListener('mouseenter',()=>linkPair(n,true));card.addEventListener('mouseleave',()=>linkPair(n,false));card.addEventListener('focus',()=>linkPair(n,true));card.addEventListener('blur',()=>linkPair(n,false))});document.querySelectorAll('[data-route]').forEach(b=>b.onclick=e=>{e.stopPropagation();toggleRoute(+b.dataset.route)});document.querySelectorAll('[data-community-toggle]').forEach(b=>b.onclick=e=>{e.stopPropagation();toggleCommunityCard(+b.dataset.communityToggle)})}
 function linkPair(n,on){{const lm=markerByNum.get(n);if(lm&&listingCluster&&!lm.getElement()){const par=listingCluster.getVisibleParent(lm);par&&par.getElement&&par.getElement()&&par.getElement().classList.toggle('is-linked',on)}document.querySelector(`[data-card="${n}"]`)?.classList.toggle('is-linked',on);markerByNum.get(n)?.getElement()?.querySelector('.pin')?.classList.toggle('is-linked',on);raiseMarker(markerByNum.get(n),on||state.selected===n)}}
 function selectListing(n,scroll=false){if(listings.find(x=>x.num===n)?.placeholder)return;state.selected=n;markerByNum.forEach((m,num)=>{m.getElement()?.querySelector('.pin')?.classList.toggle('is-selected',num===n);raiseMarker(m,num===n)});{const sm=markerByNum.get(n);if(sm)revealPin(sm,n)}document.querySelectorAll('[data-card]').forEach(c=>c.classList.toggle('is-selected',+c.dataset.card===n));renderPeek(n);if(scroll){const card=document.querySelector(`[data-card="${n}"]`);if(!card)return;const panel=card.closest('.list-column');if(panel&&panel.scrollHeight>panel.clientHeight){const pb=panel.getBoundingClientRect(),cb=card.getBoundingClientRect();if(cb.top>=pb.top&&cb.bottom<=pb.bottom)return;panel.scrollTo({top:Math.max(0,panel.scrollTop+cb.top-pb.top-Math.max(0,(panel.clientHeight-cb.height)/2)),behavior:'smooth'})}else if(innerWidth<1024)window.scrollTo({top:card.getBoundingClientRect().top+window.scrollY-Math.max(0,(innerHeight-card.offsetHeight)/2),behavior:'smooth'})}}
 // K4 map popup (spec 8.7): one 280px popup at a time inside #mapPeek — photo

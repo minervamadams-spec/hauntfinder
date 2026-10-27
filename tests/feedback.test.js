@@ -14,7 +14,7 @@ test('feedback API validates, persists, isolates homes and handles failures',asy
     rows.set('hauntfinder:2026:reviews:8',[JSON.stringify({name:'Former closet visitor',rating:5})]);
     res=response();await handler({method:'GET',headers:{},query:{house:'8'}},res);assert.deepEqual(res.body.reviews,[]);assert.equal(rows.get('hauntfinder:2026:reviews:8').length,1);calls=0;
     const valid={house:1,name:'  Visitor  ',rating:5,comment:'Loved the display!',timestamp:'1990-01-01',website:''};
-    for(const change of [{rating:0},{rating:6},{rating:1.5},{house:100},{name:' '},{comment:' '},{comment:'x'.repeat(1501)},{website:'spam'}]){res=response();await handler(request({...valid,...change}),res);assert.equal(res.statusCode,400)}assert.equal(calls,0);
+    for(const change of [{rating:0},{rating:6},{rating:1.5},{house:999},{name:' '},{comment:' '},{comment:'x'.repeat(1501)},{website:'spam'}]){res=response();await handler(request({...valid,...change}),res);assert.equal(res.statusCode,400)}assert.equal(calls,0);
     res=response();const foreign=request(valid);foreign.headers.origin='https://other.example';await handler(foreign,res);assert.equal(res.statusCode,403);
     res=response();const malformed=request('{');await handler(malformed,res);assert.equal(res.statusCode,400);
     res=response();await handler(request(valid),res);assert.equal(res.statusCode,201);const review=res.body.reviews[0];assert.equal(review.name,'Visitor');assert.equal(review.comment,valid.comment);assert.equal(review.rating,5);assert.ok(Math.abs(Date.now()-Date.parse(review.timestamp))<5000);assert.ok(review.id);assert.ok(!JSON.stringify(res.body).includes('test-token'));
