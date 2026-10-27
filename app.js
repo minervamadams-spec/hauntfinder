@@ -3194,7 +3194,7 @@ const listings=[
    "kind": "Decorated home/yard display"
  },
  {
-   "updatedAt": "2026-10-26",
+   "updatedAt": "2026-10-27",
    "num": 108,
    "entityId": "1107-ridge-avenue-asbury-park-2026",
    "name": "The Asbury Park Halloween House",
@@ -3205,20 +3205,48 @@ const listings=[
    "geoVerified": "census-exact 2026-10-26: 1107 RIDGE AVE, ASBURY PARK, NJ, 07712",
    "season": "halloween",
    "year": 2026,
-   "participation": "nominated",
-   "source": "community",
+   "participation": "confirmed",
    "schedule": {
-     "endDate": "2026-10-31"
+     "endDate": "2026-11-01",
+     "weekly": [
+       {"dow": 0, "open": "17:30", "close": "02:30"},
+       {"dow": 1, "open": "17:30", "close": "02:30"},
+       {"dow": 2, "open": "17:30", "close": "02:30"},
+       {"dow": 3, "open": "17:30", "close": "02:30"},
+       {"dow": 4, "open": "17:30", "close": "02:30"},
+       {"dow": 5, "open": "17:30", "close": "02:30"},
+       {"dow": 6, "open": "17:30", "close": "02:30"}
+     ]
    },
-   "dates": "Through Oct 31",
-   "times": "About 6-10 PM, weather permitting",
-   "levels": [],
-   "type": [
-     "Drive or walk by (both)"
+   "dates": "Now through Nov 1",
+   "times": "5:30 PM–2:30 AM nightly",
+   "levels": [
+     "Family Friendly",
+     "Spooky"
    ],
-   "features": [],
-   "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
-   "kind": "Decorated home/yard display"
+   "type": [
+     "Walk-up",
+     "Walk-through"
+   ],
+   "features": [
+     "Music / Sound",
+     "Fog",
+     "Lights",
+     "Animatronics"
+   ],
+   "notes": "A blacklight/UV glow display with a giant dragon, skeletons, reapers and a Michael Myers figure. Please don't go on the grass.",
+   "kind": "Decorated home/yard display",
+   "photos": [
+     "assets/listings/asbury-park/asbury-park-1-wide.jpg",
+     "assets/listings/asbury-park/asbury-park-2-dragon.jpg",
+     "assets/listings/asbury-park/asbury-park-3-yard.jpg",
+     "assets/listings/asbury-park/asbury-park-4-myers.jpg",
+     "assets/listings/asbury-park/asbury-park-5-skeleton.jpg"
+   ],
+   "video": {
+     "src": "assets/listings/asbury-park/asbury-park-walkthrough.mp4",
+     "poster": "assets/listings/asbury-park/asbury-park-walkthrough-poster.jpg"
+   }
  },
  {
    "updatedAt": "2026-10-26",
@@ -3245,6 +3273,246 @@ const listings=[
    ],
    "features": [],
    "notes": "Listed on a community Halloween display list for 2026 (confirmed for 2026). Typically on about 6-10 PM, weather permitting. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-27",
+   "num": 110,
+   "entityId": "1305-roberts-avenue-somers-point-2026",
+   "name": "Roberts Avenue Halloween House",
+   "town": "Somers Point",
+   "address": "1305 Roberts Avenue, Somers Point, NJ 08244",
+   "lat": 39.310060764,
+   "lng": -74.615526997,
+   "geoVerified": "census-exact 2026-10-27: 1305 ROBERTS AVE, SOMERS POINT, NJ, 08244",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "dates": "",
+   "times": "",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Drive-by or sidewalk. Hours not confirmed. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-27",
+   "num": 111,
+   "entityId": "30-walnut-drive-burlington-2026",
+   "name": "Walnut Wonderland Halloween Light Show",
+   "town": "Burlington",
+   "address": "30 Walnut Drive, Burlington, NJ 08016",
+   "lat": 40.058450958,
+   "lng": -74.86269563,
+   "geoVerified": "census-exact 2026-10-27: 30 WALNUT DR, BURLINGTON, NJ, 08016",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31",
+     "weekly": [
+       {"dow": 0, "open": "18:00", "close": "22:00"},
+       {"dow": 1, "open": "18:00", "close": "22:00"},
+       {"dow": 2, "open": "18:00", "close": "22:00"},
+       {"dow": 3, "open": "18:00", "close": "22:00"},
+       {"dow": 4, "open": "18:00", "close": "22:00"},
+       {"dow": 5, "open": "18:00", "close": "23:00"},
+       {"dow": 6, "open": "18:00", "close": "23:00"}
+     ]
+   },
+   "dates": "Through Oct 31",
+   "times": "Sun–Thu 6:00 PM–10:00 PM; Fri–Sat 6:00 PM–11:00 PM",
+   "levels": [],
+   "type": [
+     "Walk-through"
+   ],
+   "features": [
+     "Lights"
+   ],
+   "notes": "Walk-through light show. Please stay off the grass and don't block driveways. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-27",
+   "num": 112,
+   "entityId": "100-raymond-avenue-evesham-2026",
+   "name": "Newman House Halloween Display",
+   "town": "Evesham",
+   "address": "100 Raymond Avenue, Evesham, NJ 08053",
+   "lat": 39.79481319,
+   "lng": -74.899322456,
+   "geoVerified": "census-exact 2026-10-27: 100 RAYMOND AVE, EVESHAM, NJ, 08053",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "dates": "",
+   "times": "",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Hours not confirmed. Please view from the street and stay off the property.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-27",
+   "num": 113,
+   "entityId": "311-harrison-avenue-blackwood-2026",
+   "name": "The Psycho Trail",
+   "town": "Blackwood",
+   "address": "311 Harrison Avenue, Blackwood, NJ 08012",
+   "lat": 39.804247399,
+   "lng": -75.0703761,
+   "geoVerified": "census-exact 2026-10-27: 311 HARRISON AVE, BLACKWOOD, NJ, 08012",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31",
+     "weekly": [
+       {"dow": 0, "open": "19:00", "close": "21:00"},
+       {"dow": 6, "open": "19:00", "close": "21:00"}
+     ]
+   },
+   "dates": "Weekends through Oct 31",
+   "times": "7:00 PM–9:00 PM",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Drive-by or sidewalk. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-27",
+   "num": 114,
+   "entityId": "7-holly-oak-drive-voorhees-2026",
+   "name": "Voorhees Pirate Ship Halloween Display",
+   "town": "Voorhees",
+   "address": "7 Holly Oak Drive, Voorhees, NJ 08043",
+   "lat": 39.860081868,
+   "lng": -74.960348572,
+   "geoVerified": "census-exact 2026-10-27: 7 HOLLY OAK DR, VOORHEES, NJ, 08043",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-11-01"
+   },
+   "dates": "Through Nov 1",
+   "times": "Open through the day until 10:00 PM",
+   "levels": [],
+   "type": [
+     "Walk-through"
+   ],
+   "features": [],
+   "notes": "Walk-through. Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-27",
+   "num": 115,
+   "entityId": "93-walnut-street-bloomfield-2026",
+   "name": "Walnut Street Halloween Display",
+   "town": "Bloomfield",
+   "address": "93 Walnut Street, Bloomfield, NJ 07003",
+   "lat": 40.793461697,
+   "lng": -74.189903479,
+   "geoVerified": "census-exact 2026-10-27: 93 WALNUT ST, BLOOMFIELD, NJ, 07003",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-11-01",
+     "weekly": [
+       {"dow": 0, "open": "19:30", "close": "21:30"},
+       {"dow": 1, "open": "19:30", "close": "21:30"},
+       {"dow": 2, "open": "19:30", "close": "21:30"},
+       {"dow": 3, "open": "19:30", "close": "21:30"},
+       {"dow": 4, "open": "19:30", "close": "21:30"},
+       {"dow": 5, "open": "19:30", "close": "21:30"},
+       {"dow": 6, "open": "19:30", "close": "21:30"}
+     ]
+   },
+   "dates": "Through Nov 1",
+   "times": "7:30 PM–9:30 PM nightly",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-27",
+   "num": 116,
+   "entityId": "121-jordan-road-colonia-2026",
+   "name": "Jordan Road Halloween Display",
+   "town": "Colonia",
+   "address": "121 Jordan Road, Colonia, NJ 07067",
+   "lat": 40.602971334,
+   "lng": -74.327639521,
+   "geoVerified": "census-exact 2026-10-27: 121 JORDAN RD, COLONIA, NJ, 07067",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "schedule": {
+     "endDate": "2026-10-31",
+     "weekly": [
+       {"dow": 0, "open": "17:00", "close": "22:00"},
+       {"dow": 1, "open": "17:00", "close": "22:00"},
+       {"dow": 2, "open": "17:00", "close": "22:00"},
+       {"dow": 3, "open": "17:00", "close": "22:00"},
+       {"dow": 4, "open": "17:00", "close": "22:00"},
+       {"dow": 5, "open": "17:00", "close": "22:00"},
+       {"dow": 6, "open": "17:00", "close": "22:00"}
+     ]
+   },
+   "dates": "Through Oct 31",
+   "times": "5:00 PM–10:00 PM nightly",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Please view from the street.",
+   "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-27",
+   "num": 117,
+   "entityId": "948-us-highway-202-bridgewater-2026",
+   "name": "13 Skeletons",
+   "town": "Bridgewater",
+   "address": "948 Route 202-206, Bridgewater, NJ 08807",
+   "lat": 40.62044647,
+   "lng": -74.627187786,
+   "geoVerified": "census-exact 2026-10-27: 948 US HWY 202, BRIDGEWATER, NJ, 08807",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "nominated",
+   "source": "community",
+   "dates": "",
+   "times": "",
+   "levels": [],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "Hours not confirmed. Please view from the street.",
    "kind": "Decorated home/yard display"
  }
 ];
@@ -3715,7 +3983,390 @@ const events=[
   ],
   "url": "https://www.meditationinnewjersey.org/events",
   "notes": "Drive-through trunk or treat on Halloween Eve. Families drive through the parking lot, where children in costume get candy from friendly volunteers. Costumes encouraged; everyone welcome. Free, no registration needed."
-}
+},
+ {
+  "id": "north-jersey-vineyard-trunk-or-treat-2026-10-31",
+  "entityId": "north-jersey-vineyard-trunk-or-treat-2026",
+  "updatedAt": "2026-10-27",
+  "name": "North Jersey Vineyard Church Trunk or Treat",
+  "eventType": "Trunk-or-treat",
+  "venue": "North Jersey Vineyard Church",
+  "address": "310 Phillips Avenue, South Hackensack, NJ 07606",
+  "lat": 40.857351066,
+  "lng": -74.046265546,
+  "geoVerified": "census-exact 2026-10-27: 310 PHILLIPS AVE, SOUTH HACKENSACK, NJ, 07606",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T18:30:00-04:00",
+  "endAt": "2026-10-31T20:00:00-04:00",
+  "hours": "6:30 PM–8:00 PM",
+  "cost": "Free",
+  "attendance": "Open to all",
+  "features": [
+    "Free",
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Free, no registration needed."
+ },
+ {
+  "id": "sea-isle-city-recreation-trunk-or-treat-2026-10-31",
+  "entityId": "sea-isle-city-recreation-trunk-or-treat-2026",
+  "updatedAt": "2026-10-27",
+  "name": "Sea Isle City Recreation Trunk or Treat",
+  "eventType": "Trunk-or-treat",
+  "venue": "Sea Isle City Community Center",
+  "address": "4500 Central Avenue, Sea Isle City, NJ 08243",
+  "lat": 39.153758609,
+  "lng": -74.695545044,
+  "geoVerified": "census-exact 2026-10-27: 4500 CENTRAL AVE, SEA ISLE CITY, NJ, 08243",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T17:00:00-04:00",
+  "endAt": "2026-10-31T19:00:00-04:00",
+  "hours": "5:00 PM–7:00 PM",
+  "cost": "Check with the organizer",
+  "attendance": "Open to all",
+  "features": [
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Community Center lot. Check with the organizer about cost."
+ },
+ {
+  "id": "howl-o-ween-turtle-back-zoo-2026-10-31",
+  "entityId": "howl-o-ween-turtle-back-zoo-2026",
+  "updatedAt": "2026-10-27",
+  "name": "Howl-O-Ween at Turtle Back Zoo",
+  "eventType": "Festival",
+  "venue": "Turtle Back Zoo",
+  "address": "560 Northfield Avenue, West Orange, NJ 07052",
+  "lat": 40.769735521,
+  "lng": -74.281600071,
+  "geoVerified": "census-exact 2026-10-27: 560 NORTHFIELD AVE, WEST ORANGE, NJ, 07052",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T16:00:00-04:00",
+  "endAt": "2026-10-31T20:00:00-04:00",
+  "hours": "4:00 PM–8:00 PM",
+  "cost": "$5 general, $3 members, under 2 free",
+  "attendance": "Open to all",
+  "features": [
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Ticket needed for everyone over 2. Rain or shine."
+ },
+ {
+  "id": "livingston-recreation-trunk-or-treat-2026-10-30",
+  "entityId": "livingston-recreation-trunk-or-treat-2026",
+  "updatedAt": "2026-10-27",
+  "name": "Livingston Recreation Annual Trunk or Treat",
+  "eventType": "Trunk-or-treat",
+  "venue": "Eastman Building lot",
+  "address": "290 W Mount Pleasant Avenue, Livingston, NJ 07039",
+  "lat": 40.796011632,
+  "lng": -74.336915454,
+  "geoVerified": "census-exact 2026-10-27: 290 W MOUNT PLEASANT AVE, LIVINGSTON, NJ, 07039",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-30",
+  "startAt": "2026-10-30T15:30:00-04:00",
+  "endAt": "2026-10-30T17:30:00-04:00",
+  "hours": "3:30 PM–5:30 PM",
+  "cost": "Free",
+  "attendance": "Open to all",
+  "features": [
+    "Free",
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Costume contest, photo booth, and food trucks."
+ },
+ {
+  "id": "nj-state-museum-halloween-spooktacular-2026-10-31",
+  "entityId": "nj-state-museum-halloween-spooktacular-2026",
+  "updatedAt": "2026-10-27",
+  "name": "New Jersey State Museum Halloween Spooktacular",
+  "eventType": "Festival",
+  "venue": "New Jersey State Museum",
+  "address": "205 W State Street, Trenton, NJ 08608",
+  "lat": 40.221722546,
+  "lng": -74.772776906,
+  "geoVerified": "census-exact 2026-10-27: 205 W STATE ST, TRENTON, NJ, 08608",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T10:00:00-04:00",
+  "endAt": "2026-10-31T14:00:00-04:00",
+  "hours": "10:00 AM–2:00 PM",
+  "cost": "Check with the organizer",
+  "attendance": "Open to all",
+  "features": [
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Candy from 11:00 AM while it lasts. Check with the organizer about cost."
+ },
+ {
+  "id": "spookfest-market-piscataway-2026-10-31",
+  "entityId": "spookfest-market-piscataway-2026",
+  "updatedAt": "2026-10-27",
+  "name": "SpookFest Market 3.0",
+  "eventType": "Festival",
+  "venue": "Arbor Hose Co. #1",
+  "address": "1780 W Seventh Street, Piscataway, NJ 08854",
+  "lat": 40.587999683,
+  "lng": -74.447938594,
+  "geoVerified": "census-exact 2026-10-27: 1780 W 7TH ST, PISCATAWAY, NJ, 08854",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T16:00:00-04:00",
+  "endAt": "2026-10-31T21:00:00-04:00",
+  "hours": "4:00 PM–9:00 PM",
+  "cost": "Free admission (food and merch extra)",
+  "attendance": "Open to all",
+  "features": [
+    "Free",
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Free admission. Food and merchandise cost extra. RSVP suggested."
+ },
+ {
+  "id": "pier-village-halloween-spooktacular-2026-10-31",
+  "entityId": "pier-village-halloween-spooktacular-2026",
+  "updatedAt": "2026-10-27",
+  "name": "Pier Village Halloween Spooktacular",
+  "eventType": "Festival",
+  "venue": "Pier Village",
+  "address": "50 Chelsea Avenue, Long Branch, NJ 07740",
+  "lat": 40.301626904,
+  "lng": -73.980615372,
+  "geoVerified": "census-exact 2026-10-27: 50 CHELSEA AVE, LONG BRANCH, NJ, 07740",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T13:00:00-04:00",
+  "endAt": "2026-10-31T17:00:00-04:00",
+  "hours": "1:00 PM–5:00 PM",
+  "cost": "Check with the organizer",
+  "attendance": "Open to all",
+  "features": [
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Trick-or-treating, DJ, face painting, and a bubble show at 3:15 PM. Check with the organizer about cost."
+ },
+ {
+  "id": "florham-park-jaycees-trunk-or-treat-2026-10-31",
+  "entityId": "florham-park-jaycees-trunk-or-treat-2026",
+  "updatedAt": "2026-10-27",
+  "name": "Florham Park Jaycees Halloween Trunk or Treat",
+  "eventType": "Trunk-or-treat",
+  "venue": "Holy Family School lot",
+  "address": "17 Lloyd Avenue, Florham Park, NJ 07932",
+  "lat": 40.778244428,
+  "lng": -74.391539875,
+  "geoVerified": "census-exact 2026-10-27: 17 LLOYD AVE, FLORHAM PARK, NJ, 07932",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T13:00:00-04:00",
+  "endAt": "2026-10-31T14:30:00-04:00",
+  "hours": "1:00 PM–2:30 PM",
+  "cost": "Check with the organizer",
+  "attendance": "Open to all",
+  "features": [
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Holy Family School lot. Check with the organizer about cost."
+ },
+ {
+  "id": "realsophy-trunk-or-treat-2026-10-31",
+  "entityId": "realsophy-trunk-or-treat-2026",
+  "updatedAt": "2026-10-27",
+  "name": "Realsophy Real Estate Trunk or Treat",
+  "eventType": "Trunk-or-treat",
+  "venue": "Realsophy Real Estate",
+  "address": "1934 Washington Valley Road, Martinsville, NJ 08836",
+  "lat": 40.601742082,
+  "lng": -74.562577458,
+  "geoVerified": "census-exact 2026-10-27: 1934 WASHINGTON VALLEY RD, MARTINSVILLE, NJ, 08836",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T12:00:00-04:00",
+  "endAt": "2026-10-31T14:00:00-04:00",
+  "hours": "12:00 PM–2:00 PM",
+  "cost": "Free",
+  "attendance": "Open to all",
+  "features": [
+    "Free",
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Free. Walk-ins welcome."
+ },
+ {
+  "id": "bound-brook-pto-trunk-or-treat-2026-10-30",
+  "entityId": "bound-brook-pto-trunk-or-treat-2026",
+  "updatedAt": "2026-10-27",
+  "name": "Bound Brook PTO Trunk or Treat",
+  "eventType": "Trunk-or-treat",
+  "venue": "Bound Brook",
+  "address": "120 E 2nd Street, Bound Brook, NJ 08805",
+  "lat": 40.562882756,
+  "lng": -74.533077937,
+  "geoVerified": "census-exact 2026-10-27: 120 E 2ND ST, BOUND BROOK, NJ, 08805",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-30",
+  "startAt": "2026-10-30T18:00:00-04:00",
+  "endAt": "2026-10-30T20:00:00-04:00",
+  "hours": "6:00 PM–8:00 PM",
+  "cost": "$8 presale / $10 at the door; adults and under 3 free",
+  "attendance": "Open to all",
+  "features": [
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Tickets are $8 presale or $10 at the door. Adults and children under 3 are free."
+ },
+ {
+  "id": "classic-cars-trunk-or-treat-2026-10-31",
+  "entityId": "classic-cars-trunk-or-treat-2026",
+  "updatedAt": "2026-10-27",
+  "name": "Classic Cars Trunk or Treat",
+  "eventType": "Trunk-or-treat",
+  "venue": "Gethsemane Lutheran Church",
+  "address": "409 E Baldwin Street, Hackettstown, NJ 07840",
+  "lat": 40.860394696,
+  "lng": -74.833635535,
+  "geoVerified": "census-exact 2026-10-27: 409 E BALDWIN ST, HACKETTSTOWN, NJ, 07840",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T16:00:00-04:00",
+  "endAt": "2026-10-31T18:00:00-04:00",
+  "hours": "4:00 PM–6:00 PM",
+  "cost": "Free",
+  "attendance": "Open to all",
+  "features": [
+    "Free",
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Free."
+ },
+ {
+  "id": "franklin-lakes-library-trick-or-treat-2026-10-31",
+  "entityId": "franklin-lakes-library-trick-or-treat-2026",
+  "updatedAt": "2026-10-27",
+  "name": "Trick or Treat at the Library",
+  "eventType": "Other",
+  "venue": "Franklin Lakes Public Library",
+  "address": "470 DeKorte Drive, Franklin Lakes, NJ 07417",
+  "lat": 41.018545227,
+  "lng": -74.198920035,
+  "geoVerified": "census-exact 2026-10-27: 470 DE KORTE DR, FRANKLIN LAKES, NJ, 07417",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T10:00:00-04:00",
+  "endAt": "2026-10-31T16:00:00-04:00",
+  "hours": "10:00 AM–4:00 PM",
+  "cost": "Check with the organizer",
+  "attendance": "Open to all",
+  "features": [
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Indoor. Check with the organizer about cost."
+ },
+ {
+  "id": "bloomfield-library-halloween-marathon-2026-10-31",
+  "entityId": "bloomfield-library-halloween-marathon-2026",
+  "updatedAt": "2026-10-27",
+  "name": "Halloween Movie Marathon & Trick-or-Treating",
+  "eventType": "Other",
+  "venue": "Bloomfield Public Library",
+  "address": "90 Broad Street, Bloomfield, NJ 07003",
+  "lat": 40.79664844,
+  "lng": -74.197400796,
+  "geoVerified": "census-exact 2026-10-27: 90 BROAD ST, BLOOMFIELD, NJ, 07003",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T09:30:00-04:00",
+  "endAt": "2026-10-31T15:00:00-04:00",
+  "hours": "9:30 AM–3:00 PM",
+  "cost": "Check with the organizer",
+  "attendance": "Open to all",
+  "features": [
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "Indoor. Trick-or-treating until 2:00 PM. Check with the organizer about cost."
+ },
+ {
+  "id": "voorhees-library-story-time-2026-10-31",
+  "entityId": "voorhees-library-story-time-2026",
+  "updatedAt": "2026-10-27",
+  "name": "Halloween Story Time and Costume Parade",
+  "eventType": "Other",
+  "venue": "M. Allan Vogelson Branch Library",
+  "address": "203 Laurel Road, Voorhees, NJ 08043",
+  "lat": 39.848294914,
+  "lng": -75.001788665,
+  "geoVerified": "census-exact 2026-10-27: 203 LAUREL RD, VOORHEES, NJ, 08043",
+  "season": "halloween",
+  "year": 2026,
+  "participation": "confirmed",
+  "date": "2026-10-31",
+  "startAt": "2026-10-31T10:30:00-04:00",
+  "endAt": "2026-10-31T11:00:00-04:00",
+  "hours": "10:30 AM–11:00 AM",
+  "cost": "Check with the organizer",
+  "attendance": "Open to all",
+  "features": [
+    "Open to all",
+    "Kid-friendly"
+  ],
+  "url": "",
+  "notes": "No registration needed. Check with the organizer about cost."
+ }
 ];
 const CURRENT_SEASON={season:'halloween',year:2026};
 function inCurrentSeason(x){const participation=x.participation||'confirmed';return x.season===CURRENT_SEASON.season&&x.year===CURRENT_SEASON.year&&(participation==='confirmed'||participation==='nominated')}
@@ -3731,6 +4382,8 @@ const map=L.map('map',{scrollWheelZoom:true,tap:true}).setView([40.87,-74.72],12
 // World Dark Gray Base — still a dark tile style per spec.
 map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,attribution:'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'}).addTo(map);
+// Town and road names on a labels-only overlay, above the dark base and below the pins.
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,pane:'tilePane',attribution:''}).addTo(map);
 const markerByNum=new Map();
 // Overlapping pins cluster (34px circle in the tab's accent colour); clustering stops at zoom 15, where a cluster click spiderfies.
 const CLUSTER_STOP_ZOOM=15;
@@ -3798,7 +4451,7 @@ function selectEventCard(id){const card=document.querySelector(`#cardList [data-
 function eventSquareIcon(n){const w=pinWidth(),h=pinHeight(w);return L.divIcon({className:'',html:`<div class="pin pin--event" data-event-pin="${n}"><img class="pin__art" src="assets/icons/v2/pin-event.svg" alt=""></div>`,iconSize:[w,h],iconAnchor:[w/2,h-1]})}
 function eventIcon(){return eventSquareIcon(0)}
 function syncEventPins(){eventMarkers.forEach(m=>map.removeLayer(m));eventMarkers.length=0;if(state.category==='events'){matchingEvents().filter(ev=>Number.isFinite(ev.lat)&&Number.isFinite(ev.lng)).forEach((ev,i)=>{const m=L.marker([ev.lat,ev.lng],{icon:eventSquareIcon(i+1),keyboard:true,title:`Event: ${ev.name}`,zIndexOffset:900}).addTo(map);m.getElement()?.setAttribute('aria-label',`Event: ${ev.name}`);m._evId=ev.id;m.on('add',()=>stopBadge(m.getElement()&&m.getElement().querySelector('.pin'),state.route.findIndex(r=>r.eventId!=null&&r.eventId===ev.id)));m.on('click',()=>selectEventCard(ev.id));m.on('mouseover',()=>linkEvent(ev.id,true));m.on('mouseout',()=>linkEvent(ev.id,false));eventMarkers.push(m)});if(eventMarkers.length&&!(document.querySelector('.map-frame')||{}).hidden)map.fitBounds(L.featureGroup(eventMarkers).getBounds(),mapFitOptions({maxZoom:14,animate:false}));return}state.route.filter(r=>r.eventId!=null).forEach(r=>{const ev=events.find(x=>x.id===r.eventId);if(!ev||!Number.isFinite(ev.lat)||!Number.isFinite(ev.lng))return;const m=L.marker([ev.lat,ev.lng],{icon:eventIcon(),keyboard:true,title:`Event: ${ev.name}`,zIndexOffset:900}).addTo(map);m.getElement()?.setAttribute('aria-label',`Event: ${ev.name}`);m.on('click',()=>{if(typeof openEvent==='function')openEvent(ev.id)});eventMarkers.push(m)})}
-document.addEventListener('hf:search-changed',e=>{state.search=e.detail;renderCards();renderRoute();renderPeek(state.selected);syncSearchCircle();if(searchCircle){map.fitBounds(searchCircle.getBounds().pad(0.12));setTimeout(()=>map.invalidateSize(),100)}if(e.detail&&e.detail.radius==='all'&&!(e.detail.mode==='area'&&e.detail.bounds))fitVisiblePins()});
+document.addEventListener('hf:search-changed',e=>{state.search=e.detail;renderCards();renderRoute();renderPeek(state.selected);syncSearchCircle();if(searchCircle){map.fitBounds(searchCircle.getBounds().pad(0.12));setTimeout(()=>map.invalidateSize(),100)}if(e.detail&&e.detail.mode==='device'&&Number.isFinite(e.detail.lat)&&Number.isFinite(e.detail.lng))map.flyTo([e.detail.lat,e.detail.lng],12);else if(e.detail&&e.detail.radius==='all'&&!(e.detail.mode==='area'&&e.detail.bounds))fitVisiblePins()});
 
 const FEATURE_ICONS={
  'Costumes Available':{label:'Costumes Available',path:'M10 5a2 2 0 1 1 3 2l-1 1v3M12 11 2 18v3h20v-3Z'},
@@ -3826,7 +4479,7 @@ function treatDateText(x){const m=/^([A-Za-z]+) (\d{1,2}), (\d{4})$/.exec(String
 function treatHoursText(x){const t=[treatDateText(x),x.times?compactTime(x.times):''].filter(Boolean).join(' · ');return t||listingHoursText(x)}
 function hasHostNotes(x){const n=String((x&&x.notes)||'').trim();return !!n&&!/^more details coming soon\.?$/i.test(n)}
 function treatCardHTML(x){const onRoute=state.route.some(r=>r.num===x.num);return `<article class="card card--compact treat-stop-card ${state.selected===x.num?'is-selected':''}${onRoute?' card--on-route':''}" data-card="${x.num}" data-town="${safeListingText(x.town)}" tabindex="0" aria-label="${safeListingText(x.name)}"><div class="card__head"><div class="card__pin">${cardIconHTML('treat')}</div><div class="card__heading"><h3 class="card__name"><span class="card__nametext" data-card-name="${x.num}">${safeListingText(x.name)}</span></h3></div></div>${listingStatusHTML(x)}<div class="card__addrline"><a class="card__address" href="${gmapsDirections(x.address)}" target="_blank" rel="noopener" aria-label="Directions to ${safeListingText(x.name)}">${safeListingText(x.address.replace(/,\s*NJ\s*$/i,''))} ↗</a>${distanceLabelHTML(x)}${typeof openTonightBadgeHTML==='function'?openTonightBadgeHTML(x,{eligible:openTonightOK}):''}</div><p class="card__hours">${safeListingText(treatHoursText(x))}</p>${(x.features||[]).length?`<div class="chips">${x.features.map(v=>hfTagHTML(v)).join('')}</div>`:''}<div class="card__actions"><button class="btn card__route-btn" type="button" data-route="${x.num}" aria-pressed="${onRoute}">${onRoute?'✓ On your route':'+ Add to route'}</button><button type="button" class="card__mapbtn" data-card-map="${x.num}"><span aria-hidden="true">◉</span> Map</button><button type="button" class="card__morebtn" data-card-more="${x.num}" aria-expanded="false" aria-label="More for ${safeListingText(x.name)}">⋯</button><div class="card__meta"><div class="card__meta-right"><a class="card__metalink" href="${listingPageHref(x)}#report-update">Report</a><a class="card__metalink" href="${listingPageHref(x)}#share">Share</a></div></div></div></article>`}
-function cardHTML(x){if(x.placeholder)return `<article class="card card--compact card--vacant" aria-label="Listing ${x.num} available"><div class="card__head"><span class="vacant-number">${x.num}</span><div class="card__heading"><h3 class="card__name">Listing number available</h3></div></div><div class="card__body"><p>This number is reserved for the next new listing.</p></div></article>`;if(isCommunity(x))return communityCardHTML(x);if(isTreatStop(x))return treatCardHTML(x);const selected=state.selected===x.num,onRoute=state.route.some(r=>r.num===x.num);return `<article class="card card--compact ${selected?'is-selected':''}${onRoute?' card--on-route':''}" data-card="${x.num}" data-town="${safeListingText(x.town)}" tabindex="0" aria-label="${safeListingText(x.name)}"><div class="card__head"><div class="card__pin">${cardIconHTML(isTreatStop(x)?'treat':'display')}</div><div class="card__heading"><h3 class="card__name"><span class="card__nametext" data-card-name="${x.num}">${safeListingText(x.name)}</span></h3></div></div>${listingStatusHTML(x)}<div class="card__addrline"><a class="card__address" href="${gmapsDirections(x.address)}" target="_blank" rel="noopener" aria-label="Directions to ${safeListingText(x.name)}">${safeListingText(x.address.replace(/,\s*NJ\s*$/i,''))} ↗</a>${distanceLabelHTML(x)}${typeof openTonightBadgeHTML==='function'?openTonightBadgeHTML(x,{eligible:openTonightOK}):''}</div><div class="card__hours-row"><p class="card__hours">${safeListingText(listingHoursText(x))}</p>${hasHostNotes(x)?`<details class="card__notes"><summary>Host notes</summary><div>${safeListingText(x.notes)}</div></details>`:''}</div>${x.levels.length?`<p class="card__scare-row"><span class="card__scare">${scarePips(x.levels)}</span></p>`:''}${(x.type.length||x.features.length)?`<div class="card__tags">${x.type.map(t=>hfTagHTML(t,'chip--type')).join('')}${x.features.map(featureChip).join('')}</div>`:''}<div class="card__actions"><button class="btn card__route-btn" type="button" data-route="${x.num}" aria-pressed="${onRoute}">${onRoute?'✓ On your route':'+ Add to route'}</button><button type="button" class="card__mapbtn" data-card-map="${x.num}"><span aria-hidden="true">◉</span> Map</button><button type="button" class="card__morebtn" data-card-more="${x.num}" aria-expanded="false" aria-label="More for ${safeListingText(x.name)}">⋯</button><div class="card__meta"><div class="card__meta-left"><a class="card-rating" href="${listingPageHref(x)}#feedback" data-rating-summary="${x.num}" aria-label="View ratings for ${safeListingText(x.name)}"><span class="card-rating__text">No ratings yet · <span class="card-rating__rate">Rate</span></span></a></div><div class="card__meta-right"><a class="card__metalink" href="${listingPageHref(x)}#report-update">Report</a><a class="card__metalink" href="${listingPageHref(x)}#share">Share</a></div></div></div></article>`}
+function cardHTML(x){if(x.placeholder)return `<article class="card card--compact card--vacant" aria-label="Listing ${x.num} available"><div class="card__head"><span class="vacant-number">${x.num}</span><div class="card__heading"><h3 class="card__name">Listing number available</h3></div></div><div class="card__body"><p>This number is reserved for the next new listing.</p></div></article>`;if(isCommunity(x))return communityCardHTML(x);if(isTreatStop(x))return treatCardHTML(x);const selected=state.selected===x.num,onRoute=state.route.some(r=>r.num===x.num);return `<article class="card card--compact ${selected?'is-selected':''}${onRoute?' card--on-route':''}" data-card="${x.num}" data-town="${safeListingText(x.town)}" tabindex="0" aria-label="${safeListingText(x.name)}"><div class="card__head"><div class="card__pin">${cardIconHTML(isTreatStop(x)?'treat':'display')}</div><div class="card__heading"><h3 class="card__name"><span class="card__nametext" data-card-name="${x.num}">${safeListingText(x.name)}</span></h3></div></div>${listingStatusHTML(x)}<div class="card__addrline"><a class="card__address" href="${gmapsDirections(x.address)}" target="_blank" rel="noopener" aria-label="Directions to ${safeListingText(x.name)}">${safeListingText(x.address.replace(/,\s*NJ\s*$/i,''))} ↗</a>${distanceLabelHTML(x)}${typeof openTonightBadgeHTML==='function'?openTonightBadgeHTML(x,{eligible:openTonightOK}):''}</div><div class="card__hours-row"><p class="card__hours">${safeListingText(listingHoursText(x))}</p>${hasHostNotes(x)?`<details class="card__notes"><summary>Host notes</summary><div>${safeListingText(x.notes)}</div></details>`:''}${listingMediaHTML(x)}</div>${x.levels.length?`<p class="card__scare-row"><span class="card__scare">${scarePips(x.levels)}</span></p>`:''}${(x.type.length||x.features.length)?`<div class="card__tags">${x.type.map(t=>hfTagHTML(t,'chip--type')).join('')}${x.features.map(featureChip).join('')}</div>`:''}<div class="card__actions"><button class="btn card__route-btn" type="button" data-route="${x.num}" aria-pressed="${onRoute}">${onRoute?'✓ On your route':'+ Add to route'}</button><button type="button" class="card__mapbtn" data-card-map="${x.num}"><span aria-hidden="true">◉</span> Map</button><button type="button" class="card__morebtn" data-card-more="${x.num}" aria-expanded="false" aria-label="More for ${safeListingText(x.name)}">⋯</button><div class="card__meta"><div class="card__meta-left"><a class="card-rating" href="${listingPageHref(x)}#feedback" data-rating-summary="${x.num}" aria-label="View ratings for ${safeListingText(x.name)}"><span class="card-rating__text">No ratings yet · <span class="card-rating__rate">Rate</span></span></a></div><div class="card__meta-right"><a class="card__metalink" href="${listingPageHref(x)}#report-update">Report</a><a class="card__metalink" href="${listingPageHref(x)}#share">Share</a></div></div></div></article>`}
 
 function dateFilterChipsHTML(){
  const f=state.dateFilter||{};
@@ -3834,6 +4487,7 @@ function dateFilterChipsHTML(){
  const dateInput=f.kind==='date'?`<input type="date" id="dateFilterInput" class="filter-date-input" value="${safeListingText(f.date||'')}" aria-label="Choose a date">`:'';
  return `<div class="filter-tier filter-tier--date"><span class="filterbar__label">When</span>${chip('tonight','Tonight')}${chip('weekend','This weekend')}${chip('date','Choose a date')}${dateInput}</div>`;
 }
+function listingMediaHTML(x){const photos=(Array.isArray(x.photos)?x.photos:[]).filter(p=>typeof p==='string'&&p.startsWith('assets/')&&!p.includes('..'));const v=x.video&&typeof x.video==='object'?x.video:null;const src=v&&typeof v.src==='string'&&v.src.startsWith('assets/')&&!v.src.includes('..')?v.src:'';const poster=v&&typeof v.poster==='string'&&v.poster.startsWith('assets/')&&!v.poster.includes('..')?v.poster:'';if(!photos.length&&!src)return '';const imgs=photos.map(p=>`<img src="${safeListingText(p)}" alt="Photo of ${safeListingText(x.name)}" loading="lazy" decoding="async">`).join('');const vid=src?`<video controls muted playsinline preload="none"${poster?` poster="${safeListingText(poster)}"`:''} aria-label="Walkthrough of ${safeListingText(x.name)}"><source src="${safeListingText(src)}" type="video/mp4"></video>`:'';return `<details class="card__notes card__media"><summary>Photos</summary><div class="card__gallery">${imgs}${vid}</div></details>`}
 function renderFilters(){const button=f=>`<button class="filter ${FEATURE_ICONS[f]?'filter--feature':''}" type="button" data-filter="${f}" aria-pressed="${state.filter===f}">${featureIcon(f)}${safeListingText(FEATURE_ICONS[f]?.label||f)}</button>`;const featureActive=filters.some(f=>FEATURE_ICONS[f]&&state.filter===f),anyActive=state.filter!=='All'||Boolean(state.dateFilter&&state.dateFilter.kind);document.getElementById('filters').innerHTML=`<div class="filter-tier filter-tier--primary"><span class="filterbar__label">Show</span>${filters.filter(f=>!FEATURE_ICONS[f]).map(button).join('')}${anyActive?'<button class="filter filter--reset" type="button" data-reset-filters>Reset filters</button>':''}</div><details class="filter-tier filter-tier--features"${featureActive?' open':''}><summary>Features</summary>${filters.filter(f=>FEATURE_ICONS[f]).map(button).join('')}</details>${dateFilterChipsHTML()}`}
 
 function syncListingMarkers(visible){if(typeof L==='undefined'||!map||!markerByNum)return;const keep=new Set(visible.filter(x=>!x.placeholder&&Number.isFinite(x.lat)&&Number.isFinite(x.lng)).map(x=>x.num));markerByNum.forEach((m,n)=>{const on=hasListing(m);if(keep.has(n)){if(!on)addListing(m)}else if(on)removeListing(m)})}

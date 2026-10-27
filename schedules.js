@@ -70,11 +70,12 @@ function isOpenAt(schedule,dateStr,timeStr){
  if(t===null)return false;
  if(!h.open)return true;
  const open=toMinutes(h.open);
- if(open===null||t<open)return false;
- if(h.close){
-  const close=toMinutes(h.close);
-  if(close!==null&&t>close)return false;
- }
+ if(open===null)return false;
+ const close=h.close?toMinutes(h.close):null;
+ // A close earlier than open runs past midnight (5:30 PM–2:30 AM).
+ if(close!==null&&close<open)return t>=open||t<=close;
+ if(t<open)return false;
+ if(close!==null&&t>close)return false;
  return true;
 }
 // "18:00" -> "6 PM", "16:30" -> "4:30 PM", "24:00" -> "12 AM".

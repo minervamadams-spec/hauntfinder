@@ -765,11 +765,12 @@
       "scheduleEvidence": "Through Oct 31, 2026. About 6-10 PM, weather permitting. Drive or walk by (both). Participation nominated."
     },
     {
+      "rowKey": "32dc41d1d156d8e8447b1e16577e31eb6f0c8714e73fd08c614c107af0175320",
       "listingId": 108,
       "entityId": "1107-ridge-avenue-asbury-park-2026",
-      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-26",
+      "decision": "updated_owner_submitted_displays_form_minerva_approved_2026-10-27",
       "publicAddress": "1107 Ridge Avenue, Asbury Park, NJ 07712",
-      "scheduleEvidence": "Through Oct 31, 2026. About 6-10 PM, weather permitting. Drive or walk by (both). Participation nominated."
+      "scheduleEvidence": "Now through Nov 1, 2026. 5:30 PM to 2:30 AM nightly. Family Friendly, Spooky. Walk-up and walk-through. Music / Sound, Fog, Lights, Animatronics. Owner-submitted display. Participation confirmed."
     },
     {
       "listingId": 109,
@@ -777,6 +778,62 @@
       "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-26",
       "publicAddress": "13 Monmouth Avenue, Freehold, NJ 07728",
       "scheduleEvidence": "Through Oct 31, 2026. About 6-10 PM, weather permitting. Drive or walk by (both). Participation nominated."
+    },
+    {
+      "listingId": 110,
+      "entityId": "1305-roberts-avenue-somers-point-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-27",
+      "publicAddress": "1305 Roberts Avenue, Somers Point, NJ 08244",
+      "scheduleEvidence": "Hours not confirmed. Drive-by or sidewalk. Please view from the street. Participation nominated."
+    },
+    {
+      "listingId": 111,
+      "entityId": "30-walnut-drive-burlington-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-27",
+      "publicAddress": "30 Walnut Drive, Burlington, NJ 08016",
+      "scheduleEvidence": "Through Oct 31, 2026. Sun\u2013Thu 6:00\u201310:00 PM, Fri\u2013Sat 6:00\u201311:00 PM. Walk-through light show. Stay off the grass and don't block driveways. Participation nominated."
+    },
+    {
+      "listingId": 112,
+      "entityId": "100-raymond-avenue-evesham-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-27",
+      "publicAddress": "100 Raymond Avenue, Evesham, NJ 08053",
+      "scheduleEvidence": "Hours not confirmed. View from the street and stay off the property. Participation nominated."
+    },
+    {
+      "listingId": 113,
+      "entityId": "311-harrison-avenue-blackwood-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-27",
+      "publicAddress": "311 Harrison Avenue, Blackwood, NJ 08012",
+      "scheduleEvidence": "Weekends through Oct 31, 2026, 7:00\u20139:00 PM. Drive-by or sidewalk. Participation nominated."
+    },
+    {
+      "listingId": 114,
+      "entityId": "7-holly-oak-drive-voorhees-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-27",
+      "publicAddress": "7 Holly Oak Drive, Voorhees, NJ 08043",
+      "scheduleEvidence": "Through Nov 1, 2026. Open through the day until 10:00 PM. Walk-through. Participation nominated."
+    },
+    {
+      "listingId": 115,
+      "entityId": "93-walnut-street-bloomfield-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-27",
+      "publicAddress": "93 Walnut Street, Bloomfield, NJ 07003",
+      "scheduleEvidence": "Through Nov 1, 2026. Nightly 7:30\u20139:30 PM. View from the street. Participation nominated."
+    },
+    {
+      "listingId": 116,
+      "entityId": "121-jordan-road-colonia-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-27",
+      "publicAddress": "121 Jordan Road, Colonia, NJ 07067",
+      "scheduleEvidence": "Through Oct 31, 2026. Nightly 5:00\u201310:00 PM. View from the street. Participation nominated."
+    },
+    {
+      "listingId": 117,
+      "entityId": "948-us-highway-202-bridgewater-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-27",
+      "publicAddress": "948 Route 202-206, Bridgewater, NJ 08807",
+      "scheduleEvidence": "Hours not confirmed. Census matched 948 US HWY 202, BRIDGEWATER, NJ, 08807 (Route 202-206 concurrency). View from the street. Participation nominated."
     }
   ],
   "treatStops": {
@@ -932,6 +989,104 @@
         "decision": "published_census_exact_address_verified_minerva_approved_2026-10-26",
         "publicAddress": "11 Music Mountain Blvd, Lambertville, NJ 08530",
         "scheduleEvidence": "Friday, October 30, 2026, 4:30 PM–6:00 PM. Free, open to all, kid-friendly. Trunk-or-treat."
+      },
+      {
+        "eventId": "north-jersey-vineyard-trunk-or-treat-2026-10-31",
+        "entityId": "north-jersey-vineyard-trunk-or-treat-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
+        "publicAddress": "310 Phillips Avenue, South Hackensack, NJ 07606",
+        "scheduleEvidence": "Saturday, October 31, 2026, 6:30\u20138:00 PM. Free, no registration. Trunk-or-treat."
+      },
+      {
+        "eventId": "sea-isle-city-recreation-trunk-or-treat-2026-10-31",
+        "entityId": "sea-isle-city-recreation-trunk-or-treat-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
+        "publicAddress": "4500 Central Avenue, Sea Isle City, NJ 08243",
+        "scheduleEvidence": "Saturday, October 31, 2026, 5:00\u20137:00 PM. Community Center lot. Cost not stated. Trunk-or-treat."
+      },
+      {
+        "eventId": "howl-o-ween-turtle-back-zoo-2026-10-31",
+        "entityId": "howl-o-ween-turtle-back-zoo-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
+        "publicAddress": "560 Northfield Avenue, West Orange, NJ 07052",
+        "scheduleEvidence": "Saturday, October 31, 2026, 4:00\u20138:00 PM. $5 general, $3 members, under 2 free. Ticket needed for everyone over 2. Rain or shine."
+      },
+      {
+        "eventId": "livingston-recreation-trunk-or-treat-2026-10-30",
+        "entityId": "livingston-recreation-trunk-or-treat-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
+        "publicAddress": "290 W Mount Pleasant Avenue, Livingston, NJ 07039",
+        "scheduleEvidence": "Friday, October 30, 2026, 3:30\u20135:30 PM. Free. Costume contest, photo booth, food trucks. Trunk-or-treat."
+      },
+      {
+        "eventId": "nj-state-museum-halloween-spooktacular-2026-10-31",
+        "entityId": "nj-state-museum-halloween-spooktacular-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
+        "publicAddress": "205 W State Street, Trenton, NJ 08608",
+        "scheduleEvidence": "Saturday, October 31, 2026, 10:00 AM\u20132:00 PM. Candy from 11:00 AM while it lasts. Cost not stated."
+      },
+      {
+        "eventId": "spookfest-market-piscataway-2026-10-31",
+        "entityId": "spookfest-market-piscataway-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
+        "publicAddress": "1780 W Seventh Street, Piscataway, NJ 08854",
+        "scheduleEvidence": "Saturday, October 31, 2026, 4:00\u20139:00 PM. Free admission; food and merch extra. RSVP suggested."
+      },
+      {
+        "eventId": "pier-village-halloween-spooktacular-2026-10-31",
+        "entityId": "pier-village-halloween-spooktacular-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
+        "publicAddress": "50 Chelsea Avenue, Long Branch, NJ 07740",
+        "scheduleEvidence": "Saturday, October 31, 2026, 1:00\u20135:00 PM. Trick-or-treating, DJ, face painting, bubble show at 3:15 PM. Cost not stated."
+      },
+      {
+        "eventId": "florham-park-jaycees-trunk-or-treat-2026-10-31",
+        "entityId": "florham-park-jaycees-trunk-or-treat-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
+        "publicAddress": "17 Lloyd Avenue, Florham Park, NJ 07932",
+        "scheduleEvidence": "Saturday, October 31, 2026, 1:00\u20132:30 PM. Holy Family School lot. Cost not stated. Trunk-or-treat."
+      },
+      {
+        "eventId": "realsophy-trunk-or-treat-2026-10-31",
+        "entityId": "realsophy-trunk-or-treat-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
+        "publicAddress": "1934 Washington Valley Road, Martinsville, NJ 08836",
+        "scheduleEvidence": "Saturday, October 31, 2026, 12:00\u20132:00 PM. Free. Walk-ins welcome. Trunk-or-treat."
+      },
+      {
+        "eventId": "bound-brook-pto-trunk-or-treat-2026-10-30",
+        "entityId": "bound-brook-pto-trunk-or-treat-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
+        "publicAddress": "120 E 2nd Street, Bound Brook, NJ 08805",
+        "scheduleEvidence": "Friday, October 30, 2026, 6:00\u20138:00 PM. Tickets $8 presale / $10 at the door; adults and under 3 free. Trunk-or-treat."
+      },
+      {
+        "eventId": "classic-cars-trunk-or-treat-2026-10-31",
+        "entityId": "classic-cars-trunk-or-treat-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
+        "publicAddress": "409 E Baldwin Street, Hackettstown, NJ 07840",
+        "scheduleEvidence": "Saturday, October 31, 2026, 4:00\u20136:00 PM. Free. Trunk-or-treat."
+      },
+      {
+        "eventId": "franklin-lakes-library-trick-or-treat-2026-10-31",
+        "entityId": "franklin-lakes-library-trick-or-treat-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
+        "publicAddress": "470 DeKorte Drive, Franklin Lakes, NJ 07417",
+        "scheduleEvidence": "Saturday, October 31, 2026, 10:00 AM\u20134:00 PM. Indoor. Cost not stated."
+      },
+      {
+        "eventId": "bloomfield-library-halloween-marathon-2026-10-31",
+        "entityId": "bloomfield-library-halloween-marathon-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
+        "publicAddress": "90 Broad Street, Bloomfield, NJ 07003",
+        "scheduleEvidence": "Saturday, October 31, 2026, 9:30 AM\u20133:00 PM. Indoor. Trick-or-treating until 2:00 PM. Cost not stated."
+      },
+      {
+        "eventId": "voorhees-library-story-time-2026-10-31",
+        "entityId": "voorhees-library-story-time-2026",
+        "decision": "published_census_exact_address_verified_minerva_approved_2026-10-27",
+        "publicAddress": "203 Laurel Road, Voorhees, NJ 08043",
+        "scheduleEvidence": "Saturday, October 31, 2026, 10:30\u201311:00 AM. No registration. Cost not stated."
       }
     ]
   },
