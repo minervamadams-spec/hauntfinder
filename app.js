@@ -3553,7 +3553,10 @@ const listings=[
      "Lights"
    ],
    "notes": "Argh! Come see the Skeleton Pirates battle the Kraken!",
-   "kind": "Decorated home/yard display"
+   "kind": "Decorated home/yard display",
+   "photos": [
+     "assets/listings/garfield/creepy-corner-cove.jpg"
+   ]
  }
 ];
 listings.sort((a,b)=>a.num-b.num);
