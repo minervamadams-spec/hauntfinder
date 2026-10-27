@@ -28,8 +28,11 @@ test('listing 108 is an owner display with a lazy photo gallery and a muted walk
   const mediaStart=app.indexOf('function listingMediaHTML');
   const media=app.slice(mediaStart,app.indexOf('function renderFilters',mediaStart));
   assert.match(media,/loading="lazy"/);
-  assert.match(media,/<video controls muted playsinline preload="none"/);
+  assert.match(media,/<video controls playsinline muted preload="metadata"/);
   assert.match(media,/poster="/);
+  assert.match(media,/data-gallery-photo="/);
+  assert.ok(app.includes('e.stopPropagation()')&&app.includes('hfOpenGallery'),'thumbnail taps open the lightbox and do not bubble into the card');
+  assert.ok(app.includes(".card__gallery video")&&app.includes("v.addEventListener('click',stop)"),'video controls are not intercepted by the card');
   assert.ok(app.includes('${listingMediaHTML(x)}'),'gallery renders on the expanded owner card');
   const card=app.split('function cardHTML')[1].split('function listingMediaHTML')[0];
   assert.ok(card.includes('<details class="card__notes"><summary>Host notes</summary>'));

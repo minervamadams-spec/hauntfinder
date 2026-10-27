@@ -113,7 +113,7 @@ function ddHTML(kind,label,valueText,active,session){return `<details class="dd$
 
 function railChip(action,value,label,pressed){return `<button type="button" class="filter filter--rail" data-rail-filter="${action}" data-value="${String(value).replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" aria-pressed="${pressed}">${action==='event-type'&&typeof hfEventColor==='function'?`<span class="type-dot" aria-hidden="true" style="background:${hfEventColor({eventType:value})}"></span>`:''}${typeof hfIconSVG==='function'&&action!=='event-type'?hfIconSVG(value)||hfIconSVG(label):''}${label}</button>`}
 function railSection(label,body){return `<section class="filter-rail__section"><h3>${label}</h3><div class="filter-rail__chips">${body}</div></section>`}
-function railActiveCount(){return (state.community===false?1:0)+(state.dateFilter&&state.dateFilter.kind?1:0)+(state.filter&&state.filter!=='All'?1:0)+((state.features||[]).length)}
+function railActiveCount(){return (state.community?1:0)+(state.dateFilter&&state.dateFilter.kind?1:0)+(state.filter&&state.filter!=='All'?1:0)+((state.features||[]).length)}
 function railClearHTML(){return railActiveCount()?'<button type="button" class="filter-rail__clear" data-rail-clear>Clear all filters</button>':''}
 function railFiltersHTML(){
  const kind=(state.dateFilter&&state.dateFilter.kind)||'',isHalloween=Boolean(state.dateFilter&&state.dateFilter.kind==='date'&&/\-10-31$/.test(state.dateFilter.date||''));
@@ -125,7 +125,7 @@ function railFiltersHTML(){
  else{
   const visit=[['Drive-by','Drive-by'],['Walk-by','Walk-up'],['Walk-through','Walk-through'],['Drive or walk by (both)','Drive or walk by (both)']].map(([v,l])=>railChip('show',v,l,state.filter===v)).join('');
   const scares=CHROME_SHOW_OPTIONS.filter(o=>['Family Friendly','Spooky','Scary'].includes(o.value)).map(o=>railChip('show',o.value,o.label,state.filter===o.value)).join('');
-  body=railSection('When',when)+railSection('How to visit',visit)+railSection('Scare level',scares)+railSection('Community',railChip('community','community','Community spotted',state.community!==false))+railSection('Features',featureOptions().map(o=>railChip('feature',o.value,o.label,state.features.includes(o.value))).join(''));
+  body=railSection('When',when)+railSection('How to visit',visit)+railSection('Scare level',scares)+railSection('Community',railChip('community','community','Community spotted',state.community===true))+railSection('Features',featureOptions().map(o=>railChip('feature',o.value,o.label,state.features.includes(o.value))).join(''));
  }
  return body+railClearHTML();
 }
@@ -163,7 +163,7 @@ filtersEl.addEventListener('toggle',e=>{
 },true);
 
 filtersEl.addEventListener('click',e=>{
- if(e.target.closest('[data-rail-clear]')){state.community=true;state.filter='All';state.features=[];state.categoryFeature='';state.dateFilter={kind:null,date:null};if(typeof saveDateFilter==='function')try{state.dateFilter=saveDateFilter(state.dateFilter,localStorage)}catch{}renderFilters();renderCards();return}
+ if(e.target.closest('[data-rail-clear]')){state.community=false;state.filter='All';state.features=[];state.categoryFeature='';state.dateFilter={kind:null,date:null};if(typeof saveDateFilter==='function')try{state.dateFilter=saveDateFilter(state.dateFilter,localStorage)}catch{}renderFilters();renderCards();return}
  const rail=e.target.closest('[data-rail-filter]');
  if(rail){
   const action=rail.dataset.railFilter,value=rail.dataset.value;

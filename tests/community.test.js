@@ -56,22 +56,24 @@ test('community pin: own art, on-route art, number is the listing number',()=>{
   assert.match(css,/min-width:768px\)\{html body \.community-icon \.pin\.pin--community\{width:34px;height:40px/,'34x40 on desktop');
   assert.ok(app.includes('iconSize:[44,44],iconAnchor:[22,44]'),'44x44 tap area, bottom-centre anchor');
 });
-test('filter: Community spotted is a rail toggle (phone Filters sheet too), default on, separate from scare level; hidden listings never show',()=>{
+test('filter: Community spotted shows only those listings; the default shows every listing including nominated ones',()=>{
   const chrome=read('chrome-filters.js');
-  assert.ok(app.includes('community:true'),'on by default');
+  assert.ok(app.includes('community:false'),'off by default, so nominated listings stay in the full list');
   assert.equal(html.includes('communityChip'),false,'no floating chip over the map');
-  assert.ok(chrome.includes("railSection('Community',railChip('community','community','Community spotted',state.community!==false))"),'chip lives in the filter rail');
+  assert.ok(chrome.includes("railSection('Community',railChip('community','community','Community spotted',state.community===true))"),'chip lives in the filter rail');
   assert.ok(chrome.includes("if(action==='community')setCommunity(state.community===false);"),'toggle handler');
   assert.ok(chrome.includes("railSection('Scare level',scares)+railSection('Community'"),'its own group, after scare level');
-  assert.ok(/function railActiveCount\(\)\{return \(state\.community===false\?1:0\)/.test(chrome),'off counts as an active filter');
-  assert.ok(chrome.includes("if(e.target.closest('[data-rail-clear]')){state.community=true;"),'Clear all filters restores the default');
-  assert.ok(app.includes("if(x.hidden||removedHere(x))return false;if(isCommunity(x)&&!state.community)return false;"),'matchFilter order');
+  assert.ok(/function railActiveCount\(\)\{return \(state\.community\?1:0\)/.test(chrome),'selecting it counts as an active filter');
+  assert.ok(chrome.includes("if(e.target.closest('[data-rail-clear]')){state.community=false;"),'Clear all filters restores the default');
+  assert.ok(app.includes("if(x.hidden||removedHere(x))return false;if(state.category==='displays'&&state.community&&!isCommunity(x))return false;"),'only-community filter');
   const m=/function removedHere\(x\)\{[^\n]*\}/.exec(app)[0];
   const ctx={localStorage:{getItem:()=>JSON.stringify([7])}};vm.createContext(ctx);vm.runInContext(m,ctx);
   assert.equal(ctx.removedHere({num:7}),true);assert.equal(ctx.removedHere({num:8}),false);
-  const sc=/function setCommunity\(on\)\{[^\n]*\}/.exec(app)[0],c2={state:{community:true,selected:7},listings:[{num:7,source:'community'}],isCommunity:x=>x.source==='community',hid:false,hidePeek:()=>{c2.hid=true}};
-  vm.createContext(c2);vm.runInContext(sc+';setCommunity(false)',c2);
-  assert.equal(c2.state.community,false);assert.equal(c2.state.selected,null);assert.equal(c2.hid,true);
+  const sc=/function setCommunity\(on\)\{[^\n]*\}/.exec(app)[0],c2={state:{community:false,selected:1},listings:[{num:1},{num:7,source:'community'}],isCommunity:x=>!!x&&x.source==='community',hid:false,hidePeek:()=>{c2.hid=true}};
+  vm.createContext(c2);vm.runInContext(sc+';setCommunity(true)',c2);
+  assert.equal(c2.state.community,true);assert.equal(c2.state.selected,null);assert.equal(c2.hid,true,'an owner listing drops out of the only-community view');
+  c2.hid=false;c2.state.selected=7;vm.runInContext('setCommunity(false)',c2);
+  assert.equal(c2.state.community,false);assert.equal(c2.state.selected,7);assert.equal(c2.hid,false,'clearing the filter keeps a community listing, which is still shown');
 });
 test('entry points: map button, submit.html last choice after Shops, map key row',()=>{
   assert.ok(submit.indexOf('data-type-link="shop"')<submit.indexOf('data-type-link="spotted"'),'A house I spotted comes after Shops');
