@@ -8,6 +8,7 @@ const SEARCH_KEY='hfsearch:v1';
 const VIEW_KEY='hfview:v1';
 const ZIP_TABLE_URL='data/zip-centroids.json';
 const RADII=[5,10,25,50];
+const ALL_RADIUS='all';
 const ERR_UNKNOWN_ZIP="We couldn't find that ZIP. Check the number, try a nearby ZIP, or use your location.";
 const ERR_OUT_OF_COVERAGE='Hauntfinder covers New Jersey, New York and Pennsylvania right now. Try a ZIP in those states.';
 const ERR_GEOLOCATION='Location access is off. Enter a ZIP instead, or allow location in your browser settings.';
@@ -22,7 +23,7 @@ function normalizeSearch(s){
  const clean={...DEFAULT_SEARCH};
  if(!s||typeof s!=='object')return clean;
  if(['zip','device','area'].includes(s.mode))clean.mode=s.mode;
- if(RADII.includes(s.radius))clean.radius=s.radius;
+ if(s.radius===ALL_RADIUS||RADII.includes(s.radius))clean.radius=s.radius;
  const zip=parseZip(s.zip);if(zip)clean.zip=zip;
  if(Number.isFinite(s.lat))clean.lat=s.lat;
  if(Number.isFinite(s.lng))clean.lng=s.lng;
@@ -31,13 +32,14 @@ function normalizeSearch(s){
 // Storage is injectable for tests; every read/write is failure-safe.
 function loadSearch(storage){try{return normalizeSearch(JSON.parse(storage.getItem(SEARCH_KEY)||'null'))}catch{return {...DEFAULT_SEARCH}}}
 function saveSearch(s,storage){const clean=normalizeSearch(s);if(clean.mode==='device'){clean.lat=round2(clean.lat);clean.lng=round2(clean.lng)}try{storage.setItem(SEARCH_KEY,JSON.stringify(clean))}catch{}return clean}
-function describeSearch(s){if(s.mode==='device')return `Near your location · within ${s.radius} mi`;if(s.mode==='area')return `Map area · within ${s.radius} mi`;return `Within ${s.radius} mi of ${s.zip}`}
+function describeSearch(s){if(s&&s.radius===ALL_RADIUS)return 'All NJ';if(s.mode==='device')return `Near your location · within ${s.radius} mi`;if(s.mode==='area')return `Map area · within ${s.radius} mi`;return `Within ${s.radius} mi of ${s.zip}`}
 // View preference ('map'|'list') lives in its own private key; storage injectable for tests.
 function loadView(storage){try{return JSON.parse(storage.getItem(VIEW_KEY)||'null')==='map'?'map':'list'}catch{return 'list'}}
 function saveView(v,storage){const clean=v==='map'?'map':'list';try{storage.setItem(VIEW_KEY,JSON.stringify(clean))}catch{}return clean}
 // ---- Location filtering (Release 1, Phase 4). Pure and Node-testable. ----
 function formatDistance(d){return d<10?d.toFixed(1):String(Math.round(d))}
-function inSearchArea(x,search){if(!search||!Number.isFinite(search.lat)||!Number.isFinite(search.lng)||!Number.isFinite(x.lat)||!Number.isFinite(x.lng))return false;return haversineMi(search,x)<=search.radius}
+function searchIsUnlimited(search){return Boolean(search)&&search.radius===ALL_RADIUS}
+function inSearchArea(x,search){if(!search)return false;if(searchIsUnlimited(search))return true;if(!Number.isFinite(search.lat)||!Number.isFinite(search.lng)||!Number.isFinite(x.lat)||!Number.isFinite(x.lng))return false;return haversineMi(search,x)<=search.radius}
 function isDefaultArea(search){return Boolean(search)&&search.mode==='zip'&&search.zip==='07828'&&search.radius===25}
 // Nearest-first ordering; boundary ties fall to the tiebreaker, so listings
 // keep number order and events keep start-time order at equal distances.
@@ -51,7 +53,7 @@ function orderByDistance(items,search,tieBreak){
 // Items without coordinates never appear in narrowed distance results.
 function visibleSet({items,search,predicate,coordOf,keepUnlocated=false}){
  const located=typeof coordOf==='function'?coordOf:x=>({lat:x.lat,lng:x.lng});
- const pass=x=>{if(predicate&&!predicate(x))return false;if(!search)return true;const c=located(x);if(!Number.isFinite(c.lat)||!Number.isFinite(c.lng))return keepUnlocated;return haversineMi(search,c)<=search.radius};
+ const pass=x=>{if(predicate&&!predicate(x))return false;if(!search||searchIsUnlimited(search))return true;const c=located(x);if(!Number.isFinite(c.lat)||!Number.isFinite(c.lng))return keepUnlocated;return haversineMi(search,c)<=search.radius};
  return orderByDistance(items.filter(pass),search,(a,b)=>(a.num??1e9)-(b.num??1e9));
 }
 // Per-tab counts for the current search area (ignores active filter chips).
@@ -78,7 +80,7 @@ if(typeof document!=='undefined'&&typeof window!=='undefined'&&document.getEleme
  const setStatus=msg=>{feedback=msg;els.status.textContent=msg;if(els.fullStatus)els.fullStatus.textContent=describeSearch(state)};
  function syncUI(){
   if(state.mode==='zip')els.input.value=state.zip;
-  els.radii.forEach(b=>b.setAttribute('aria-checked',String(+b.dataset.radius===state.radius)));
+  els.radii.forEach(b=>b.setAttribute('aria-checked',String(b.dataset.radius===ALL_RADIUS?state.radius===ALL_RADIUS:+b.dataset.radius===state.radius)));
   if(els.fullStatus)els.fullStatus.textContent=describeSearch(state);
   els.status.textContent=feedback;
   if(els.back){if(state.mode==='area'&&lastNonArea){els.back.hidden=false;els.back.textContent=lastNonArea.mode==='device'?'Back to your location':`Back to ${lastNonArea.zip}`}else els.back.hidden=true}
@@ -105,13 +107,13 @@ if(typeof document!=='undefined'&&typeof window!=='undefined'&&document.getEleme
    {enableHighAccuracy:false,timeout:10000}
   );
  };
- els.radii.forEach(b=>{b.onclick=()=>{state=saveSearch({...state,radius:+b.dataset.radius},localStorage);feedback='';syncUI();announce()}});
+ els.radii.forEach(b=>{b.onclick=()=>{state=saveSearch({...state,radius:b.dataset.radius===ALL_RADIUS?ALL_RADIUS:+b.dataset.radius},localStorage);feedback='';syncUI();announce()}});
  // Empty-state "Expand radius" and deep-link "Show listings near here".
- document.addEventListener('hf:expand-radius',e=>{const radius=e.detail&&e.detail.radius;if(!RADII.includes(radius))return;state=saveSearch({...state,radius},localStorage);feedback='';syncUI();announce()});
+ document.addEventListener('hf:expand-radius',e=>{const radius=e.detail&&e.detail.radius;if(radius!==ALL_RADIUS&&!RADII.includes(radius))return;state=saveSearch({...state,radius},localStorage);feedback='';syncUI();announce()});
  document.addEventListener('hf:search-near',e=>{const d=e.detail||{};if(!Number.isFinite(d.lat)||!Number.isFinite(d.lng))return;if(state.mode!=='area')lastNonArea={...state};state=saveSearch({...state,mode:'area',lat:round2(d.lat),lng:round2(d.lng)},localStorage);feedback='';syncUI();announce()});
  // "Search this area" gets a way back: restore the previous ZIP/device search.
  if(els.back)els.back.onclick=()=>{if(!lastNonArea)return;state=saveSearch({...lastNonArea},localStorage);feedback='';syncUI();announce()};
  syncUI();
  announce();
 }
-if(typeof module!=='undefined')module.exports={haversineMi,inRadius,sortByDistance,parseZip,isLaunchStateZip,nextRadius,normalizeSearch,loadSearch,saveSearch,describeSearch,DEFAULT_SEARCH,SEARCH_KEY,VIEW_KEY,loadView,saveView,ERR_UNKNOWN_ZIP,ERR_OUT_OF_COVERAGE,ERR_GEOLOCATION,formatDistance,inSearchArea,isDefaultArea,orderByDistance,visibleSet,areaCounts,stopsWithAreaFlags};
+if(typeof module!=='undefined')module.exports={haversineMi,inRadius,sortByDistance,parseZip,isLaunchStateZip,nextRadius,normalizeSearch,loadSearch,saveSearch,describeSearch,DEFAULT_SEARCH,SEARCH_KEY,VIEW_KEY,loadView,saveView,ERR_UNKNOWN_ZIP,ERR_OUT_OF_COVERAGE,ERR_GEOLOCATION,formatDistance,inSearchArea,isDefaultArea,orderByDistance,visibleSet,areaCounts,stopsWithAreaFlags,ALL_RADIUS,searchIsUnlimited};

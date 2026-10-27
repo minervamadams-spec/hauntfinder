@@ -180,6 +180,31 @@ test('stopsWithAreaFlags flags route stops outside the current search area witho
  assert.ok(stops.every(s=>!('outOfArea' in s)));
  assert.deepEqual(loc.stopsWithAreaFlags(stops,null).map(s=>s.outOfArea),[false,false]);
 });
+test('All NJ is an unlimited search after the mile radii and is not the default',()=>{
+ assert.equal(loc.ALL_RADIUS,'all');
+ assert.equal(loc.DEFAULT_SEARCH.radius,25);
+ assert.equal(loc.searchIsUnlimited({radius:'all'}),true);
+ assert.equal(loc.searchIsUnlimited({radius:50}),false);
+ assert.equal(loc.nextRadius(50),null,'the mile ladder still stops at 50');
+ const storage=mockStorage();
+ const saved=loc.saveSearch({mode:'zip',zip:'07828',lat:40.884959,lng:-74.755657,radius:'all'},storage);
+ assert.equal(saved.radius,'all');
+ assert.equal(loc.loadSearch(storage).radius,'all');
+ assert.equal(loc.describeSearch(saved),'All NJ');
+ assert.equal(loc.describeSearch(loc.DEFAULT_SEARCH),'Within 25 mi of 07828');
+ assert.equal(loc.isDefaultArea(saved),false);
+ const far={num:9,lat:39.0,lng:-75.2};
+ assert.equal(loc.inSearchArea(far,{...GEO_SEARCH,radius:'all'}),true);
+ assert.equal(loc.inSearchArea({num:8}, {...GEO_SEARCH,radius:'all'}),true);
+ assert.deepEqual(loc.visibleSet({items:[...GEO_ITEMS,far],search:{...GEO_SEARCH,radius:'all'},predicate:()=>true}).map(x=>x.num),[1,2,3,9,4]);
+ assert.equal(loc.areaCounts({listings:GEO_ITEMS,events:[],search:{...GEO_SEARCH,radius:'all'}}).treats,1);
+ assert.deepEqual(loc.stopsWithAreaFlags([{num:1,lat:40.985,lng:-74.7557}],{...GEO_SEARCH,radius:'all'}).map(s=>s.outOfArea),[false]);
+ const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
+ const labels=[...html.matchAll(/data-radius="([^"]+)"[^>]*>([^<]+)/g)].map(m=>m[1]+' '+m[2].trim());
+ assert.deepEqual(labels,['5 5 mi','10 10 mi','25 25 mi','50 50 mi','all All NJ','5 5 mi','10 10 mi','25 25 mi','50 50 mi','all All NJ']);
+ const app=fs.readFileSync(path.join(__dirname,'../app.js'),'utf8');
+ assert.ok(app.includes("state.search.radius==='all'?`${nonPlaceholder.length} ${noun}${nonPlaceholder.length===1?'':'s'} in NJ`"),'list header names the unlimited set as in NJ');
+});
 test('view preference persists to its own key, defaults to list, and survives corrupt values',()=>{
  const storage=mockStorage();
  assert.equal(loc.VIEW_KEY,'hfview:v1');

@@ -246,7 +246,7 @@ document.addEventListener('click',e=>{
  const radius=e.target.closest&&e.target.closest('[data-radius]');
  if(radius&&withinDD)withinDD.open=false;
 });
-function paintWithin(){const label=document.querySelector('.within-dd__value');if(label&&state.search)label.textContent=state.search.radius+' mi'}
+function paintWithin(){const label=document.querySelector('.within-dd__value');if(label&&state.search)label.textContent=state.search.radius==='all'?'All NJ':state.search.radius+' mi'}
 document.addEventListener('hf:search-changed',paintWithin);
 paintWithin();
 

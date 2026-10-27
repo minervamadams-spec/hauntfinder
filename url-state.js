@@ -91,13 +91,14 @@ renderCards=function(){const out=prevRenderCards.apply(this,arguments);hfWriteUR
  renderCards();
  // zip + mi: hand the zip to the existing location.js pipeline (it validates
  // launch-state coverage), then widen the radius if the URL asks.
- const zip=params.get('zip'),mi=Number(params.get('mi'));
+ const zip=params.get('zip'),miRaw=params.get('mi'),mi=Number(miRaw);
  if(zip&&/^\d{5}$/.test(zip)){
   const input=$('zipInput'),btn=$('zipSearchBtn');
   if(input&&btn){
    input.value=zip;
    btn.click();
-   if(HF_URL_RADII.includes(mi))document.dispatchEvent(new CustomEvent('hf:expand-radius',{detail:{radius:mi}}));
+   if(miRaw==='all')document.dispatchEvent(new CustomEvent('hf:expand-radius',{detail:{radius:'all'}}));
+   else if(HF_URL_RADII.includes(mi))document.dispatchEvent(new CustomEvent('hf:expand-radius',{detail:{radius:mi}}));
   }
  }
 })();

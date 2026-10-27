@@ -337,7 +337,7 @@ button.footer-link{cursor:pointer}
 .map-full-head__close{min-height:44px;padding:0 14px;background:var(--cream);color:var(--night);border:0;border-radius:4px;font:800 15px/1 var(--f-ui);letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
 .map-full-head__status{margin:0;font:700 14px/1.3 var(--f-ui);color:var(--mist)}
 .map-full-head__radii{display:flex;gap:6px;margin-left:auto}
-.map-full-head__radii button{min-height:40px;padding:0 12px;background:var(--filter);color:var(--cream);border:2px solid var(--line-strong);border-radius:4px;font:700 14px/1 var(--f-ui);cursor:pointer}
+.map-full-head__radii button{min-height:40px;padding:0 12px;background:var(--filter);color:var(--cream);border:2px solid var(--line-strong);border-radius:4px;font:700 14px/1 var(--f-ui);cursor:pointer;white-space:nowrap}
 .map-full-head__radii button[aria-checked="true"]{background:var(--pumpkin);border-color:var(--pumpkin);color:var(--night)}
 html[data-fullmap]{overflow:hidden}
 html:not([data-fullmap]) .map-full-head{display:none!important}
