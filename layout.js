@@ -141,7 +141,7 @@
  function setAreaBaseline(){const c=map.getCenter();areaBaseline={lat:c.lat,lng:c.lng,zoom:map.getZoom()};areaBaselinePending=false}
  function syncSearchAreaBtn(){if(!searchAreaBtn||!areaBaseline)return;const c=map.getCenter();const moved=haversineMi({lat:areaBaseline.lat,lng:areaBaseline.lng},{lat:c.lat,lng:c.lng});const changed=moved>SEARCH_AREA_MOVE_MI||map.getZoom()!==areaBaseline.zoom;searchAreaBtn.classList.toggle('is-visible',changed&&!areaBaselinePending)}
  if(searchAreaBtn){
-  searchAreaBtn.onclick=()=>{const c=map.getCenter();document.dispatchEvent(new CustomEvent('hf:search-near',{detail:{lat:c.lat,lng:c.lng}}))};
+  searchAreaBtn.onclick=()=>{const c=map.getCenter(),b=map.getBounds();document.dispatchEvent(new CustomEvent('hf:search-near',{detail:{lat:c.lat,lng:c.lng,bounds:{north:b.getNorth(),south:b.getSouth(),east:b.getEast(),west:b.getWest()}}}))};
   // Round 4 item 7: only a visitor's own pan/zoom reveals the button. Moves the app makes itself (tab switches, fitting pins) re-baseline silently.
   let areaUser=false,areaUserT=0;const userDown=()=>{areaUser=true;clearTimeout(areaUserT)},userUp=()=>{if(!areaUser)return;clearTimeout(areaUserT);areaUserT=setTimeout(()=>{areaUser=false},1500)},userNudge=()=>{areaUser=true;userUp()};
   const mapEl=map.getContainer();mapEl.addEventListener('pointerdown',userDown,{passive:true});document.addEventListener('pointerup',userUp,{passive:true});['wheel','touchstart','keydown','dblclick'].forEach(ev=>mapEl.addEventListener(ev,userNudge,{passive:true}));

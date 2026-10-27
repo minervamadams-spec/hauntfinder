@@ -205,6 +205,33 @@ test('All NJ is an unlimited search after the mile radii and is not the default'
  const app=fs.readFileSync(path.join(__dirname,'../app.js'),'utf8');
  assert.ok(app.includes("state.search.radius==='all'?`${nonPlaceholder.length} ${noun}${nonPlaceholder.length===1?'':'s'} in NJ`"),'list header names the unlimited set as in NJ');
 });
+test('Search this area filters to the visible map bounds and does not refit',()=>{
+ const bounds={north:41.0,south:40.8,east:-74.4,west:-74.7};
+ const view={mode:'area',radius:'all',lat:40.9,lng:-74.55,bounds};
+ const inside={num:1,lat:40.9,lng:-74.55};
+ const outside={num:2,lat:39.6,lng:-74.6};
+ const edge={num:3,lat:41.0,lng:-74.4};
+ assert.equal(loc.inMapBounds(inside,bounds),true);
+ assert.equal(loc.inMapBounds(edge,bounds),true);
+ assert.equal(loc.inMapBounds(outside,bounds),false);
+ assert.equal(loc.inSearchArea(outside,{...view,radius:5}),false,'bounds win over a mile radius');
+ assert.equal(loc.inSearchArea(inside,view),true,'All NJ still respects the visible bounds');
+ assert.equal(loc.inSearchArea({num:4},view),false,'a pin with no coordinates is outside the map');
+ assert.deepEqual(loc.visibleSet({items:[outside,inside,{num:5}],search:view,predicate:()=>true}).map(x=>x.num),[1]);
+ assert.deepEqual(loc.visibleSet({items:[inside,outside],search:{...GEO_SEARCH,radius:'all'},predicate:()=>true}).map(x=>x.num),[1,2],'All NJ without bounds stays statewide');
+ const saved=loc.saveSearch(view,mockStorage());
+ assert.deepEqual(saved.bounds,bounds);
+ assert.equal(loc.loadSearch(mockStorage({'hfsearch:v1':JSON.stringify(saved)})).bounds.north,41);
+ assert.equal(loc.saveSearch({...view,mode:'zip',zip:'07828'},mockStorage()).bounds,undefined,'leaving the map area drops the bounds');
+ assert.equal(loc.describeSearch(view),'This map area');
+ assert.equal(loc.describeSearch({...view,bounds:undefined}),'All NJ');
+ assert.deepEqual(loc.stopsWithAreaFlags([inside,outside],view).map(s=>s.outOfArea),[false,true]);
+ const app=fs.readFileSync(path.join(__dirname,'../app.js'),'utf8');
+ const layout=fs.readFileSync(path.join(__dirname,'../layout.js'),'utf8');
+ assert.ok(app.includes("e.detail.radius==='all'&&!(e.detail.mode==='area'&&e.detail.bounds)"),'All NJ refits, a map-bounds search does not');
+ assert.ok(app.includes("in this area"),'bounds search header names the visible area');
+ assert.ok(layout.includes('map.getBounds()')&&layout.includes('north:b.getNorth()')&&layout.includes("new CustomEvent('hf:search-near'"),'Search this area sends the current map bounds');
+});
 test('view preference persists to its own key, defaults to list, and survives corrupt values',()=>{
  const storage=mockStorage();
  assert.equal(loc.VIEW_KEY,'hfview:v1');
