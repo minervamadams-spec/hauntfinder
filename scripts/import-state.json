@@ -834,6 +834,16 @@
       "decision": "published_census_exact_address_verified_minerva_approved_community_nominated_2026-10-27",
       "publicAddress": "948 Route 202-206, Bridgewater, NJ 08807",
       "scheduleEvidence": "Hours not confirmed. Census matched 948 US HWY 202, BRIDGEWATER, NJ, 08807 (Route 202-206 concurrency). View from the street. Participation nominated."
+    },
+    {
+      "row": 20,
+      "timestampSerial": 46322.659685844905,
+      "submittedAt": "2026-10-27T15:49:56-04:00",
+      "listingId": 118,
+      "entityId": "108-columbus-avenue-garfield-2026",
+      "decision": "published_census_exact_address_verified_minerva_approved_owner_submitted_2026-10-27",
+      "publicAddress": "108 Columbus Ave, Garfield, NJ 07026",
+      "scheduleEvidence": "Now through Nov 8, 2026, an owner-approved exception to the Nov 1 cutoff. 6:30\u201310:00 PM nightly. Family Friendly. Drive or walk by (both). Photo opportunities, Lights. Owner-submitted display. Participation confirmed."
     }
   ],
   "treatStops": {

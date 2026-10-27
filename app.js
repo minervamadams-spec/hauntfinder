@@ -3514,6 +3514,46 @@ const listings=[
    "features": [],
    "notes": "Hours not confirmed. Please view from the street.",
    "kind": "Decorated home/yard display"
+ },
+ {
+   "updatedAt": "2026-10-27",
+   "num": 118,
+   "entityId": "108-columbus-avenue-garfield-2026",
+   "name": "Creepy Corner Cove",
+   "town": "Garfield",
+   "address": "108 Columbus Ave, Garfield, NJ 07026",
+   "lat": 40.882526348709,
+   "lng": -74.115224685414,
+   "geoVerified": "census-exact 2026-10-27: 108 COLUMBUS AVE, GARFIELD, NJ, 07026",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "endDate": "2026-11-08",
+     "weekly": [
+       {"dow": 0, "open": "18:30", "close": "22:00"},
+       {"dow": 1, "open": "18:30", "close": "22:00"},
+       {"dow": 2, "open": "18:30", "close": "22:00"},
+       {"dow": 3, "open": "18:30", "close": "22:00"},
+       {"dow": 4, "open": "18:30", "close": "22:00"},
+       {"dow": 5, "open": "18:30", "close": "22:00"},
+       {"dow": 6, "open": "18:30", "close": "22:00"}
+     ]
+   },
+   "dates": "Now through Nov 8",
+   "times": "6:30 PM–10:00 PM nightly",
+   "levels": [
+     "Family Friendly"
+   ],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [
+     "Photo opportunities",
+     "Lights"
+   ],
+   "notes": "Argh! Come see the Skeleton Pirates battle the Kraken!",
+   "kind": "Decorated home/yard display"
  }
 ];
 listings.sort((a,b)=>a.num-b.num);
