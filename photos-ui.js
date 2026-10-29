@@ -26,18 +26,26 @@
     if(approved.length)photoIndex.set(num,approved[0].url);
     if(typeof window.hfPaintCardFlip==='function')window.hfPaintCardFlip(num);
   }
+  // No per-listing requests: photo metadata comes from the one batched
+  // /api/feedback?summary=1 read started in community.js. If that read failed the
+  // result is null and cards simply stay without photos.
   window.hfFetchPhotos=function(num){
     if(photoRequests.has(num))return photoRequests.get(num);
-    const request=fetch('/api/photos?num='+num)
-      .then(r=>r.ok?r.json():null)
-      .then(data=>{rememberPhotos(num,data);return data})
+    const request=(window.hfSummary||Promise.resolve(null))
+      .then(summary=>{
+        const data=summary?{photos:(summary.photos&&summary.photos[num])||[]}:null;
+        rememberPhotos(num,data);return data;
+      })
       .catch(()=>null);
     photoRequests.set(num,request);
     return request;
   };
-  // Deferred background indexing, mirroring the per-listing feedback fetch in
-  // community.js, so pills appear shortly after load without blocking cards.
-  setTimeout(()=>{listings.forEach(x=>{if(!x.placeholder)window.hfFetchPhotos(x.num)})},800);
+  // Index only listings that have approved photos so pills appear shortly
+  // after load without blocking cards.
+  (window.hfSummary||Promise.resolve(null)).then(summary=>{
+    if(!summary||!summary.photos)return;
+    listings.forEach(x=>{if(!x.placeholder&&summary.photos[x.num])window.hfFetchPhotos(x.num)});
+  });
   window.loadPeekPhotos=function(num,listing){
     if(!listing||listing.placeholder)return;
     if(typeof inCurrentSeason==='function'&&!inCurrentSeason(listing))return;
