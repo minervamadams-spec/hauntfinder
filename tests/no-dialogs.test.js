@@ -26,7 +26,7 @@ test('card Rate, Report and Share are same-tab links to the listing page section
 test('dialog controllers removed; rating summaries, share-this-site and ?house= deep links kept',()=>{
   for(const s of ['feedbackDialog','showModal','openFeedback','listingReportForm','data-close-dialog'])assert.equal(community.includes(s),false,'community.js drops '+s);
   assert.match(community,/function paintRatingSummaries\(\)/,'card ratings still painted');
-  assert.match(community,/fetch\('\/api\/feedback\?house='\+house\.num\)/,'read-only rating fetch kept');
+  assert.match(community,/fetch\('\/api\/feedback\?summary=1'\)/,'read-only batched rating fetch kept');
   assert.match(community,/shareSiteBtn\.onclick=/,'share this site kept');
   for(const s of ['houseShareDialog','openHouseShare','showModal','saveHouseImage'])assert.equal(sharing.includes(s),false,'sharing.js drops '+s);
   assert.match(sharing,/selectListing\(linkedHouse\)/,'?house= deep link kept');

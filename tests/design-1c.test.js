@@ -70,7 +70,7 @@ test('ratings render in the spec format with orange stars',()=>{
   assert.ok(community.includes('${summary.average} · ${summary.count} ratings'),'"4.8 · 12 ratings" format');
   assert.ok(community.includes('No ratings yet · <span class="card-rating__rate">Rate</span>'),'empty-state format');
   assert.ok(css.includes('.card-rating__stars{color:var(--orange)'),'orange stars');
-  assert.ok(community.includes("fetch('/api/feedback?house='+house.num)"),'public ratings fetch unchanged');
+  assert.ok(community.includes("fetch('/api/feedback?summary=1')")&&!community.includes("fetch('/api/feedback?house='"),'one batched ratings read, no per-listing fetch');
 });
 
 test('OPEN TONIGHT and scare level follow the spec (lime label; scare desktop-only)',()=>{
@@ -95,7 +95,8 @@ test('photo flip mechanics: pill, Y rotation, perspective, backface, reduced-mot
 });
 
 test('photos pipeline: API contract, session cache, peek strip preserved',()=>{
-  assert.ok(photos.includes("fetch('/api/photos?num='+num)"),'photos API path unchanged');
+  assert.equal(photos.includes("fetch('/api/photos"),false,'no per-listing photo requests; metadata comes from the batched summary');
+  assert.ok(photos.includes('window.hfSummary'),'photos reuse the batched summary promise');
   assert.ok(photos.includes('window.hfPhotoHas')&&photos.includes('window.hfPhotoURL'),'session index exported');
   assert.ok(photos.includes('window.hfFetchPhotos'),'cached per-listing fetch');
   assert.ok(photos.includes("img.loading='lazy'"),'lazy images');
