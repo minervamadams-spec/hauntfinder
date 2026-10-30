@@ -70,7 +70,7 @@ test('Macaroni KID West Morris credit is a new-tab link',()=>{
 
 test('new Garden State Circle rows are census-exact and the two non-matches are absent',()=>{
   const {listings,events}=appData();
-  assert.equal(listings.length,119);
+  assert.equal(listings.length,121);
   assert.equal(events.length,33);
   const skeletons=listings.find(x=>x.num===117);
   assert.equal(skeletons.geoVerified,'census-exact 2026-10-27: 948 US HWY 202, BRIDGEWATER, NJ, 08807');
@@ -79,4 +79,68 @@ test('new Garden State Circle rows are census-exact and the two non-matches are 
   assert.equal(blob.includes('Woodbridge Center'),false);
   assert.equal(blob.includes('FrightMaps'),false);
   assert.ok(events.some(e=>e.id==='howl-o-ween-turtle-back-zoo-2026-10-31'&&e.startAt.endsWith('-04:00')));
+});
+
+test('owner listings 120 and 121: Collins Street hours and photos, Sadler Rd street midpoint',()=>{
+  const {listings}=appData();
+  const collins=listings.find(x=>x.num===120);
+  const sadler=listings.find(x=>x.num===121);
+  assert.equal(collins.name,'The Collins Street Massacre: Museum of Horror');
+  assert.equal(collins.address,'22 Collins St, Cranford, NJ 07016');
+  assert.equal(collins.geoVerified,'census-exact 2026-10-30: 22 COLLINS ST, CRANFORD, NJ, 07016');
+  assert.equal(collins.lat,40.644868692654);
+  assert.equal(collins.lng,-74.297560052526);
+  assert.equal(collins.participation,'confirmed');
+  assert.equal(collins.source,undefined);
+  assert.equal(JSON.stringify(collins.levels),JSON.stringify(['Spooky','Scary']));
+  assert.equal(collins.levels.includes('Family Friendly'),false);
+  assert.equal(JSON.stringify(collins.type),JSON.stringify(['Drive or walk by (both)']));
+  assert.equal(collins.kind,'Decorated home/yard display');
+  assert.equal(collins.schedule.startDate,'2026-10-30');
+  assert.equal(collins.schedule.endDate,'2026-10-31');
+  assert.equal(sch.hoursOn(collins.schedule,'2026-10-30').open,'18:30');
+  assert.equal(sch.hoursOn(collins.schedule,'2026-10-30').close,'21:30');
+  assert.equal(sch.hoursOn(collins.schedule,'2026-10-31').open,'18:30');
+  assert.equal(sch.isOpenAt(collins.schedule,'2026-10-30','18:30'),true);
+  assert.equal(sch.isOpenAt(collins.schedule,'2026-10-30','21:30'),true);
+  assert.equal(sch.hoursOn(collins.schedule,'2026-10-29'),null);
+  assert.equal(sch.hoursOn(collins.schedule,'2026-11-01'),null);
+  assert.equal(Array.isArray(collins.dates),false,'listing dates stay display text; dates[] is an events field');
+  assert.equal(collins.url,undefined);
+  assert.equal(collins.link,undefined);
+  assert.equal(JSON.stringify(collins.photos),JSON.stringify([
+    'assets/listings/cranford/collins-street-1.jpg',
+    'assets/listings/cranford/collins-street-2.jpg',
+    'assets/listings/cranford/collins-street-3.jpg'
+  ]));
+  for(const file of collins.photos){
+    const buf=fs.readFileSync(path.join(ROOT,file));
+    assert.equal(buf[0],0xff);
+    assert.equal(buf[1],0xd8);
+    assert.equal(buf.includes(Buffer.from('Exif')),false,file);
+    assert.equal(buf.includes(Buffer.from('GPS')),false,file);
+  }
+  assert.equal(sadler.name,'Halloween Display on Sadler Rd, Bloomfield');
+  assert.equal(sadler.address,'Sadler Rd, Bloomfield');
+  assert.equal(/\d/.test(sadler.address),false,'no house number');
+  assert.equal(sadler.town,'Bloomfield');
+  assert.equal(sadler.lat,40.8251286859);
+  assert.equal(sadler.lng,-74.1734504971);
+  assert.match(sadler.geoVerified,/^street-midpoint 2026-10-30: SADLER RD, BLOOMFIELD, NJ, 07003$/);
+  assert.equal(sadler.participation,'confirmed');
+  assert.equal(sadler.source,undefined);
+  assert.equal(JSON.stringify(sadler.levels),JSON.stringify(['Family Friendly']));
+  assert.equal(JSON.stringify(sadler.type),JSON.stringify(['Drive or walk by (both)']));
+  assert.equal(sadler.kind,'Decorated home/yard display');
+  assert.equal(sadler.dates,'Through Oct 31');
+  assert.equal(sadler.times,'');
+  assert.equal(sadler.schedule.endDate,'2026-10-31');
+  assert.equal(sch.hoursOn(sadler.schedule,'2026-10-30'),null);
+  assert.equal(sadler.photos,undefined);
+  assert.equal(sadler.notes,"A family's homemade Halloween yard display on Sadler Rd. Stroll by and say hi!");
+  const blob=JSON.stringify([collins,sadler]);
+  assert.equal(/[\w.+-]+@[\w-]+\.[\w.]+/.test(blob),false);
+  assert.equal(/\(?\b\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}\b/.test(blob),false);
+  assert.equal(/Contest House/.test(blob),false);
+  assert.equal(/facebook\.com/i.test(blob),false);
 });

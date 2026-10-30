@@ -3596,6 +3596,75 @@ const listings=[
    "photos": [
      "assets/listings/netcong/display-on-center-st.jpg"
    ]
+  },
+ {
+   "updatedAt": "2026-10-30",
+   "num": 120,
+   "entityId": "22-collins-st-cranford-2026",
+   "name": "The Collins Street Massacre: Museum of Horror",
+   "town": "Cranford",
+   "address": "22 Collins St, Cranford, NJ 07016",
+   "lat": 40.644868692654,
+   "lng": -74.297560052526,
+   "geoVerified": "census-exact 2026-10-30: 22 COLLINS ST, CRANFORD, NJ, 07016",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "startDate": "2026-10-30",
+     "endDate": "2026-10-31",
+     "exceptions": [
+       {"date": "2026-10-30", "open": "18:30", "close": "21:30"},
+       {"date": "2026-10-31", "open": "18:30", "close": "21:30"}
+     ]
+   },
+   "dates": "October 30 and October 31, 2026",
+   "times": "6:30 PM–9:30 PM",
+   "levels": [
+     "Spooky",
+     "Scary"
+   ],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [
+     "Lights"
+   ],
+   "notes": "Annual front-yard Museum of Horror packed with horror-movie characters, from Freddy and Chucky to Pennywise and Michael Myers, lit in eerie green and blue. New additions this year. Out tonight and tomorrow only, 6:30-9:30 PM.",
+   "kind": "Decorated home/yard display",
+   "photos": [
+     "assets/listings/cranford/collins-street-1.jpg",
+     "assets/listings/cranford/collins-street-2.jpg",
+     "assets/listings/cranford/collins-street-3.jpg"
+   ]
+  },
+ {
+   "updatedAt": "2026-10-30",
+   "num": 121,
+   "entityId": "sadler-rd-bloomfield-2026",
+   "name": "Halloween Display on Sadler Rd, Bloomfield",
+   "town": "Bloomfield",
+   "address": "Sadler Rd, Bloomfield",
+   "lat": 40.8251286859,
+   "lng": -74.1734504971,
+   "geoVerified": "street-midpoint 2026-10-30: SADLER RD, BLOOMFIELD, NJ, 07003",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "endDate": "2026-10-31"
+   },
+   "dates": "Through Oct 31",
+   "times": "",
+   "levels": [
+     "Family Friendly"
+   ],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "A family's homemade Halloween yard display on Sadler Rd. Stroll by and say hi!",
+   "kind": "Decorated home/yard display"
   }
 ];
 listings.sort((a,b)=>a.num-b.num);

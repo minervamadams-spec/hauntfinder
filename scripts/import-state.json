@@ -851,6 +851,20 @@
       "decision": "published_census_exact_address_verified_owner_approved_2026-10-30",
       "publicAddress": "38 Center St, Netcong, NJ 07857",
       "scheduleEvidence": "Until after Halloween, no set viewing times. Family Friendly. Drive or walk by (both). Census exact 38 CENTER ST, NETCONG, NJ, 07857. Participation confirmed."
+    },
+    {
+      "listingId": 120,
+      "entityId": "22-collins-st-cranford-2026",
+      "decision": "published_census_exact_address_verified_owner_approved_2026-10-30",
+      "publicAddress": "22 Collins St, Cranford, NJ 07016",
+      "scheduleEvidence": "October 30 and October 31, 2026, 6:30-9:30 PM, stored as schedule exceptions because listings keep dates as display text. Spooky and Scary, not Family Friendly. Drive or walk by (both). Lights. Free sidewalk viewing. Census exact 22 COLLINS ST, CRANFORD, NJ, 07016. Three owner photos, EXIF and GPS absent. No link field on listings. Participation confirmed."
+    },
+    {
+      "listingId": 121,
+      "entityId": "sadler-rd-bloomfield-2026",
+      "decision": "published_street_midpoint_owner_approved_2026-10-30",
+      "publicAddress": "Sadler Rd, Bloomfield",
+      "scheduleEvidence": "Through Oct 31, 2026. No set times. Family Friendly. Drive or walk by (both). Decorated home/yard display. No photos. Pin is the length midpoint of the Bloomfield portion of Sadler Rd (TIGER centerline; no house number). Participation confirmed."
     }
   ],
   "treatStops": {
