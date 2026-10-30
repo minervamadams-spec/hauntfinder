@@ -52,10 +52,10 @@ const listings=[
   "flyerNotes": "Candy at garage while supplies last. Walk around the driveway; watch wires and lights. Park at TY Ward Monument lot across the street; cross carefully."
  },
  {
-  "updatedAt": "2026-10-16",
+  "updatedAt": "2026-10-30",
   "num": 2,
   "entityId": "hauntfinder:2026:listing:2:original",
-  "name": "Alcrest Avenue Halloween Display",
+  "name": "Spider Invasion on Alcrest Avenue",
   "town": "Budd Lake",
   "address": "24 Alcrest Avenue, Budd Lake, NJ",
   "lat": 40.882738,
@@ -65,15 +65,23 @@ const listings=[
   "year": 2026,
   "participation": "confirmed",
   "schedule": {
-  "startDate": "2026-10-30",
-  "endDate": "2026-10-31"
+  "startDate": "2026-10-31",
+  "endDate": "2026-10-31",
+  "exceptions": [
+   {
+    "date": "2026-10-31",
+    "open": "17:00",
+    "close": "21:00"
+   }
+  ]
  },
-  "dates": "Halloween weekend",
-  "times": "All weekend",
+  "dates": "Halloween (Sat, Oct 31)",
+  "times": "5-9 PM",
   "levels": [],
   "type": [],
   "features": [],
-  "notes": "More details coming soon."
+  "notes": "Scary spiders! Lights and things that jump scare. Treats offered on Halloween 5-9 PM.",
+  "alsoTreatStop": true
  },
  {
   "updatedAt": "2026-10-06",
@@ -3557,7 +3565,38 @@ const listings=[
    "photos": [
      "assets/listings/garfield/creepy-corner-cove.jpg"
    ]
- }
+  },
+  {
+   "updatedAt": "2026-10-30",
+   "num": 119,
+   "entityId": "display-on-center-st-netcong-2026",
+   "name": "Display on Center St, Netcong",
+   "town": "Netcong",
+   "address": "38 Center St, Netcong, NJ 07857",
+   "lat": 40.893637,
+   "lng": -74.706947,
+   "geoVerified": "census-exact 2026-10-30: 38 CENTER ST, NETCONG, NJ, 07857",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "startDate": "2026-10-30"
+   },
+   "dates": "Until after Halloween",
+   "times": "",
+   "levels": [
+     "Family Friendly"
+   ],
+   "type": [
+     "Drive or walk by (both)"
+   ],
+   "features": [],
+   "notes": "",
+   "kind": "Decorated home/yard display",
+   "photos": [
+     "assets/listings/netcong/display-on-center-st.jpg"
+   ]
+  }
 ];
 listings.sort((a,b)=>a.num-b.num);
 const events=[
@@ -4500,7 +4539,7 @@ function communityBodyHTML(x,peek){const addr=safeListingText(x.address.replace(
 function communityCardHTML(x){const selected=state.selected===x.num,onRoute=state.route.some(r=>r.num===x.num),open=communityOpen.has(x.num),levels=Array.isArray(x.levels)?x.levels:[],type=Array.isArray(x.type)?x.type:[],features=Array.isArray(x.features)?x.features:[];return `<article class="card card--compact card--community ${selected?'is-selected':''}${onRoute?' card--on-route':''}${open?' is-open':''}" data-card="${x.num}" data-community="1" data-town="${safeListingText(x.town)}" tabindex="0" aria-expanded="${open}" aria-label="Community-spotted display: ${safeListingText(x.name)}"><div class="card__head"><div class="card__pin">${cardIconHTML('display')}</div><div class="card__heading"><h3 class="card__name"><span class="card__nametext" data-card-name="${x.num}">${safeListingText(communityNameText(x))}</span></h3></div></div>${listingStatusHTML(x)}<div class="card__addrline"><a class="card__address" href="${gmapsDirections(x.address)}" target="_blank" rel="noopener" aria-label="Directions to ${safeListingText(x.name)}">${safeListingText(x.address.replace(/,\s*NJ\s*$/i,''))} ↗</a>${distanceLabelHTML(x)}${typeof openTonightBadgeHTML==='function'?openTonightBadgeHTML(x,{eligible:openTonightOK}):''}</div><div class="card__hours-row"><p class="card__hours">${safeListingText(typeof listingHoursText==='function'?listingHoursText(x):'')}</p><button type="button" class="community__toggle" data-community-toggle="${x.num}" aria-expanded="${open}">Details</button></div>${levels.length?`<p class="card__scare-row"><span class="card__scare">${scarePips(levels)}</span></p>`:''}${(type.length||features.length)?`<div class="card__tags">${type.map(t=>hfTagHTML(t,'chip--type')).join('')}${features.map(featureChip).join('')}</div>`:''}<div class="card__actions"><button class="btn card__route-btn" type="button" data-route="${x.num}" aria-pressed="${onRoute}">${onRoute?'✓ On your route':'+ Add to route'}</button><button type="button" class="card__mapbtn" data-card-map="${x.num}"><span aria-hidden="true">◉</span> Map</button><button type="button" class="card__morebtn" data-card-more="${x.num}" aria-expanded="false" aria-label="More for ${safeListingText(x.name)}">⋯</button><div class="card__meta"><div class="card__meta-left"><a class="card-rating" href="${listingPageHref(x)}#feedback" data-rating-summary="${x.num}" aria-label="View ratings for ${safeListingText(x.name)}"><span class="card-rating__text">No ratings yet · <span class="card-rating__rate">Rate</span></span></a></div><div class="card__meta-right"><a class="card__metalink" href="${listingPageHref(x)}#report-update">Report</a><a class="card__metalink" href="${listingPageHref(x)}#share">Share</a></div></div></div><div class="community__expand"${open?'':' hidden'}>${communityDetailsHTML(x)}</div></article>`}
 function toggleCommunityCard(n){if(communityOpen.has(n))communityOpen.delete(n);else communityOpen.add(n);const card=document.querySelector(`[data-card="${n}"]`);if(!card)return;const open=communityOpen.has(n);card.classList.toggle('is-open',open);card.setAttribute('aria-expanded',String(open));const panel=card.querySelector('.community__expand');if(panel)panel.hidden=!open;const btn=card.querySelector('[data-community-toggle]');if(btn)btn.setAttribute('aria-expanded',String(open))}
 function eventIsUpcoming(x,now){if(x&&x.ongoing===true)return true;if(typeof eventHasUpcoming==='function')return eventHasUpcoming(x,now==null?new Date():now);return new Date(x.endAt).getTime()>(now==null?Date.now():+new Date(now))}
-function matchFilter(x){if(!inCurrentSeason(x))return false;if(x.hidden||removedHere(x))return false;if(state.category==='displays'&&state.community&&!isCommunity(x))return false;if(x.placeholder)return state.category==='displays'&&state.filter==='All'&&(typeof isDefaultArea!=='function'||!state.search||isDefaultArea(state.search));if(state.category==='events')return false;if(state.dateFilter&&state.dateFilter.kind&&typeof schedulesDateMatch==='function'&&!schedulesDateMatch(x,state.dateFilter))return false;if(state.search&&typeof inSearchArea==='function'&&!inSearchArea(x,state.search))return false;if(isTreatStop(x)!==(state.category==='treats'))return false;if(Array.isArray(state.features)&&state.features.length&&!state.features.every(f=>(x.features||[]).some(xf=>featureKey(xf)===f)))return false;if(state.category==='treats')return !state.categoryFeature||(x.features||[]).includes(state.categoryFeature);if(state.filter==='All')return true;if(['Family Friendly','Spooky','Scary'].includes(state.filter))return x.levels.includes(state.filter);if(['Walk-through','Drive-by','Walk-by','Drive or walk by (both)'].includes(state.filter))return x.type.includes(state.filter)||(x.type.includes('Drive or walk by (both)')&&['Drive-by','Walk-by'].includes(state.filter));return x.features.some(f=>featureKey(f)===state.filter)}
+function matchFilter(x){if(!inCurrentSeason(x))return false;if(x.hidden||removedHere(x))return false;if(state.category==='displays'&&state.community&&!isCommunity(x))return false;if(x.placeholder)return state.category==='displays'&&state.filter==='All'&&(typeof isDefaultArea!=='function'||!state.search||isDefaultArea(state.search));if(state.category==='events')return false;if(state.dateFilter&&state.dateFilter.kind&&typeof schedulesDateMatch==='function'&&!schedulesDateMatch(x,state.dateFilter))return false;if(state.search&&typeof inSearchArea==='function'&&!inSearchArea(x,state.search))return false;if(state.category==='treats'?!(isTreatStop(x)||x.alsoTreatStop===true):isTreatStop(x))return false;if(Array.isArray(state.features)&&state.features.length&&!state.features.every(f=>(x.features||[]).some(xf=>featureKey(xf)===f)))return false;if(state.category==='treats')return !state.categoryFeature||(x.features||[]).includes(state.categoryFeature);if(state.filter==='All')return true;if(['Family Friendly','Spooky','Scary'].includes(state.filter))return x.levels.includes(state.filter);if(['Walk-through','Drive-by','Walk-by','Drive or walk by (both)'].includes(state.filter))return x.type.includes(state.filter)||(x.type.includes('Drive or walk by (both)')&&['Drive-by','Walk-by'].includes(state.filter));return x.features.some(f=>featureKey(f)===state.filter)}
 function matchingEvents(ignoreDay){const onDay=x=>typeof eventOccursOn==='function'?eventOccursOn(x,state.eventDay):(x.date||String(x.startAt||'').slice(0,10))===state.eventDay;const filtered=events.filter(x=>eventIsUpcoming(x)&&inCurrentSeason(x)&&(state.filter==='All'||x.eventType===state.filter)&&(!state.categoryFeature||(x.features||[]).includes(state.categoryFeature))&&(!(state.features&&state.features.length)||state.features.every(f=>(x.features||[]).includes(f)))&&((ignoreDay||!state.eventDay)||x.ongoing||onDay(x))&&(!state.search||typeof inSearchArea!=='function'||inSearchArea(x,state.search))&&(x.ongoing||!state.dateFilter||!state.dateFilter.kind||typeof eventDateMatch!=='function'||eventDateMatch(x,state.dateFilter)));const day=ignoreDay?'':(state.eventDay||'');return typeof sortEventsByStart==='function'?sortEventsByStart(filtered,day):filtered.slice().sort((a,b)=>String(a.startAt||a.date||'').localeCompare(String(b.startAt||b.date||'')))}
 // Single source of truth for the ordered visible set. Falls back to number
 // order during the very first render, before location.js has loaded.

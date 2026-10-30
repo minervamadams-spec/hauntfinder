@@ -66,7 +66,7 @@ function areaCounts({listings=[],events=[],search,now=Date.now()}){
  const ok=x=>!search||inSearchArea(x,search);
  return {
   displays:listings.filter(x=>!x.placeholder&&x.kind!=='Trick-or-treat stop'&&ok(x)).length,
-  treats:listings.filter(x=>!x.placeholder&&x.kind==='Trick-or-treat stop'&&ok(x)).length,
+  treats:listings.filter(x=>!x.placeholder&&(x.kind==='Trick-or-treat stop'||x.alsoTreatStop===true)&&ok(x)).length,
   events:events.filter(x=>((typeof eventHasUpcoming==='function'?eventHasUpcoming(x,now):(x.ongoing===true||new Date(x.endAt).getTime()>now)))&&ok(x)).length
  };
 }

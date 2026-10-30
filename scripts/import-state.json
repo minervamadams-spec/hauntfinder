@@ -844,6 +844,13 @@
       "decision": "published_census_exact_address_verified_minerva_approved_owner_submitted_2026-10-27",
       "publicAddress": "108 Columbus Ave, Garfield, NJ 07026",
       "scheduleEvidence": "Now through Nov 8, 2026, an owner-approved exception to the Nov 1 cutoff. 6:30\u201310:00 PM nightly. Family Friendly. Drive or walk by (both). Photo opportunities, Lights. Owner-submitted display. Participation confirmed."
+    },
+    {
+      "listingId": 119,
+      "entityId": "display-on-center-st-netcong-2026",
+      "decision": "published_census_exact_address_verified_owner_approved_2026-10-30",
+      "publicAddress": "38 Center St, Netcong, NJ 07857",
+      "scheduleEvidence": "Until after Halloween, no set viewing times. Family Friendly. Drive or walk by (both). Census exact 38 CENTER ST, NETCONG, NJ, 07857. Participation confirmed."
     }
   ],
   "treatStops": {
@@ -886,6 +893,13 @@
         "decision": "published_census_exact_address_verified_minerva_approved_close_23:00_2026-10-23",
         "publicAddress": "20 Tinc Rd, Flanders, NJ 07836",
         "scheduleEvidence": "October 31, 2026, 6:00 PM to late (Minerva set close at 11:00 PM). Park at the school; path to the candy bowl."
+      },
+      {
+        "listingId": 2,
+        "entityId": "hauntfinder:2026:listing:2:original",
+        "decision": "matched_existing_display_also_treat_stop_owner_approved_2026-10-30",
+        "publicAddress": "24 Alcrest Avenue, Budd Lake, NJ",
+        "scheduleEvidence": "Halloween (Sat, Oct 31) only, 5-9 PM. Treats offered. Display remains a display with alsoTreatStop."
       }
     ]
   },

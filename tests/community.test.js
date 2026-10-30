@@ -151,7 +151,7 @@ test('data: shipped listings carry no email or phone; community records keep own
     if(x.spottedBy)assert.ok(!/@/.test(x.spottedBy));
     assert.equal(/Contest House/.test(x.name+' '+(x.notes||'')+' '+(x.address||'')),false,'Contest House is not part of the public listing text');
   }
-  assert.equal(data.listings.length,118);
+  assert.equal(data.listings.length,119);
   const first=data.listings.find(x=>x.num===41),last=data.listings.find(x=>x.num===109);
   assert.equal(first.address,'35 Morse Avenue, Bloomfield, NJ 07003');
   assert.equal(first.lat,40.78496575);
