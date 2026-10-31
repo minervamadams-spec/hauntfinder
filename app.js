@@ -3665,6 +3665,34 @@ const listings=[
    "features": [],
    "notes": "A family's homemade Halloween yard display on Sadler Rd. Stroll by and say hi!",
    "kind": "Decorated home/yard display"
+  },
+ {
+   "updatedAt": "2026-10-31",
+   "num": 122,
+   "entityId": "haunted-house-on-vail-2026",
+   "name": "Haunted House On Vail",
+   "town": "Landing",
+   "address": "530 Vail Road, Landing, NJ 07850",
+   "lat": 40.912499090413,
+   "lng": -74.654593764635,
+   "geoVerified": "census-exact 2026-10-31: 530 VAIL RD, LANDING, NJ, 07850",
+   "season": "halloween",
+   "year": 2026,
+   "participation": "confirmed",
+   "schedule": {
+     "startDate": "2026-10-31",
+     "endDate": "2026-10-31",
+     "weekly": [
+       {"dow": 6, "open": "12:00", "close": "23:00"}
+     ]
+   },
+   "dates": "Halloween (Sat, Oct 31)",
+   "times": "12:00 PM–11:00 PM",
+   "levels": [],
+   "type": [],
+   "features": [],
+   "notes": "Stroller friendly. Porch light on. Lots of decorations. Street parking.",
+   "kind": "Trick-or-treat stop"
   }
 ];
 listings.sort((a,b)=>a.num-b.num);
