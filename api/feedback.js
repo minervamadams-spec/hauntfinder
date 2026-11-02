@@ -2,6 +2,7 @@ const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const {randomUUID,createHmac}=require('node:crypto');
 const {storageKeys}=require('../lib/keys');
 const {isReusedSlot}=require('../routing');
+const listingSummary=require('../lib/listing-summary');
 // House numbers and reused-slot entity namespaces are derived from the
 // listings data at module load, so new listings need no hand edits here.
 function loadHouses(){
@@ -27,6 +28,8 @@ async function reviewsFor(house){
   return (rows||[]).map(x=>typeof x==='string'?JSON.parse(x):x).filter(r=>r&&r.kind!=='update-request');
 }
 module.exports=async function handler(req,res){
+  // Batched home-page read (ratings + photos for all listings), CDN cacheable.
+  if(req.method==='GET'&&req.query&&req.query.summary)return listingSummary(req,res);
   res.setHeader('Cache-Control','no-store');
   res.setHeader('X-Content-Type-Options','nosniff');
   if(!['GET','POST'].includes(req.method)){res.setHeader('Allow','GET, POST');return res.status(405).json({error:'Method not allowed.'})}
@@ -34,7 +37,10 @@ module.exports=async function handler(req,res){
   try{
     if(req.method==='GET'){
       const house=Number(req.query.house);if(!HOUSE_IDS.has(house))return res.status(400).json({error:'Please choose a listed home.'});
-      return res.status(200).json({reviews:await reviewsFor(house)});
+      const reviews=await reviewsFor(house);
+      // Reads are CDN cacheable; the POST response below carries the writer's fresh list.
+      res.setHeader('Cache-Control','public, max-age=0, s-maxage=60, stale-while-revalidate=300');
+      return res.status(200).json({reviews});
     }
     const origin=req.headers.origin;
     if(!origin||new URL(origin).host!==req.headers.host)return res.status(403).json({error:'Please submit feedback from this site.'});

@@ -123,7 +123,9 @@ function wireFeedback(house){
     $('feedbackList').innerHTML=reviews.map(r=>`<article class="visitor-review"><div class="review-meta"><strong>${escapeHTML(r.name)}</strong><span aria-label="${r.rating} out of 5 skeletons" class="review-crows">${Array.from({length:5},(_,i)=>`<span class="${i<r.rating?'is-filled':''}">${skeletonIcon()}</span>`).join('')}</span></div><time datetime="${escapeHTML(r.timestamp)}">${escapeHTML(new Date(r.timestamp).toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'}))}</time><p>${escapeHTML(r.comment)}</p><a class="review-report" href="mailto:${REPORT_TO}?subject=${encodeURIComponent('Haunt Finder feedback report: '+r.id)}">Report this feedback</a></article>`).join('');
   }
   status.textContent='Loading visitor feedback…';
-  fetch('/api/feedback?house='+house.num).then(async r=>{const d=await r.json();if(!r.ok)throw new Error(d.error||'');show(d);submit.disabled=false})
+  // A visitor who just posted skips the shared cache so a reload shows their review at once.
+  let bust='';try{const mine=(JSON.parse(localStorage.getItem('hfrated:v1'))||{})[house.num];if(mine&&Date.now()-mine.at<300000)bust='&t='+mine.at}catch{}
+  fetch('/api/feedback?house='+house.num+bust).then(async r=>{const d=await r.json();if(!r.ok)throw new Error(d.error||'');show(d);submit.disabled=false})
     .catch(()=>{status.textContent='Feedback is temporarily unavailable. Please try again later.'});
   form.addEventListener('submit',async e=>{
     e.preventDefault();if(!form.reportValidity())return;
@@ -131,7 +133,8 @@ function wireFeedback(house){
     try{
       const r=await fetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({house:house.num,name:f.get('name'),rating:Number(f.get('rating')),comment:f.get('comment'),website:f.get('website')})});
       const d=await r.json();if(!r.ok)throw new Error(d.error||'Your feedback was not saved. Please try again.');
-      show(d);form.reset();paint();formStatus.textContent='Your feedback is posted. Thank you for visiting!';
+      show(d);form.reset();paint();
+      try{const rs=d.reviews||[],all=JSON.parse(localStorage.getItem('hfrated:v1'))||{};all[house.num]={count:rs.length,average:rs.length?(rs.reduce((s,x)=>s+x.rating,0)/rs.length).toFixed(1):null,at:Date.now()};localStorage.setItem('hfrated:v1',JSON.stringify(all))}catch{}formStatus.textContent='Your feedback is posted. Thank you for visiting!';
     }catch(err){formStatus.textContent=/^(Feedback|Please)/.test(err.message)?err.message:'Your feedback was not saved. Please try again.'}
     finally{submit.disabled=false}
   });

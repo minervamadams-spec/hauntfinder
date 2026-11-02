@@ -24,14 +24,14 @@ module.exports=async function handler(req,res){
   const num=Number(req.query&&req.query.num);
   if(!Number.isInteger(num))return res.status(400).json({error:'Please choose a listed home.'});
   if(!HOUSE_IDS.has(num))return res.status(404).json({error:'Unknown listing.'});
-  // 60s edge cache: short enough that an organizer-approved photo shows on
+  // 60s shared (CDN) cache: short enough that an organizer-approved photo shows on
   // the next page load shortly after approval (a 5-min cache made approvals
   // appear to do nothing).
-  res.setHeader('Cache-Control','public, max-age=60');
+  res.setHeader('Cache-Control','public, max-age=0, s-maxage=60, stale-while-revalidate=300');
   if(!storageUrl()||!storageToken())return res.status(200).json({photos:[]});
   try{
     const rows=await redis(['LRANGE',PHOTOS_KEY(num),0,49]);
     const photos=(rows||[]).map(parseRecord).filter(p=>p&&p.status==='approved').map(p=>({id:p.id,url:p.url,pathname:p.pathname}));
     return res.status(200).json({photos});
-  }catch{return res.status(200).json({photos:[]})}
+  }catch{res.setHeader('Cache-Control','no-store');return res.status(200).json({photos:[]})}
 };
