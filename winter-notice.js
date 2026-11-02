@@ -32,6 +32,15 @@
     '<a class="gf-notice__link" href="' + URL_GLOWFINDER + '" rel="noopener">Open Glowfinder</a>' +
     '<button type="button" class="gf-notice__close" aria-label="Dismiss the Glowfinder notice"><span aria-hidden="true">×</span></button>';
 
+  // The notice changes the page height after the Leaflet map has sized itself. Leaflet only re-measures on a
+  // window resize, so announce one; otherwise tiles never load for the area the notice frees or covers.
+  function relayout(win) {
+    try {
+      var fire = function () { win.dispatchEvent(new win.Event('resize')); };
+      if (typeof win.requestAnimationFrame === 'function') win.requestAnimationFrame(fire); else fire();
+    } catch (e) { /* older browsers: the map's own delayed invalidateSize still runs */ }
+  }
+
   function show(doc, win) {
     if (!doc || !doc.body || doc.querySelector('.gf-notice')) return null;
     var storage = null;
@@ -48,6 +57,7 @@
     function measure() { html.style.setProperty('--gf-notice-h', el.offsetHeight + 'px'); }
     measure();
     html.setAttribute('data-gf-notice', '');
+    relayout(win);
     if (typeof win.ResizeObserver === 'function') new win.ResizeObserver(measure).observe(el);
     else win.addEventListener('resize', measure);
     el.querySelector('.gf-notice__close').addEventListener('click', function () {
@@ -55,6 +65,7 @@
       el.remove();
       html.style.removeProperty('--gf-notice-h');
       html.removeAttribute('data-gf-notice');
+      relayout(win);
       var target = doc.querySelector('h1, main, [tabindex]') || doc.body;
       if (target.focus) { if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1'); target.focus({ preventScroll: true }); }
     });

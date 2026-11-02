@@ -62,3 +62,10 @@ test('fixed-height shells give the notice its height back (map shell and phone m
   assert.match(css,/html\[data-gf-notice\] \.app\{height:calc\(100dvh - var\(--gf-notice-h,0px\)\)!important\}/);
   assert.match(css,/html\[data-mview="map"\]\{--mapbar-top:calc\(149px \+ var\(--gf-notice-h,0px\)\)\}/);
 });
+
+test('showing and dismissing the notice fire a window resize so the map re-measures', () => {
+  const src = require('node:fs').readFileSync(require('node:path').join(__dirname, '..', 'winter-notice.js'), 'utf8');
+  const calls = (src.match(/relayout\(win\)/g) || []).length;
+  assert.ok(calls >= 2, 'relayout is called on show and on dismiss');
+  assert.match(src, /new win\.Event\('resize'\)/);
+});
