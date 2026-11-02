@@ -1888,7 +1888,7 @@ html body .filterbar.site-nav a:hover,html body .filterbar.site-nav a:focus{text
  html body .filterbar.site-nav .tabs{flex-wrap:wrap;height:auto}
  html body .filterbar.site-nav .tabs a.site-tab{height:44px}
  /* Map view: start the fixed map below the Shops row so all four sections stay one tap away. */
- html[data-mview="map"]{--mapbar-top:149px}
+ html[data-mview="map"]{--mapbar-top:calc(149px + var(--gf-notice-h,0px))}
 }
 @media(max-width:420px){
  html body .filterbar .shops-nav-link,html body .filterbar.site-nav .shops-nav-link{padding:0 12px;font-size:14px;gap:0}
@@ -1906,3 +1906,17 @@ html body .filterbar.site-nav a:hover,html body .filterbar.site-nav a:focus{text
 .lightbox__nav--next{right:8px}
 .lightbox__nav:focus-visible{outline:2px solid #B48CFF;outline-offset:2px}
 html body #cardList .card--compact .card__hours-row .card__media[open]{flex:1 0 100%;margin-top:6px}
+
+/* Glowfinder hand-off notice (winter-notice.js): shown Nov 1–Feb 21, top of every page. */
+.gf-notice{display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap;padding:var(--space-2) var(--space-4);background:var(--panel);border-bottom:1px solid var(--line-2);color:var(--text);font:600 15px/1.35 var(--f-body)}
+.gf-notice__text{margin:0;flex:1 1 260px;min-width:0}
+.gf-notice__link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 var(--space-4);border-radius:var(--radius-control);background:var(--orange);color:var(--bg);font:800 15px/1 var(--f-cond);letter-spacing:.04em;text-transform:uppercase;text-decoration:none;white-space:nowrap}
+.gf-notice__close{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin-left:auto;border:1px solid var(--line-2);border-radius:var(--radius-control);background:transparent;color:var(--text-2);font:400 24px/1 var(--f-body);cursor:pointer}
+.gf-notice__link:focus-visible,.gf-notice__close:focus-visible{outline:3px solid var(--text);outline-offset:2px}
+.gf-notice__link:hover{filter:brightness(1.08)}
+.gf-notice__close:hover{color:var(--text);border-color:var(--text-2)}
+@media(max-width:600px){.gf-notice{padding:var(--space-2) var(--space-3);gap:var(--space-2)}.gf-notice__text{flex-basis:100%;font-size:14px}.gf-notice__close{margin-left:0;order:2}.gf-notice__link{flex:1 1 auto;order:1}}
+/* The map page is a fixed-height shell; give the notice its height back. */
+html[data-gf-notice]:has(.app),html[data-gf-notice]:has(.app) body{height:100dvh}
+html[data-gf-notice] .app{height:calc(100dvh - var(--gf-notice-h,0px))!important}
+.footer-link--winter{white-space:nowrap}

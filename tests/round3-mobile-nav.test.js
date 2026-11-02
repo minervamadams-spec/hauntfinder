@@ -32,7 +32,8 @@ test('secondary pages wrap the row under the three tabs instead of a fourth tab'
 });
 
 test('the mobile map view starts below the Shops row', () => {
-  assert.match(mobile, /html\[data-mview="map"\]\{--mapbar-top:149px\}/);
+  // 149px with no notice; the Glowfinder notice (winter-notice.js) adds its own height above the bar.
+  assert.match(mobile, /html\[data-mview="map"\]\{--mapbar-top:calc\(149px \+ var\(--gf-notice-h,0px\)\)\}/);
 });
 
 test('label is "Shops & Services" below 1280px and "Shops, Makers & Services" at 1280px and wider', () => {
